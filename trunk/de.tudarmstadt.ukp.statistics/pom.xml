@@ -28,7 +28,9 @@
 	<version>0.0.3-SNAPSHOT</version>
 	<name>DKPro Statistics</name>
 	<scm>
-		<developerConnection>scm:svn:https://scruffy.ukp.informatik.tu-darmstadt.de/svn/dkpro_ng/statistics/trunk</developerConnection>
+		<developerConnection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/de.tudarmstadt.ukp.statistics</developerConnection>
+		<connection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/de.tudarmstadt.ukp.statistics</connection>
+		<url>http://code.google.com/p/dkpro-statistics/source/browse/</url>
 	</scm>
 	<dependencies>
 		<dependency>
@@ -91,4 +93,5 @@
                         </build>
                 </profile>
 	</profiles>
+	<url>http://code.google.com/p/dkpro-statistics/</url>
 </project>
