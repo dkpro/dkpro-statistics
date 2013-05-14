@@ -94,4 +94,5 @@
                 </profile>
 	</profiles>
 	<url>http://code.google.com/p/dkpro-statistics/</url>
+	<description>DKPro Statistics is a collection of open-licensed statistical tools, currently including correlation and inter-rater agreement methods.</description>
 </project>
