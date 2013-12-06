@@ -28,7 +28,7 @@ public class TestAlphaUnitizedAgreement {
 
 	@Test
 	public void testAlphaUnitizedAgreementObservedDisagreement() {
-		UnitizingStudy study = StudyFactory.getStudy();
+		UnitizingStudy study = StudyFactory.getKrippendorfSampleStudy();
 		AlphaUnitizedAgreement alpha = new AlphaUnitizedAgreement(study);
 		assertEquals(0.0144, alpha.getObservedDisagreement("c"), 0.0001);
 		assertEquals(0.0, alpha.getObservedDisagreement("k"), 0.0);
@@ -36,7 +36,7 @@ public class TestAlphaUnitizedAgreement {
 
 	@Test
 	public void testAlphaUnitizedAgreementExpectedDisagreement() {
-		UnitizingStudy study = StudyFactory.getStudy();
+		UnitizingStudy study = StudyFactory.getKrippendorfSampleStudy();
 		AlphaUnitizedAgreement alpha = new AlphaUnitizedAgreement(study);
 		assertEquals(0.0532, alpha.getExpectedDisagreement("c"), 0.0001);
 		assertEquals(0.0490, alpha.getExpectedDisagreement("k"), 0.0001);
@@ -44,7 +44,7 @@ public class TestAlphaUnitizedAgreement {
 	
 	@Test
 	public void testAlphaUnitizedCategoryAgreement() {
-		UnitizingStudy study = StudyFactory.getStudy();
+		UnitizingStudy study = StudyFactory.getKrippendorfSampleStudy();
 		AlphaUnitizedAgreement alpha = new AlphaUnitizedAgreement(study);
 		// The expected value differs from the value 
 		// of Krippendorf's paper because there 
@@ -55,7 +55,7 @@ public class TestAlphaUnitizedAgreement {
 	
 	@Test
 	public void testAlphaUnitizedJointAgreement() {
-		UnitizingStudy study = StudyFactory.getStudy();
+		UnitizingStudy study = StudyFactory.getKrippendorfSampleStudy();
 		AlphaUnitizedAgreement alpha = new AlphaUnitizedAgreement(study);
 		// The expected value differs from the value 
 		// of Krippendorf's paper because there 

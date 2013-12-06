@@ -32,7 +32,7 @@ public class StudyFactory {
 	 * Qualitative Text Analysis Data
 	 * @return Unitizing study containing the sections of two annotators. 
 	 */
-	public static UnitizingStudy getStudy() {
+	public static UnitizingStudy getKrippendorfSampleStudy() {
 		UnitizingStudy study = new UnitizingStudy(2);
 		// observer i is annotator 1
 		// observer j is annotator 2
