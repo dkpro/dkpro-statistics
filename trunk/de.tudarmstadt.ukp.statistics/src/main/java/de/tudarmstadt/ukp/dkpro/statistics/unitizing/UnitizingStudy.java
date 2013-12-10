@@ -159,6 +159,21 @@ public class UnitizingStudy
         public int l;
         public int v;
 
+        public Section()
+        {
+            // assigns default values
+        }
+
+        public Section(final String category, final int annotator, final int b, final int l,
+                final int v)
+        {
+            this.category = category;
+            this.annotator = annotator;
+            this.b = b;
+            this.l = l;
+            this.v = v;
+        }
+
         @Override
         public int hashCode()
         {
