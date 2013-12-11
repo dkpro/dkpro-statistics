@@ -32,6 +32,8 @@ import java.util.List;
 public class UnitizingStudy
 {
 
+    private static final int DEFAULT_L = -1;
+
     /** 
      * The units of multiple annotators 
      */
@@ -40,7 +42,7 @@ public class UnitizingStudy
     /** 
      * Length of the continuum
      */
-    private int l;
+    private int l = DEFAULT_L;
 
     /**
      * Basic constructor
@@ -139,6 +141,9 @@ public class UnitizingStudy
 
     public int getL()
     {
+        if (this.l == DEFAULT_L) {
+            throw new IllegalStateException("Property 'l' has not been set!");
+        }
         return l;
     }
 
