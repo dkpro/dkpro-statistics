@@ -17,6 +17,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.statistics.unitizing;
 
+
 /**
  * Factory containing some testing methods that create UnitizingStudies.
  *  
@@ -34,37 +35,39 @@ public class StudyFactory
     public static UnitizingStudy getKrippendorfSampleStudy()
     {
         final UnitizingStudy study = new UnitizingStudy(2);
+        study.setContinuumStart(150);
         // observer i is annotator 0
         // observer j is annotator 1
 
-        study.addSection("c", 0, 150, 75, 0);
-        study.addSection("c", 0, 225, 70, 1);
-        study.addSection("c", 0, 295, 75, 0);
-        study.addSection("c", 0, 370, 30, 1);
-        study.addSection("c", 0, 400, 50, 0);
+        // study.addSection("c", 0, 150, 75, 0);
+        study.addSection("c", 0, 225, 70);
+        // study.addSection("c", 0, 295, 75, 0);
+        study.addSection("c", 0, 370, 30);
+        // study.addSection("c", 0, 400, 50, 0);
 
-        study.addSection("c", 1, 150, 70, 0);
-        study.addSection("c", 1, 220, 80, 1);
-        study.addSection("c", 1, 300, 55, 0);
-        study.addSection("c", 1, 355, 20, 1);
-        study.addSection("c", 1, 375, 25, 0);
-        study.addSection("c", 1, 400, 20, 1);
-        study.addSection("c", 1, 420, 30, 0);
+        // study.addSection("c", 1, 150, 70, 0);
+        study.addSection("c", 1, 220, 80);
+        // study.addSection("c", 1, 300, 55, 0);
+        study.addSection("c", 1, 355, 20);
+        // study.addSection("c", 1, 375, 25, 0);
+        study.addSection("c", 1, 400, 20);
+        // study.addSection("c", 1, 420, 30, 0);
 
-        study.addSection("k", 0, 150, 30, 0);
-        study.addSection("k", 0, 180, 60, 1);
-        study.addSection("k", 0, 240, 60, 0);
-        study.addSection("k", 0, 300, 50, 1);
-        study.addSection("k", 0, 350, 100, 0);
+        // study.addSection("k", 0, 150, 30, 0);
+        study.addSection("k", 0, 180, 60);
+        // study.addSection("k", 0, 240, 60, 0);
+        study.addSection("k", 0, 300, 50);
+        // study.addSection("k", 0, 350, 100, 0);
 
-        study.addSection("k", 1, 150, 30, 0);
-        study.addSection("k", 1, 180, 60, 1);
-        study.addSection("k", 1, 240, 60, 0);
-        study.addSection("k", 1, 300, 50, 1);
-        study.addSection("k", 1, 350, 100, 0);
+        // study.addSection("k", 1, 150, 30, 0);
+        study.addSection("k", 1, 180, 60);
+        // study.addSection("k", 1, 240, 60, 0);
+        study.addSection("k", 1, 300, 50);
+        // study.addSection("k", 1, 350, 100, 0);
 
-        study.setL(300);
+        study.setContinuumLength(300);
+        study.close();
+
         return study;
     }
-
 }
