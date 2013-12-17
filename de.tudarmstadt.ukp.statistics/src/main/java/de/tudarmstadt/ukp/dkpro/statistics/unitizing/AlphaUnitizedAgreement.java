@@ -153,8 +153,8 @@ public class AlphaUnitizedAgreement
 
         // calculate denominator
         double denominator = 0.0;
-        denominator = (study.getAnnotatorCount() * study.getContinuumLength())
-                * (study.getAnnotatorCount() * study.getContinuumLength() - 1);
+        denominator = ((double)study.getAnnotatorCount() * (double)study.getContinuumLength())
+                * ((double)study.getAnnotatorCount() * (double)study.getContinuumLength() - 1);
         double tmp = 0.0;
         for (int i = 0; i < study.getAnnotatorCount(); i++) {
             final List<Section> sections = study.getSections(category, i);
