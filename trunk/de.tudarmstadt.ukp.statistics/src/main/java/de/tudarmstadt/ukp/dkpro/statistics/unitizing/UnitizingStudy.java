@@ -299,6 +299,8 @@ public class UnitizingStudy
     /**
      * Returns the length of the continuum.
      * 
+     * Zero by default.
+     * 
      * @return the length of the continuum
      */
     public int getContinuumLength()
