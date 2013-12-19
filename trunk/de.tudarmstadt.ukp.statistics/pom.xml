@@ -24,12 +24,12 @@
 	</parent>
 	<groupId>de.tudarmstadt.ukp.dkpro.statistics</groupId>
 	<artifactId>de.tudarmstadt.ukp.dkpro.statistics</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<name>DKPro Statistics</name>
 	<scm>
-		<developerConnection>scm:svn:https://dkpro-statistics.googlecode.com/svn/tags/de.tudarmstadt.ukp.dkpro.statistics-1.0.2</developerConnection>
-		<connection>scm:svn:https://dkpro-statistics.googlecode.com/svn/tags/de.tudarmstadt.ukp.dkpro.statistics-1.0.2</connection>
-		<url>http://code.google.com/p/dkpro-statistics/source/browse/tags/de.tudarmstadt.ukp.dkpro.statistics-1.0.2</url>
+		<developerConnection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/de.tudarmstadt.ukp.statistics</developerConnection>
+		<connection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/de.tudarmstadt.ukp.statistics</connection>
+		<url>http://code.google.com/p/dkpro-statistics/source/browse/</url>
 	</scm>
 	<dependencies>
 		<dependency>
