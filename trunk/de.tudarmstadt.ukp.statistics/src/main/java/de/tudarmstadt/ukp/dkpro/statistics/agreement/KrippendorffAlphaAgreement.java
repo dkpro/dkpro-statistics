@@ -41,111 +41,121 @@ import de.tudarmstadt.ukp.dkpro.statistics.agreement.util.IDistanceFunction;
  * @author Christian M. Meyer
  * @date 04.11.2009
  */
-public class KrippendorffAlphaAgreement {
+public class KrippendorffAlphaAgreement
+{
 
-	protected IAnnotationStudy study;
-	protected IDistanceFunction distanceFunction;
-	
-	/** Initializes the instance for the given annotation study. The study 
-	 *  should never be null. */
-	public KrippendorffAlphaAgreement(final IAnnotationStudy study) {
-		this.study = study;
-	}
-	
-	/** Returns the distance function that is used to measure the distance
-	 *  between two annotation categories. */
-	public IDistanceFunction getDistanceFunction() {
-		return distanceFunction;
-	}
-	
-	/** Uses the given distance function for upcoming calculations of the
-	 *  inter-rater agreement. */
-	public void setDistanceFunction(final IDistanceFunction distanceFunction) {
-		this.distanceFunction = distanceFunction;
-	}
-	
-	/** Calculates the inter-rater agreement for the annotation 
-	 *  study that was passed to the class constructor and the currently
-	 *  assigned distance function. 
-	 *  @throws NullPointerException if the study is null.
-	 *  @throws ArithmeticException if the study does not contain any item or
-	 *  	the number of raters is smaller than 2. */
-	public double calculateAgreement() {
-		double DO = calculateObservedDisagreement();
-		double DE = calculateExpectedDisagreement();
-		return 1.0 - (DO / DE);
-	}
-	
-	/** Calculates the observed inter-rater agreement for the annotation 
-	 *  study that was passed to the class constructor and the currently
-	 *  assigned distance function.
-	 *  @throws NullPointerException if the study is null.
-	 *  @throws ArithmeticException if the study does not contain any item or
-	 *  	the number of raters is smaller than 2. */
-	public double calculateObservedDisagreement() {
-		double result = 0;
-		for (IAnnotationItem item : study.getItems()) {
-			TreeMap<Object, Integer> annotationsPerCategory 
-					= new TreeMap<Object, Integer>();
-			for (Object annotation : item.getAnnotations()) {
-				Integer count = annotationsPerCategory.get(annotation);
-				if (count == null)
-					annotationsPerCategory.put(annotation, 1);
-				else
-					annotationsPerCategory.put(annotation, count + 1);
-			}
-			
-			/*for (Object category1 : study.getCategories())
-				if (annotationsPerCategory.get(category1)!=null)
-				System.out.println(category1 + " = " + annotationsPerCategory.get(category1));
-			System.out.println("----------" + Arrays.toString(item.getAnnotations()));*/
-				
-			for (Object category1 : annotationsPerCategory.keySet())
-				for (Object category2 : annotationsPerCategory.keySet()) {
-					Integer cat1Count = annotationsPerCategory.get(category1);
-					if (cat1Count == null)
-						continue;
-					Integer cat2Count = annotationsPerCategory.get(category2);
-					if (cat2Count == null)
-						continue;
-					
-					result += cat1Count * cat2Count 
-							* distanceFunction.measureDistance(study, category1, category2);
-				}
-		}
+    protected IAnnotationStudy study;
+    protected IDistanceFunction distanceFunction;
 
-		result /= (double) (study.getItemCount() * study.getAnnotatorCount() 
-				* (study.getAnnotatorCount() - 1));
-		return result;
-	}
+    /** Initializes the instance for the given annotation study. The study 
+     *  should never be null. */
+    public KrippendorffAlphaAgreement(final IAnnotationStudy study)
+    {
+        this.study = study;
+    }
 
-	/** Calculates the expected inter-rater agreement using the defined 
-	 *  distance function to infer the assumed probability distribution. 
-	 *  @throws NullPointerException if the annotation study is null. 
-	 *  @throws ArithmeticException if there are no items or raters in the 
-	 *  	annotation study. */
-	public double calculateExpectedDisagreement() {
-		double result = 0;
-		TreeMap<Object, Integer> annotationsPerCategory 
-				= new TreeMap<Object, Integer>();
-		for (IAnnotationItem item : study.getItems())
-			for (Object annotation : item.getAnnotations()) {
-				Integer count = annotationsPerCategory.get(annotation);
-				if (count == null)
-					annotationsPerCategory.put(annotation, 1);
-				else
-					annotationsPerCategory.put(annotation, count + 1);
-			}
-		
-		for (Object category1 : study.getCategories())
-			for (Object category2 : study.getCategories())
-				result += annotationsPerCategory.get(category1)
-						* annotationsPerCategory.get(category2)
-						* distanceFunction.measureDistance(study, category1, category2);
-			
-		result /= (double) (study.getItemCount() * study.getAnnotatorCount() 
-				* (study.getItemCount() * study.getAnnotatorCount() - 1));
-		return result;
-	}
-	
+    /** Returns the distance function that is used to measure the distance
+     *  between two annotation categories. */
+    public IDistanceFunction getDistanceFunction()
+    {
+        return distanceFunction;
+    }
+
+    /** Uses the given distance function for upcoming calculations of the
+     *  inter-rater agreement. */
+    public void setDistanceFunction(final IDistanceFunction distanceFunction)
+    {
+        this.distanceFunction = distanceFunction;
+    }
+
+    /** Calculates the inter-rater agreement for the annotation 
+     *  study that was passed to the class constructor and the currently
+     *  assigned distance function. 
+     *  @throws NullPointerException if the study is null.
+     *  @throws ArithmeticException if the study does not contain any item or
+     *  	the number of raters is smaller than 2. */
+    public double calculateAgreement()
+    {
+        final double DO = calculateObservedDisagreement();
+        final double DE = calculateExpectedDisagreement();
+        return 1.0 - (DO / DE);
+    }
+
+    /** Calculates the observed inter-rater agreement for the annotation 
+     *  study that was passed to the class constructor and the currently
+     *  assigned distance function.
+     *  @throws NullPointerException if the study is null.
+     *  @throws ArithmeticException if the study does not contain any item or
+     *  	the number of raters is smaller than 2. */
+    public double calculateObservedDisagreement()
+    {
+        double result = 0;
+        for (final IAnnotationItem item : study.getItems()) {
+            final TreeMap<Object, Integer> annotationsPerCategory = new TreeMap<Object, Integer>();
+            for (final Object annotation : item.getAnnotations()) {
+                final Integer count = annotationsPerCategory.get(annotation);
+                if (count == null) {
+                    annotationsPerCategory.put(annotation, 1);
+                }
+                else {
+                    annotationsPerCategory.put(annotation, count + 1);
+                }
+            }
+
+            for (final Object category1 : annotationsPerCategory.keySet()) {
+                for (final Object category2 : annotationsPerCategory.keySet()) {
+                    final Integer cat1Count = annotationsPerCategory.get(category1);
+                    if (cat1Count == null) {
+                        continue;
+                    }
+                    final Integer cat2Count = annotationsPerCategory.get(category2);
+                    if (cat2Count == null) {
+                        continue;
+                    }
+
+                    result += cat1Count * cat2Count
+                            * distanceFunction.measureDistance(study, category1, category2);
+                }
+            }
+        }
+
+        result /= study.getItemCount() * study.getAnnotatorCount()
+                * (study.getAnnotatorCount() - 1);
+        return result;
+    }
+
+    /** Calculates the expected inter-rater agreement using the defined 
+     *  distance function to infer the assumed probability distribution. 
+     *  @throws NullPointerException if the annotation study is null. 
+     *  @throws ArithmeticException if there are no items or raters in the 
+     *  	annotation study. */
+    public double calculateExpectedDisagreement()
+    {
+        double result = 0;
+        final TreeMap<Object, Integer> annotationsPerCategory = new TreeMap<Object, Integer>();
+        for (final IAnnotationItem item : study.getItems()) {
+            for (final Object annotation : item.getAnnotations()) {
+                final Integer count = annotationsPerCategory.get(annotation);
+                if (count == null) {
+                    annotationsPerCategory.put(annotation, 1);
+                }
+                else {
+                    annotationsPerCategory.put(annotation, count + 1);
+                }
+            }
+        }
+
+        for (final Object category1 : study.getCategories()) {
+            for (final Object category2 : study.getCategories()) {
+                result += annotationsPerCategory.get(category1)
+                        * annotationsPerCategory.get(category2)
+                        * distanceFunction.measureDistance(study, category1, category2);
+            }
+        }
+
+        result /= study.getItemCount() * study.getAnnotatorCount()
+                * (study.getItemCount() * study.getAnnotatorCount() - 1);
+        return result;
+    }
+
 }
