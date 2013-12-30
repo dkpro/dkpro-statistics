@@ -27,7 +27,8 @@ import org.apache.commons.logging.LogFactory;
  * @author zesch
  *
  */
-public class PearsonCorrelation {
+public class PearsonCorrelation
+{
 
     private static Log log = LogFactory.getLog(PearsonCorrelation.class);
 
@@ -37,23 +38,24 @@ public class PearsonCorrelation {
      * @param list2 The second dataset as a list.
      * @return The correlation between the two datasets.
      */
-    public static double computeCorrelation(List<Double> list1, List<Double> list2) {
-        double[] doubleArray1 = new double[list1.size()];
-        double[] doubleArray2 = new double[list2.size()];
+    public static double computeCorrelation(final List<Double> list1, final List<Double> list2)
+    {
+        final double[] doubleArray1 = new double[list1.size()];
+        final double[] doubleArray2 = new double[list2.size()];
 
         int off1 = 0;
-        for (double item : list1) {
+        for (final double item : list1) {
             doubleArray1[off1] = item;
             off1++;
         }
 
         int off2 = 0;
-        for (double item : list2) {
+        for (final double item : list2) {
             doubleArray2[off2] = item;
             off2++;
         }
 
-        double correlation = computeCorrelation(doubleArray1, doubleArray2);
+        final double correlation = computeCorrelation(doubleArray1, doubleArray2);
 
         return correlation;
     }
@@ -64,52 +66,41 @@ public class PearsonCorrelation {
      * @param list2 The second dataset as a double array.
      * @return The correlation between the two datasets.
      */
-    public static double computeCorrelation(double[] list1, double[] list2) {
-        // R = { N* (Sum(x*y) - Sum(x)*Sum(y)} / sqrt( { N* Sum( x**2 ) - Sum( x )**2} ) * sqrt ( {N * Sum( y**2 ) - Sum( y )**2} )
+    public static double computeCorrelation(final double[] list1, final double[] list2)
+    {
+        // R = { N* (Sum(x*y) - Sum(x)*Sum(y)} / sqrt( { N* Sum( x**2 ) - Sum( x )**2} ) * sqrt ( {N
+        // * Sum( y**2 ) - Sum( y )**2} )
         double sumXY = 0;
         double sumX = 0;
         double sumY = 0;
         double sumXsquares = 0;
         double sumYsquares = 0;
-        long N = list1.length; // we assume that both list are of equal length
+        final long N = list1.length; // we assume that both list are of equal length
 
         if (list1.length != list2.length) {
-            log.fatal("Lists are not the same size ("+ list1.length + " - " + list2.length + ").");
+            log.fatal("Lists are not the same size (" + list1.length + " - " + list2.length + ").");
             System.exit(1);
         }
 
-        for (int i=0; i<N; i++) {
-            double x = list1[i];
-            double y = list2[i];
-            sumXY += x*y;
+        for (int i = 0; i < N; i++) {
+            final double x = list1[i];
+            final double y = list2[i];
+            sumXY += x * y;
             sumX += x;
             sumY += y;
-            sumXsquares += x*x;
-            sumYsquares += y*y;
+            sumXsquares += x * x;
+            sumYsquares += y * y;
         }
 
-//        System.out.println("n: " + N);
-//        System.out.println("x: " + sumX);
-//        System.out.println("y: " + sumY);
-//        System.out.println("xy: " + sumXY);
-//        System.out.println("x^2: " + sumXsquares);
-//        System.out.println("y^2: " + sumYsquares);
+        final double nominator = (N * sumXY - sumX * sumY);
 
-        double nominator = ( N*sumXY - sumX*sumY );
+        final double root1 = N * sumXsquares - sumX * sumX;
+        final double root2 = N * sumYsquares - sumY * sumY;
+        final double denominator = Math.sqrt(root1) * Math.sqrt(root2);
 
-        double root1 = N*sumXsquares - sumX*sumX;
-        double root2 = N*sumYsquares - sumY*sumY;
-        double denominator = Math.sqrt( root1 ) * Math.sqrt( root2 );
-
-//        System.out.println("root1: " + root1);
-//        System.out.println("root2: " + root2);
-//        System.out.println("nominator: " + nominator);
-//        System.out.println("denominator: " + denominator);
-
-        double correlation =  nominator / denominator;
+        final double correlation = nominator / denominator;
 
         return correlation;
     }
-
 
 }
