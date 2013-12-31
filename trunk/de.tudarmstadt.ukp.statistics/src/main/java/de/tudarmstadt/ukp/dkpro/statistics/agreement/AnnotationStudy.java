@@ -18,6 +18,7 @@
 package de.tudarmstadt.ukp.dkpro.statistics.agreement;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.TreeSet;
 
 /**
@@ -28,87 +29,120 @@ import java.util.TreeSet;
  * @author Christian M. Meyer
  * @date 04.11.2009
  */
-public class AnnotationStudy implements IAnnotationStudy {
+public class AnnotationStudy
+    implements IAnnotationStudy
+{
 
-	/**
-	 * Default implementation of the {@link IAnnotationItem} interface. 
-	 * @author Christian M. Meyer
-	 */
-	public class AnnotationItem implements IAnnotationItem {
+    /**
+     * Default implementation of the {@link IAnnotationItem} interface. 
+     * @author Christian M. Meyer
+     */
+    public class AnnotationItem
+        implements IAnnotationItem
+    {
 
-		protected Object[] annotations;
-		
-		/** Creates a new annotation item with the given annotations. It is
-		 *  recommended to use {@link IAnnotationStudy#addItem(Object...)}
-		 *  to create the annotation items. */
-		public AnnotationItem(final Object[] annotations) {
-			this.annotations = annotations;
-		}
-		
-		public Object getAnnotation(int annotator) {
-			return annotations[annotator];
-		}
+        protected Object[] annotations;
 
-		public Object[] getAnnotations() {
-			return annotations;
-		}
-		
-		/** Returns an iterable tree set of all the annotation categories
-		 *  of the current annotation item instance. */
-		public Iterable<Object> getCategories() {
-			categories = new TreeSet<Object>();
-			for (Object category : getAnnotations())
-				categories.add(category);
-			return categories;
-		}
-		
-	}
-	
-	
-	protected ArrayList<IAnnotationItem> items;
-	protected TreeSet<Object> categories;
-	protected int annotatorCount;
-	
-	/** Instanciates the annotation study with the given number of 
-	 *  raters/annotators. */
-	public AnnotationStudy(final int annotatorCount) {
-		items = new ArrayList<IAnnotationItem>();
-		this.annotatorCount = annotatorCount;
-	}
+        /** Creates a new annotation item with the given annotations. It is
+         *  recommended to use {@link IAnnotationStudy#addItem(Object...)}
+         *  to create the annotation items. */
+        public AnnotationItem(final Object[] annotations)
+        {
+            this.annotations = annotations;
+        }
 
-	public Iterable<IAnnotationItem> getItems() {
-		return items;
-	}
+        @Override
+        public Object getAnnotation(final int annotator)
+        {
+            return annotations[annotator];
+        }
 
-	public int getItemCount() {
-		return items.size();
-	}
-	
-	public int getAnnotatorCount() {
-		return annotatorCount;
-	}
+        @Override
+        public Object[] getAnnotations()
+        {
+            return annotations;
+        }
 
-	public Iterable<Object> getCategories() {
-		if (categories == null) {
-			categories = new TreeSet<Object>();
-			for (IAnnotationItem item : items) 
-				for (Object category : item.getAnnotations())
-					categories.add(category);
-		}
-		return categories;
-	}
+        /** Returns an iterable tree set of all the annotation categories
+         *  of the current annotation item instance. */
+        public Iterable<Object> getCategories()
+        {
+            categories = new TreeSet<Object>();
+            for (final Object category : getAnnotations()) {
+                categories.add(category);
+            }
+            return categories;
+        }
 
-	public int getCategoryCount() {
-		getCategories();
-		return categories.size();
-	}
+        @Override
+        public String toString()
+        {
+            return "Item " + Arrays.toString(annotations);
+        }
 
-	public void addItem(final Object... annotations) {
-		addItemAsArray(annotations);
-	}
+    }
 
-	public void addItemAsArray(final Object[] annotations) {
-		items.add(new AnnotationItem(annotations));
-	}
+    protected ArrayList<IAnnotationItem> items;
+    protected TreeSet<Object> categories;
+    protected int annotatorCount;
+
+    /** Instanciates the annotation study with the given number of 
+     *  raters/annotators. */
+    public AnnotationStudy(final int annotatorCount)
+    {
+        items = new ArrayList<IAnnotationItem>();
+        this.annotatorCount = annotatorCount;
+    }
+
+    @Override
+    public Iterable<IAnnotationItem> getItems()
+    {
+        return items;
+    }
+
+    @Override
+    public int getItemCount()
+    {
+        return items.size();
+    }
+
+    @Override
+    public int getAnnotatorCount()
+    {
+        return annotatorCount;
+    }
+
+    @Override
+    public Iterable<Object> getCategories()
+    {
+        if (categories == null) {
+            categories = new TreeSet<Object>();
+            for (final IAnnotationItem item : items) {
+                for (final Object category : item.getAnnotations()) {
+                    categories.add(category);
+                }
+            }
+        }
+        return categories;
+    }
+
+    @Override
+    public int getCategoryCount()
+    {
+        getCategories();
+        return categories.size();
+    }
+
+    @Override
+    public void addItem(final Object... annotations)
+    {
+        addItemAsArray(annotations);
+    }
+
+    @Override
+    public void addItemAsArray(final Object[] annotations)
+    {
+        items.add(new AnnotationItem(annotations));
+    }
 
 }
