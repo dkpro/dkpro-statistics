@@ -18,10 +18,14 @@
 package de.tudarmstadt.ukp.dkpro.statistics.unitizing;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Unit tests for {@link AlphaUnitizedAgreement} 
+ */
 public class AlphaUnitizedAgreementTest
 {
 
@@ -37,15 +41,15 @@ public class AlphaUnitizedAgreementTest
     @Test
     public void testAlphaUnitizedAgreementObservedDisagreement()
     {
-        assertEquals(0.0144, alphaForKrippendorfStudy.getObservedDisagreement("c"), 0.0001);
-        assertEquals(0.0, alphaForKrippendorfStudy.getObservedDisagreement("k"), 0.0);
+        assertEquals(0.0144, this.alphaForKrippendorfStudy.getObservedDisagreement("c"), 0.0001);
+        assertEquals(0.0, this.alphaForKrippendorfStudy.getObservedDisagreement("k"), 0.0);
     }
 
     @Test
     public void testAlphaUnitizedAgreementExpectedDisagreement()
     {
-        assertEquals(0.0532, alphaForKrippendorfStudy.getExpectedDisagreement("c"), 0.0001);
-        assertEquals(0.0490, alphaForKrippendorfStudy.getExpectedDisagreement("k"), 0.0001);
+        assertEquals(0.0532, this.alphaForKrippendorfStudy.getExpectedDisagreement("c"), 0.0001);
+        assertEquals(0.0490, this.alphaForKrippendorfStudy.getExpectedDisagreement("k"), 0.0001);
     }
 
     @Test
@@ -54,8 +58,8 @@ public class AlphaUnitizedAgreementTest
         // The expected value differs from the value
         // of Krippendorf's paper because there
         // all values are rounded to 4 decimal places
-        assertEquals(0.7285, alphaForKrippendorfStudy.estimateCategoryAgreement("c"), 0.0001);
-        assertEquals(1.0, alphaForKrippendorfStudy.estimateCategoryAgreement("k"), 0.0001);
+        assertEquals(0.7285, this.alphaForKrippendorfStudy.estimateCategoryAgreement("c"), 0.0001);
+        assertEquals(1.0, this.alphaForKrippendorfStudy.estimateCategoryAgreement("k"), 0.0001);
     }
 
     @Test
@@ -64,7 +68,20 @@ public class AlphaUnitizedAgreementTest
         // The expected value differs from the value
         // of Krippendorf's paper because there
         // all values are rounded to 4 decimal places
-        assertEquals(0.8587, alphaForKrippendorfStudy.estimateJointAgreement(), 0.0001);
+        assertEquals(0.8587, this.alphaForKrippendorfStudy.estimateJointAgreement(), 0.0001);
 
+    }
+
+    @Test
+    public void testOnlyOneAnnotation()
+    {
+        final UnitizingStudy study = new UnitizingStudy(3);
+        study.addSection("X", 0, 1, 1);
+        study.setContinuumLength(20);
+        study.close();
+
+        final AlphaUnitizedAgreement agreement = new AlphaUnitizedAgreement(study);
+
+        assertTrue(agreement.estimateJointAgreement() < 1.0);
     }
 }
