@@ -17,13 +17,10 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.statistics.unitizing;
 
-import java.util.Collection;
-import java.util.List;
-
 import de.tudarmstadt.ukp.dkpro.statistics.unitizing.UnitizingStudy.Section;
 
 /**
- * Calculates the unitized alpha coefficient described in Krippendorf
+ * Calculates the unitized alpha coefficient described in Krippendorff
  * (2004) "Measuring the Reliability of Qualitative Text Analysis Data" 
  * The agreement can either be calculated for a certain category or 
  * for all categories. The coefficient can be used for two or more coders.
@@ -44,10 +41,7 @@ public class AlphaUnitizedAgreement
      */
     public AlphaUnitizedAgreement(final UnitizingStudy study)
     {
-        if (!study.isClosed()) {
-            throw new IllegalArgumentException(
-                    "The study needs to be closed before further processing!");
-        }
+        this.validateThatStudyIsClosed(study);
 
         this.study = study;
     }
@@ -59,7 +53,7 @@ public class AlphaUnitizedAgreement
      */
     public double estimateCategoryAgreement(final String category)
     {
-        return 1 - (getObservedDisagreement(category) / getExpectedDisagreement(category));
+        return 1 - (this.getObservedDisagreement(category) / this.getExpectedDisagreement(category));
     }
 
     /**
@@ -68,12 +62,11 @@ public class AlphaUnitizedAgreement
      */
     public double estimateJointAgreement()
     {
-        final Collection<String> categories = study.getCategories();
         double enumerator = 0.0;
         double denominator = 0.0;
-        for (final String category : categories) {
-            enumerator = enumerator + getObservedDisagreement(category);
-            denominator = denominator + getExpectedDisagreement(category);
+        for (final String category : this.study.getCategories()) {
+            enumerator = enumerator + this.getObservedDisagreement(category);
+            denominator = denominator + this.getExpectedDisagreement(category);
         }
 
         return 1 - (enumerator / denominator);
@@ -87,24 +80,21 @@ public class AlphaUnitizedAgreement
     public double getObservedDisagreement(final String category)
     {
         double sum = 0.0;
-        for (int i = 0; i < study.getAnnotatorCount(); i++) {
-            for (int g = 0; g < study.getSections(category, i).size(); g++) {
-                for (int j = 0; j < study.getAnnotatorCount(); j++) {
-                    if (j != i) {
-                        for (int h = 0; h < study.getSections(category, j).size(); h++) {
-                            final Section u = study.getSection(category, i, g);
-                            final Section v = study.getSection(category, j, h);
+        for (final int annotator1 : this.study.getAnnotators()) {
+            for (final Section sectionByAnnotator1 : this.study.getSections(category, annotator1)) {
+                for (final int annotator2 : this.study.getAnnotators()) {
+                    if (annotator2 != annotator1) {
+                        for (final Section sectionByAnnotator2 : this.study.getSections(category,
+                                annotator2)) {
 
-                            sum = sum + delta(u, v);
+                            sum = sum + this.delta(sectionByAnnotator1, sectionByAnnotator2);
                         }
                     }
                 }
             }
         }
 
-        return sum
-                / (study.getAnnotatorCount() * (study.getAnnotatorCount() - 1) * Math.pow(
-                        study.getContinuumLength(), 2));
+        return sum / this.determineNormalizationTermForObservedDisagreement();
     }
 
     /**
@@ -114,63 +104,18 @@ public class AlphaUnitizedAgreement
      */
     public double getExpectedDisagreement(final String category)
     {
-        // calculate number of units of category c
-        final int nc = study.getNumAnnotatedSections(category);
-
-        // calculate enumerator
-        double enumerator = 0.0;
-        for (int i = 0; i < study.getAnnotatorCount(); i++) {
-
-            final List<Section> outerSections = study.getSections(category, i);
-            for (int g = 0; g < outerSections.size(); g++) {
-
-                final Section cig = outerSections.get(g);
-                if (cig.isAnnotated()) {
-                    double tmp = ((nc - 1.0) / 3)
-                            * (2 * Math.pow(cig.l, 3) - 3 * Math.pow(cig.l, 2) + cig.l);
-
-                    double tmp2 = 0.0;
-                    for (int j = 0; j < study.getAnnotatorCount(); j++) {
-
-                        final List<Section> innerSections = study.getSections(category, j);
-                        for (int h = 0; h < innerSections.size(); h++) {
-                            final Section cjh = innerSections.get(h);
-                            if (cjh.isGap() && cjh.l >= cig.l) {
-                                tmp2 += cjh.l - cig.l + 1;
-                            }
-                        }
-
-                    }
-
-                    tmp2 *= Math.pow(cig.l, 2);
-                    tmp += tmp2;
-                    enumerator = enumerator + tmp;
-                }
-            }
-        }
-
-        enumerator = enumerator * (2.0 / study.getContinuumLength());
-
-        // calculate denominator
-        double denominator = 0.0;
-        denominator = ((double)study.getAnnotatorCount() * (double)study.getContinuumLength())
-                * ((double)study.getAnnotatorCount() * (double)study.getContinuumLength() - 1);
-        double tmp = 0.0;
-        for (int i = 0; i < study.getAnnotatorCount(); i++) {
-            final List<Section> sections = study.getSections(category, i);
-            for (int g = 0; g < sections.size(); g++) {
-
-                final Section cig = sections.get(g);
-                if (cig.isAnnotated()) {
-                    tmp += cig.l * (cig.l - 1);
-                }
-
-            }
-        }
-
-        denominator = denominator - tmp;
+        final double enumerator = this.calculateEnumeratorForExpectedDisagreement(category);
+        final double denominator = this.calculateDenominatorForExpectedDisagreement(category);
 
         return enumerator / denominator;
+    }
+
+    private void validateThatStudyIsClosed(final UnitizingStudy study)
+    {
+        if (!study.isClosed()) {
+            throw new IllegalArgumentException(
+                    "The study needs to be closed before further processing!");
+        }
     }
 
     /**
@@ -186,21 +131,89 @@ public class AlphaUnitizedAgreement
             return -1;
         }
 
-        final int beginOffset = u.b - v.b;
+        final int diffOfBeginIndices = u.begin - v.begin;
 
-        if (u.v == 1 && v.v == 1 && (-u.l) < beginOffset && beginOffset < v.l) {
-            return Math.pow(beginOffset, 2) + Math.pow((u.b + u.l - v.b - v.l), 2);
+        if (u.isAnnotated == 1 && v.isAnnotated == 1 && (-u.length) < diffOfBeginIndices
+                && diffOfBeginIndices < v.length) {
+            return Math.pow(diffOfBeginIndices, 2) + Math.pow((u.getEnd() - v.getEnd()), 2);
         }
 
-        if (u.v == 1 && v.v == 0 && (v.l - u.l) >= beginOffset && beginOffset >= 0) {
-            return Math.pow(u.l, 2);
+        if (u.isAnnotated == 1 && v.isAnnotated == 0 && (v.length - u.length) >= diffOfBeginIndices
+                && diffOfBeginIndices >= 0) {
+            return Math.pow(u.length, 2);
         }
 
-        if (u.v == 0 && v.v == 1 && (v.l - u.l) <= beginOffset && beginOffset <= 0) {
-            return Math.pow(v.l, 2);
+        if (u.isAnnotated == 0 && v.isAnnotated == 1 && (v.length - u.length) <= diffOfBeginIndices
+                && diffOfBeginIndices <= 0) {
+            return Math.pow(v.length, 2);
         }
 
         return 0;
+    }
+
+    private double determineNormalizationTermForObservedDisagreement()
+    {
+        return this.study.getAnnotatorCount() * (this.study.getAnnotatorCount() - 1)
+                * Math.pow(this.study.getContinuumLength(), 2);
+    }
+
+    private double calculateEnumeratorForExpectedDisagreement(final String category)
+    {
+        final int numberOfSectionsForCategory = this.study.getNumberOfAnnotatedSections(category);
+
+        double enumerator = 0.0;
+        for (final int annotator1 : this.study.getAnnotators()) {
+
+            for (final Section sectionByAnnotator1 : this.study.getSections(category, annotator1)) {
+
+                if (sectionByAnnotator1.isAnnotated()) {
+
+                    final double tmp1 = ((numberOfSectionsForCategory - 1.0) / 3)
+                            * (2 * Math.pow(sectionByAnnotator1.length, 3) - 3
+                                    * Math.pow(sectionByAnnotator1.length, 2) + sectionByAnnotator1.length);
+
+                    double tmp2 = 0.0;
+                    for (final int annotator2 : this.study.getAnnotators()) {
+
+                        for (final Section sectionByAnnotator2 : this.study.getSections(category,
+                                annotator2)) {
+                            if (sectionByAnnotator2.isGap()
+                                    && sectionByAnnotator2.length >= sectionByAnnotator1.length) {
+                                tmp2 += sectionByAnnotator2.length - sectionByAnnotator1.length + 1;
+                            }
+                        }
+
+                    }
+
+                    tmp2 *= Math.pow(sectionByAnnotator1.length, 2);
+                    enumerator += tmp1 + tmp2;
+                }
+            }
+        }
+
+        enumerator = enumerator * (2.0 / this.study.getContinuumLength());
+
+        return enumerator;
+    }
+
+    private double calculateDenominatorForExpectedDisagreement(final String category)
+    {
+        double denominator = 0.0;
+        final double annoCount = this.study.getAnnotatorCount();
+        denominator = 1.0 * (annoCount * this.study.getContinuumLength())
+                * (annoCount * this.study.getContinuumLength() - 1);
+
+        for (final int annotator1 : this.study.getAnnotators()) {
+            for (final Section section : this.study.getSections(category, annotator1)) {
+
+                if (section.isAnnotated()) {
+                    denominator -= section.length * (section.length - 1);
+                }
+
+            }
+        }
+
+        return denominator;
     }
 
 }

@@ -23,14 +23,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * This class holds units/section of several annotators and additional
- * information that is needed for calculating the agreement. Each 
- * annotation is stored as an Unit-Object. The class provides different
- * methods for accessing certain units of interest.   
+ * A unitized annotation study holds free-span annotations by several annotators for several categories. 
+ * Each annotation is stored as so-called section.   
  * 
  * <p>
  * <b>Note</b>: Before using the study, needs to be 'closed' using {@link UnitizingStudy#close()}
@@ -46,33 +43,27 @@ import java.util.Set;
 public class UnitizingStudy
 {
 
-    /**
-     * The start index of the continuum
-     */
     private int continuumStart;
-
-    /** 
-     * Length of the continuum
-     */
     private int contiuumLength;
 
     private boolean isClosed;
 
-    private int annotatorCount;
-
     private Set<String> categories;
     private Map<AnnotatorAndCategory, List<Section>> annotatorAndCategoryToSections;
 
+    private List<Integer> annotators;
+
     /**
      * Basic constructor
-     * @param annotators number of annotators
+     * @param annotatorCount number of annotators
      */
-    public UnitizingStudy(final int annotators)
+    public UnitizingStudy(final int annotatorCount)
     {
         this.contiuumLength = 0;
         this.continuumStart = 0;
         this.isClosed = false;
-        this.annotatorCount = annotators;
+        this.createAnnotatorsList(annotatorCount);
+
         this.categories = new HashSet<String>();
         this.annotatorAndCategoryToSections = new HashMap<AnnotatorAndCategory, List<Section>>();
     }
@@ -84,43 +75,10 @@ public class UnitizingStudy
      */
     public void close()
     {
-        final int continuumStart = this.getContinuumStart();
-        final int continuumEnd = this.getContinuumEnd();
-        final int continuumLength = this.getContinuumLength();
-
-        for (final Entry<AnnotatorAndCategory, List<Section>> entry : this.annotatorAndCategoryToSections
-                .entrySet()) {
-            final int annotator = entry.getKey().getAnnotator();
-            final String category = entry.getKey().getCategory();
-            final List<Section> sections = entry.getValue();
-
-            if (!sections.isEmpty()) {
-
-                final Section lastSection = sections.get(sections.size() - 1);
-
-                // Check whether the last section exceeds the contiuum length
-                final int endOfLastSection = lastSection.getEnd();
-                if (endOfLastSection > continuumEnd) {
-                    throw new IllegalStateException(
-                            String.format(
-                                    "The last section for annotator %d and category %s ends at %d and exceeds the continuum's end at %d",
-                                    annotator, category, endOfLastSection, continuumEnd));
-                }
-
-                // If there is a gap between the last section and the end of the continuum, fill it
-                if (endOfLastSection < continuumEnd) {
-                    final int finalGapLength = continuumEnd - endOfLastSection;
-                    final Section finalGap = Section.createGap(category, annotator,
-                            endOfLastSection, finalGapLength);
-                    sections.add(finalGap);
-                }
+        for (final int annotator : this.getAnnotators()) {
+            for (final String category : this.getCategories()) {
+                this.closeForAnnotatorAndCategory(annotator, category);
             }
-            else {
-                final Section finalGap = Section.createGap(category, annotator, continuumStart,
-                        continuumLength);
-                sections.add(finalGap);
-            }
-
         }
 
         this.isClosed = true;
@@ -137,26 +95,6 @@ public class UnitizingStudy
     }
 
     /**
-     * Method for adding section to the study. Note that the sections
-     * have to be ordered with respect to their occurrence
-     * @param category category of the section
-     * @param annotator the annotator of the unit
-     * @param b the start unit of the section
-     * @param l the length of the section
-     * @param v indicates if the section is a gap (v=0) or a unit (v=1)
-     * 
-     * @deprecated Use {@link UnitizingStudy#addSection(String, int, int, int)}, which does not require the 'v' flag
-     */
-    @Deprecated
-    public void addSection(final String category, final int annotator, final int b, final int l,
-            final int v)
-    {
-        final Section section = new Section(category, annotator, b, l, v);
-        this.categories.add(category);
-        getSections(category, annotator).add(section);
-    }
-
-    /**
      * Method for adding section to the study. 
      * 
      * <b>Note</b> that the sections
@@ -165,14 +103,18 @@ public class UnitizingStudy
      * @param category category of the section
      * @param annotator the annotator of the unit
      * @param begin the start unit of the section
-     * @param l the length of the section
+     * @param length the length of the section
      * 
      */
-    public void addSection(final String category, final int annotator, final int begin, final int l)
+    public void addSection(final String category, final int annotator, final int begin,
+            final int length)
     {
-        checkBeginIndex(begin);
+        this.validateBeginIndex(begin);
 
-        final List<Section> sections = getSections(category, annotator);
+        final Section newSection = new Section(category, annotator, begin, length,
+                Section.ANNOTATED);
+
+        final List<Section> sections = this.getSections(category, annotator);
         if (sections.isEmpty()) {
             if (begin != 0) {
                 final int gapLength = begin - this.continuumStart;
@@ -183,26 +125,15 @@ public class UnitizingStudy
         else {
             final Section lastSection = sections.get(sections.size() - 1);
             final int endOfLastSection = lastSection.getBegin() + lastSection.getLength();
-            if (begin > endOfLastSection) {
+            if (newSection.begin > endOfLastSection) {
                 final int gapLength = begin - endOfLastSection;
                 sections.add(new Section(category, annotator, endOfLastSection, gapLength,
                         Section.GAP));
             }
         }
 
-        final Section annotatedSection = new Section(category, annotator, begin, l,
-                Section.ANNOTATED);
         this.categories.add(category);
-        sections.add(annotatedSection);
-    }
-
-    private void checkBeginIndex(final int b)
-    {
-        if (b < this.continuumStart) {
-            throw new IllegalStateException(String.format(
-                    "Begin index %d is before the beginning of the continuum at %d", b,
-                    this.continuumStart));
-        }
+        sections.add(newSection);
     }
 
     /**
@@ -214,7 +145,7 @@ public class UnitizingStudy
      */
     public Section getSection(final String category, final int annotator, final int section)
     {
-        return getSections(category, annotator).get(section);
+        return this.getSections(category, annotator).get(section);
     }
 
     /**
@@ -235,41 +166,24 @@ public class UnitizingStudy
     }
 
     /**
+     * Returns the number of sections for the given annotator and category
+     * @param annotator
+     * @param category
+     * 
+     * @return the number of annotated sections
+     */
+    public int getNumberOfSections(final int annotator, final String category)
+    {
+        return this.getSections(category, annotator).size();
+    }
+
+    /**
      * Returns a list of all categories included in the given study
      * @return list of all categories
      */
     public Collection<String> getCategories()
     {
         return this.categories;
-    }
-
-    /**
-     * Returns all annotator indices
-     * 
-     * @return all annotator indices
-     * 
-     */
-    public Collection<Integer> getAnnotators()
-    {
-        final List<Integer> result = new ArrayList<Integer>();
-        for (int i = 0; i < this.annotatorCount; ++i) {
-            result.add(i);
-        }
-        return result;
-    }
-
-    public int getNumAnnotatedSections(final String category)
-    {
-        int nc = 0;
-        for (int annotator = 0; annotator < this.getAnnotatorCount(); annotator++) {
-            final List<Section> sections = this.getSections(category, annotator);
-            for (int s = 0; s < sections.size(); s++) {
-                if (sections.get(s).isAnnotated()) {
-                    ++nc;
-                }
-            }
-        }
-        return nc;
     }
 
     /**
@@ -280,45 +194,48 @@ public class UnitizingStudy
      */
     public int getAnnotatorCount()
     {
-        return this.annotatorCount;
+        return this.annotators.size();
     }
 
     /**
-     * Returns the length of the continuum.
+     * Returns all annotator indices
      * 
-     * @return the length
+     * @return all annotator indices
      * 
-     * @deprecated Use {@link UnitizingStudy#getContinuumLength}
      */
-    @Deprecated
-    public int getL()
+    public Collection<Integer> getAnnotators()
     {
-        return contiuumLength;
+        return this.annotators;
+    }
+
+    /**
+     * Returns the number of annotated sections for this category
+     * @param category
+     * @return
+     */
+    public int getNumberOfAnnotatedSections(final String category)
+    {
+        int count = 0;
+        for (final int annotator : this.getAnnotators()) {
+
+            for (final Section section : this.getSections(category, annotator)) {
+                if (section.isAnnotated()) {
+                    ++count;
+                }
+            }
+
+        }
+        return count;
     }
 
     /**
      * Returns the length of the continuum.
-     * 
-     * Zero by default.
      * 
      * @return the length of the continuum
      */
     public int getContinuumLength()
     {
         return this.contiuumLength;
-    }
-
-    /**
-     * Set the length of the continuum
-     * 
-     * @param l the length
-     * 
-     * @deprecated Use {@link UnitizingStudy#setContinuumLength}
-     */
-    @Deprecated
-    public void setL(final int l)
-    {
-        this.contiuumLength = l;
     }
 
     /**
@@ -358,7 +275,115 @@ public class UnitizingStudy
      */
     public int getContinuumEnd()
     {
-        return this.getContinuumLength() + this.continuumStart;
+        return this.getContinuumLength() + this.getContinuumStart();
+    }
+
+    /**
+     * Method for adding section to the study. Note that the sections
+     * have to be ordered with respect to their occurrence
+     * @param category category of the section
+     * @param annotator the annotator of the unit
+     * @param b the start unit of the section
+     * @param l the length of the section
+     * @param v indicates if the section is a gap (v=0) or a unit (v=1)
+     * 
+     * @deprecated Use {@link UnitizingStudy#addSection(String, int, int, int)}, which does not require the 'v' flag
+     */
+    @Deprecated
+    public void addSection(final String category, final int annotator, final int b, final int l,
+            final int v)
+    {
+        final Section section = new Section(category, annotator, b, l, v);
+        this.categories.add(category);
+        this.getSections(category, annotator).add(section);
+    }
+
+    /**
+     * Returns the length of the continuum.
+     * 
+     * @return the length
+     * 
+     * @deprecated Use {@link UnitizingStudy#getContinuumLength}. This methods will be removed in future versions.
+     */
+    @Deprecated
+    public int getL()
+    {
+        return this.contiuumLength;
+    }
+
+    /**
+     * Set the length of the continuum
+     * 
+     * @param l the length
+     * 
+     * @deprecated Use {@link UnitizingStudy#setContinuumLength}. This methods will be removed in future versions.
+     */
+    @Deprecated
+    public void setL(final int l)
+    {
+        this.contiuumLength = l;
+    }
+
+    private void createAnnotatorsList(final int annotatorCount)
+    {
+        this.annotators = new ArrayList<Integer>();
+        for (int a = 0; a < annotatorCount; ++a) {
+            this.annotators.add(a);
+        }
+    }
+
+    private void validateBeginIndex(final int beginIndex)
+    {
+        if (beginIndex < this.continuumStart) {
+            throw new IllegalStateException(String.format(
+                    "Begin index %d is before the beginning of the continuum at %d", beginIndex,
+                    this.continuumStart));
+        }
+    }
+
+    private void closeForAnnotatorAndCategory(final int annotator, final String category)
+    {
+
+        final int continuumStart = this.getContinuumStart();
+        final int continuumEnd = this.getContinuumEnd();
+        final int continuumLength = this.getContinuumLength();
+
+        final List<Section> sections = this.getSections(category, annotator);
+
+        if (!sections.isEmpty()) {
+
+            final Section lastSection = sections.get(sections.size() - 1);
+
+            this.validateThatSectionDoesNotExceedContinuum(lastSection, continuumEnd);
+
+            // If there is a gap between the last section and the end of the continuum, fill
+            // it
+            final int endOfLastSection = lastSection.getEnd();
+            if (endOfLastSection < continuumEnd) {
+                final int finalGapLength = continuumEnd - endOfLastSection;
+                final Section finalGap = Section.createGap(category, annotator, endOfLastSection,
+                        finalGapLength);
+                sections.add(finalGap);
+            }
+        }
+        else {
+            final Section finalGap = Section.createGap(category, annotator, continuumStart,
+                    continuumLength);
+            sections.add(finalGap);
+        }
+
+    }
+
+    private void validateThatSectionDoesNotExceedContinuum(final Section lastSection,
+            final int continuumEnd)
+    {
+        if (lastSection.getEnd() > continuumEnd) {
+            throw new IllegalStateException(
+                    String.format(
+                            "The last section for annotator %d and category %s ends at %d and exceeds the continuum's end at %d",
+                            lastSection.annotator, lastSection.category, lastSection.getEnd(),
+                            continuumEnd));
+        }
     }
 
     /**
@@ -392,8 +417,8 @@ public class UnitizingStudy
         {
             final int prime = 31;
             int result = 1;
-            result = prime * result + annotator;
-            result = prime * result + ((category == null) ? 0 : category.hashCode());
+            result = prime * result + this.annotator;
+            result = prime * result + ((this.category == null) ? 0 : this.category.hashCode());
             return result;
         }
 
@@ -406,19 +431,19 @@ public class UnitizingStudy
             if (obj == null) {
                 return false;
             }
-            if (getClass() != obj.getClass()) {
+            if (this.getClass() != obj.getClass()) {
                 return false;
             }
             final AnnotatorAndCategory other = (AnnotatorAndCategory) obj;
-            if (annotator != other.annotator) {
+            if (this.annotator != other.annotator) {
                 return false;
             }
-            if (category == null) {
+            if (this.category == null) {
                 if (other.category != null) {
                     return false;
                 }
             }
-            else if (!category.equals(other.category)) {
+            else if (!this.category.equals(other.category)) {
                 return false;
             }
             return true;
@@ -437,9 +462,9 @@ public class UnitizingStudy
 
         public String category;
         public int annotator;
-        public int b;
-        public int l;
-        public int v;
+        public int begin;
+        public int length;
+        public int isAnnotated;
 
         public Section()
         {
@@ -451,9 +476,9 @@ public class UnitizingStudy
         {
             this.category = category;
             this.annotator = annotator;
-            this.b = b;
-            this.l = l;
-            this.v = v;
+            this.begin = b;
+            this.length = l;
+            this.isAnnotated = v;
         }
 
         /**
@@ -464,7 +489,7 @@ public class UnitizingStudy
          */
         public int getBegin()
         {
-            return this.b;
+            return this.begin;
         }
 
         /**
@@ -476,7 +501,7 @@ public class UnitizingStudy
          */
         public int getEnd()
         {
-            return this.b + this.l;
+            return this.begin + this.length;
         }
 
         /**
@@ -486,7 +511,7 @@ public class UnitizingStudy
          */
         public int getLength()
         {
-            return this.l;
+            return this.length;
         }
 
         /**
@@ -496,7 +521,7 @@ public class UnitizingStudy
          */
         public boolean isGap()
         {
-            return GAP == this.v;
+            return GAP == this.isAnnotated;
         }
 
         /**
@@ -506,7 +531,7 @@ public class UnitizingStudy
          */
         public boolean isAnnotated()
         {
-            return ANNOTATED == this.v;
+            return ANNOTATED == this.isAnnotated;
         }
 
         /**
@@ -544,11 +569,11 @@ public class UnitizingStudy
         {
             final int prime = 31;
             int result = 1;
-            result = prime * result + annotator;
-            result = prime * result + b;
-            result = prime * result + ((category == null) ? 0 : category.hashCode());
-            result = prime * result + l;
-            result = prime * result + v;
+            result = prime * result + this.annotator;
+            result = prime * result + this.begin;
+            result = prime * result + ((this.category == null) ? 0 : this.category.hashCode());
+            result = prime * result + this.length;
+            result = prime * result + this.isAnnotated;
             return result;
         }
 
@@ -561,28 +586,28 @@ public class UnitizingStudy
             if (obj == null) {
                 return false;
             }
-            if (getClass() != obj.getClass()) {
+            if (this.getClass() != obj.getClass()) {
                 return false;
             }
             final Section other = (Section) obj;
-            if (annotator != other.annotator) {
+            if (this.annotator != other.annotator) {
                 return false;
             }
-            if (b != other.b) {
+            if (this.begin != other.begin) {
                 return false;
             }
-            if (category == null) {
+            if (this.category == null) {
                 if (other.category != null) {
                     return false;
                 }
             }
-            else if (!category.equals(other.category)) {
+            else if (!this.category.equals(other.category)) {
                 return false;
             }
-            if (l != other.l) {
+            if (this.length != other.length) {
                 return false;
             }
-            if (v != other.v) {
+            if (this.isAnnotated != other.isAnnotated) {
                 return false;
             }
             return true;
@@ -591,8 +616,8 @@ public class UnitizingStudy
         @Override
         public String toString()
         {
-            return "Section [" + (this.v == GAP ? "GAP" : "ANNOTATED") + " cat=" + category
-                    + ", anno=" + annotator + ", b=" + b + ", l=" + l + "]";
+            return "Section [" + (this.isAnnotated == GAP ? "GAP" : "ANNOTATED") + " cat=" + this.category
+                    + ", anno=" + this.annotator + ", b=" + this.begin + ", l=" + this.length + "]";
         }
 
     }
