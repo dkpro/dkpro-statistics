@@ -41,8 +41,8 @@
         <url>http://www.ukp.tu-darmstadt.de/</url>
     </organization>
     <scm>
-		<developerConnection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/de.tudarmstadt.ukp.statistics</developerConnection>
-		<connection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/de.tudarmstadt.ukp.statistics</connection>
+		<developerConnection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/dkpro-statistics</developerConnection>
+		<connection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/dkpro-statistics</connection>
 		<url>http://code.google.com/p/dkpro-statistics/source/browse/</url>
 	</scm>
 	<dependencies>
