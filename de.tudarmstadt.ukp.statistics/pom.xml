@@ -1,5 +1,5 @@
 <!--
-        Copyright 2013
+        Copyright 2014
         Ubiquitous Knowledge Processing (UKP) Lab
         Technische Universität Darmstadt
 
@@ -18,15 +18,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-               <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-                <artifactId>dkpro-parent-pom</artifactId>
-                <version>3</version>
+        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+        <artifactId>dkpro-parent-pom</artifactId>
+        <version>9</version>
 	</parent>
 	<groupId>de.tudarmstadt.ukp.dkpro.statistics</groupId>
-	<artifactId>de.tudarmstadt.ukp.dkpro.statistics</artifactId>
+	<artifactId>dkpro-statistics</artifactId>
 	<version>1.0.3-SNAPSHOT</version>
+    <packaging>pom</packaging>
 	<name>DKPro Statistics</name>
-	<scm>
+    <description>DKPro Statistics is a collection of open-licensed statistical tools, currently including correlation and inter-rater agreement methods.</description>
+    <url>http://code.google.com/p/dkpro-statistics/</url>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <organization>
+        <name>Ubiquitous Knowledge Processing (UKP) Lab</name>
+        <url>http://www.ukp.tu-darmstadt.de/</url>
+    </organization>
+    <scm>
 		<developerConnection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/de.tudarmstadt.ukp.statistics</developerConnection>
 		<connection>scm:svn:https://dkpro-statistics.googlecode.com/svn/trunk/de.tudarmstadt.ukp.statistics</connection>
 		<url>http://code.google.com/p/dkpro-statistics/source/browse/</url>
@@ -38,60 +52,48 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging-api</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-math</artifactId>
-			<version>2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
-		</dependency>
 	</dependencies>
 	<profiles>
-                <profile>
-                        <id>rat-check</id>
-                        <activation>
-                                <file>
-                                        <exists>src/main/java</exists>
-                                </file>
-                        </activation>
-                        <build>
-                                <plugins>
-                                        <plugin>
-                                                <groupId>org.apache.rat</groupId>
-                                                <artifactId>apache-rat-plugin</artifactId>
-                                                <executions>
-                                                        <execution>
-                                                                <id>default</id>
-                                                                <phase>verify</phase>
-                                                                <goals>
-                                                                        <goal>check</goal>
-                                                                </goals>
-                                                                <configuration>
-                                                                        <excludes>
-                                                                                <!-- release generated artifact -->
-                                                                                <exclude>release.properties</exclude>
-                                                                                <exclude>CHANGES</exclude>
-                                                                                <exclude>NOTICE</exclude>
-                                                                                <exclude>README</exclude>
-                                                                                <exclude>src/main/resources/**/*</exclude>
-                                                                                <exclude>src/test/resources/**/*</exclude>
-                                                                        </excludes>
-                                                                </configuration>
-                                                        </execution>
-                                                </executions>
-                                        </plugin>
-                                </plugins>
-                        </build>
-                </profile>
+        <profile>
+            <id>rat-check</id>
+            <activation>
+                <file>
+                    <exists>src/main/java</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.rat</groupId>
+                        <artifactId>apache-rat-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <excludes>
+                                        <!-- release generated artifact -->
+                                        <exclude>release.properties</exclude>
+                                        <exclude>CHANGES</exclude>
+                                        <exclude>NOTICE</exclude>
+                                        <exclude>README</exclude>
+                                        <exclude>src/main/resources/**/*</exclude>
+                                        <exclude>src/test/resources/**/*</exclude>
+                                    </excludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 	</profiles>
-	<url>http://code.google.com/p/dkpro-statistics/</url>
-	<description>DKPro Statistics is a collection of open-licensed statistical tools, currently including correlation and inter-rater agreement methods.</description>
+	<modules>
+		<module>dkpro-statistics-agreement</module>
+		<module>dkpro-statistics-correlation</module>
+		<module>dkpro-statistics-significance</module>
+	</modules>
 </project>
