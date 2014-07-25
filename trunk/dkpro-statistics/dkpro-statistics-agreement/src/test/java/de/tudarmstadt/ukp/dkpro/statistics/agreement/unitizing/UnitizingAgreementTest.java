@@ -22,6 +22,7 @@ import junit.framework.TestCase;
 /**
  * Tests for measuring {@link KrippendorffAlphaUnitizingAgreement}.<br><br>
  * @author Christian M. Meyer
+ * @author Ivan Habernal
  */
 public class UnitizingAgreementTest extends TestCase {
 	
@@ -35,6 +36,23 @@ public class UnitizingAgreementTest extends TestCase {
 		assertEquals(-0.7003, alpha.calculateCategoryAgreement("A"), 0.0001);
 	}
 	
+	/***/
+	public void testSingleAnnotationUnit() {
+		UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 20);
+		study.addUnit(0, 1, 0, "X");
+
+		KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
+		assertEquals(0.0, alpha.calculateAgreement());
+	}
+	
+	/***/
+	public void testEmptyAnnotationSet() {
+		UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 20);
+
+		KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
+		assertTrue(Double.isNaN(alpha.calculateAgreement()));
+	}
+
 	/***/
 	public void testDistanceMetric() {
 		assertEquals(0.0, KrippendorffAlphaUnitizingAgreement.measureDistance(
