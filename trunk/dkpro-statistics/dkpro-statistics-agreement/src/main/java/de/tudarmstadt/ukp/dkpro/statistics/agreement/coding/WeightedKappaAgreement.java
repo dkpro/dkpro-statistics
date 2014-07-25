@@ -39,7 +39,6 @@ import de.tudarmstadt.ukp.dkpro.statistics.agreement.distance.IDistanceFunction;
  *   Linguistics. Computational Linguistics 34(4):555-596, 
  *   Cambridge, MA: The MIT Press, 2008.</ul>
  * @author Christian M. Meyer
- * @date 04.11.2009
  */
 public class WeightedKappaAgreement extends WeightedAgreement
 		implements IChanceCorrectedDisagreement {

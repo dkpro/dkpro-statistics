@@ -56,10 +56,10 @@ public class CohenKappaAgreement extends CodingAgreementMeasure
 		Map<Object, int[]> annotationsPerCategory 
 				= CodingAnnotationStudy.countAnnotationsPerCategory(study);
 		
-		BigDecimal result = new BigDecimal(0.0);
+		BigDecimal result = new BigDecimal(0);
 		for (Object category : study.getCategories()) {
 			int[] annotations = annotationsPerCategory.get(category);
-			BigDecimal prod = new BigDecimal(1.0);
+			BigDecimal prod = new BigDecimal(1);
 			for (int rater = 0; rater < study.getRaterCount(); rater++)
 				prod = prod.multiply(new BigDecimal(annotations[rater]));
 			result = result.add(prod);
@@ -72,7 +72,7 @@ public class CohenKappaAgreement extends CodingAgreementMeasure
 		Map<Object, int[]> annotationsPerCategory 
 				= CodingAnnotationStudy.countAnnotationsPerCategory(study);
 
-		BigDecimal result = new BigDecimal(0.0);
+		BigDecimal result = new BigDecimal(0);
 		for (Object category : study.getCategories()) {
 			int[] annotations = annotationsPerCategory.get(category);
 			int min = -1;

@@ -41,7 +41,7 @@ import de.tudarmstadt.ukp.dkpro.statistics.agreement.IAnnotationUnit;
  * @author Christian M. Meyer  
  */
 public class CodingAnnotationStudy extends AnnotationStudy 
-		implements ICodingAnnotationStudy {
+		implements ICodingAnnotationStudy, Cloneable {
 	
 	protected List<ICodingAnnotationItem> items;
 	

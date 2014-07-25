@@ -18,6 +18,7 @@
 package de.tudarmstadt.ukp.dkpro.statistics.agreement.coding;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import de.tudarmstadt.ukp.dkpro.statistics.agreement.DisagreementMeasure;
 import de.tudarmstadt.ukp.dkpro.statistics.agreement.IWeightedAgreement;
@@ -68,17 +69,16 @@ public abstract class WeightedAgreement extends DisagreementMeasure
 			Map<Object, Integer> annotationsPerCategory 
 					= CodingAnnotationStudy.countTotalAnnotationsPerCategory(item);
 						
-			for (Object category1 : annotationsPerCategory.keySet())
-				for (Object category2 : annotationsPerCategory.keySet()) {
-					Integer cat1Count = annotationsPerCategory.get(category1);
-					if (cat1Count == null)
+			for (Entry<Object, Integer> category1 : annotationsPerCategory.entrySet())
+				for (Entry<Object, Integer> category2 : annotationsPerCategory.entrySet()) {
+					if (category1.getValue() == null)
 						continue;
-					Integer cat2Count = annotationsPerCategory.get(category2);
-					if (cat2Count == null)
+					if (category2.getValue() == null)
 						continue;
 					
-					result += cat1Count * cat2Count 
-							* distanceFunction.measureDistance(study, category1, category2);
+					result += category1.getValue() * category2.getValue()
+							* distanceFunction.measureDistance(study, 
+									category1.getKey(), category2.getKey());
 				}
 		}
 
