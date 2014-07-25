@@ -64,6 +64,9 @@ public class UnitizingAnnotationUnit extends AnnotationUnit
 	
 	@Override
 	public int compareTo(final IUnitizingAnnotationUnit that) {
+		if (this.equals(that))
+			return 0;
+		
 		if (this.offset < that.getOffset())
 			return -1;
 		if (this.offset > that.getOffset())
@@ -74,7 +77,22 @@ public class UnitizingAnnotationUnit extends AnnotationUnit
 		if (this.length > that.getLength())
 			return +1;
 		
-		return (this.raterIdx < that.getRaterIdx() ? -1 : +1);
+		if (this.raterIdx < that.getRaterIdx())
+			return -1;
+		if (this.raterIdx > that.getRaterIdx())
+			return +1;
+		
+		return (this.hashCode() < that.hashCode() ? -1 : +1);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 	
 	@Override

@@ -134,7 +134,7 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
 		int R = study.getRaterCount(); 
 		
 		int N_c = 0;
-		BigDecimal squaredLengths = new BigDecimal(0.0);
+		BigDecimal squaredLengths = new BigDecimal(0);
 		for (IUnitizingAnnotationUnit unit : study.getUnits())
 			if (category.equals(unit.getCategory())) {
 				N_c++;
@@ -175,14 +175,14 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
 			}
 		});
 		
-		BigDecimal result = new BigDecimal(0.0);
+		BigDecimal result = new BigDecimal(0);
 		for (IUnitizingAnnotationUnit unit : study.getUnits())
 			if (category.equals(unit.getCategory())) {
 				long length1 = unit.getLength();
 				BigDecimal sum1 = new BigDecimal((N_c - 1.0) 
 						* (2.0 * length1 * length1 * length1 - 3.0 * length1 * length1 + length1)) 
-						.divide(new BigDecimal(3.0), MathContext.DECIMAL128);
-				BigDecimal sum2 = new BigDecimal(0.0);
+						.divide(new BigDecimal(3), MathContext.DECIMAL128);
+				BigDecimal sum2 = new BigDecimal(0);
 				for (Long gap : gaps)
 					if (gap >= length1)
 						sum2 = sum2.add(new BigDecimal(gap - length1 + 1.0));
@@ -191,7 +191,7 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
 				sum2 = sum2.multiply(new BigDecimal(length1 * length1));
 				result = result.add(sum1).add(sum2);
 			}
-		result = result.multiply(new BigDecimal(2.0).divide(new BigDecimal(L), MathContext.DECIMAL128));
+		result = result.multiply(new BigDecimal(2).divide(new BigDecimal(L), MathContext.DECIMAL128));
 		result = result.divide(
 				new BigDecimal(R * L * (R * L - 1)).subtract(squaredLengths),
 				MathContext.DECIMAL128);
