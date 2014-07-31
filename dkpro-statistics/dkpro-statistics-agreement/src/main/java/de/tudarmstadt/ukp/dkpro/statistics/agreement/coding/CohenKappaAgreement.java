@@ -44,6 +44,7 @@ public class CohenKappaAgreement extends CodingAgreementMeasure
 	public CohenKappaAgreement(final ICodingAnnotationStudy study) {
 		super(study);
 		ensureTwoRaters();
+		warnIfMissingValues();
 	}
 
 	/** Calculates the expected inter-rater agreement that assumes a 

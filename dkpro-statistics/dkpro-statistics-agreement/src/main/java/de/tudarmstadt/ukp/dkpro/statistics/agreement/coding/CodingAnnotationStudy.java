@@ -131,7 +131,11 @@ public class CodingAnnotationStudy extends AnnotationStudy
 	
 	@Override
 	public int getUnitCount() {
-		return items.size() * raters.size();
+		int result = 0;
+		for (ICodingAnnotationItem item : items)
+			result += item.getRaterCount();
+		return result;
+		//return items.size() * raters.size();
 	}
 	
 	@Override

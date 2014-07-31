@@ -21,9 +21,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Map;
 
-// Hubert’s κ in this paper. This statistic, which is
-// defined in (4b), has been independently proposed by Conger (1980), and is discussed
-// in Davies and Fleiss (1982), Popping (1983) and Heuvelmans and Sanders (1993).
 /**
  * <li>Conger, A.J.: Integration and generalization of kappas for multiple 
  *   raters. Psychological Bulletin 88(2):322-328, 1980.</li>
@@ -40,6 +37,7 @@ public class HubertKappaAgreement extends CodingAgreementMeasure {
 	 *  should never be null. */
 	public HubertKappaAgreement(final ICodingAnnotationStudy study) {
 		super(study);
+		warnIfMissingValues();
 	}
 
 	/** Calculates the expected inter-rater agreement that assumes the same
