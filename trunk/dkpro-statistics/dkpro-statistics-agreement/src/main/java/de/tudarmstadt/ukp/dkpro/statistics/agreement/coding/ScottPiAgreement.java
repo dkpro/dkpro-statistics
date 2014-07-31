@@ -42,6 +42,7 @@ public class ScottPiAgreement extends CodingAgreementMeasure
 	public ScottPiAgreement(final ICodingAnnotationStudy study) {
 		super(study);
 		ensureTwoRaters();
+		warnIfMissingValues();
 	}
 
 	/** Calculates the expected inter-rater agreement that assumes the same

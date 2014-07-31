@@ -51,6 +51,7 @@ public class FleissKappaAgreement extends CodingAgreementMeasure
 	 *  may never be null. */
 	public FleissKappaAgreement(final ICodingAnnotationStudy study) {
 		super(study);
+		warnIfMissingValues();
 	}
 	
 	/** Calculates the expected inter-rater agreement that assumes the same

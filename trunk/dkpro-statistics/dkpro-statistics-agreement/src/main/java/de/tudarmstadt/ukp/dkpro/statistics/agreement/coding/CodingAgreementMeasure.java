@@ -69,5 +69,10 @@ public abstract class CodingAgreementMeasure extends AgreementMeasure
 			throw new IllegalArgumentException("This agreement measure is only "
 					+ "applicable for annotation studies with two raters!");
 	}
-	
+
+	protected void warnIfMissingValues() {
+		if (study.hasMissingValues())
+			System.err.println(getClass().getName() + " does not support dealing with missing values. Consider using, for example, Krippendorff's alpha instead.");
+	}
+
 }
