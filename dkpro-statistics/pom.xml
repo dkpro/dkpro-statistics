@@ -27,7 +27,7 @@
 	<version>1.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 	<name>DKPro Statistics</name>
-    <description>DKPro Statistics is a collection of open-licensed statistical tools, currently including correlation and inter-rater agreement methods.</description>
+    <description>DKPro Statistics is a collection of open-licensed statistical tools, currently including inter-rater agreement, correlation, and significance measures.</description>
     <url>http://code.google.com/p/dkpro-statistics/</url>
     <licenses>
         <license>
@@ -77,9 +77,9 @@
                                     <excludes>
                                         <!-- release generated artifact -->
                                         <exclude>release.properties</exclude>
-                                        <exclude>CHANGES</exclude>
-                                        <exclude>NOTICE</exclude>
-                                        <exclude>README</exclude>
+                                        <exclude>CHANGES.txt</exclude>
+                                        <exclude>NOTICE.txt</exclude>
+                                        <exclude>README.txt</exclude>
                                         <exclude>src/main/resources/**/*</exclude>
                                         <exclude>src/test/resources/**/*</exclude>
                                     </excludes>
