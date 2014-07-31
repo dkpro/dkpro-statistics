@@ -1,0 +1,19 @@
+DKPro Statistics 2.0.0 (31.07.2014)
+* Major revision of the software library.
+* Modified: Converted to Maven multi-module project.
+* Modified: Upgrade to dkpro-parent-pom 9.
+* Modified: Restructured all agreement measures.
+* Added: Unified data model for coding and unitizing tasks.
+* Added: Randolph's kappa.
+* Added: Hubert's kappa.
+* Added: Multiple test cases.
+* Added: Visualization package.
+
+DKPro Statistics 1.0.2 (19.12.2013)
+* Modified: Minor refactoring of Krippendorff's alpha_U.
+
+DKPro Statistics 1.0.1 (10.12.2013)
+* Added: Implementation of Krippendorff's alpha_U.
+
+DKPro Statistics 1.0.0 (14.05.2013)
+* Released project under the Apache License. 
