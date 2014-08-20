@@ -1,3 +1,7 @@
+DKPro Statistics 2.0.1
+- Fixed: Rounding issues with weighted kappa.
+- Modified: Normalize observed and expected disagreement for weighted measures (#7).
+
 DKPro Statistics 2.0.0 (31.07.2014)
 * Major revision of the software library.
 * Modified: Converted to Maven multi-module project.
