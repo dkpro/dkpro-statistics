@@ -121,7 +121,6 @@ public class ArtsteinPoesio2008Test extends TestCase {
 		assertEquals(0.396, kappa.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.8013, kappa.calculateAgreement(), 0.001);
 		
-		// More or less the same results as multi-pi.
 		KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, 
 				new NominalDistanceFunction());
 		assertEquals(0.120, alpha.calculateObservedDisagreement(), 0.001);
@@ -133,16 +132,15 @@ public class ArtsteinPoesio2008Test extends TestCase {
 		assertEquals(0.4879, alpha.calculateExpectedDisagreement(), 0.001);
 		assertEquals(0.8156, alpha.calculateAgreement(), 0.001);
 		
-		// More or less the same results as multi-pi.
 		WeightedKappaAgreement kappaW = new WeightedKappaAgreement(study,
 				new NominalDistanceFunction());
 		assertEquals(0.120, kappaW.calculateObservedDisagreement(), 0.001);
-		assertEquals(0.601, kappaW.calculateExpectedDisagreement(), 0.001);
-		assertEquals(0.800, kappaW.calculateAgreement(), 0.001);		
+		assertEquals(0.604, kappaW.calculateExpectedDisagreement(), 0.001);
+		assertEquals(0.8013, kappaW.calculateAgreement(), 0.001);		
 		
 		kappaW.setDistanceFunction(weightedDistanceFunction);
 		assertEquals(0.090, kappaW.calculateObservedDisagreement(), 0.001);
-		assertEquals(0.49, kappaW.calculateExpectedDisagreement(), 0.01);
+		assertEquals(0.490, kappaW.calculateExpectedDisagreement(), 0.001);
 		assertEquals(0.8163, kappaW.calculateAgreement(), 0.001);
 	} 
 

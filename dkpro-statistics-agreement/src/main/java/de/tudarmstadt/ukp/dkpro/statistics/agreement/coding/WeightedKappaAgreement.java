@@ -17,7 +17,10 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.statistics.agreement.coding;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import de.tudarmstadt.ukp.dkpro.statistics.agreement.IChanceCorrectedDisagreement;
 import de.tudarmstadt.ukp.dkpro.statistics.agreement.distance.IDistanceFunction;
@@ -49,7 +52,43 @@ public class WeightedKappaAgreement extends WeightedAgreement
 			final IDistanceFunction distanceFunction) {
 		super(study);
 		this.distanceFunction = distanceFunction;
-	}	
+	}
+
+	/** Calculates the observed inter-rater agreement for the annotation 
+	 *  study that was passed to the class constructor and the currently
+	 *  assigned distance function.
+	 *  @throws NullPointerException if the study is null.
+	 *  @throws ArithmeticException if the study does not contain any item or
+	 *  	the number of raters is smaller than 2. */
+	public double calculateObservedDisagreement() {
+		ensureDistanceFunction();
+		
+		double result = 0.0;
+		double maxDistance = 1.0;
+		for (ICodingAnnotationItem item : study.getItems()) {
+			Map<Object, Integer> annotationsPerCategory 
+					= CodingAnnotationStudy.countTotalAnnotationsPerCategory(item);
+						
+			for (Entry<Object, Integer> category1 : annotationsPerCategory.entrySet())
+				for (Entry<Object, Integer> category2 : annotationsPerCategory.entrySet()) {
+					if (category1.getValue() == null)
+						continue;
+					if (category2.getValue() == null)
+						continue;
+					
+					double distance = distanceFunction.measureDistance(study, 
+							category1.getKey(), category2.getKey());
+					result += category1.getValue() * category2.getValue()
+							* distance;
+					if (distance > maxDistance)
+						maxDistance = distance;
+				}
+		}
+
+		result /= (double) (maxDistance * study.getItemCount() * study.getRaterCount() 
+				* (study.getRaterCount() - 1));
+		return result;
+	}
 
 	/** Calculates the expected inter-rater agreement using the defined 
 	 *  distance function to infer the assumed probability distribution. 
@@ -59,19 +98,31 @@ public class WeightedKappaAgreement extends WeightedAgreement
 	public double calculateExpectedDisagreement() {
 		ensureDistanceFunction();
 		
-		double result = 0.0;
-		Map<Object, Integer> annotationsPerCategory 
-				= CodingAnnotationStudy.countTotalAnnotationsPerCategory(study);
+		BigDecimal result = new BigDecimal(0);
+		Map<Object, int[]> annotationsPerCategory 
+				= CodingAnnotationStudy.countAnnotationsPerCategory(study);
 		
+		double maxDistance = 1.0;
 		for (Object category1 : study.getCategories())
-			for (Object category2 : study.getCategories())
-				result += annotationsPerCategory.get(category1)
-						* annotationsPerCategory.get(category2)
-						* distanceFunction.measureDistance(study, category1, category2);
-			
-		result /= (double) (study.getItemCount() * study.getRaterCount() 
-				* (study.getItemCount() * study.getRaterCount() - 1));
-		return result;
+			for (Object category2 : study.getCategories()) {
+				int[] annotationCounts1 = annotationsPerCategory.get(category1);
+				int[] annotationCounts2 = annotationsPerCategory.get(category2);
+				for (int m = 0; m < study.getRaterCount(); m++)
+					for (int n = m + 1; n < study.getRaterCount(); n++) {
+						double distance = distanceFunction.measureDistance(study, category1, category2);
+						result = result.add(
+								new BigDecimal(annotationCounts1[m]).multiply(
+								new BigDecimal(annotationCounts2[n]).multiply(
+								new BigDecimal(distance)
+								)));
+						if (distance > maxDistance)
+							maxDistance = distance;
+					}
+			}
+		
+		result = result.divide(new BigDecimal(study.getItemCount()).pow(2).multiply(
+				new BigDecimal(maxDistance)), MathContext.DECIMAL128);
+		return result.doubleValue();
 	}
 	
 }

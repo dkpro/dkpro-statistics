@@ -55,38 +55,6 @@ public abstract class WeightedAgreement extends DisagreementMeasure
 		this.distanceFunction = distanceFunction;
 	}
 
-	/** Calculates the observed inter-rater agreement for the annotation 
-	 *  study that was passed to the class constructor and the currently
-	 *  assigned distance function.
-	 *  @throws NullPointerException if the study is null.
-	 *  @throws ArithmeticException if the study does not contain any item or
-	 *  	the number of raters is smaller than 2. */
-	public double calculateObservedDisagreement() {
-		ensureDistanceFunction();
-		
-		double result = 0.0;
-		for (ICodingAnnotationItem item : study.getItems()) {
-			Map<Object, Integer> annotationsPerCategory 
-					= CodingAnnotationStudy.countTotalAnnotationsPerCategory(item);
-						
-			for (Entry<Object, Integer> category1 : annotationsPerCategory.entrySet())
-				for (Entry<Object, Integer> category2 : annotationsPerCategory.entrySet()) {
-					if (category1.getValue() == null)
-						continue;
-					if (category2.getValue() == null)
-						continue;
-					
-					result += category1.getValue() * category2.getValue()
-							* distanceFunction.measureDistance(study, 
-									category1.getKey(), category2.getKey());
-				}
-		}
-
-		result /= (double) (study.getItemCount() * study.getRaterCount() 
-				* (study.getRaterCount() - 1));
-		return result;
-	}
-
 	protected void ensureDistanceFunction() {
 		if (distanceFunction == null)
 			throw new NullPointerException("No distance function provided. "
