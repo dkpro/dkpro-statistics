@@ -20,8 +20,7 @@ package de.tudarmstadt.ukp.dkpro.statistics.significance;
 import java.util.List;
 
 import org.apache.commons.math.MathException;
-import org.apache.commons.math.distribution.NormalDistribution;
-import org.apache.commons.math.distribution.NormalDistributionImpl;
+import org.apache.commons.math.special.Erf;
 import org.apache.commons.math.stat.inference.TestUtils;
 
 
@@ -34,7 +33,10 @@ public class Significance {
 
     /** 
      * Tests two correlation values for equality.
-     * http://www.lesn.appstate.edu/olson/stat_directory/Statistical%20procedures/Correlations/a_test_of_the_equivalence_of_two.htm
+     * See page 745
+     * Press, W. H. (2007).
+     * Numerical Recipes 3rd Edition: The Art of Scientific Computing.
+     * Cambridge University Press.
      * 
      * Null-Hypothesis: Both samples of pairs show the same correlation strength, i.e., r1 = r2.
      * 
@@ -49,13 +51,11 @@ public class Significance {
      * The two correlation coefficients are transformed with the Fisher Z-transformation:
      * Zf = 1/2 * ln( (1+r) / (1-r) )
      *  
-     * The difference
-     * z = (Zf1 - Zf2) / SQRT( 1/(N1-3) + 1/(N2-3) )
+     * The difference is
+     * z = (Zf1 - Zf2) / ( SQRT( 2 ) * SQRT( 1/(N1-3) + 1/(N2-3) ) )
      * 
-     * is approximately Standard Normal distributed.
-     * 
-     * So the p-value is
-     * pv = 2 * (1 - pnorm(abs(z)))
+     * p-value is computed using the complementary error function
+     * p = 2 * (1 - pnorm(abs(z)))
      * 
      * Uses:
      *  - for testing whether to correlations differ significantly
@@ -93,7 +93,7 @@ public class Significance {
     public static double getSignificance(double[] sample1, double[] sample2) throws IllegalArgumentException, MathException {
         double alpha = TestUtils.pairedTTest(sample1, sample2);
         boolean significance = TestUtils.pairedTTest(sample1, sample2, .30);
-System.err.println("sig: " + significance);
+        System.err.println("sig: " + significance);
         return alpha;
     }
     
@@ -131,27 +131,14 @@ System.err.println("sig: " + significance);
     public static double getSignificance(double correlation1, double correlation2, int n1, int n2) throws MathException {
         
         // transform to Fisher Z-values
-        double zv1 = getZValue(correlation1);
-        double zv2 = getZValue(correlation2);
+        double zv1 = FisherZTransformation.transform(correlation1);
+        double zv2 = FisherZTransformation.transform(correlation2);
 
         // difference of the Z-values
-        double zDifference = (zv1 - zv2) / Math.sqrt( (double)1/(n1-3) + (double)1/(n2-3));
+        double zDifference = (zv1 - zv2) / Math.sqrt(2d) / Math.sqrt( (double)1/(n1-3) + (double)1/(n2-3));
         
-        // get p value from the normal distribution
-        NormalDistribution normal = new NormalDistributionImpl();
-        double p = 2 * (1 - normal.cumulativeProbability( Math.abs(zDifference)));
+        // get p value from the complementary error function
+        double p = Erf.erfc( Math.abs(zDifference));
         return p;
     }
-    
-    
-    /**
-     * zf = 1/2 * ln( (1+r) / (1-r) )
-     * 
-     * @param correlation
-     * @return The Fisher Z-value for the given correlation
-     */
-    private static double getZValue(double correlation) {
-        double zf = 0.5 * Math.log( (1 + correlation) / (1 - correlation));
-        return zf;
-    }    
 }
