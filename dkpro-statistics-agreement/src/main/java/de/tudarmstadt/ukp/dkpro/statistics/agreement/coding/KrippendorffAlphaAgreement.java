@@ -118,7 +118,6 @@ public class KrippendorffAlphaAgreement extends WeightedAgreement
 			}		
 		D_O /= n;
 		
-//		double n = 0.0;
 		if (coincidenceMatrix == null)
 			coincidenceMatrix = CodingAnnotationStudy.countCategoryCoincidence(study);
 		n = 0.0;
@@ -138,10 +137,6 @@ public class KrippendorffAlphaAgreement extends WeightedAgreement
 						* distanceFunction.measureDistance(study, cat1.getKey(), cat2.getKey());
 		D_E /= n * (n - 1.0);*/
 		double D_E = calculateExpectedDisagreement();
-		
-		System.out.println(D_O);
-		System.out.println(D_E);
-		
 		if (D_E == 0.0)
 			return 1.0;
 		else		

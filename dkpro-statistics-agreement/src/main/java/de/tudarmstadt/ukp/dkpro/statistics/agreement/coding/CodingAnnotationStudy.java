@@ -77,7 +77,9 @@ public class CodingAnnotationStudy extends AnnotationStudy
 	 *  indicates an annotation item which has been coded as category "A"
 	 *  by rater 0 and 3 and as category "B" by rater 1. Rater 2 did not
 	 *  assign any category to the item. The method is a shorthand for 
-	 *  {@link #addItemAsArray(Object[])}. */
+	 *  {@link #addItemAsArray(Object[])}.
+	 *  @throws IllegalArgumentException if the number of annotations does
+	 *      not match the number of raters. */
 	public ICodingAnnotationItem addItem(final Object... annotations) {
 		return addItemAsArray(annotations);
 	}
@@ -88,8 +90,16 @@ public class CodingAnnotationStudy extends AnnotationStudy
 	 *  annotations, Invoking <code>addItem(new Object[]{"A", "B", null, 
 	 *  "A"})</code> indicates an annotation item which has been coded as 
 	 *  category "A" by rater 0 and 3 and as category "B" by rater 1. Rater 2 
-	 *  did not assign any category to the item. */
+	 *  did not assign any category to the item.
+	 *  @throws IllegalArgumentException if the number of annotations does
+	 *      not match the number of raters. */
 	public ICodingAnnotationItem addItemAsArray(final Object[] annotations) {
+		if (annotations.length != raters.size())
+			throw new IllegalArgumentException("Incorrect number of annotation units "
+					+ "(expected " + raters.size() + ", given " 
+					+ annotations.length + "). "
+					+ "For array params, use #addItemsAsArray instead of #addItem.");
+		
 		int itemIdx = items.size();
 		CodingAnnotationItem item = new CodingAnnotationItem(raters.size());
 		for (int raterIdx = 0; raterIdx < annotations.length; raterIdx++)

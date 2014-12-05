@@ -1,6 +1,10 @@
 DKPro Statistics 2.0.1
 - Fixed: Rounding issues with weighted kappa.
 - Modified: Normalize observed and expected disagreement for weighted measures (#7).
+- Added: Test case for adding annotation items to a study (#11).
+- Fixed: Raise exception if trying to ad incomplete AnnotationItems (#11).
+- Fixed: Removed printf debugging in KrippendorffAlphaAgreement.calculateItemAgreement.
+- Fixed: WeightedAgreementTest test case.
 
 DKPro Statistics 2.0.0 (31.07.2014)
 * Major revision of the software library.
