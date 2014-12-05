@@ -112,7 +112,7 @@ public class WeightedAgreementTest extends TestCase {
 				new NominalDistanceFunction());
 		assertEquals(0.153, alpha.calculateObservedDisagreement(), 0.001);
 		assertEquals(0.150, alpha.calculateExpectedDisagreement(), 0.001);
-		assertEquals(-0.002, alpha.calculateAgreement(), 0.001);	
+		assertEquals(-0.020, alpha.calculateAgreement(), 0.001);	
 		
 		WeightedKappaAgreement kappaW = new WeightedKappaAgreement(study,
 				new NominalDistanceFunction());
