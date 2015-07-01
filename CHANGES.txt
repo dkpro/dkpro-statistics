@@ -6,7 +6,8 @@ DKPro Statistics 2.0.1
 - Fixed: Removed printf debugging in KrippendorffAlphaAgreement.calculateItemAgreement.
 - Fixed: WeightedAgreementTest test case.
 - Upgraded to dkpro-parent-pom:11 (Java 8).
-- Migrated to GitHub. 
+- Migrated to GitHub.
+- Updated group id and package names to org.dkpro.
 
 DKPro Statistics 2.0.0 (31.07.2014)
 * Major revision of the software library.
