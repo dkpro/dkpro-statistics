@@ -2,13 +2,13 @@
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,26 +19,20 @@ package org.dkpro.statistics.agreement.coding;
 
 import java.util.Iterator;
 
-import org.dkpro.statistics.agreement.coding.BennettSAgreement;
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.CohenKappaAgreement;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationItem;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.PercentageAgreement;
-import org.dkpro.statistics.agreement.coding.ScottPiAgreement;
-
 import junit.framework.TestCase;
+
+import org.dkpro.statistics.agreement.InsufficientDataException;
 
 /**
  * Tests for several inter-rater agreement measures with two raters.
  * @author Christian M. Meyer
  */
 public class TwoRaterAgreementTest extends TestCase {
-	
+
 	/***/
 	public void testAgreement() {
 		ICodingAnnotationStudy study = createExample();
-						
+
 		PercentageAgreement pa = new PercentageAgreement(study);
 		double agreement = pa.calculateAgreement();
 		assertEquals(0.7, agreement);
@@ -47,18 +41,18 @@ public class TwoRaterAgreementTest extends TestCase {
 //		double[] ci = poa.confidenceInterval(agreement, se, TwoRaterObservedAgreement.CONFIDENCE_95);
 //		assertEquals(0.045, se, 0.001);
 //		assertEquals(0.610, ci[0], 0.001);
-//		assertEquals(0.789, ci[1], 0.001);	
+//		assertEquals(0.789, ci[1], 0.001);
 
 		BennettSAgreement s = new BennettSAgreement(study);
 		assertEquals(0.7, s.calculateObservedAgreement(), 0.001);
 		assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.4, s.calculateAgreement(), 0.001);
-		
+
 		ScottPiAgreement pi = new ScottPiAgreement(study);
 		assertEquals(0.7, pi.calculateObservedAgreement(), 0.001);
 		assertEquals(0.545, pi.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.341, pi.calculateAgreement(), 0.001);
-		
+
 		CohenKappaAgreement kappa = new CohenKappaAgreement(study);
 		assertEquals(0.7, kappa.calculateObservedAgreement(), 0.001);
 		assertEquals(0.54, kappa.calculateExpectedAgreement(), 0.001);
@@ -68,7 +62,7 @@ public class TwoRaterAgreementTest extends TestCase {
 	/***/
 	public void testItemSpecificAgreement() {
 		ICodingAnnotationStudy study = createExample();
-		
+
 		PercentageAgreement pa = new PercentageAgreement(study);
 		Iterator<ICodingAnnotationItem> itemIter = study.getItems().iterator();
 		assertEquals(1.0, pa.calculateItemAgreement(itemIter.next()));
@@ -87,29 +81,94 @@ public class TwoRaterAgreementTest extends TestCase {
 	/* ** /
 	public void testCategorySpecificAgreement() {
 		ICodingAnnotationStudy study = createExample();
-		
+
 		new ContingencyMatrixPrinter().print(System.out, study);
 		new CoincidenceMatrixPrinter().print(System.out, study);
-		
+
 		PercentageAgreement pa = new PercentageAgreement(study);
 		assertEquals(4 / 7, pa.calculateCategoryAgreement("low"));
 		assertEquals(10 / 13, pa.calculateCategoryAgreement("high"));
 	}*/
-	
+
+
+	public void testMissingCategories() {
+		// Annotation categories not used by any rater must be added to
+		// the study explicitly in order to avoid an InsufficientDataException.
+		CodingAnnotationStudy study = new CodingAnnotationStudy(2);
+		study.addCategory("A");
+		study.addCategory("B");
+		study.addItem("A", "A");
+		study.addItem("A", "A");
+		study.addItem("A", "A");
+
+		PercentageAgreement pa = new PercentageAgreement(study);
+		assertEquals(1.0, pa.calculateAgreement());
+
+		BennettSAgreement s = new BennettSAgreement(study);
+		assertEquals(1.0, s.calculateObservedAgreement(), 0.001);
+		assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
+		assertEquals(1.0, s.calculateAgreement(), 0.001);
+
+		try {
+			new ScottPiAgreement(study).calculateAgreement();
+			fail("InsufficientDataException expected!");
+		} catch (InsufficientDataException e) {}
+		try {
+			new CohenKappaAgreement(study).calculateAgreement();
+			fail("InsufficientDataException expected!");
+		} catch (InsufficientDataException e) {}
+	}
+
+
+	/***/
+	public void testInsufficientData() {
+		// Empty annotation study.
+		CodingAnnotationStudy emptyStudy = new CodingAnnotationStudy(2);
+		try {
+			new BennettSAgreement(emptyStudy).calculateAgreement();
+			fail("InsufficientDataException expected!");
+		} catch (InsufficientDataException e) {}
+		try {
+			new ScottPiAgreement(emptyStudy).calculateAgreement();
+			fail("InsufficientDataException expected!");
+		} catch (InsufficientDataException e) {}
+		try {
+			new CohenKappaAgreement(emptyStudy).calculateAgreement();
+			fail("InsufficientDataException expected!");
+		} catch (InsufficientDataException e) {}
+
+		// Annotation study with single category.
+		CodingAnnotationStudy singleCategoryStudy = new CodingAnnotationStudy(2);
+		singleCategoryStudy.addItem("A", "A");
+		singleCategoryStudy.addItem("A", "A");
+		singleCategoryStudy.addItem("A", "A");
+		try {
+			new BennettSAgreement(singleCategoryStudy).calculateAgreement();
+			fail("InsufficientDataException expected!");
+		} catch (InsufficientDataException e) {}
+		try {
+			new ScottPiAgreement(singleCategoryStudy).calculateAgreement();
+			fail("InsufficientDataException expected!");
+		} catch (InsufficientDataException e) {}
+		try {
+			new CohenKappaAgreement(singleCategoryStudy).calculateAgreement();
+			fail("InsufficientDataException expected!");
+		} catch (InsufficientDataException e) {}
+	}
+
 	/***/
 	public void testInvalidRaterCount() {
+		CodingAnnotationStudy tooManyRatersStudy = new CodingAnnotationStudy(3);
 		try {
-			new BennettSAgreement(new CodingAnnotationStudy(3));
+			new BennettSAgreement(tooManyRatersStudy);
 			fail("IllegalArgumentException expected!");
 		} catch (IllegalArgumentException e) {}
-		
 		try {
-			new ScottPiAgreement(new CodingAnnotationStudy(3));
+			new ScottPiAgreement(tooManyRatersStudy);
 			fail("IllegalArgumentException expected!");
 		} catch (IllegalArgumentException e) {}
-		
 		try {
-			new CohenKappaAgreement(new CodingAnnotationStudy(3));
+			new CohenKappaAgreement(tooManyRatersStudy);
 			fail("IllegalArgumentException expected!");
 		} catch (IllegalArgumentException e) {}
 	}
@@ -129,5 +188,5 @@ public class TwoRaterAgreementTest extends TestCase {
 		study.addItem("low", "low");
 		return study;
 	}
-	
+
 }

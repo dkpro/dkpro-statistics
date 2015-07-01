@@ -8,6 +8,7 @@ DKPro Statistics 2.0.1
 - Upgraded to dkpro-parent-pom:11 (Java 8).
 - Migrated to GitHub.
 - Updated group id and package names to org.dkpro.
+- Added: InsufficientDataException raised if study is empty, contains only a single category, or - in some cases - has insufficient variation (#13).
 
 DKPro Statistics 2.0.0 (31.07.2014)
 * Major revision of the software library.
