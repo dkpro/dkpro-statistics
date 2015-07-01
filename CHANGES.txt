@@ -1,4 +1,4 @@
-DKPro Statistics 2.0.1
+DKPro Statistics 2.0.1 (01.07.2015).
 - Fixed: Rounding issues with weighted kappa.
 - Modified: Normalize observed and expected disagreement for weighted measures (#7).
 - Added: Test case for adding annotation items to a study (#11).

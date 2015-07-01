@@ -27,7 +27,7 @@ as a dependency in your pom.xml file:
 <dependency>
    <groupId>de.tudarmstadt.ukp.dkpro.statistics</groupId>
    <artifactId>dkpro-statistics</artifactId>
-   <version>2.0.0</version>
+   <version>2.1.0</version>
 </dependency>
 
 In addition to that, you can add each of the modules described above 
@@ -44,12 +44,12 @@ Publications and Citation Information
 A more detailed description of DKPro Statistics is available in our 
 scientific articles:
 
-* Christian M. Meyer, Margot Mieskes, Christian Stab, and Iryna Gurevych: 
+* Christian M. Meyer, Margot Mieskes, Christian Stab, and Iryna Gurevych:
   DKPro Agreement: An Open-Source Java Library for Measuring Inter-Rater 
   Agreement, in: Proceedings of the 25th International Conference on 
-  Computational Linguistics (COLING), (to appear), August 2014. 
-  Dublin, Ireland.
-  <https://www.ukp.tu-darmstadt.de/publications/details/?no_cache=1&tx_bibtex_pi1%5Bpub_id%5D=TUD-CS-2014-0863> 
+  Computational Linguistics: System Demonstrations (COLING), p. 105–109, 
+  August 2014. Dublin, Ireland.
+  <http://www.aclweb.org/anthology/C/C14/C14-2023.pdf>
 
 Please cite our COLING 2014 paper if you use the software in your 
 scientific work.
@@ -65,6 +65,7 @@ mainly contributed to this project (in alphabetical order):
 
 * Richard Eckart de Castilho
 * Iryna Gurevych
+* Roland Kluge
 * Christian M. Meyer
 * Margot Mieskes
 * Christian Stab
