@@ -100,7 +100,7 @@ public class WeightedKappaAgreement extends WeightedAgreement
 	public double calculateExpectedDisagreement() {
 		ensureDistanceFunction();
 
-		BigDecimal result = new BigDecimal(0);
+		BigDecimal result = BigDecimal.ZERO;
 		Map<Object, int[]> annotationsPerCategory
 				= CodingAnnotationStudy.countAnnotationsPerCategory(study);
 

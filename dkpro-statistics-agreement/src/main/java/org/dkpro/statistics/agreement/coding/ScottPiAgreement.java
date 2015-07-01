@@ -55,7 +55,7 @@ public class ScottPiAgreement extends CodingAgreementMeasure
 		Map<Object, Integer> annotationsPerCategory
 				= CodingAnnotationStudy.countTotalAnnotationsPerCategory(study);
 
-		BigDecimal result = new BigDecimal(0);
+		BigDecimal result = BigDecimal.ZERO;
 		for (Object category : study.getCategories()) {
 			Integer catCount = annotationsPerCategory.get(category);
 			if (catCount != null)

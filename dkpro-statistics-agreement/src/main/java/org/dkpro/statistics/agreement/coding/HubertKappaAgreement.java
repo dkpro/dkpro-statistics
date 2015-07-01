@@ -49,7 +49,7 @@ public class HubertKappaAgreement extends CodingAgreementMeasure {
 	public double calculateExpectedAgreement() {
 		Map<Object, int[]> annotationsPerCategory
 				= CodingAnnotationStudy.countAnnotationsPerCategory(study);
-		BigDecimal result = new BigDecimal(0);
+		BigDecimal result = BigDecimal.ZERO;
 		for (Object category : study.getCategories()) {
 			int[] annotationCounts = annotationsPerCategory.get(category);
 			for (int m = 0; m < study.getRaterCount(); m++)

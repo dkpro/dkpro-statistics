@@ -76,7 +76,7 @@ public class FleissKappaAgreement extends CodingAgreementMeasure
 			}
 		}
 
-		BigDecimal result = new BigDecimal(0);
+		BigDecimal result = BigDecimal.ZERO;
 		for (BigDecimal p : categoryProbability.values())
 			result = result.add(p.pow(2));
 		result = result.divide(
