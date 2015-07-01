@@ -29,9 +29,9 @@ import java.util.HashSet;
  * is relation anchoring (i.e., the task of finding the correct word senses
  * of the source and the target of a semantic relation. In this setting,
  * raters may assign multiple word senses to a relation endpoint (cf.
- * Meyer&Gurevych, 2012).<br><br>
+ * Meyer &amp; Gurevych, 2012).<br><br>
  * References:<ul>
- * <li>Meyer, C.M. & Gurevych, I.: OntoWiktionary – Constructing an Ontology
+ * <li>Meyer, C.M. &amp; Gurevych, I.: OntoWiktionary – Constructing an Ontology
  *   from the Collaborative Online Dictionary Wiktionary. In: Semi-Automatic
  *   Ontology Development: Processes and Resources, p. 131–161,
  *   Hershey, PA: IGI Global, 2012.</li>

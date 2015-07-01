@@ -17,19 +17,16 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
-import org.dkpro.statistics.agreement.distance.OrdinalDistanceFunction;
-
 import junit.framework.TestCase;
 
+import org.dkpro.statistics.agreement.distance.OrdinalDistanceFunction;
+
 /**
- * Tests based on Hayes & Krippendorff (2007) for measuring
+ * Tests based on Hayes &amp; Krippendorff (2007) for measuring
  * {@link KrippendorffAlphaAgreement} with an
  * {@link OrdinalDistanceFunction}.<br><br>
  * References:<ul>
- * <li>Hayes, A.F. & Krippendorff, K.: Answering the call for a standard
+ * <li>Hayes, A.F. &amp; Krippendorff, K.: Answering the call for a standard
  *   reliability measure for coding data. Communication Methods and Measures
  *   1(1):77–89, 2007.</li></ul>
  * @author Christian M. Meyer
@@ -46,7 +43,7 @@ public class HayesKrippendorff2007Test extends TestCase {
 	}
 
 	/** Creates an example annotation study introduced by
-	 *  Hayes&Krippendorff (2007: p. 84). */
+	 *  Hayes &amp; Krippendorff (2007: p. 84). */
 	public static ICodingAnnotationStudy createExample() {
 		CodingAnnotationStudy study = new CodingAnnotationStudy(5);
 		study.addItem(1, 1, 2, null, 2);

@@ -17,19 +17,14 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import org.dkpro.statistics.agreement.coding.BennettSAgreement;
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.CohenKappaAgreement;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-
 import junit.framework.TestCase;
 
 /**
- * Tests based on Brennan & Prediger (1981) for measuring
+ * Tests based on Brennan &amp; Prediger (1981) for measuring
  * {@link BennettSAgreement} and {@link CohenKappaAgreement}.<br><br>
  * References:<ul>
- * <li>Brennan, R.L. & Prediger, D.J.: Coefficient kappa: Some uses, misuses,
- *   and alternatives. Educational and Psychological Measurement
+ * <li>Brennan, R.L. &amp; Prediger, D.J.: Coefficient kappa: Some uses,
+ *   misuses, and alternatives. Educational and Psychological Measurement
  *   41(3):687–699, 1981.</li></ul>
  * @author Christian M. Meyer
  */
@@ -77,7 +72,7 @@ public class BrennanPrediger1981Test extends TestCase {
 	}
 
 	/** Creates an example annotation study introduced by
-	 *  Brennan&Prediger (1981: p. 689). Proportions are scaled by 100. */
+	 *  Brennan &amp; Prediger (1981: p. 689). Proportions are scaled by 100. */
 	public static ICodingAnnotationStudy createExample1() {
 		CodingAnnotationStudy study = new CodingAnnotationStudy(2);
 		study.addMultipleItems(50, 1, 1);
@@ -89,7 +84,7 @@ public class BrennanPrediger1981Test extends TestCase {
 	}
 
 	/** Creates an example annotation study introduced by
-	 *  Brennan&Prediger (1981: p. 691). Proportions are scaled by 100. */
+	 *  Brennan &amp; Prediger (1981: p. 691). Proportions are scaled by 100. */
 	public static ICodingAnnotationStudy createExample2() {
 		CodingAnnotationStudy study = new CodingAnnotationStudy(2);
 		study.addMultipleItems(50, 1, 1);

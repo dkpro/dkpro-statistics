@@ -2,13 +2,13 @@
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,14 +16,6 @@
  * limitations under the License.
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
-
-import org.dkpro.statistics.agreement.coding.BennettSAgreement;
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.CohenKappaAgreement;
-import org.dkpro.statistics.agreement.coding.FleissKappaAgreement;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.PercentageAgreement;
-import org.dkpro.statistics.agreement.coding.ScottPiAgreement;
 
 import junit.framework.TestCase;
 
@@ -36,26 +28,26 @@ public class NumericalStabilityTest extends TestCase {
 	/***/
 	public void testExample1() {
 		ICodingAnnotationStudy study = createExample1();
-		
+
 		PercentageAgreement raw = new PercentageAgreement(study);
 		assertEquals(0.9, raw.calculateAgreement(), 0.001);
-		
+
 		BennettSAgreement s = new BennettSAgreement(study);
 		assertEquals(0.9, s.calculateObservedAgreement(), 0.001);
 		assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.8, s.calculateAgreement(), 0.001);
-		
+
 		ScottPiAgreement pi = new ScottPiAgreement(study);
 		assertEquals(0.9, pi.calculateObservedAgreement(), 0.001);
 		assertEquals(0.5, pi.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.8, pi.calculateAgreement(), 0.001);
-		
+
 		CohenKappaAgreement kappa = new CohenKappaAgreement(study);
 		assertEquals(0.9, kappa.calculateObservedAgreement(), 0.001);
 		assertEquals(0.5, kappa.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.8, kappa.calculateAgreement(), 0.001);
 	}
-	
+
 	/***/
 	public void testExample2() {
 		ICodingAnnotationStudy study = createExample2();
@@ -69,20 +61,20 @@ public class NumericalStabilityTest extends TestCase {
 		for (int i = 0; i < 9000; i++)
 			tmpStudy.addItem(0, 0);
 		study = tmpStudy;
-		
+
 		PercentageAgreement raw = new PercentageAgreement(study);
 		assertEquals(0.9, raw.calculateAgreement(), 0.001);
-		
+
 		BennettSAgreement s = new BennettSAgreement(study);
 		assertEquals(0.9, s.calculateObservedAgreement(), 0.001);
 		assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.8, s.calculateAgreement(), 0.001);
-		
+
 		ScottPiAgreement pi = new ScottPiAgreement(study);
 		assertEquals(0.9, pi.calculateObservedAgreement(), 0.001);
 		assertEquals(0.759, pi.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.585, pi.calculateAgreement(), 0.001);
-		
+
 		CohenKappaAgreement kappa = new CohenKappaAgreement(study);
 		assertEquals(0.9, kappa.calculateObservedAgreement(), 0.001);
 		assertEquals(0.756, kappa.calculateExpectedAgreement(), 0.001);
@@ -92,17 +84,17 @@ public class NumericalStabilityTest extends TestCase {
 	/***/
 	public void testScaledArtsteinPoesio() {
 		ICodingAnnotationStudy study = createExample2(500);
-		
+
 		// Two raters, observed agreement.
 		PercentageAgreement pa = new PercentageAgreement(study);
 		assertEquals(0.7, pa.calculateAgreement(), 0.001);
-		
+
 		// Two raters, chance-corrected agreement.
 		BennettSAgreement s = new BennettSAgreement(study);
 		assertEquals(0.7, s.calculateObservedAgreement(), 0.001);
 		assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
 		assertEquals(0.4, s.calculateAgreement(), 0.001);
-		
+
 		ScottPiAgreement pi = new ScottPiAgreement(study);
 		assertEquals(0.7, pi.calculateObservedAgreement(), 0.001);
 		assertEquals(0.545, pi.calculateExpectedAgreement(), 0.001);
@@ -117,7 +109,7 @@ public class NumericalStabilityTest extends TestCase {
 	/***/
 	public void testScaledFleiss() {
 		ICodingAnnotationStudy study = createExample3(2000);
-		
+
 		FleissKappaAgreement pi = new FleissKappaAgreement(study);
 		assertEquals(0.5556, pi.calculateObservedAgreement(), 0.001);
 		assertEquals(0.2201, pi.calculateExpectedAgreement(), 0.001);
@@ -135,7 +127,7 @@ public class NumericalStabilityTest extends TestCase {
 		study.addMultipleItems(45000, 0, 0);
 		return study;
 	}
-	
+
 	/** Creates an example annotation study with many items. Such a study
 	 *  can easily yield problems related to numerical stability. */
 	public static ICodingAnnotationStudy createExample2() {
@@ -146,9 +138,9 @@ public class NumericalStabilityTest extends TestCase {
 		study.addMultipleItems( 9000, 0, 0);
 		return study;
 	}
-	
-	/** Creates an example annotation study introduced by 
-	 *  Artstein&Poesio (2008: p. 558) that is scaled by the given factor. */
+
+	/** Creates an example annotation study introduced by Artstein &amp;
+	 *  Poesio (2008: p. 558) that is scaled by the given factor. */
 	public static ICodingAnnotationStudy createExample2(int scale) {
 		/*		STAT	IReq	  Σ
 		STAT	 20		 10		 30
@@ -187,7 +179,7 @@ public class NumericalStabilityTest extends TestCase {
 		study.addMultipleItems(scale, 1, 1, 1, 1, 1, 2);
 		study.addMultipleItems(scale, 2, 2, 4, 4, 4, 4);
 		study.addMultipleItems(scale, 1, 3, 3, 5, 5, 5);
-		
+
 		study.addMultipleItems(scale, 5, 5, 5, 5, 5, 5);
 		study.addMultipleItems(scale, 2, 4, 4, 4, 4, 4);
 		study.addMultipleItems(scale, 2, 2, 4, 5, 5, 5);
@@ -200,4 +192,5 @@ public class NumericalStabilityTest extends TestCase {
 		study.addMultipleItems(scale, 5, 5, 5, 5, 5, 5);
 		return study;
 	}
+
 }

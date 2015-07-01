@@ -30,7 +30,7 @@ import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
  * inter-rater agreement for two raters. The measure assumes a different
  * probability distribution for all raters.<br><br>
  * References:<ul>
- * <li>Artstein, R. & Poesio, M.: Inter-Coder Agreement for Computational
+ * <li>Artstein, R. &amp; Poesio, M.: Inter-Coder Agreement for Computational
  *   Linguistics. Computational Linguistics 34(4):555-596, 2008.</li>
  * <li>Cohen, J.: A Coefficient of Agreement for Nominal Scales.
  *   Educational and Psychological Measurement 20(1):37-46, 1960.</li></ul>

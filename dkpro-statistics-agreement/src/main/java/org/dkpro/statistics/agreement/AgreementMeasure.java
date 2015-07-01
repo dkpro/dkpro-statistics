@@ -26,7 +26,7 @@ package org.dkpro.statistics.agreement;
  * {@link DisagreementMeasure} for the analogous definition of a measure based
  * on the observed and expected disagreement.<br><br>
  * References:<ul>
- * <li>Artstein, R. & Poesio, M.: Inter-Coder Agreement for Computational
+ * <li>Artstein, R. &amp; Poesio, M.: Inter-Coder Agreement for Computational
  *   Linguistics. Computational Linguistics 34(4):555-596, 2008.</li>
  * <li>Scott, W.A.: Reliability of content analysis: The case of nominal
  *   scale coding. Public Opinion Quaterly 19(3):321-325, 1955.</li></ul>

@@ -17,25 +17,17 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
+import junit.framework.TestCase;
+
 import org.dkpro.statistics.agreement.IAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.BennettSAgreement;
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.CohenKappaAgreement;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
-import org.dkpro.statistics.agreement.coding.PercentageAgreement;
-import org.dkpro.statistics.agreement.coding.ScottPiAgreement;
-import org.dkpro.statistics.agreement.coding.WeightedKappaAgreement;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
 
-import junit.framework.TestCase;
-
 /**
- * Tests based on Artstein & Poesio (2008) for several inter-rater agreement
- * measures.<br><br>
+ * Tests based on Artstein &amp; Poesio (2008) for several inter-rater
+ * agreement measures.<br><br>
  * References:<ul>
- * <li>Artstein, R. & Poesio, M.: Inter-Coder Agreement for Computational
+ * <li>Artstein, R. &amp; Poesio, M.: Inter-Coder Agreement for Computational
  *   Linguistics. Computational Linguistics 34(4):555-596, 2008.</li></ul>
  * @author Christian M. Meyer
  */
@@ -157,7 +149,7 @@ public class ArtsteinPoesio2008Test extends TestCase {
 	}
 
 	/** Creates an example annotation study introduced by
-	 *  Artstein&Poesio (2008: p. 558). */
+	 *  Artstein &amp; Poesio (2008: p. 558). */
 	public static ICodingAnnotationStudy createExample1() {
 		/*		STAT	IReq	  Σ
 		STAT	 20		 10		 30
@@ -172,7 +164,7 @@ public class ArtsteinPoesio2008Test extends TestCase {
 	}
 
 	/** Creates an example annotation study introduced by
-	 *  Artstein&Poesio (2008: p. 568). */
+	 *  Artstein &amp; Poesio (2008: p. 568). */
 	public static ICodingAnnotationStudy createExample2() {
 		/*  	STAT	IReq	Chck	  Σ
 		STAT	 46		  0		  0		 46
