@@ -2,13 +2,13 @@
  * Copyright 2013
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,9 +28,9 @@ import java.util.Map;
 // TODO this seems to produce wrong Spearman values => replace with more reliable method
 public class SpearmansRankCorrelation_old
 {
-    private Map<String, ValuesAndRanks> data;
-    private int maxTiedRanksBeforeCorrection;
-    private boolean sortDescending;
+    private final Map<String, ValuesAndRanks> data;
+    private final int maxTiedRanksBeforeCorrection;
+    private final boolean sortDescending;
 
     public static final int DEFAULT_MAX_TIED_RANKS_BEFORE_CORRELATION = 0;
     public static final boolean DEFAULT_SORT_DESCENDING = false;
@@ -67,8 +67,8 @@ public class SpearmansRankCorrelation_old
     {
         final SpearmansRankCorrelation_old src = new SpearmansRankCorrelation_old();
         for (int i = 0; i < list1.size(); i++) {
-            src.addXValue(new Integer(i).toString(), list1.get(i));
-            src.addYValue(new Integer(i).toString(), list2.get(i));
+            src.addXValue(Integer.toString(i), list1.get(i));
+            src.addYValue(Integer.toString(i), list2.get(i));
             i++;
         }
         return src.calculate();
@@ -272,8 +272,8 @@ public class SpearmansRankCorrelation_old
     private class Comp
         implements Comparator<ValuesAndRanks>
     {
-        private boolean sortDescending;
-        private int dataType;
+        private final boolean sortDescending;
+        private final int dataType;
 
         public Comp(final int dataType, final boolean sortDescending)
         {
