@@ -1,0 +1,20 @@
+# Project releases
+#
+# Possible status: "stable", "unstable"
+#
+# 
+- version: 2.0.1
+  date: 2015-07-01
+  status: stable
+- version: 2.0.0
+  date: 2014-07-31
+  status: stable
+- version: 1.0.2
+  date: 2013-12-19
+  status: stable
+- version: 1.0.1
+  date: 2013-12-10
+  status: stable
+- version: 1.0.0
+  date: 2013-05-14
+  status: stable
