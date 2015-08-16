@@ -25,7 +25,7 @@ If you use Maven as your build tool, then you can add DKPro Statistics
 as a dependency in your pom.xml file:
 
 <dependency>
-   <groupId>de.tudarmstadt.ukp.dkpro.statistics</groupId>
+   <groupId>org.dkpro.statistics</groupId>
    <artifactId>dkpro-statistics</artifactId>
    <version>2.1.0</version>
 </dependency>
