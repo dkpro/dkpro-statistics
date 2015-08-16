@@ -5,14 +5,11 @@
 # this work, you have to use › layout: frontpage
 #
 layout: frontpage
-title: "DKProStatistics"
-#header:
-#	title: DKPro Core
-#   image_fullwidth: "header_unsplash_12.jpg"
-header-1:
-    title: "A collection of open-licensed statistical tools written in Java"
-    text: " "
+title: "DKPro Statistics"
 ---
+
+A collection of open-licensed statistical tools written in Java
+---------------------------------------------------------------
 
 DKPro Statistics is a collection of open-licensed statistical tools written in Java. The software library is divided into the following modules:
 
