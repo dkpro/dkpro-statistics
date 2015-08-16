@@ -1,6 +1,7 @@
 <aside>
 
-{% assign stable = (site.data.releases | where:"status", "stable" | first) %}
+{% assign stable = (site.data.releases | where:"status", "stable" | first) %}
+
 {% if stable.version %}
 <div class="radius b20" style="text-align: center;">
 Latest release: {{ stable.version }} ({{ stable.date }})
@@ -13,7 +14,7 @@ Latest release: {{ stable.version }} ({{ stable.date }})
         alt="DKPro Agreement poster presented at COLING 2014" 
         title="DKPro Agreement poster presented at COLING 2014">
   </a>
-  <p>DKPro Agreement poster presented at COLING 2014</p>
+  <p>DKPro Agreement poster<br>(presented at COLING 2014)</p>
 </div>
 
 </aside>

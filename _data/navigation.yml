@@ -1,5 +1,5 @@
 - title: DKPro
-  url: "http://dkpro.github.io"
+  url: "https://dkpro.github.io"
   side: left
 
 - title: Statistics
@@ -13,15 +13,11 @@
 - title: Documentation
   url: "/documentation/"
   side: left
-#  dropdown:
-#  - title: "Components"
-#    url: "/components/"
-#  - title: "Models"
-#    url: "/models/"
-#  - title: "Formats"
-#    url: "/formats/"
-#  - title: "Typesystem"
-#    url: "/typesystem/"
+  dropdown:
+  - title: "Getting started"
+    url: "/documentation/"
+  - title: "Javadoc"
+    url: "/releases/!LATEST!/apidocs/index.html"
 
 - title: "Issues"
   url: "http://github.com/dkpro/dkpro-statistics/issues"
