@@ -13,9 +13,9 @@ A collection of open-licensed statistical tools written in Java
 
 DKPro Statistics is a collection of open-licensed statistical tools written in Java. The software library is divided into the following modules:
 
-* *DKPro Agreement* (`dkpro-statistics-agreement`) is a module for computing multiple inter-rater agreement measures using a shared interface and data model. Based on this model, the software allows for analyzing coding (i.e., assigning categories to fixed items) and unitizing setups (i.e., segmenting the data into codable units). The software has been described in our [COLING 2014 demo paper](https://www.ukp.tu-darmstadt.de/publications/details/?no_cache=1&tx_bibtex_pi1%5Bpub_id%5D=TUD-CS-2014-0863).
-* *DKPro Correlation* (`dkpro-statistics-correlation`) is a module for computing correlation and association measures. It is currently under construction. 
-* *DKPro Significance* (`dkpro-statistics-significance`) is a module for assessing statistical significance. It is currently under construction. 
+* **DKPro Agreement** (`dkpro-statistics-agreement`) is a module for computing multiple inter-rater agreement measures using a shared interface and data model. Based on this model, the software allows for analyzing coding (i.e., assigning categories to fixed items) and unitizing setups (i.e., segmenting the data into codable units). The software has been described in our [COLING 2014 demo paper](https://www.ukp.tu-darmstadt.de/publications/details/?no_cache=1&tx_bibtex_pi1%5Bpub_id%5D=TUD-CS-2014-0863).
+* **DKPro Correlation** (`dkpro-statistics-correlation`) is a module for computing correlation and association measures. It is currently under construction. 
+* **DKPro Significance** (`dkpro-statistics-significance`) is a module for assessing statistical significance. It is currently under construction. 
 
 
 Publications and Citation Information
