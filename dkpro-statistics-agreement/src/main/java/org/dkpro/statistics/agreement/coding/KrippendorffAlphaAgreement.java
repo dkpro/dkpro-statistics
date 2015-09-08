@@ -25,6 +25,7 @@ import java.util.TreeMap;
 import org.dkpro.statistics.agreement.IAnnotationUnit;
 import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
 import org.dkpro.statistics.agreement.IChanceCorrectedDisagreement;
+import org.dkpro.statistics.agreement.InsufficientDataException;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 
 /**
@@ -61,16 +62,18 @@ public class KrippendorffAlphaAgreement extends WeightedAgreement
 	@Override
 	public double calculateObservedDisagreement() {
 		ensureDistanceFunction();
-		if (coincidenceMatrix == null)
-			coincidenceMatrix = CodingAnnotationStudy.countCategoryCoincidence(study);
+		if (coincidenceMatrix == null) {
+            coincidenceMatrix = CodingAnnotationStudy.countCategoryCoincidence(study);
+        }
 
 		double n = 0.0;
 		double result = 0.0;
-		for (Entry<Object, Map<Object, Double>> cat1 : coincidenceMatrix.entrySet())
-			for (Entry<Object, Double> cat2 : cat1.getValue().entrySet()) {
+		for (Entry<Object, Map<Object, Double>> cat1 : coincidenceMatrix.entrySet()) {
+            for (Entry<Object, Double> cat2 : cat1.getValue().entrySet()) {
 					result += cat2.getValue() * distanceFunction.measureDistance(study, cat1.getKey(), cat2.getKey());
 				n += cat2.getValue();
 			}
+        }
 		result /= n;
 		return result;
 	}
@@ -83,50 +86,62 @@ public class KrippendorffAlphaAgreement extends WeightedAgreement
 	@Override
 	public double calculateExpectedDisagreement() {
 		ensureDistanceFunction();
-		if (coincidenceMatrix == null)
-			coincidenceMatrix = CodingAnnotationStudy.countCategoryCoincidence(study);
+		if (coincidenceMatrix == null) {
+            coincidenceMatrix = CodingAnnotationStudy.countCategoryCoincidence(study);
+        }
 
-		double n = 0.0;
+        if (study.getCategoryCount() <= 1) {
+            throw new InsufficientDataException("An annotation study needs at least two different categories; otherwise there is no decision for the raters to agree on.");
+        }
+
+        double n = 0.0;
 		Map<Object, Double> marginals = new HashMap<Object, Double>();
 		for (Entry<Object, Map<Object, Double>> cat1 : coincidenceMatrix.entrySet()) {
 			double n_c = 0.0;
-			for (Entry<Object, Double> cat2 : cat1.getValue().entrySet())
-				n_c += cat2.getValue();
+			for (Entry<Object, Double> cat2 : cat1.getValue().entrySet()) {
+                n_c += cat2.getValue();
+            }
 			marginals.put(cat1.getKey(), n_c);
 			n += n_c;
 		}
 
 		double result = 0.0;
-		for (Entry<Object, Double> cat1 : marginals.entrySet())
-			for (Entry<Object, Double> cat2 : marginals.entrySet())
-				result += cat1.getValue() * cat2.getValue()
+		for (Entry<Object, Double> cat1 : marginals.entrySet()) {
+            for (Entry<Object, Double> cat2 : marginals.entrySet()) {
+                result += cat1.getValue() * cat2.getValue()
 						* distanceFunction.measureDistance(study, cat1.getKey(), cat2.getKey());
+            }
+        }
 		result /= n * (n - 1.0);
 		return result;
 	}
 
-	public double calculateItemAgreement(final ICodingAnnotationItem item) {
+	@Override
+    public double calculateItemAgreement(final ICodingAnnotationItem item) {
 		ensureDistanceFunction();
 		Map<Object, Map<Object, Double>> itemMatrix =
 				CodingAnnotationStudy.countCategoryCoincidence(item);
 
 		double n = 0.0;
 		double D_O = 0.0;
-		for (Entry<Object, Map<Object, Double>> cat1 : itemMatrix.entrySet())
-			for (Entry<Object, Double> cat2 : cat1.getValue().entrySet()) {
+		for (Entry<Object, Map<Object, Double>> cat1 : itemMatrix.entrySet()) {
+            for (Entry<Object, Double> cat2 : cat1.getValue().entrySet()) {
 					D_O += cat2.getValue() * distanceFunction.measureDistance(study, cat1.getKey(), cat2.getKey());
 				n += cat2.getValue();
 			}
+        }
 		D_O /= n;
 
-		if (coincidenceMatrix == null)
-			coincidenceMatrix = CodingAnnotationStudy.countCategoryCoincidence(study);
+		if (coincidenceMatrix == null) {
+            coincidenceMatrix = CodingAnnotationStudy.countCategoryCoincidence(study);
+        }
 		n = 0.0;
 		Map<Object, Double> marginals = new TreeMap<Object, Double>();
 		for (Entry<Object, Map<Object, Double>> cat1 : coincidenceMatrix.entrySet()) {
 			double n_c = 0.0;
-			for (Entry<Object, Double> cat2 : cat1.getValue().entrySet())
-				n_c += cat2.getValue();
+			for (Entry<Object, Double> cat2 : cat1.getValue().entrySet()) {
+                n_c += cat2.getValue();
+            }
 			marginals.put(cat1.getKey(), n_c);
 			n += n_c;
 		}
@@ -138,13 +153,16 @@ public class KrippendorffAlphaAgreement extends WeightedAgreement
 						* distanceFunction.measureDistance(study, cat1.getKey(), cat2.getKey());
 		D_E /= n * (n - 1.0);*/
 		double D_E = calculateExpectedDisagreement();
-		if (D_E == 0.0)
-			return 1.0;
-		else
-			return 1.0 - (D_O / D_E);
+		if (D_E == 0.0) {
+            return 1.0;
+        }
+        else {
+            return 1.0 - (D_O / D_E);
+        }
 	}
 
-	public double calculateCategoryAgreement(final Object category) {
+	@Override
+    public double calculateCategoryAgreement(final Object category) {
 		ensureDistanceFunction();
 
 		final Object NULL_CATEGORY = new Object();
@@ -154,11 +172,14 @@ public class KrippendorffAlphaAgreement extends WeightedAgreement
 		for (ICodingAnnotationItem item : study.getItems()) {
 			int nKeepCategory = 0;
 			int nNullCategory = 0;
-			for (IAnnotationUnit annotation : item.getUnits())
-				if (category.equals(annotation.getCategory()))
-					nKeepCategory++;
-				else
-					nNullCategory++;
+			for (IAnnotationUnit annotation : item.getUnits()) {
+                if (category.equals(annotation.getCategory())) {
+                    nKeepCategory++;
+                }
+                else {
+                    nNullCategory++;
+                }
+            }
 			observedDisagreement +=
 					  nKeepCategory * nKeepCategory * distanceFunction.measureDistance(study, category, category)
 					+ nKeepCategory * nNullCategory * distanceFunction.measureDistance(study, category, NULL_CATEGORY)
