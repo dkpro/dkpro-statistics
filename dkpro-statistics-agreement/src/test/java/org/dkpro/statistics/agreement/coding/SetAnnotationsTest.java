@@ -2,13 +2,13 @@
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,27 +17,24 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
+import junit.framework.TestCase;
+
 import org.dkpro.statistics.agreement.distance.MASISetAnnotationDistanceFunction;
 import org.dkpro.statistics.agreement.distance.SetAnnotation;
 import org.dkpro.statistics.agreement.distance.SetAnnotationDistanceFunction;
 
-import junit.framework.TestCase;
-
 /**
  * Tests for {@link KrippendorffAlphaAgreement} with
- * {@link SetAnnotationDistanceFunction} and 
+ * {@link SetAnnotationDistanceFunction} and
  * {@link MASISetAnnotationDistanceFunction}.
  * @author Christian M. Meyer
  */
 public class SetAnnotationsTest extends TestCase {
-	
+
 	/***/
 	public void testSetDistanceFunction() {
 		ICodingAnnotationStudy study = createExample();
-		
+
 		KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
 		alpha.setDistanceFunction(new SetAnnotationDistanceFunction());
 		assertEquals(0.333, alpha.calculateObservedDisagreement(), 0.001);
@@ -48,13 +45,29 @@ public class SetAnnotationsTest extends TestCase {
 	/***/
 	public void testMASIDistanceFunction() {
 		ICodingAnnotationStudy study = createExample();
-		
+
 		KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
 		alpha.setDistanceFunction(new MASISetAnnotationDistanceFunction());
 		assertEquals(0.253, alpha.calculateObservedDisagreement(), 0.001);
 		assertEquals(0.338, alpha.calculateExpectedDisagreement(), 0.001);
 		assertEquals(0.252, alpha.calculateAgreement(), 0.001);
 	}
+
+	/***/
+    public void testPercentageAgreement() {
+        ICodingAnnotationStudy study = createExample();
+
+        PercentageAgreement percentageAgreement = new PercentageAgreement(study);
+        assertEquals(0.333, percentageAgreement.calculateAgreement(), 0.001);
+    }
+
+    /***/
+    public void testMaxPercentageAgreement() {
+        ICodingAnnotationStudy study = createExample();
+
+        MaxPercentageAgreement maxPercentageAgreement = new MaxPercentageAgreement(study);
+        assertEquals(0.667, maxPercentageAgreement.calculateAgreement(), 0.001);
+    }
 
 	/** Creates an example annotation study. */
 	public ICodingAnnotationStudy createExample() {
