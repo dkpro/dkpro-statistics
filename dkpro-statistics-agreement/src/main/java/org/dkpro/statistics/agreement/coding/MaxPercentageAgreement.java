@@ -18,10 +18,6 @@
 package org.dkpro.statistics.agreement.coding;
 
 import org.dkpro.statistics.agreement.IAnnotationUnit;
-import org.dkpro.statistics.agreement.coding.CodingAgreementMeasure;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationItem;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.ICodingItemSpecificAgreement;
 import org.dkpro.statistics.agreement.distance.SetAnnotation;
 
 /**
@@ -32,7 +28,7 @@ import org.dkpro.statistics.agreement.distance.SetAnnotation;
  * References:
  * <ul>
  * <li>Jean Véronis. A study of polysemy judgements and inter-annotator
- * agreement. In Proceedings of SENSEVAL-1, 1998.</li>
+ * agreement. In <em>Proceedings of SENSEVAL-1</em>, 1998.</li>
  * </ul>
  *
  * @author Tristan Miller
@@ -49,6 +45,8 @@ public class MaxPercentageAgreement
     public MaxPercentageAgreement(final ICodingAnnotationStudy study)
     {
         super(study);
+        ensureTwoRaters();
+        warnIfMissingValues();
     }
 
     /**
@@ -87,6 +85,7 @@ public class MaxPercentageAgreement
      * @throws NullPointerException
      *             if the given item is null.
      */
+    @Override
     public double calculateItemAgreement(final ICodingAnnotationItem item)
     {
         return doCalculateItemAgreement(item) / item.getRaterCount();
