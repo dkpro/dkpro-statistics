@@ -28,6 +28,7 @@ import org.dkpro.statistics.agreement.distance.SetAnnotationDistanceFunction;
  * {@link SetAnnotationDistanceFunction} and
  * {@link MASISetAnnotationDistanceFunction}.
  * @author Christian M. Meyer
+ * @author Tristan Miller
  */
 public class SetAnnotationsTest extends TestCase {
 
@@ -67,6 +68,14 @@ public class SetAnnotationsTest extends TestCase {
 
         MaxPercentageAgreement maxPercentageAgreement = new MaxPercentageAgreement(study);
         assertEquals(0.667, maxPercentageAgreement.calculateAgreement(), 0.001);
+    }
+
+    /***/
+    public void testDiceAgreement() {
+        ICodingAnnotationStudy study = createExample();
+
+        DiceAgreement DiceAgreement = new DiceAgreement(study);
+        assertEquals(0.5, DiceAgreement.calculateAgreement(), 0.001);
     }
 
 	/** Creates an example annotation study. */
