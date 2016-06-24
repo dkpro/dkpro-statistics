@@ -25,7 +25,7 @@
 	<packaging>pom</packaging>
 
 	<name>DKPro Statistics</name>
-	<url>http://dkpro.org/statistics/</url>
+	<url>https://dkpro.github.io/dkpro-statistics/</url>
 	<description>DKPro Statistics is a collection of open-licensed statistical tools, currently including inter-rater agreement, correlation, and significance measures.</description>
 
 	<organization>
