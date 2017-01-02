@@ -74,5 +74,5 @@ mainly contributed to this project (in alphabetical order):
 
 Project Homepage
 ----------------
-* http://code.google.com/p/dkpro-statistics/
+* https://dkpro.github.io/dkpro-statistics/
 * https://www.ukp.tu-darmstadt.de/software/dkpro-statistics/
