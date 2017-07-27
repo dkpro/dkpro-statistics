@@ -33,13 +33,13 @@ License and Availability
 
 The latest version of DKPro Statistics is available via [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.dkpro.statistics%22). If you use Maven as your build tool, then you can add DKPro Statistics as a dependency in your pom.xml file:
 
-```
+{% highlight xml %}
 		<dependency>
 		  <groupId>org.dkpro.statistics</groupId>
 		  <artifactId>dkpro-statistics</artifactId>
 		  <version>2.1.0</version>
 		</dependency>
-```
+{% endhighlight %}
 
 In addition to that, you can add each of the modules described above separately (e.g., artifactId `dkpro-statistics-agreement`).
 
