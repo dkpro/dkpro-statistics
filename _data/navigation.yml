@@ -17,7 +17,7 @@
   - title: "Getting started"
     url: "/documentation/"
   - title: "Javadoc"
-    url: "/releases/!LATEST!/apidocs/index.html"
+    url: "https://zoidberg.ukp.informatik.tu-darmstadt.de/jenkins/job/DKPro%20Statistics%20(GitHub)/javadoc/"
 
 - title: "Issues"
   url: "http://github.com/dkpro/dkpro-statistics/issues"
