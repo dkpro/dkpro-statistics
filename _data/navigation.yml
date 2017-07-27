@@ -16,8 +16,11 @@
   dropdown:
   - title: "Getting started"
     url: "/documentation/"
-  - title: "Javadoc"
+  - title: "Javadoc (Snapshot)"
     url: "https://zoidberg.ukp.informatik.tu-darmstadt.de/jenkins/job/DKPro%20Statistics%20(GitHub)/javadoc/"
+  - title: "Javadoc (2.1.0)"
+    url: "/releases/2.1.0/apidocs/index.html"
+#    url: "/releases/!LATEST!/apidocs/index.html"
 
 - title: "Issues"
   url: "http://github.com/dkpro/dkpro-statistics/issues"
