@@ -5,7 +5,7 @@
 # this work, you have to use › layout: frontpage
 #
 layout: frontpage
-title: "DKPro Statistics"
+title: "Welcome"
 ---
 A collection of open-licensed statistical tools written in Java
 ---------------------------------------------------------------

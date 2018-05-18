@@ -1,6 +1,6 @@
 ---
 layout: page-fullwidth
-title: "Getting started"
+title: "Documentation"
 permalink: "/documentation/"
 ---
 
