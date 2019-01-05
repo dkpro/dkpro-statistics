@@ -26,7 +26,6 @@ import org.junit.Test;
 
 public class SignificanceTest
 {
-
     @Test
     public void testTestCorrelations() throws MathException
     {

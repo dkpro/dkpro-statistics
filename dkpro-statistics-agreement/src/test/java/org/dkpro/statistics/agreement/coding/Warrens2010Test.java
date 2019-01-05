@@ -37,8 +37,7 @@ import junit.framework.TestCase;
 public class Warrens2010Test
     extends TestCase
 {
-
-    
+    /***/
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
@@ -56,7 +55,7 @@ public class Warrens2010Test
         // assertEquals(0.8325, kappaL.calculateAgreement(), 0.0001);
     }
 
-    
+    /***/
     public void testPairwiseEquivalenceHubertKappa()
     {
         CodingAnnotationStudy study = createExample();
@@ -78,7 +77,7 @@ public class Warrens2010Test
         assertEquals(0.8326, kappaEquivalence, 0.0001);
     }
 
-    
+    /***/
     public void testPairwiseEquivalenceLightKappa()
     {
         CodingAnnotationStudy study = createExample();
