@@ -27,7 +27,6 @@ import org.apache.commons.math.stat.inference.TestUtils;
 /**
  * Computes statistical significance.
  * @author zesch
- *
  */
 public class Significance {
 
@@ -97,12 +96,6 @@ public class Significance {
         return alpha;
     }
     
-    
-    /**
-     * @throws MathException 
-     * @throws IllegalArgumentException 
-     * @see org.tud.sir.util.statistics.Significance#getSignificance(double[], double[])
-     */
     public static double getSignificance(List<Double> list1, List<Double> list2) throws IllegalArgumentException, MathException {
         double[] doubleArray1 = new double[list1.size()];
         double[] doubleArray2 = new double[list2.size()];
@@ -122,11 +115,8 @@ public class Significance {
         return getSignificance(doubleArray1, doubleArray2);
     }
     
-    
-    
     /**
      * Computes the significance of the difference between two correlations.
-     * @see org.tud.sir.util.statistics.Significance.testCorrelations
      */
     public static double getSignificance(double correlation1, double correlation2, int n1, int n2) throws MathException {
         

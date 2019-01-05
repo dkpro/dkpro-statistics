@@ -22,12 +22,15 @@ import java.math.MathContext;
 import java.util.Map;
 
 /**
+ * <ul>
  * <li>Conger, A.J.: Integration and generalization of kappas for multiple
  *   raters. Psychological Bulletin 88(2):322-328, 1980.</li>
  * <li>Davies, M. &amp; Fleiss, J.L.: Measuring agreement for multinomial data.
  *   Biometrics 38(4):1047–1051, 1982.</li>
  * <li>Hubert, L.: Kappa revisited. Psychological Bulletin
  *   84(2):289-297, 1977.</li>
+ * </ul>
+ * 
  * @author Christian M. Meyer
  */
 //TODO: Check Popping (1983) and Heuvelmans and Sanders (1993).
@@ -52,10 +55,12 @@ public class HubertKappaAgreement extends CodingAgreementMeasure {
         BigDecimal result = BigDecimal.ZERO;
         for (Object category : study.getCategories()) {
             int[] annotationCounts = annotationsPerCategory.get(category);
-            for (int m = 0; m < study.getRaterCount(); m++)
-                for (int n = m + 1; n < study.getRaterCount(); n++)
+            for (int m = 0; m < study.getRaterCount(); m++) {
+                for (int n = m + 1; n < study.getRaterCount(); n++) {
                     result = result.add(new BigDecimal(annotationCounts[m])
                             .multiply(new BigDecimal(annotationCounts[n])));
+                }
+            }
         }
         result = result.multiply(new BigDecimal(2));
         result = result.divide(new BigDecimal(study.getRaterCount())
