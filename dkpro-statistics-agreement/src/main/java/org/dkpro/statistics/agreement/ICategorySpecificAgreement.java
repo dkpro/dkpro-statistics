@@ -28,15 +28,15 @@ package org.dkpro.statistics.agreement;
  * @author Christian M. Meyer
  */
 public interface ICategorySpecificAgreement {
-	
-	/** Calculates the inter-rater agreement for the given category.
-	 *  @see ICategorySpecificAgreement */
-	/*  TODO @throws NullPointerException if the study is null or the given
-	 *  	category is null.
-	 *  @throws ArrayIndexOutOfBoundsException if the study does not contain 
-	 *  	the given category.
-	 *  @throws ArithmeticException if the study does not
-	 *  	contain annotations for the given category. */
-	public double calculateCategoryAgreement(final Object category);
-	
+    
+    /** Calculates the inter-rater agreement for the given category.
+     *  @see ICategorySpecificAgreement */
+    /*  TODO @throws NullPointerException if the study is null or the given
+     *      category is null.
+     *  @throws ArrayIndexOutOfBoundsException if the study does not contain 
+     *      the given category.
+     *  @throws ArithmeticException if the study does not
+     *      contain annotations for the given category. */
+    public double calculateCategoryAgreement(final Object category);
+    
 }

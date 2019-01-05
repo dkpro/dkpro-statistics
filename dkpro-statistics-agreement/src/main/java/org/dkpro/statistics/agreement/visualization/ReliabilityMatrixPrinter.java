@@ -49,70 +49,70 @@ import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
  */
 public class ReliabilityMatrixPrinter {
 
-	/** Print the reliability matrix for the given coding study. */
-	public void print(final PrintStream out, final ICodingAnnotationStudy study) {
-		//TODO: measure length of cats. maybe cut them.
-		Map<Object, Integer> categories = new LinkedHashMap<Object, Integer>();
-		for (Object cat : study.getCategories())
-			categories.put(cat, categories.size());
-		
-		final String DIVIDER = "\t";
-		
-		for (int i = 0; i < study.getItemCount(); i++)
-			out.print(DIVIDER + (i + 1));
-		out.print(DIVIDER + "Σ");
-		out.println();
-		
-		for (int r = 0; r < study.getRaterCount(); r++) {
-			out.print(r + 1);
-			for (ICodingAnnotationItem item : study.getItems())
-				out.print(DIVIDER + item.getUnit(r).getCategory());
-			out.println();
-		}
-		out.println();
-		
-		for (Object category : study.getCategories()) {
-			out.print(category);
-			int catSum = 0;
-			for (ICodingAnnotationItem item : study.getItems()) {
-				int catCount = 0;
-				for (IAnnotationUnit unit : item.getUnits())
-					if (category.equals(unit.getCategory()))
-						catCount++;
-				out.print(DIVIDER + (catCount > 0 ? catCount : ""));
-				catSum += catCount;
-			}
-			out.println(DIVIDER + catSum);
-		}
-		
-/*		
-		for (Object category : categories.keySet())
-			out.print(DIVIDER + category);
-		out.print(DIVIDER + "Σ");
-		out.println();
-		int i = 0;
-		int[] colSum = new int[study.getCategoryCount()];
-		for (Object category1 : categories.keySet()) {
-			out.print(category1);
-			int rowSum = 0;
-			for (int j = 0; j < categories.size(); j++) {
-				out.printf(DIVIDER + "%3d", frequencies[i][j]);
-				rowSum += frequencies[i][j];
-				colSum[j] += frequencies[i][j];
-			}
-			out.printf(DIVIDER + "%3d", rowSum);
-			out.println();
-			i++;
-		}
-		
-		out.print("Σ");
-		int rowSum = 0;
-		for (int j = 0; j < categories.size(); j++) {
-			out.printf(DIVIDER + "%3d", colSum[j]);
-			rowSum += colSum[j];
-		}
-		out.printf(DIVIDER + "%3d", rowSum);
-		out.println();*/
-	}
-	
+    /** Print the reliability matrix for the given coding study. */
+    public void print(final PrintStream out, final ICodingAnnotationStudy study) {
+        //TODO: measure length of cats. maybe cut them.
+        Map<Object, Integer> categories = new LinkedHashMap<Object, Integer>();
+        for (Object cat : study.getCategories())
+            categories.put(cat, categories.size());
+        
+        final String DIVIDER = "\t";
+        
+        for (int i = 0; i < study.getItemCount(); i++)
+            out.print(DIVIDER + (i + 1));
+        out.print(DIVIDER + "Σ");
+        out.println();
+        
+        for (int r = 0; r < study.getRaterCount(); r++) {
+            out.print(r + 1);
+            for (ICodingAnnotationItem item : study.getItems())
+                out.print(DIVIDER + item.getUnit(r).getCategory());
+            out.println();
+        }
+        out.println();
+        
+        for (Object category : study.getCategories()) {
+            out.print(category);
+            int catSum = 0;
+            for (ICodingAnnotationItem item : study.getItems()) {
+                int catCount = 0;
+                for (IAnnotationUnit unit : item.getUnits())
+                    if (category.equals(unit.getCategory()))
+                        catCount++;
+                out.print(DIVIDER + (catCount > 0 ? catCount : ""));
+                catSum += catCount;
+            }
+            out.println(DIVIDER + catSum);
+        }
+        
+/*        
+        for (Object category : categories.keySet())
+            out.print(DIVIDER + category);
+        out.print(DIVIDER + "Σ");
+        out.println();
+        int i = 0;
+        int[] colSum = new int[study.getCategoryCount()];
+        for (Object category1 : categories.keySet()) {
+            out.print(category1);
+            int rowSum = 0;
+            for (int j = 0; j < categories.size(); j++) {
+                out.printf(DIVIDER + "%3d", frequencies[i][j]);
+                rowSum += frequencies[i][j];
+                colSum[j] += frequencies[i][j];
+            }
+            out.printf(DIVIDER + "%3d", rowSum);
+            out.println();
+            i++;
+        }
+        
+        out.print("Σ");
+        int rowSum = 0;
+        for (int j = 0; j < categories.size(); j++) {
+            out.printf(DIVIDER + "%3d", colSum[j]);
+            rowSum += colSum[j];
+        }
+        out.printf(DIVIDER + "%3d", rowSum);
+        out.println();*/
+    }
+    
 }

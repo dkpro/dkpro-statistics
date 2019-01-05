@@ -42,22 +42,22 @@ import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
 // TODO: Check correspondence to Guilford's (1961; Holley & Guilford, 1964)
 //   G index; and Maxwell's (1977) random error (RE) coefficient - Zwick88
 public class BennettSAgreement extends CodingAgreementMeasure
-		implements IChanceCorrectedAgreement {
+        implements IChanceCorrectedAgreement {
 
-	/** Initializes the instance for the given annotation study. The study
-	 *  may never be null. */
-	public BennettSAgreement(final ICodingAnnotationStudy study) {
-		super(study);
-		ensureTwoRaters();
-	}
+    /** Initializes the instance for the given annotation study. The study
+     *  may never be null. */
+    public BennettSAgreement(final ICodingAnnotationStudy study) {
+        super(study);
+        ensureTwoRaters();
+    }
 
-	/** Calculates the expected inter-rater agreement that assumes a
-	 *  uniform distribution over all raters and annotations.
-	 *  @throws NullPointerException if the annotation study is null.
-	 *  @throws ArithmeticException if there are no annotation categories. */
-	@Override
-	public double calculateExpectedAgreement() {
-		return 1.0 / (double) study.getCategoryCount();
-	}
+    /** Calculates the expected inter-rater agreement that assumes a
+     *  uniform distribution over all raters and annotations.
+     *  @throws NullPointerException if the annotation study is null.
+     *  @throws ArithmeticException if there are no annotation categories. */
+    @Override
+    public double calculateExpectedAgreement() {
+        return 1.0 / (double) study.getCategoryCount();
+    }
 
 }

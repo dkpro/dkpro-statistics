@@ -32,25 +32,25 @@ import org.dkpro.statistics.agreement.IAnnotationStudy;
  */
 public class CachedDistanceFunction implements IDistanceFunction {
 
-	protected Hashtable<String, Double> cache;
-	protected IDistanceFunction wrappee;
+    protected Hashtable<String, Double> cache;
+    protected IDistanceFunction wrappee;
 
-	/** Instantiates the wrapper for the given distance function. */
-	public CachedDistanceFunction(final IDistanceFunction wrappee) {
-		this.wrappee = wrappee;
-		cache = new Hashtable<String, Double>();
-	}
+    /** Instantiates the wrapper for the given distance function. */
+    public CachedDistanceFunction(final IDistanceFunction wrappee) {
+        this.wrappee = wrappee;
+        cache = new Hashtable<String, Double>();
+    }
 
-	@Override
-	public double measureDistance(final IAnnotationStudy study,
-			final Object category1, final Object category2) {
-		String key = category1.hashCode() + "|" + category2.hashCode();
-		Double result = cache.get(key);
-		if (result == null) {
-			result = wrappee.measureDistance(study, category1, category2);
-			cache.put(key, result);
-		}
-		return result;
-	}
+    @Override
+    public double measureDistance(final IAnnotationStudy study,
+            final Object category1, final Object category2) {
+        String key = category1.hashCode() + "|" + category2.hashCode();
+        Double result = cache.get(key);
+        if (result == null) {
+            result = wrappee.measureDistance(study, category1, category2);
+            cache.put(key, result);
+        }
+        return result;
+    }
 
 }

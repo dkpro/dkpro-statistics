@@ -32,19 +32,19 @@ import org.dkpro.statistics.agreement.IAnnotationUnit;
  * @author Christian M. Meyer
  */
 public interface IUnitizingAnnotationUnit extends IAnnotationUnit, 
-		Comparable<IUnitizingAnnotationUnit> {
+        Comparable<IUnitizingAnnotationUnit> {
 
-	/** Returns the offset of the annotation unit (i.e., the start position 
-	 *  of the identified segment). */
-	public long getOffset();
-	
-	/** Returns the length of the annotation unit (i.e., the difference between
-	 *  the end and start position of the identified segment). */
-	public long getLength();
+    /** Returns the offset of the annotation unit (i.e., the start position 
+     *  of the identified segment). */
+    public long getOffset();
+    
+    /** Returns the length of the annotation unit (i.e., the difference between
+     *  the end and start position of the identified segment). */
+    public long getLength();
 
-	/** Returns the right delimiter of the annotation unit (i.e., the end 
-	 *  position of the identified segment). The method is a shorthand for
-	 *  {@link #getOffset()} + {@link #getLength()}. */
-	public long getEndOffset();
+    /** Returns the right delimiter of the annotation unit (i.e., the end 
+     *  position of the identified segment). The method is a shorthand for
+     *  {@link #getOffset()} + {@link #getLength()}. */
+    public long getEndOffset();
 
 }

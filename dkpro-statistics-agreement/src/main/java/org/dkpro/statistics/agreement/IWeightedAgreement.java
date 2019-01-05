@@ -30,8 +30,8 @@ import org.dkpro.statistics.agreement.distance.IDistanceFunction;
  */
 public interface IWeightedAgreement {
 
-	/** Returns the distance function that is used to measure the distance
-	 *  between two annotation categories. */
-	public IDistanceFunction getDistanceFunction();
-	
+    /** Returns the distance function that is used to measure the distance
+     *  between two annotation categories. */
+    public IDistanceFunction getDistanceFunction();
+    
 }

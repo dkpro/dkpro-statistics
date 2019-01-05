@@ -25,14 +25,14 @@ import org.dkpro.statistics.agreement.DisagreementMeasure;
  * @author Christian M. Meyer
  */
 public abstract class UnitizingAgreementMeasure extends DisagreementMeasure
-		implements IUnitizingAgreementMeasure {
+        implements IUnitizingAgreementMeasure {
 
-	protected IUnitizingAnnotationStudy study;
-	
-	/** Initializes the instance for the given annotation study. The study 
-	 *  should never be null. */
-	public UnitizingAgreementMeasure(final IUnitizingAnnotationStudy study) {
-		this.study = study;
-	}
+    protected IUnitizingAnnotationStudy study;
+    
+    /** Initializes the instance for the given annotation study. The study 
+     *  should never be null. */
+    public UnitizingAgreementMeasure(final IUnitizingAnnotationStudy study) {
+        this.study = study;
+    }
 
 }

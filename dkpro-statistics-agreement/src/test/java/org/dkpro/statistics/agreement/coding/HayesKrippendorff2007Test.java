@@ -33,60 +33,60 @@ import org.dkpro.statistics.agreement.distance.OrdinalDistanceFunction;
  */
 public class HayesKrippendorff2007Test extends TestCase {
 
-	/***/
-	public void testAgreement() {
-		ICodingAnnotationStudy study = createExample();
+    /***/
+    public void testAgreement() {
+        ICodingAnnotationStudy study = createExample();
 
-		KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
-				new OrdinalDistanceFunction());
-		assertEquals(0.7598, alpha.calculateAgreement(), 0.0001);
-	}
+        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
+                new OrdinalDistanceFunction());
+        assertEquals(0.7598, alpha.calculateAgreement(), 0.0001);
+    }
 
-	/** Creates an example annotation study introduced by
-	 *  Hayes &amp; Krippendorff (2007: p. 84). */
-	public static ICodingAnnotationStudy createExample() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(5);
-		study.addItem(1, 1, 2, null, 2);
-		study.addItem(1, 1, 0, 1, null);
-		study.addItem(2, 3, 3, 3, null);
-		study.addItem(null, 0, 0, null, 0);
-		study.addItem(0, 0, 0, null, 0);
-		study.addItem(0, 0, 0, null, 0);
-		study.addItem(1, 0, 2, null, 1);
-		study.addItem(1, null, 2, 0, null);
-		study.addItem(2, 2, 2, null, 2);
-		study.addItem(2, 1, 1, 1, null);
-		study.addItem(null, 1, 0, 0, null);
-		study.addItem(0, 0, 0, 0, null);
-		study.addItem(1, 2, 2, 2, null);
-		study.addItem(3, 3, 2, 2, 3);
-		study.addItem(1, 1, 1, null, 1);
-		study.addItem(1, 1, 1, null, 1);
-		study.addItem(2, 1, 2, null, 2);
-		study.addItem(1, 2, 3, 3, null);
-		study.addItem(1, 1, 0, 1, null);
-		study.addItem(0, 0, 0, null, 0);
-		study.addItem(0, 0, 1, 1, null);
-		study.addItem(0, 0, null, 0, 0);
-		study.addItem(2, 3, 3, 3, null);
-		study.addItem(0, 0, 0, 0, null);
-		study.addItem(1, 2, null, 2, 2);
-		study.addItem(0, 1, 1, 1, null);
-		study.addItem(0, 0, 0, 1, 0);
-		study.addItem(1, 2, 1, 2, null);
-		study.addItem(1, 1, 2, 2, null);
-		study.addItem(1, 1, 2, null, 2);
-		study.addItem(1, 1, 0, null, 0);
-		study.addItem(2, 1, 2, 1, null);
-		study.addItem(2, 2, null, 2, 2);
-		study.addItem(3, 2, 2, 2, null);
-		study.addItem(2, 2, 2, null, 2);
-		study.addItem(2, 2, 3, null, 2);
-		study.addItem(2, 2, 2, null, 2);
-		study.addItem(2, 2, null, 1, 2);
-		study.addItem(2, 2, 2, 2, null);
-		study.addItem(1, 1, 1, null, 1);
-		return study;
-	}
+    /** Creates an example annotation study introduced by
+     *  Hayes &amp; Krippendorff (2007: p. 84). */
+    public static ICodingAnnotationStudy createExample() {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(5);
+        study.addItem(1, 1, 2, null, 2);
+        study.addItem(1, 1, 0, 1, null);
+        study.addItem(2, 3, 3, 3, null);
+        study.addItem(null, 0, 0, null, 0);
+        study.addItem(0, 0, 0, null, 0);
+        study.addItem(0, 0, 0, null, 0);
+        study.addItem(1, 0, 2, null, 1);
+        study.addItem(1, null, 2, 0, null);
+        study.addItem(2, 2, 2, null, 2);
+        study.addItem(2, 1, 1, 1, null);
+        study.addItem(null, 1, 0, 0, null);
+        study.addItem(0, 0, 0, 0, null);
+        study.addItem(1, 2, 2, 2, null);
+        study.addItem(3, 3, 2, 2, 3);
+        study.addItem(1, 1, 1, null, 1);
+        study.addItem(1, 1, 1, null, 1);
+        study.addItem(2, 1, 2, null, 2);
+        study.addItem(1, 2, 3, 3, null);
+        study.addItem(1, 1, 0, 1, null);
+        study.addItem(0, 0, 0, null, 0);
+        study.addItem(0, 0, 1, 1, null);
+        study.addItem(0, 0, null, 0, 0);
+        study.addItem(2, 3, 3, 3, null);
+        study.addItem(0, 0, 0, 0, null);
+        study.addItem(1, 2, null, 2, 2);
+        study.addItem(0, 1, 1, 1, null);
+        study.addItem(0, 0, 0, 1, 0);
+        study.addItem(1, 2, 1, 2, null);
+        study.addItem(1, 1, 2, 2, null);
+        study.addItem(1, 1, 2, null, 2);
+        study.addItem(1, 1, 0, null, 0);
+        study.addItem(2, 1, 2, 1, null);
+        study.addItem(2, 2, null, 2, 2);
+        study.addItem(3, 2, 2, 2, null);
+        study.addItem(2, 2, 2, null, 2);
+        study.addItem(2, 2, 3, null, 2);
+        study.addItem(2, 2, 2, null, 2);
+        study.addItem(2, 2, null, 1, 2);
+        study.addItem(2, 2, 2, 2, null);
+        study.addItem(1, 1, 1, null, 1);
+        return study;
+    }
 
 }

@@ -31,33 +31,33 @@ import org.dkpro.statistics.agreement.distance.IDistanceFunction;
  * @author Christian M. Meyer
  */
 public abstract class WeightedAgreement extends DisagreementMeasure
-		implements IWeightedAgreement {
+        implements IWeightedAgreement {
 
-	protected IDistanceFunction distanceFunction;
-	protected ICodingAnnotationStudy study;
+    protected IDistanceFunction distanceFunction;
+    protected ICodingAnnotationStudy study;
 
-	/** Initializes the instance for the given annotation study. The study
-	 *  should never be null. */
-	public WeightedAgreement(final ICodingAnnotationStudy study) {
-		this.study = study;
-	}
+    /** Initializes the instance for the given annotation study. The study
+     *  should never be null. */
+    public WeightedAgreement(final ICodingAnnotationStudy study) {
+        this.study = study;
+    }
 
-	@Override
+    @Override
     public IDistanceFunction getDistanceFunction() {
-		return distanceFunction;
-	}
+        return distanceFunction;
+    }
 
-	/** Uses the given distance function for upcoming calculations of the
-	 *  inter-rater agreement. */
-	public void setDistanceFunction(final IDistanceFunction distanceFunction) {
-		this.distanceFunction = distanceFunction;
-	}
+    /** Uses the given distance function for upcoming calculations of the
+     *  inter-rater agreement. */
+    public void setDistanceFunction(final IDistanceFunction distanceFunction) {
+        this.distanceFunction = distanceFunction;
+    }
 
-	protected void ensureDistanceFunction() {
-		if (distanceFunction == null) {
+    protected void ensureDistanceFunction() {
+        if (distanceFunction == null) {
             throw new NullPointerException("No distance function provided. "
-					+ "Use " + getClass() + ".setDistanceFunction()!");
+                    + "Use " + getClass() + ".setDistanceFunction()!");
         }
-	}
+    }
 
 }

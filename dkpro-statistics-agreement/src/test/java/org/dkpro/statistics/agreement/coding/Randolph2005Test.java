@@ -36,51 +36,51 @@ import junit.framework.TestCase;
  */
 public class Randolph2005Test extends TestCase {
 
-	/***/
-	public void testExample1() {
-		ICodingAnnotationStudy study = createExample1();
-				
-		FleissKappaAgreement pi = new FleissKappaAgreement(study);
-		assertEquals(0.67, pi.calculateObservedAgreement(), 0.01);
-		assertEquals(0.50, pi.calculateExpectedAgreement(), 0.01);
-		assertEquals(0.33, pi.calculateAgreement(), 0.01);
-		
-		RandolphKappaAgreement rk = new RandolphKappaAgreement(study);
-		assertEquals(0.33, rk.calculateAgreement(), 0.01);		
-	}  
+    /***/
+    public void testExample1() {
+        ICodingAnnotationStudy study = createExample1();
+                
+        FleissKappaAgreement pi = new FleissKappaAgreement(study);
+        assertEquals(0.67, pi.calculateObservedAgreement(), 0.01);
+        assertEquals(0.50, pi.calculateExpectedAgreement(), 0.01);
+        assertEquals(0.33, pi.calculateAgreement(), 0.01);
+        
+        RandolphKappaAgreement rk = new RandolphKappaAgreement(study);
+        assertEquals(0.33, rk.calculateAgreement(), 0.01);        
+    }  
 
-	/***/
-	public void testExample2() {
-		ICodingAnnotationStudy study = createExample2();
-				
-		FleissKappaAgreement pi = new FleissKappaAgreement(study);
-		assertEquals(-0.2, pi.calculateAgreement(), 0.01);
-		
-		RandolphKappaAgreement rk = new RandolphKappaAgreement(study);
-		assertEquals(0.33, rk.calculateAgreement(), 0.01);
-		
-	}  
-	
-	/** Creates an example annotation study introduced by
-	 *  Randolph (2005: p. 17). */
-	public static ICodingAnnotationStudy createExample1() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(3);
-		study.addItem("Yes", "Yes", "Yes");
-		study.addItem("Yes", "Yes", "No");
-		study.addItem("No", "No", "Yes");
-		study.addItem("No", "No", "No");
-		return study;
-	}
+    /***/
+    public void testExample2() {
+        ICodingAnnotationStudy study = createExample2();
+                
+        FleissKappaAgreement pi = new FleissKappaAgreement(study);
+        assertEquals(-0.2, pi.calculateAgreement(), 0.01);
+        
+        RandolphKappaAgreement rk = new RandolphKappaAgreement(study);
+        assertEquals(0.33, rk.calculateAgreement(), 0.01);
+        
+    }  
+    
+    /** Creates an example annotation study introduced by
+     *  Randolph (2005: p. 17). */
+    public static ICodingAnnotationStudy createExample1() {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(3);
+        study.addItem("Yes", "Yes", "Yes");
+        study.addItem("Yes", "Yes", "No");
+        study.addItem("No", "No", "Yes");
+        study.addItem("No", "No", "No");
+        return study;
+    }
 
-	/** Creates an example annotation study introduced by 
-	 *  Randolph (2005: p. 17). */
-	public static ICodingAnnotationStudy createExample2() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(3);
-		study.addItem("Yes", "Yes", "Yes");
-		study.addItem("Yes", "Yes", "No");
-		study.addItem("Yes", "Yes", "No");
-		study.addItem("Yes", "Yes", "Yes");
-		return study;
-	}
-	
+    /** Creates an example annotation study introduced by 
+     *  Randolph (2005: p. 17). */
+    public static ICodingAnnotationStudy createExample2() {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(3);
+        study.addItem("Yes", "Yes", "Yes");
+        study.addItem("Yes", "Yes", "No");
+        study.addItem("Yes", "Yes", "No");
+        study.addItem("Yes", "Yes", "Yes");
+        return study;
+    }
+    
 }

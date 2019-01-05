@@ -38,21 +38,21 @@ import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
  * @author Christian M. Meyer
  */
 public class RandolphKappaAgreement extends CodingAgreementMeasure
-		implements IChanceCorrectedAgreement {
+        implements IChanceCorrectedAgreement {
 
-	/** Initializes the instance for the given annotation study. The study
-	 *  may never be null. */
-	public RandolphKappaAgreement(final ICodingAnnotationStudy study) {
-		super(study);
-	}
+    /** Initializes the instance for the given annotation study. The study
+     *  may never be null. */
+    public RandolphKappaAgreement(final ICodingAnnotationStudy study) {
+        super(study);
+    }
 
-	/** Calculates the expected inter-rater agreement that assumes a
-	 *  uniform distribution over all raters and annotations.
-	 *  @throws NullPointerException if the annotation study is null.
-	 *  @throws ArithmeticException if there are no annotation categories. */
-	@Override
-	public double calculateExpectedAgreement() {
-		return 1.0 / (double) study.getCategoryCount();
-	}
+    /** Calculates the expected inter-rater agreement that assumes a
+     *  uniform distribution over all raters and annotations.
+     *  @throws NullPointerException if the annotation study is null.
+     *  @throws ArithmeticException if there are no annotation categories. */
+    @Override
+    public double calculateExpectedAgreement() {
+        return 1.0 / (double) study.getCategoryCount();
+    }
 
 }

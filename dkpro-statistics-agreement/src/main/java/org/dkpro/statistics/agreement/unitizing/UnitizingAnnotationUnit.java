@@ -31,72 +31,72 @@ import org.dkpro.statistics.agreement.AnnotationUnit;
  * @author Christian M. Meyer
  */
 public class UnitizingAnnotationUnit extends AnnotationUnit
-		implements IUnitizingAnnotationUnit {
+        implements IUnitizingAnnotationUnit {
 
-	protected long offset;
-	protected long length;
+    protected long offset;
+    protected long length;
 
-	/** Initializes the unit with the given offset and length as well as the
-	 *  category assigned to the unit by the rater with the specified index.
-	 *  Normally, the method {@link UnitizingAnnotationStudy#addUnit(long,
-	 *  long, int, Object)} should be used to define the annotation units. */
-	protected UnitizingAnnotationUnit(long offset, long length, int raterIdx,
-			final Object category) {
-		super(raterIdx, category);
-		this.offset = offset;
-		this.length = length;
-	}
+    /** Initializes the unit with the given offset and length as well as the
+     *  category assigned to the unit by the rater with the specified index.
+     *  Normally, the method {@link UnitizingAnnotationStudy#addUnit(long,
+     *  long, int, Object)} should be used to define the annotation units. */
+    protected UnitizingAnnotationUnit(long offset, long length, int raterIdx,
+            final Object category) {
+        super(raterIdx, category);
+        this.offset = offset;
+        this.length = length;
+    }
 
-	@Override
-	public long getOffset() {
-		return offset;
-	}
+    @Override
+    public long getOffset() {
+        return offset;
+    }
 
-	@Override
-	public long getLength() {
-		return length;
-	}
+    @Override
+    public long getLength() {
+        return length;
+    }
 
-	@Override
-	public long getEndOffset() {
-		return offset + length;
-	}
+    @Override
+    public long getEndOffset() {
+        return offset + length;
+    }
 
-	@Override
-	public int compareTo(final IUnitizingAnnotationUnit that) {
-		if (this.equals(that)) {
+    @Override
+    public int compareTo(final IUnitizingAnnotationUnit that) {
+        if (this.equals(that)) {
             return 0;
         }
 
-		if (this.offset < that.getOffset()) {
+        if (this.offset < that.getOffset()) {
             return -1;
         }
-		if (this.offset > that.getOffset()) {
+        if (this.offset > that.getOffset()) {
             return +1;
         }
 
-		if (this.length < that.getLength()) {
+        if (this.length < that.getLength()) {
             return -1;
         }
-		if (this.length > that.getLength()) {
+        if (this.length > that.getLength()) {
             return +1;
         }
 
-		if (this.raterIdx < that.getRaterIdx()) {
+        if (this.raterIdx < that.getRaterIdx()) {
             return -1;
         }
-		if (this.raterIdx > that.getRaterIdx()) {
+        if (this.raterIdx > that.getRaterIdx()) {
             return +1;
         }
 
-		return (this.hashCode() < that.hashCode() ? -1 : +1);
-	}
+        return (this.hashCode() < that.hashCode() ? -1 : +1);
+    }
 
-	@Override
-	public String toString() {
-		return raterIdx + "<" + category + ">"
-				+ ((offset >= 0) ? "@" + offset : "")
-				+ ((length > 0) ? "-" + length : "");
-	}
+    @Override
+    public String toString() {
+        return raterIdx + "<" + category + ">"
+                + ((offset >= 0) ? "@" + offset : "")
+                + ((length > 0) ? "-" + length : "");
+    }
 
 }

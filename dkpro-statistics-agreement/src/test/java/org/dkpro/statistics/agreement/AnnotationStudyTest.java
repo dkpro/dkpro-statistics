@@ -23,36 +23,36 @@ import junit.framework.TestCase;
 
 public class AnnotationStudyTest extends TestCase {
 
-	public void testAddItem() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(3);
-		study.addItem("A", "B", "C");
-		study.addItem(5, 3, 0);
-		study.addItem(new Object(), "c", 12);
-		study.addItem((Object[]) new String[]{"A", "B", "D"});
-		assertEquals(4, study.getItemCount());
-	}
-	
-	public void testAddItemMissingUnits() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(3);
-		try {
-			study.addItem("A");
-			fail("IllegalArgumentException expected!");
-		} catch (IllegalArgumentException e) {}
-		
-		try {
-			study.addItem(5, 3);
-			fail("IllegalArgumentException expected!");
-		} catch (IllegalArgumentException e) {}
-		
-		try {
-			study.addItem((Object) new String[]{"A", "B", "D"});
-			fail("IllegalArgumentException expected!");
-		} catch (IllegalArgumentException e) {}
-		
-		try {
-			study.addItem((Object[]) new String[]{"A", "B"});
-			fail("IllegalArgumentException expected!");
-		} catch (IllegalArgumentException e) {}
-	}
-	
+    public void testAddItem() {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(3);
+        study.addItem("A", "B", "C");
+        study.addItem(5, 3, 0);
+        study.addItem(new Object(), "c", 12);
+        study.addItem((Object[]) new String[]{"A", "B", "D"});
+        assertEquals(4, study.getItemCount());
+    }
+    
+    public void testAddItemMissingUnits() {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(3);
+        try {
+            study.addItem("A");
+            fail("IllegalArgumentException expected!");
+        } catch (IllegalArgumentException e) {}
+        
+        try {
+            study.addItem(5, 3);
+            fail("IllegalArgumentException expected!");
+        } catch (IllegalArgumentException e) {}
+        
+        try {
+            study.addItem((Object) new String[]{"A", "B", "D"});
+            fail("IllegalArgumentException expected!");
+        } catch (IllegalArgumentException e) {}
+        
+        try {
+            study.addItem((Object[]) new String[]{"A", "B"});
+            fail("IllegalArgumentException expected!");
+        } catch (IllegalArgumentException e) {}
+    }
+    
 }

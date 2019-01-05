@@ -35,15 +35,15 @@ package org.dkpro.statistics.agreement;
  */
 public interface IChanceCorrectedDisagreement extends IAgreementMeasure {
 
-	/** Returns the observed disagreement of an annotation study. The observed
-	 *  disagreement is basically the proportion of annotation units that the
-	 *  raters disagree on divided by the number of units in the given study. */
-	public double calculateObservedDisagreement();
+    /** Returns the observed disagreement of an annotation study. The observed
+     *  disagreement is basically the proportion of annotation units that the
+     *  raters disagree on divided by the number of units in the given study. */
+    public double calculateObservedDisagreement();
 
-	/** Returns the expected disagreement of an annotation study. The expected
-	 *  disagreement is the proportion of disagreement that would be expected by
-	 *  chance alone. The expected disagreement should be equal to the observed
-	 *  disagreement if each rater makes a random decision for each unit. */
-	public double calculateExpectedDisagreement();
+    /** Returns the expected disagreement of an annotation study. The expected
+     *  disagreement is the proportion of disagreement that would be expected by
+     *  chance alone. The expected disagreement should be equal to the observed
+     *  disagreement if each rater makes a random decision for each unit. */
+    public double calculateExpectedDisagreement();
 
 }

@@ -39,11 +39,11 @@ import org.dkpro.statistics.agreement.coding.WeightedKappaAgreement;
  */
 public interface IDistanceFunction {
 
-	/** Returns a distance value for the given pair of categories used within
-	 *  the given annotation study. Normally, the measure should return a 
-	 *  distance of 0 if, and only if, the two categories are equal and
-	 *  a positive number otherwise. */
-	public double measureDistance(final IAnnotationStudy study, 
-			final Object category1, final Object category2);
-					
+    /** Returns a distance value for the given pair of categories used within
+     *  the given annotation study. Normally, the measure should return a 
+     *  distance of 0 if, and only if, the two categories are equal and
+     *  a positive number otherwise. */
+    public double measureDistance(final IAnnotationStudy study, 
+            final Object category1, final Object category2);
+                    
 }

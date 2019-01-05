@@ -28,5 +28,5 @@ import org.dkpro.statistics.agreement.IAgreementMeasure;
  * @author Christian M. Meyer
  */
 public interface IUnitizingAgreementMeasure extends IAgreementMeasure {
-	
+    
 }

@@ -37,87 +37,87 @@ import org.dkpro.statistics.agreement.unitizing.IUnitizingAnnotationUnit;
  */
 public class UnitizingMatrixPrinter {
 
-	/** Print a plain-text representation of the given unitizing study. A matrix
-	 *  can only be printed for two of the raters and for (non-overlapping) 
-	 *  units coded with the same category. */
-	public void print(final PrintStream out, final IUnitizingAnnotationStudy study,
-			final Object category, int rater1, int rater2) {
-		long B = study.getContinuumBegin();
-		long L = study.getContinuumLength();
-		
-		// Continuum.
-		int digits = (int) Math.floor(Math.log(B + L) / Math.log(10) + 1);
-		char[] digitSpace = new char[digits];
-		for (int i = 0; i < digits; i++)
-			digitSpace[i] = ' ';
-		char[][] scale = new char[digits][(int) L + 1];
-		for (int i = 0; i < digits; i++)
-			for (int j = 0; j <= L; j++)
-				scale[i][j] = ' ';
-		for (int i = 0; i <= L; i++) {
-			int idx = 0;
-			long pos = B + i;
-			do {
-				long lastDigit = pos % 10;
-				scale[idx++][i] = (char) (lastDigit + '0');
-				if (lastDigit == 0 || i == 0 || i == L)
-					pos = pos / 10;
-				else
-					break;
-			} while (pos > 0);
-		}		
-		for (int j = digits - 1; j >= 0; j--) {
-			out.print(digitSpace);
-			out.print("  ");
-			out.println(scale[j]);
-		}
-		
-		// Rater 1.
-		char[] annotations1 = new char[(int) L];
-		for (int i = 0; i < L; i++)
-			annotations1[i] = ' ';
-		for (IUnitizingAnnotationUnit unit : study.getUnits())
-			if (unit.getRaterIdx() == rater1 && unit.getCategory() == category)
-				for (int i = 0; i < unit.getLength(); i++)
-					annotations1[i + (int) unit.getOffset() - (int) B] = '*';
-		out.print(digitSpace);
-		out.print("  ");
-		out.println(annotations1);
-		
-		// Rater 2.
-		char[] annotations2 = new char[(int) L];
-		for (int i = 0; i < L; i++)
-			annotations2[i] = ' ';
-		for (IUnitizingAnnotationUnit unit : study.getUnits())
-			if (unit.getRaterIdx() == rater2 && unit.getCategory() == category)
-				for (int i = 0; i < unit.getLength(); i++)
-					annotations2[i + (int) unit.getOffset() - (int) B] = '*';
-		
-		for (int i = 0; i <= L; i++) {
-			for (int j = digits - 1; j >= 0; j--)
-				out.print(scale[j][i]);
-			out.print(" ");
-			if (i < L) {
-				out.print(annotations2[i]);
-				for (int k = 0; k < L; k++) {
-					/*if (i != k) {
-						out.print(' ');
-						continue;
-					}*/					
-					if (annotations1[k] == '*' && annotations2[i] == '*')
-						out.print('*');
-					else
-					if (annotations1[k] == '*' && annotations2[i] == ' ')
-						out.print('\\');
-					else
-					if (annotations1[k] == ' ' && annotations2[i] == '*')
-						out.print('/');
-					else
-						out.print('.');
-				}
-			}
-			out.println();
-		}
-	}
-	
+    /** Print a plain-text representation of the given unitizing study. A matrix
+     *  can only be printed for two of the raters and for (non-overlapping) 
+     *  units coded with the same category. */
+    public void print(final PrintStream out, final IUnitizingAnnotationStudy study,
+            final Object category, int rater1, int rater2) {
+        long B = study.getContinuumBegin();
+        long L = study.getContinuumLength();
+        
+        // Continuum.
+        int digits = (int) Math.floor(Math.log(B + L) / Math.log(10) + 1);
+        char[] digitSpace = new char[digits];
+        for (int i = 0; i < digits; i++)
+            digitSpace[i] = ' ';
+        char[][] scale = new char[digits][(int) L + 1];
+        for (int i = 0; i < digits; i++)
+            for (int j = 0; j <= L; j++)
+                scale[i][j] = ' ';
+        for (int i = 0; i <= L; i++) {
+            int idx = 0;
+            long pos = B + i;
+            do {
+                long lastDigit = pos % 10;
+                scale[idx++][i] = (char) (lastDigit + '0');
+                if (lastDigit == 0 || i == 0 || i == L)
+                    pos = pos / 10;
+                else
+                    break;
+            } while (pos > 0);
+        }        
+        for (int j = digits - 1; j >= 0; j--) {
+            out.print(digitSpace);
+            out.print("  ");
+            out.println(scale[j]);
+        }
+        
+        // Rater 1.
+        char[] annotations1 = new char[(int) L];
+        for (int i = 0; i < L; i++)
+            annotations1[i] = ' ';
+        for (IUnitizingAnnotationUnit unit : study.getUnits())
+            if (unit.getRaterIdx() == rater1 && unit.getCategory() == category)
+                for (int i = 0; i < unit.getLength(); i++)
+                    annotations1[i + (int) unit.getOffset() - (int) B] = '*';
+        out.print(digitSpace);
+        out.print("  ");
+        out.println(annotations1);
+        
+        // Rater 2.
+        char[] annotations2 = new char[(int) L];
+        for (int i = 0; i < L; i++)
+            annotations2[i] = ' ';
+        for (IUnitizingAnnotationUnit unit : study.getUnits())
+            if (unit.getRaterIdx() == rater2 && unit.getCategory() == category)
+                for (int i = 0; i < unit.getLength(); i++)
+                    annotations2[i + (int) unit.getOffset() - (int) B] = '*';
+        
+        for (int i = 0; i <= L; i++) {
+            for (int j = digits - 1; j >= 0; j--)
+                out.print(scale[j][i]);
+            out.print(" ");
+            if (i < L) {
+                out.print(annotations2[i]);
+                for (int k = 0; k < L; k++) {
+                    /*if (i != k) {
+                        out.print(' ');
+                        continue;
+                    }*/                    
+                    if (annotations1[k] == '*' && annotations2[i] == '*')
+                        out.print('*');
+                    else
+                    if (annotations1[k] == '*' && annotations2[i] == ' ')
+                        out.print('\\');
+                    else
+                    if (annotations1[k] == ' ' && annotations2[i] == '*')
+                        out.print('/');
+                    else
+                        out.print('.');
+                }
+            }
+            out.println();
+        }
+    }
+    
 }

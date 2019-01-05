@@ -29,41 +29,38 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class UnitizingAnnotationStudyTest extends TestCase {
+    public void testSortOrder() {
+        UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 7);
+        study.addUnit(0, 1, 1, null);
+        study.addUnit(3, 1, 1, null);
+        study.addUnit(1, 1, 1, null);
+        study.addUnit(2, 3, 3, null);
+        study.addUnit(2, 5, 1, null);
+        study.addUnit(2, 2, 1, null);
+        study.addUnit(1, 1, 3, null);
+        study.addUnit(1, 1, 2, null);
+        study.addUnit(2, 4, 2, null);
+        study.addUnit(3, 2, 1, null);
+        
+        Iterator<IUnitizingAnnotationUnit> iter = study.getUnits().iterator();
+        assertAnnotationItem(0, 1, 1, iter.next());
+        assertAnnotationItem(1, 1, 1, iter.next());
+        assertAnnotationItem(1, 1, 2, iter.next());
+        assertAnnotationItem(1, 1, 3, iter.next());
+        assertAnnotationItem(2, 2, 1, iter.next());
+        assertAnnotationItem(2, 3, 3, iter.next());
+        assertAnnotationItem(2, 4, 2, iter.next());
+        assertAnnotationItem(2, 5, 1, iter.next());
+        assertAnnotationItem(3, 1, 1, iter.next());
+        assertAnnotationItem(3, 2, 1, iter.next());
+        assertFalse(iter.hasNext());
+    }
 
-	/***/
-	public void testSortOrder() {
-		UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 7);
-		study.addUnit(0, 1, 1, null);
-		study.addUnit(3, 1, 1, null);
-		study.addUnit(1, 1, 1, null);
-		study.addUnit(2, 3, 3, null);
-		study.addUnit(2, 5, 1, null);
-		study.addUnit(2, 2, 1, null);
-		study.addUnit(1, 1, 3, null);
-		study.addUnit(1, 1, 2, null);
-		study.addUnit(2, 4, 2, null);
-		study.addUnit(3, 2, 1, null);
-		
-		Iterator<IUnitizingAnnotationUnit> iter = study.getUnits().iterator();
-		assertAnnotationItem(0, 1, 1, iter.next());
-		assertAnnotationItem(1, 1, 1, iter.next());
-		assertAnnotationItem(1, 1, 2, iter.next());
-		assertAnnotationItem(1, 1, 3, iter.next());
-		assertAnnotationItem(2, 2, 1, iter.next());
-		assertAnnotationItem(2, 3, 3, iter.next());
-		assertAnnotationItem(2, 4, 2, iter.next());
-		assertAnnotationItem(2, 5, 1, iter.next());
-		assertAnnotationItem(3, 1, 1, iter.next());
-		assertAnnotationItem(3, 2, 1, iter.next());
-		assertFalse(iter.hasNext());
-	}
-
-	protected static void assertAnnotationItem(int expectedOffset, 
-			int expectedLength, int expectedRaterIdx, 
-			final IUnitizingAnnotationUnit actual) {
-		assertEquals(actual.toString(), expectedOffset, actual.getOffset());
-		assertEquals(actual.toString(), expectedLength, actual.getLength());
-		assertEquals(actual.toString(), expectedRaterIdx, actual.getRaterIdx());
-	}
-	
+    protected static void assertAnnotationItem(int expectedOffset, 
+            int expectedLength, int expectedRaterIdx, 
+            final IUnitizingAnnotationUnit actual) {
+        assertEquals(actual.toString(), expectedOffset, actual.getOffset());
+        assertEquals(actual.toString(), expectedLength, actual.getLength());
+        assertEquals(actual.toString(), expectedRaterIdx, actual.getRaterIdx());
+    }
 }

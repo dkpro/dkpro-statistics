@@ -46,44 +46,44 @@ import java.util.HashSet;
  */
 public class SetAnnotation extends HashSet<Object> implements Comparable<SetAnnotation> {
 
-	/** Instantiates an empty set annotation. */
-	public SetAnnotation() {
-		super();
-	}
+    /** Instantiates an empty set annotation. */
+    public SetAnnotation() {
+        super();
+    }
 
-	/** Instantiates a set annotation with the given values as set elements. */
-	public SetAnnotation(Object... values) {
-		super();
-		for (Object value : values) {
+    /** Instantiates a set annotation with the given values as set elements. */
+    public SetAnnotation(Object... values) {
+        super();
+        for (Object value : values) {
             add(value);
         }
-	}
+    }
 
-	/** Instantiates a set annotation with the given values as set elements. */
-	public SetAnnotation(Collection<? extends Object> c) {
-		super(c);
-	}
+    /** Instantiates a set annotation with the given values as set elements. */
+    public SetAnnotation(Collection<? extends Object> c) {
+        super(c);
+    }
 
-	@Override
+    @Override
     public int compareTo(final SetAnnotation that) {
-		return toString().compareTo(that.toString());
-	}
+        return toString().compareTo(that.toString());
+    }
 
-	@Override
-    public boolean equals(final Object that)	{
-		if (!(that instanceof SetAnnotation)) {
+    @Override
+    public boolean equals(final Object that)    {
+        if (!(that instanceof SetAnnotation)) {
             return false;
         }
-		return toString().equals(((SetAnnotation) that).toString());
-	}
+        return toString().equals(((SetAnnotation) that).toString());
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder result = new StringBuilder();
-		for (Object value : this) {
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Object value : this) {
             result.append(result.length() == 0 ? "" : ", ").append(value);
         }
-		return result.toString();
-	}
+        return result.toString();
+    }
 
 }

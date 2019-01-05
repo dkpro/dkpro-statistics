@@ -41,9 +41,9 @@ import org.dkpro.statistics.agreement.unitizing.IUnitizingAnnotationStudy;
  */
 // TODO @see IUnitizingItemSpecificAgreement
 public interface IItemSpecificAgreement<ItemType extends IAnnotationItem> {
-	
-	/** Calculates the inter-rater agreement for the given annotation item.
-	 *  @see IItemSpecificAgreement */
-	public double calculateItemAgreement(final ItemType item);
-	
+    
+    /** Calculates the inter-rater agreement for the given annotation item.
+     *  @see IItemSpecificAgreement */
+    public double calculateItemAgreement(final ItemType item);
+    
 }

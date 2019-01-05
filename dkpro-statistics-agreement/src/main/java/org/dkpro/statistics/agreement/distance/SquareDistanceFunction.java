@@ -26,5 +26,5 @@ package org.dkpro.statistics.agreement.distance;
  */
 @Deprecated
 public class SquareDistanceFunction extends IntervalDistanceFunction {
-		
+        
 }

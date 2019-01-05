@@ -30,70 +30,70 @@ import junit.framework.TestCase;
  */
 public class BrennanPrediger1981Test extends TestCase {
 
-	/***/
-	public void testExample1() {
-		ICodingAnnotationStudy study = createExample1();
+    /***/
+    public void testExample1() {
+        ICodingAnnotationStudy study = createExample1();
 
-		CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-		assertEquals(0.60, kappa.calculateObservedAgreement(), 0.01);
-		assertEquals(0.45, kappa.calculateExpectedAgreement(), 0.01);
-		assertEquals(0.27, kappa.calculateAgreement(), 0.01);
+        CohenKappaAgreement kappa = new CohenKappaAgreement(study);
+        assertEquals(0.60, kappa.calculateObservedAgreement(), 0.01);
+        assertEquals(0.45, kappa.calculateExpectedAgreement(), 0.01);
+        assertEquals(0.27, kappa.calculateAgreement(), 0.01);
 
-		BennettSAgreement S = new BennettSAgreement(study);
-		assertEquals(0.60, S.calculateObservedAgreement(), 0.01);
-		assertEquals(0.33, S.calculateExpectedAgreement(), 0.01);
-		assertEquals(0.40, S.calculateAgreement(), 0.01);
+        BennettSAgreement S = new BennettSAgreement(study);
+        assertEquals(0.60, S.calculateObservedAgreement(), 0.01);
+        assertEquals(0.33, S.calculateExpectedAgreement(), 0.01);
+        assertEquals(0.40, S.calculateAgreement(), 0.01);
 
-		//max A_O = sum min{marginals} -> 0.7
-//		assertEquals(0.60, kappa / max-kappa, 0.01);
+        //max A_O = sum min{marginals} -> 0.7
+//        assertEquals(0.60, kappa / max-kappa, 0.01);
 
-//		assertEquals(-1.00, kappa_b, 0.01);
-	}
+//        assertEquals(-1.00, kappa_b, 0.01);
+    }
 
-	/***/
-	public void testExample2() {
-		ICodingAnnotationStudy study = createExample2();
+    /***/
+    public void testExample2() {
+        ICodingAnnotationStudy study = createExample2();
 
-		CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-		assertEquals(0.60, kappa.calculateObservedAgreement(), 0.01);
-		assertEquals(0.44, kappa.calculateExpectedAgreement(), 0.01);
-		assertEquals(0.29, kappa.calculateAgreement(), 0.01);
+        CohenKappaAgreement kappa = new CohenKappaAgreement(study);
+        assertEquals(0.60, kappa.calculateObservedAgreement(), 0.01);
+        assertEquals(0.44, kappa.calculateExpectedAgreement(), 0.01);
+        assertEquals(0.29, kappa.calculateAgreement(), 0.01);
 
-		BennettSAgreement S = new BennettSAgreement(study);
-		assertEquals(0.60, S.calculateObservedAgreement(), 0.01);
-		assertEquals(0.33, S.calculateExpectedAgreement(), 0.01);
-		assertEquals(0.40, S.calculateAgreement(), 0.01);
+        BennettSAgreement S = new BennettSAgreement(study);
+        assertEquals(0.60, S.calculateObservedAgreement(), 0.01);
+        assertEquals(0.33, S.calculateExpectedAgreement(), 0.01);
+        assertEquals(0.40, S.calculateAgreement(), 0.01);
 
-		//max A_O = sum min{marginals} -> 1
-//		assertEquals(0.29, kappa / max-kappa, 0.01);
+        //max A_O = sum min{marginals} -> 1
+//        assertEquals(0.29, kappa / max-kappa, 0.01);
 
-		// A_E = max. marginal (majority class)
-//		assertEquals(0.00, kappa_b, 0.01);
-	}
+        // A_E = max. marginal (majority class)
+//        assertEquals(0.00, kappa_b, 0.01);
+    }
 
-	/** Creates an example annotation study introduced by
-	 *  Brennan &amp; Prediger (1981: p. 689). Proportions are scaled by 100. */
-	public static ICodingAnnotationStudy createExample1() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(2);
-		study.addMultipleItems(50, 1, 1);
-		study.addMultipleItems(10, 2, 1);
-		study.addMultipleItems(10, 2, 2);
-		study.addMultipleItems(10, 2, 3);
-		study.addMultipleItems(20, 3, 1);
-		return study;
-	}
+    /** Creates an example annotation study introduced by
+     *  Brennan &amp; Prediger (1981: p. 689). Proportions are scaled by 100. */
+    public static ICodingAnnotationStudy createExample1() {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(2);
+        study.addMultipleItems(50, 1, 1);
+        study.addMultipleItems(10, 2, 1);
+        study.addMultipleItems(10, 2, 2);
+        study.addMultipleItems(10, 2, 3);
+        study.addMultipleItems(20, 3, 1);
+        return study;
+    }
 
-	/** Creates an example annotation study introduced by
-	 *  Brennan &amp; Prediger (1981: p. 691). Proportions are scaled by 100. */
-	public static ICodingAnnotationStudy createExample2() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(2);
-		study.addMultipleItems(50, 1, 1);
-		study.addMultipleItems(10, 1, 3);
-		study.addMultipleItems(10, 2, 2);
-		study.addMultipleItems(10, 2, 3);
-		study.addMultipleItems(10, 3, 1);
-		study.addMultipleItems(10, 3, 2);
-		return study;
-	}
+    /** Creates an example annotation study introduced by
+     *  Brennan &amp; Prediger (1981: p. 691). Proportions are scaled by 100. */
+    public static ICodingAnnotationStudy createExample2() {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(2);
+        study.addMultipleItems(50, 1, 1);
+        study.addMultipleItems(10, 1, 3);
+        study.addMultipleItems(10, 2, 2);
+        study.addMultipleItems(10, 2, 3);
+        study.addMultipleItems(10, 3, 1);
+        study.addMultipleItems(10, 3, 2);
+        return study;
+    }
 
 }

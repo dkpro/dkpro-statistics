@@ -35,27 +35,27 @@ import org.dkpro.statistics.agreement.IAnnotationStudy;
  */
 public interface IUnitizingAnnotationStudy extends IAnnotationStudy {
 
-	// -- Units --
-	
-	/** Allows iterating all annotation units of this study. */
-	public Iterable<IUnitizingAnnotationUnit> getUnits();
+    // -- Units --
+    
+    /** Allows iterating all annotation units of this study. */
+    public Iterable<IUnitizingAnnotationUnit> getUnits();
 
-	// -- Continuum --
-	
-//	@Deprecated
-//	public int getSectionCount();
-//	
-//	@Deprecated
-//	public Iterable<Integer> getSectionBoundaries();
-	
-	/** Returns the begin of the continuum (i.e., the first offset that 
-	 *  is considered valid for annotation units). */
-	public long getContinuumBegin();
-	
-	/** Returns the length of the continuum (i.e., the last possible 
-	 *  right delimiter of an annotation unit). */
-	public long getContinuumLength();
-	
-	//TODO: public void addSectionBoundary(long position);
+    // -- Continuum --
+    
+//    @Deprecated
+//    public int getSectionCount();
+//    
+//    @Deprecated
+//    public Iterable<Integer> getSectionBoundaries();
+    
+    /** Returns the begin of the continuum (i.e., the first offset that 
+     *  is considered valid for annotation units). */
+    public long getContinuumBegin();
+    
+    /** Returns the length of the continuum (i.e., the last possible 
+     *  right delimiter of an annotation unit). */
+    public long getContinuumLength();
+    
+    //TODO: public void addSectionBoundary(long position);
 
 }

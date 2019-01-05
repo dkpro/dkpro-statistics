@@ -36,31 +36,31 @@ import org.dkpro.statistics.agreement.IAnnotationStudy;
  */
 public interface ICodingAnnotationStudy extends IAnnotationStudy {
 
-	// -- Categories --
+    // -- Categories --
 
-	/** Returns true if, and only if, the annotation study contains at least
-	 *  one item with a missing value (i.e., an annotation item containing 
-	 *  an annotation unit with category null). */
-	public boolean hasMissingValues();
-	
-	// -- Items --
+    /** Returns true if, and only if, the annotation study contains at least
+     *  one item with a missing value (i.e., an annotation item containing 
+     *  an annotation unit with category null). */
+    public boolean hasMissingValues();
+    
+    // -- Items --
 
-	/** Returns the annotation item with the given index. The first 
-	 *  item has index 0. */
-	public ICodingAnnotationItem getItem(int index);
-	
-	/** Allows iterating all annotation items of this study. */
-	public Iterable<ICodingAnnotationItem> getItems();
+    /** Returns the annotation item with the given index. The first 
+     *  item has index 0. */
+    public ICodingAnnotationItem getItem(int index);
+    
+    /** Allows iterating all annotation items of this study. */
+    public Iterable<ICodingAnnotationItem> getItems();
 
-	/** Returns the number of annotation items defined by the study. */
-	public int getItemCount();
-		
-	// -- Units --
+    /** Returns the number of annotation items defined by the study. */
+    public int getItemCount();
+        
+    // -- Units --
 
-	/** Returns the number of annotation units defined by the study. That is, 
-	 *  the number of annotations coded by the raters. If there are no 
-	 *  missing values, the unit count equals the item count multiplied 
-	 *  with the number of raters. */
-	public int getUnitCount();
+    /** Returns the number of annotation units defined by the study. That is, 
+     *  the number of annotations coded by the raters. If there are no 
+     *  missing values, the unit count equals the item count multiplied 
+     *  with the number of raters. */
+    public int getUnitCount();
 
 }

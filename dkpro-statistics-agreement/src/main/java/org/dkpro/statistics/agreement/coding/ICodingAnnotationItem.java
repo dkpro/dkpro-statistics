@@ -32,17 +32,17 @@ import org.dkpro.statistics.agreement.IAnnotationUnit;
  */
 public interface ICodingAnnotationItem extends IAnnotationItem {
 
-	/** Returns the annotation unit of the rater with the specified 
-	 *  index. That is, the object holding the category assigned 
-	 *  to the item by the specified rater. */
-	public IAnnotationUnit getUnit(int raterIdx);
-	
-	/** Returns all coding units for this annotation item (i.e., 
-	 *  the categories assigned by the individual raters). */
-	public Iterable<IAnnotationUnit> getUnits();
+    /** Returns the annotation unit of the rater with the specified 
+     *  index. That is, the object holding the category assigned 
+     *  to the item by the specified rater. */
+    public IAnnotationUnit getUnit(int raterIdx);
+    
+    /** Returns all coding units for this annotation item (i.e., 
+     *  the categories assigned by the individual raters). */
+    public Iterable<IAnnotationUnit> getUnits();
 
-	/** Returns the number of raters who annotated this item with a 
-	 *  non-null category. */
-	public int getRaterCount();
-	
+    /** Returns the number of raters who annotated this item with a 
+     *  non-null category. */
+    public int getRaterCount();
+    
 }

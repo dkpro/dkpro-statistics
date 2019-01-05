@@ -24,20 +24,20 @@ package org.dkpro.statistics.agreement;
  */
 public class InsufficientDataException extends RuntimeException {
 
-	public InsufficientDataException() {
-		super();
-	}
+    public InsufficientDataException() {
+        super();
+    }
 
-	public InsufficientDataException(final String message, final Throwable cause) {
-		super(message, cause);
-	}
+    public InsufficientDataException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 
-	public InsufficientDataException(final String message) {
-		super(message);
-	}
+    public InsufficientDataException(final String message) {
+        super(message);
+    }
 
-	public InsufficientDataException(final Throwable cause) {
-		super(cause);
-	}
+    public InsufficientDataException(final Throwable cause) {
+        super(cause);
+    }
 
 }

@@ -33,29 +33,29 @@ import org.dkpro.statistics.agreement.IAnnotationStudy;
  * @author Christian M. Meyer
  */
 public class SetAnnotationDistanceFunction implements IDistanceFunction {
-	
-	@Override
-	public double measureDistance(final IAnnotationStudy study, 
-			final Object category1, final Object category2) {
-		SetAnnotation c1 = (SetAnnotation) category1;
-		SetAnnotation c2 = (SetAnnotation) category2;
-		
-		SetAnnotation delta = new SetAnnotation(c1);
-		delta.removeAll(c2);
-		boolean c1_subset_c2 = (delta.size() == 0);				
-		int overlap = c1.size() - delta.size();
-		delta = new SetAnnotation(c2);
-		delta.removeAll(c1);
-		boolean c2_subset_c1 = (delta.size() == 0);
-		
-		if (c1_subset_c2 && c2_subset_c1)
-			return 0.0; // identical.
-		if (c1_subset_c2 || c2_subset_c1)
-			return 1.0 / 3.0; // subsets.
-		if (overlap > 0)
-			return 2.0 / 3.0; // some intersection.
-		else
-			return 1.0; // disjoint.				
-	}
-	
+    
+    @Override
+    public double measureDistance(final IAnnotationStudy study, 
+            final Object category1, final Object category2) {
+        SetAnnotation c1 = (SetAnnotation) category1;
+        SetAnnotation c2 = (SetAnnotation) category2;
+        
+        SetAnnotation delta = new SetAnnotation(c1);
+        delta.removeAll(c2);
+        boolean c1_subset_c2 = (delta.size() == 0);                
+        int overlap = c1.size() - delta.size();
+        delta = new SetAnnotation(c2);
+        delta.removeAll(c1);
+        boolean c2_subset_c1 = (delta.size() == 0);
+        
+        if (c1_subset_c2 && c2_subset_c1)
+            return 0.0; // identical.
+        if (c1_subset_c2 || c2_subset_c1)
+            return 1.0 / 3.0; // subsets.
+        if (overlap > 0)
+            return 2.0 / 3.0; // some intersection.
+        else
+            return 1.0; // disjoint.                
+    }
+    
 }

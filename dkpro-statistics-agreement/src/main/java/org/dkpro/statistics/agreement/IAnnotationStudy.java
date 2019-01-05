@@ -32,36 +32,36 @@ package org.dkpro.statistics.agreement;
  * @author Christian M. Meyer
  */
 public interface IAnnotationStudy {
-	
-	// -- Raters --
+    
+    // -- Raters --
 
-	/** Returns the number of raters participating in this study. */
-	public int getRaterCount();
-	
-	// -- Categories --
+    /** Returns the number of raters participating in this study. */
+    public int getRaterCount();
+    
+    // -- Categories --
 
-	/** Returns an iterator over all annotation categories within the study. 
-	 *  Note that the categories are not per se clear; they might need to be 
-	 *  gathered by iterating through all associated items, which yields 
-	 *  performance problems in large-scale annotation studies. */
-	public Iterable<Object> getCategories();
+    /** Returns an iterator over all annotation categories within the study. 
+     *  Note that the categories are not per se clear; they might need to be 
+     *  gathered by iterating through all associated items, which yields 
+     *  performance problems in large-scale annotation studies. */
+    public Iterable<Object> getCategories();
 
-	/** Returns the number of annotation categories in the study. Note that
-	 *  the categories are not per se clear; they might need to be gathered by 
-	 *  iterating through all associated items, which yields performance 
-	 *  problems in large-scale annotation studies. */
-	public int getCategoryCount();
-	
-	/** Returns true if, and only if, the categories defined by the study yield
-	 *  a dichotomy (i.e., there are exactly two categories). */
-	public boolean isDichotomous();
-	
-	// -- Units --
-	
-//	public Iterable<? extends IAnnotationUnit> getUnits();
-	
-	/** Returns the number of annotation units defined by the study. That is, the
-	 *  number of annotations coded by the raters. */
-	public int getUnitCount();
+    /** Returns the number of annotation categories in the study. Note that
+     *  the categories are not per se clear; they might need to be gathered by 
+     *  iterating through all associated items, which yields performance 
+     *  problems in large-scale annotation studies. */
+    public int getCategoryCount();
+    
+    /** Returns true if, and only if, the categories defined by the study yield
+     *  a dichotomy (i.e., there are exactly two categories). */
+    public boolean isDichotomous();
+    
+    // -- Units --
+    
+//    public Iterable<? extends IAnnotationUnit> getUnits();
+    
+    /** Returns the number of annotation units defined by the study. That is, the
+     *  number of annotations coded by the raters. */
+    public int getUnitCount();
 
 }

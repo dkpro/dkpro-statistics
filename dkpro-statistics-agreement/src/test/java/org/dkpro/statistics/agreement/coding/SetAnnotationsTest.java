@@ -32,29 +32,29 @@ import org.dkpro.statistics.agreement.distance.SetAnnotationDistanceFunction;
  */
 public class SetAnnotationsTest extends TestCase {
 
-	/***/
-	public void testSetDistanceFunction() {
-		ICodingAnnotationStudy study = createExample();
+    /***/
+    public void testSetDistanceFunction() {
+        ICodingAnnotationStudy study = createExample();
 
-		KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
-		alpha.setDistanceFunction(new SetAnnotationDistanceFunction());
-		assertEquals(0.333, alpha.calculateObservedDisagreement(), 0.001);
-		assertEquals(0.409, alpha.calculateExpectedDisagreement(), 0.001);
-		assertEquals(0.186, alpha.calculateAgreement(), 0.001);
-	}
+        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
+        alpha.setDistanceFunction(new SetAnnotationDistanceFunction());
+        assertEquals(0.333, alpha.calculateObservedDisagreement(), 0.001);
+        assertEquals(0.409, alpha.calculateExpectedDisagreement(), 0.001);
+        assertEquals(0.186, alpha.calculateAgreement(), 0.001);
+    }
 
-	/***/
-	public void testMASIDistanceFunction() {
-		ICodingAnnotationStudy study = createExample();
+    /***/
+    public void testMASIDistanceFunction() {
+        ICodingAnnotationStudy study = createExample();
 
-		KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
-		alpha.setDistanceFunction(new MASISetAnnotationDistanceFunction());
-		assertEquals(0.253, alpha.calculateObservedDisagreement(), 0.001);
-		assertEquals(0.338, alpha.calculateExpectedDisagreement(), 0.001);
-		assertEquals(0.252, alpha.calculateAgreement(), 0.001);
-	}
+        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
+        alpha.setDistanceFunction(new MASISetAnnotationDistanceFunction());
+        assertEquals(0.253, alpha.calculateObservedDisagreement(), 0.001);
+        assertEquals(0.338, alpha.calculateExpectedDisagreement(), 0.001);
+        assertEquals(0.252, alpha.calculateAgreement(), 0.001);
+    }
 
-	/***/
+    /***/
     public void testPercentageAgreement() {
         ICodingAnnotationStudy study = createExample();
 
@@ -78,18 +78,18 @@ public class SetAnnotationsTest extends TestCase {
         assertEquals(0.5, DiceAgreement.calculateAgreement(), 0.001);
     }
 
-	/** Creates an example annotation study. */
-	public ICodingAnnotationStudy createExample() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(2);
-		study.addItem(new SetAnnotation(), new SetAnnotation());
-		study.addItem(new SetAnnotation("A"), new SetAnnotation());
-		study.addItem(new SetAnnotation("A"), new SetAnnotation("A"));
-		study.addItem(new SetAnnotation("A"), new SetAnnotation("B"));
-		study.addItem(new SetAnnotation("A", "B"), new SetAnnotation("A"));
-		study.addItem(new SetAnnotation("A", "B"), new SetAnnotation("A", "C"));
-		study.addItem(new SetAnnotation("A", "B", "C"), new SetAnnotation("A", "B", "C"));
-		study.addItem(new SetAnnotation("C"), new SetAnnotation("A", "C"));
-		study.addItem(new SetAnnotation("C"), new SetAnnotation("A", "C"));
-		return study;
-	}
+    /** Creates an example annotation study. */
+    public ICodingAnnotationStudy createExample() {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(2);
+        study.addItem(new SetAnnotation(), new SetAnnotation());
+        study.addItem(new SetAnnotation("A"), new SetAnnotation());
+        study.addItem(new SetAnnotation("A"), new SetAnnotation("A"));
+        study.addItem(new SetAnnotation("A"), new SetAnnotation("B"));
+        study.addItem(new SetAnnotation("A", "B"), new SetAnnotation("A"));
+        study.addItem(new SetAnnotation("A", "B"), new SetAnnotation("A", "C"));
+        study.addItem(new SetAnnotation("A", "B", "C"), new SetAnnotation("A", "B", "C"));
+        study.addItem(new SetAnnotation("C"), new SetAnnotation("A", "C"));
+        study.addItem(new SetAnnotation("C"), new SetAnnotation("A", "C"));
+        return study;
+    }
 }

@@ -26,29 +26,29 @@ package org.dkpro.statistics.agreement;
  */
 public class AnnotationUnit implements IAnnotationUnit {
 
-	protected int raterIdx;
-	protected Object category;
+    protected int raterIdx;
+    protected Object category;
 
-	/** Initializes the annotation unit with the given category as the 
-	 *  annotation by the rater with the specified index. */
-	public AnnotationUnit(int raterIdx, final Object category) {
-		this.raterIdx = raterIdx;
-		this.category = category;
-	}
+    /** Initializes the annotation unit with the given category as the 
+     *  annotation by the rater with the specified index. */
+    public AnnotationUnit(int raterIdx, final Object category) {
+        this.raterIdx = raterIdx;
+        this.category = category;
+    }
 
-	@Override
-	public int getRaterIdx() {
-		return raterIdx;
-	}
+    @Override
+    public int getRaterIdx() {
+        return raterIdx;
+    }
 
-	@Override
-	public Object getCategory() {
-		return category;
-	}
+    @Override
+    public Object getCategory() {
+        return category;
+    }
 
-	@Override
-	public String toString() {
-		return raterIdx + "<" + category + ">";
-	}
-	
+    @Override
+    public String toString() {
+        return raterIdx + "<" + category + ">";
+    }
+    
 }

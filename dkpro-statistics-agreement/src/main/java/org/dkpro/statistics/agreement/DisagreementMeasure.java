@@ -34,26 +34,26 @@ package org.dkpro.statistics.agreement;
  */
 public abstract class DisagreementMeasure implements IAgreementMeasure {
 
-	/* Calculates the inter-rater agreement for the annotation 
-	 *  study that was passed to the class constructor and the currently
-	 *  assigned distance function. 
-	 *  @throws NullPointerException if the study is null.
-	 *  @throws ArithmeticException if the study does not contain any item or
-	 *  	the number of raters is smaller than 2. */
-	@Override
-	public double calculateAgreement() {
-		double D_O = calculateObservedDisagreement();
-		double D_E = calculateExpectedDisagreement();
-		if (D_O == D_E)
-			return 0.0;
-		else
-			return 1.0 - (D_O / D_E);
-	}
+    /* Calculates the inter-rater agreement for the annotation 
+     *  study that was passed to the class constructor and the currently
+     *  assigned distance function. 
+     *  @throws NullPointerException if the study is null.
+     *  @throws ArithmeticException if the study does not contain any item or
+     *      the number of raters is smaller than 2. */
+    @Override
+    public double calculateAgreement() {
+        double D_O = calculateObservedDisagreement();
+        double D_E = calculateExpectedDisagreement();
+        if (D_O == D_E)
+            return 0.0;
+        else
+            return 1.0 - (D_O / D_E);
+    }
 
-	protected abstract double calculateObservedDisagreement();
+    protected abstract double calculateObservedDisagreement();
 
-	protected double calculateExpectedDisagreement() {
-		return 0.0;
-	}
+    protected double calculateExpectedDisagreement() {
+        return 0.0;
+    }
 
 }

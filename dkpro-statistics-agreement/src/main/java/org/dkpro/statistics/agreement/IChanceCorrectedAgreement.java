@@ -35,15 +35,15 @@ package org.dkpro.statistics.agreement;
  */
 public interface IChanceCorrectedAgreement extends IAgreementMeasure {
 
-	/** Returns the observed agreement of an annotation study. The observed
-	 *  agreement is basically the proportion of annotation units that the
-	 *  raters agree on divided by the number of units in the given study. */
-	public double calculateObservedAgreement();
+    /** Returns the observed agreement of an annotation study. The observed
+     *  agreement is basically the proportion of annotation units that the
+     *  raters agree on divided by the number of units in the given study. */
+    public double calculateObservedAgreement();
 
-	/** Returns the expected agreement of an annotation study. The expected
-	 *  agreement is the proportion of agreement that would be expected by
-	 *  chance alone. The expected agreement should be equal to the observed
-	 *  agreement if each rater makes a random decision for each unit. */
-	public double calculateExpectedAgreement();
+    /** Returns the expected agreement of an annotation study. The expected
+     *  agreement is the proportion of agreement that would be expected by
+     *  chance alone. The expected agreement should be equal to the observed
+     *  agreement if each rater makes a random decision for each unit. */
+    public double calculateExpectedAgreement();
 
 }

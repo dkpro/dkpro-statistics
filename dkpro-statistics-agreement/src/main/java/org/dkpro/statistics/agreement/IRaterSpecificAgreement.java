@@ -29,9 +29,9 @@ package org.dkpro.statistics.agreement;
  * @author Christian M. Meyer
  */
 public interface IRaterSpecificAgreement {
-	
-	/** Calculates the inter-rater agreement for the rater with the given index.
-	 *  @see IRaterSpecificAgreement */
-	public double calculateRaterAgreement(final int raterIdx);
-	
+    
+    /** Calculates the inter-rater agreement for the rater with the given index.
+     *  @see IRaterSpecificAgreement */
+    public double calculateRaterAgreement(final int raterIdx);
+    
 }

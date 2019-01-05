@@ -25,10 +25,10 @@ package org.dkpro.statistics.agreement;
  */
 public interface IAgreementMeasure {
 
-	/** Returns the inter-rater agreement score. Unless otherwise indicated, 
-	 *  the result is between -1 and +1, where +1 indicates perfect agreement,
-	 *  0 indicates no agreement or that the agreement can be fully explained by
-	 *  chance, and -1 indicates perfect disagreement. */
-	public double calculateAgreement();
-	
+    /** Returns the inter-rater agreement score. Unless otherwise indicated, 
+     *  the result is between -1 and +1, where +1 indicates perfect agreement,
+     *  0 indicates no agreement or that the agreement can be fully explained by
+     *  chance, and -1 indicates perfect disagreement. */
+    public double calculateAgreement();
+    
 }

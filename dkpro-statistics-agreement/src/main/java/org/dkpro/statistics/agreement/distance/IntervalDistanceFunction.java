@@ -44,19 +44,19 @@ import org.dkpro.statistics.agreement.IAnnotationStudy;
  * @author Christian M. Meyer
  */
 public class IntervalDistanceFunction implements IDistanceFunction {
-	
-	@Override
-	public double measureDistance(final IAnnotationStudy study, 
-			final Object category1, final Object category2) {
-		if (category1 instanceof Integer && category2 instanceof Integer)
-			return (((Integer) category1) - ((Integer) category2))
-					* (((Integer) category1) - ((Integer) category2));
-		
-		if (category1 instanceof Double && category2 instanceof Double)
-			return (((Double) category1) - ((Double) category2))
-					* (((Double) category1) - ((Double) category2));
-		
-		return (category1.equals(category2) ? 0.0 : 1.0);
-	}
-	
+    
+    @Override
+    public double measureDistance(final IAnnotationStudy study, 
+            final Object category1, final Object category2) {
+        if (category1 instanceof Integer && category2 instanceof Integer)
+            return (((Integer) category1) - ((Integer) category2))
+                    * (((Integer) category1) - ((Integer) category2));
+        
+        if (category1 instanceof Double && category2 instanceof Double)
+            return (((Double) category1) - ((Double) category2))
+                    * (((Double) category1) - ((Double) category2));
+        
+        return (category1.equals(category2) ? 0.0 : 1.0);
+    }
+    
 }

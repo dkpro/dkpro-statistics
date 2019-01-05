@@ -37,10 +37,10 @@ import org.dkpro.statistics.agreement.IAnnotationStudy;
  */
 public class NominalDistanceFunction implements IDistanceFunction {
 
-	@Override
-	public double measureDistance(final IAnnotationStudy study, 
-			final Object category1, final Object category2) {
-		return (category1.equals(category2) ? 0.0 : 1.0);
-	}
+    @Override
+    public double measureDistance(final IAnnotationStudy study, 
+            final Object category1, final Object category2) {
+        return (category1.equals(category2) ? 0.0 : 1.0);
+    }
 
 }

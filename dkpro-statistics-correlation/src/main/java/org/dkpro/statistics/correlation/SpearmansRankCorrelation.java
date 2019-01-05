@@ -24,7 +24,7 @@ import org.apache.commons.math.stat.correlation.SpearmansCorrelation;
 
 
 public class SpearmansRankCorrelation {
-	
+    
     /**
      * Computes the correlation between two datasets.
      * @param list1 The first dataset as a list.

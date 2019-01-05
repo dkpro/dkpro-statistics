@@ -39,30 +39,30 @@ import org.dkpro.statistics.agreement.IAnnotationStudy;
  */
 public class MASISetAnnotationDistanceFunction implements IDistanceFunction {
 
-	@Override
-	public double measureDistance(final IAnnotationStudy study,
-			Object category1, Object category2) {
-		SetAnnotation c1 = (SetAnnotation) category1;
-		SetAnnotation c2 = (SetAnnotation) category2;
+    @Override
+    public double measureDistance(final IAnnotationStudy study,
+            Object category1, Object category2) {
+        SetAnnotation c1 = (SetAnnotation) category1;
+        SetAnnotation c2 = (SetAnnotation) category2;
 
-		SetAnnotation delta = new SetAnnotation(c1);
-		delta.removeAll(c2);
-		boolean c1_subset_c2 = (delta.size() == 0);
-		int overlap = c1.size() - delta.size();
-		int union = c2.size() + delta.size();
-		delta = new SetAnnotation(c2);
-		delta.removeAll(c1);
-		boolean c2_subset_c1 = (delta.size() == 0);
+        SetAnnotation delta = new SetAnnotation(c1);
+        delta.removeAll(c2);
+        boolean c1_subset_c2 = (delta.size() == 0);
+        int overlap = c1.size() - delta.size();
+        int union = c2.size() + delta.size();
+        delta = new SetAnnotation(c2);
+        delta.removeAll(c1);
+        boolean c2_subset_c1 = (delta.size() == 0);
 
-		double jaccard = (union == 0 ? 1.0 : (1.0 - overlap / (double) union));
-		if (c1_subset_c2 && c2_subset_c1)
-			return jaccard * 0.0; // identical.
-		if (c1_subset_c2 || c2_subset_c1)
-			return jaccard * (1.0 / 3.0); // subsets.
-		if (overlap > 0)
-			return jaccard * (2.0 / 3.0); // some intersection.
-		else
-			return jaccard * 1.0; // disjoint.
-	}
+        double jaccard = (union == 0 ? 1.0 : (1.0 - overlap / (double) union));
+        if (c1_subset_c2 && c2_subset_c1)
+            return jaccard * 0.0; // identical.
+        if (c1_subset_c2 || c2_subset_c1)
+            return jaccard * (1.0 / 3.0); // subsets.
+        if (overlap > 0)
+            return jaccard * (2.0 / 3.0); // some intersection.
+        else
+            return jaccard * 1.0; // disjoint.
+    }
 
 }

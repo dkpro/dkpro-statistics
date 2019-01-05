@@ -30,6 +30,6 @@ import org.dkpro.statistics.agreement.IItemSpecificAgreement;
  * @author Christian M. Meyer
  */
 public interface ICodingItemSpecificAgreement 
-		extends IItemSpecificAgreement<ICodingAnnotationItem> {
-	
+        extends IItemSpecificAgreement<ICodingAnnotationItem> {
+    
 }
