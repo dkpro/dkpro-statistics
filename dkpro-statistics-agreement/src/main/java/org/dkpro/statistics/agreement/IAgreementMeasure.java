@@ -18,17 +18,19 @@
 package org.dkpro.statistics.agreement;
 
 /**
- * Generic interface that is to be implemented by all inter-rater agreement 
- * measures. The basic idea is to calculate a numerical score for a given 
- * {@link IAnnotationStudy}. 
+ * Generic interface that is to be implemented by all inter-rater agreement measures. The basic idea
+ * is to calculate a numerical score for a given {@link IAnnotationStudy}.
+ * 
  * @author Christian M. Meyer
  */
-public interface IAgreementMeasure {
+public interface IAgreementMeasure
+{
 
-    /** Returns the inter-rater agreement score. Unless otherwise indicated, 
-     *  the result is between -1 and +1, where +1 indicates perfect agreement,
-     *  0 indicates no agreement or that the agreement can be fully explained by
-     *  chance, and -1 indicates perfect disagreement. */
+    /**
+     * Returns the inter-rater agreement score. Unless otherwise indicated, the result is between -1
+     * and +1, where +1 indicates perfect agreement, 0 indicates no agreement or that the agreement
+     * can be fully explained by chance, and -1 indicates perfect disagreement.
+     */
     public double calculateAgreement();
-    
+
 }

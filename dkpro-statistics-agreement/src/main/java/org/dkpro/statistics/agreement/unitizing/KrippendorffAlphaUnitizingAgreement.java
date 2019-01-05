@@ -29,33 +29,39 @@ import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
 import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
 
 /**
- * Implementation of Krippendorff's (1995) alpha_U-measure for calculating a
- * chance-corrected inter-rater agreement for unitizing studies with multiple
- * raters. As a model for expected disagreement, alpha_U considers all
- * possible unitizations for the given continuum and raters. Thereby, alpha_U
- * becomes fully compatible with {@link KrippendorffAlphaAgreement}. Note
- * that units coded with the same categories by a single rater may not
- * overlap with each other.<br><br>
- * References:<ul>
- * <li>Krippendorff, K.: On the reliability of unitizing contiguous data.
- *   Sociological Methodology 25:47–76, 1995.</li>
- * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology.
- *   2nd edition, Thousand Oaks, CA: Sage Publications, 2004.</li></ul>
+ * Implementation of Krippendorff's (1995) alpha_U-measure for calculating a chance-corrected
+ * inter-rater agreement for unitizing studies with multiple raters. As a model for expected
+ * disagreement, alpha_U considers all possible unitizations for the given continuum and raters.
+ * Thereby, alpha_U becomes fully compatible with {@link KrippendorffAlphaAgreement}. Note that
+ * units coded with the same categories by a single rater may not overlap with each other.<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>Krippendorff, K.: On the reliability of unitizing contiguous data. Sociological Methodology
+ * 25:47–76, 1995.</li>
+ * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology. 2nd edition, Thousand
+ * Oaks, CA: Sage Publications, 2004.</li>
+ * </ul>
+ * 
  * @author Christian M. Meyer
  * @author Christian Stab
  */
-public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasure
-        implements ICategorySpecificAgreement {
+public class KrippendorffAlphaUnitizingAgreement
+    extends UnitizingAgreementMeasure
+    implements ICategorySpecificAgreement
+{
 
-    /** Initializes the instance for the given annotation study. The study
-     *  may never be null. */
-    public KrippendorffAlphaUnitizingAgreement(
-            final IUnitizingAnnotationStudy study) {
+    /**
+     * Initializes the instance for the given annotation study. The study may never be null.
+     */
+    public KrippendorffAlphaUnitizingAgreement(final IUnitizingAnnotationStudy study)
+    {
         super(study);
     }
 
     @Override
-    protected double calculateObservedDisagreement() {
+    protected double calculateObservedDisagreement()
+    {
         double result = 0.0;
         for (Object category : study.getCategories()) {
             result += calculateObservedCategoryDisagreement(category);
@@ -65,7 +71,8 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
     }
 
     @Override
-    protected double calculateExpectedDisagreement() {
+    protected double calculateExpectedDisagreement()
+    {
         double result = 0.0;
         for (Object category : study.getCategories()) {
             result += calculateExpectedCategoryDisagreement(category);
@@ -75,7 +82,8 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
     }
 
     @Override
-    public double calculateCategoryAgreement(Object category) {
+    public double calculateCategoryAgreement(Object category)
+    {
         double D_O = calculateObservedCategoryDisagreement(category);
         double D_E = calculateExpectedCategoryDisagreement(category);
         if (D_O == D_E) {
@@ -86,7 +94,8 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
         }
     }
 
-    protected double calculateObservedCategoryDisagreement(final Object category) {
+    protected double calculateObservedCategoryDisagreement(final Object category)
+    {
         long B = study.getContinuumBegin();
         long L = study.getContinuumLength();
         int R = study.getRaterCount();
@@ -110,7 +119,8 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
                             length1 = nextUnit1.getLength();
                             category1 = nextUnit1.getCategory();
                             nextUnit1 = UnitizingAnnotationStudy.findNextUnit(units1, r1, category);
-                        } else {
+                        }
+                        else {
                             length1 = (nextUnit1 != null ? nextUnit1.getOffset() : B + L) - pos;
                             category1 = null;
                         }
@@ -121,14 +131,15 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
                             length2 = nextUnit2.getLength();
                             category2 = nextUnit2.getCategory();
                             nextUnit2 = UnitizingAnnotationStudy.findNextUnit(units2, r2, category);
-                        } else {
+                        }
+                        else {
                             length2 = (nextUnit2 != null ? nextUnit2.getOffset() : B + L) - pos;
                             category2 = null;
                         }
                         offset2 = pos;
                     }
-                    result += measureDistance(offset1, length1, category1,
-                            offset2, length2, category2);
+                    result += measureDistance(offset1, length1, category1, offset2, length2,
+                            category2);
                     pos = Math.min(offset1 + length1, offset2 + length2);
                 }
             }
@@ -138,7 +149,8 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
         return result;
     }
 
-    protected double calculateExpectedCategoryDisagreement(final Object category) {
+    protected double calculateExpectedCategoryDisagreement(final Object category)
+    {
         long B = study.getContinuumBegin();
         long L = study.getContinuumLength();
         int R = study.getRaterCount();
@@ -148,9 +160,8 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
         for (IUnitizingAnnotationUnit unit : study.getUnits()) {
             if (category.equals(unit.getCategory())) {
                 N_c++;
-                squaredLengths = squaredLengths.add(
-                        new BigDecimal(unit.getLength()).multiply(
-                                new BigDecimal(unit.getLength() - 1.0)));
+                squaredLengths = squaredLengths.add(new BigDecimal(unit.getLength())
+                        .multiply(new BigDecimal(unit.getLength() - 1.0)));
             }
         }
 
@@ -168,7 +179,8 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
                     if (nextUnit != null && pos == nextUnit.getOffset()) {
                         length = nextUnit.getLength();
                         nextUnit = UnitizingAnnotationStudy.findNextUnit(units, r, category);
-                    } else {
+                    }
+                    else {
                         length = (nextUnit != null ? nextUnit.getOffset() : B + L) - pos;
                         gaps.add(length);
                     }
@@ -177,9 +189,11 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
                 pos = offset + length;
             }
         }
-        Collections.sort(gaps, new Comparator<Long>() {
+        Collections.sort(gaps, new Comparator<Long>()
+        {
             @Override
-            public int compare(Long o1, Long o2) {
+            public int compare(Long o1, Long o2)
+            {
                 if (o1 < o2) {
                     return +1;
                 }
@@ -196,7 +210,7 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
                 long length1 = unit.getLength();
                 BigDecimal sum1 = new BigDecimal((N_c - 1.0)
                         * (2.0 * length1 * length1 * length1 - 3.0 * length1 * length1 + length1))
-                        .divide(new BigDecimal(3), MathContext.DECIMAL128);
+                                .divide(new BigDecimal(3), MathContext.DECIMAL128);
                 BigDecimal sum2 = BigDecimal.ZERO;
                 for (Long gap : gaps) {
                     if (gap >= length1) {
@@ -212,8 +226,7 @@ public class KrippendorffAlphaUnitizingAgreement extends UnitizingAgreementMeasu
         }
         result = result
                 .multiply(new BigDecimal(2).divide(new BigDecimal(L), MathContext.DECIMAL128));
-        result = result.divide(
-                new BigDecimal(R * L * (R * L - 1)).subtract(squaredLengths),
+        result = result.divide(new BigDecimal(R * L * (R * L - 1)).subtract(squaredLengths),
                 MathContext.DECIMAL128);
         return result.doubleValue();
     }

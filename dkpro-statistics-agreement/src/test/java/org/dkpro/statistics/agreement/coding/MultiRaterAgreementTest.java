@@ -21,14 +21,18 @@ import junit.framework.TestCase;
 
 /**
  * Tests for {@link PercentageAgreement} and {@link FleissKappaAgreement}.
+ * 
  * @author Christian M. Meyer
  */
-public class MultiRaterAgreementTest extends TestCase {
-    
+public class MultiRaterAgreementTest
+    extends TestCase
+{
+
     /***/
-    public void testExample() {
+    public void testExample()
+    {
         ICodingAnnotationStudy study = createExample();
-                
+
         // Generalized percentage of agreement.
         PercentageAgreement pa = new PercentageAgreement(study);
         double agreement = pa.calculateAgreement();
@@ -49,7 +53,8 @@ public class MultiRaterAgreementTest extends TestCase {
     }
 
     /** Creates an example annotation study. */
-    public static ICodingAnnotationStudy createExample() {
+    public static ICodingAnnotationStudy createExample()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(3);
         study.addItem("high", "high", "high");
         study.addItem("high", "high", "low");
@@ -63,5 +68,5 @@ public class MultiRaterAgreementTest extends TestCase {
         study.addItem("low", "low", "high");
         return study;
     }
-    
+
 }

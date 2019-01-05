@@ -31,7 +31,8 @@ import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
  * item per column and the categories assigned to them by a certain
  * rater. In addition to that, the reliability matrix sums the number 
  * of units with identical categories. For the example by Krippendorff 
- * (1980: p. 139), the implementation displays:<pre>
+ * (1980: p. 139), the implementation displays:
+ * <pre>
  *    1  2  3  4  5  6  7  8  9   Σ
  * 1  1  1  2  4  1  2  1  3  2 
  * 2  1  2  2  4  4  2  2  3  2 
@@ -40,45 +41,53 @@ import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
  * 1  3  1        1     1         6
  * 2     2  3        3  1     3  12
  * 3                    1  3      4
- * 4           3  2               5</pre><br>
+ * 4           3  2               5
+ * </pre><br>
  * References:<ul>
  * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology.
  *   Beverly Hills, CA: Sage Publications, 1980.</li></ul>
  * @see ICodingAnnotationStudy
  * @author Christian M. Meyer
  */
-public class ReliabilityMatrixPrinter {
+public class ReliabilityMatrixPrinter
+{
 
     /** Print the reliability matrix for the given coding study. */
-    public void print(final PrintStream out, final ICodingAnnotationStudy study) {
-        //TODO: measure length of cats. maybe cut them.
+    public void print(final PrintStream out, final ICodingAnnotationStudy study)
+    {
+        // TODO: measure length of cats. maybe cut them.
         Map<Object, Integer> categories = new LinkedHashMap<Object, Integer>();
-        for (Object cat : study.getCategories())
+        for (Object cat : study.getCategories()) {
             categories.put(cat, categories.size());
-        
+        }
+
         final String DIVIDER = "\t";
-        
-        for (int i = 0; i < study.getItemCount(); i++)
+
+        for (int i = 0; i < study.getItemCount(); i++) {
             out.print(DIVIDER + (i + 1));
+        }
         out.print(DIVIDER + "Σ");
         out.println();
-        
+
         for (int r = 0; r < study.getRaterCount(); r++) {
             out.print(r + 1);
-            for (ICodingAnnotationItem item : study.getItems())
+            for (ICodingAnnotationItem item : study.getItems()) {
                 out.print(DIVIDER + item.getUnit(r).getCategory());
+            }
             out.println();
         }
         out.println();
-        
+
         for (Object category : study.getCategories()) {
             out.print(category);
             int catSum = 0;
             for (ICodingAnnotationItem item : study.getItems()) {
                 int catCount = 0;
-                for (IAnnotationUnit unit : item.getUnits())
-                    if (category.equals(unit.getCategory()))
+                for (IAnnotationUnit unit : item.getUnits()) {
+                    if (category.equals(unit.getCategory())) {
                         catCount++;
+                    }
+                }
                 out.print(DIVIDER + (catCount > 0 ? catCount : ""));
                 catSum += catCount;
             }

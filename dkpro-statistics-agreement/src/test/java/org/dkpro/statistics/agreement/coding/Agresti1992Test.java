@@ -21,25 +21,31 @@ import junit.framework.TestCase;
 
 /**
  * Tests based on Agresti (1992) for category-specific agreement using
- * {@link CohenKappaAgreement}.<br><br>
- * References:<ul>
- * <li>Agresti, A.: Modelling patterns of agreement and disagreement.
- *   Statistical Methods in Medical Research 1(2): 201-218, 1992.</li>
- * <li>Landis J.R. &amp; Koch G.G.: An application of hierarchical kappa-type
- *   statistics in the assessment of majority agreement among multiple
- *   observers. Biometrics 33:363-374, 1977.</li></ul>
+ * {@link CohenKappaAgreement}.<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>Agresti, A.: Modelling patterns of agreement and disagreement. Statistical Methods in Medical
+ * Research 1(2): 201-218, 1992.</li>
+ * <li>Landis J.R. &amp; Koch G.G.: An application of hierarchical kappa-type statistics in the
+ * assessment of majority agreement among multiple observers. Biometrics 33:363-374, 1977.</li>
+ * </ul>
+ * 
  * @author Christian M. Meyer
  */
-public class Agresti1992Test extends TestCase {
+public class Agresti1992Test
+    extends TestCase
+{
 
     /***/
-    public void testAgreement() {
+    public void testAgreement()
+    {
         ICodingAnnotationStudy study = createExample();
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
         assertEquals(0.493, kappa.calculateAgreement(), 0.001);
 
-        //TODO: assertEquals(0.057, getStandardError(), 0.001);
+        // TODO: assertEquals(0.057, getStandardError(), 0.001);
 
         assertEquals(0.781, kappa.calculateCategoryAgreement(1), 0.001);
         assertEquals(0.247, kappa.calculateCategoryAgreement(2), 0.001);
@@ -47,20 +53,22 @@ public class Agresti1992Test extends TestCase {
         assertEquals(0.435, kappa.calculateCategoryAgreement(4), 0.001);
     }
 
-    /** Creates an example annotation study introduced by
-     *  Agresti (1992: p. 202), originally derived from
-     *  Landis &amp; Koch (1977). */
-    public static ICodingAnnotationStudy createExample() {
+    /**
+     * Creates an example annotation study introduced by Agresti (1992: p. 202), originally derived
+     * from Landis &amp; Koch (1977).
+     */
+    public static ICodingAnnotationStudy createExample()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(22, 1, 1);
-        study.addMultipleItems( 2, 1, 2);
-        study.addMultipleItems( 2, 1, 3);
-        study.addMultipleItems( 5, 2, 1);
-        study.addMultipleItems( 7, 2, 2);
+        study.addMultipleItems(2, 1, 2);
+        study.addMultipleItems(2, 1, 3);
+        study.addMultipleItems(5, 2, 1);
+        study.addMultipleItems(7, 2, 2);
         study.addMultipleItems(14, 2, 3);
-        study.addMultipleItems( 2, 3, 2);
+        study.addMultipleItems(2, 3, 2);
         study.addMultipleItems(36, 3, 3);
-        study.addMultipleItems( 1, 4, 2);
+        study.addMultipleItems(1, 4, 2);
         study.addMultipleItems(17, 4, 3);
         study.addMultipleItems(10, 4, 4);
         return study;

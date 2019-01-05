@@ -24,16 +24,19 @@ import org.dkpro.statistics.agreement.distance.SetAnnotationDistanceFunction;
 import junit.framework.TestCase;
 
 /**
- * Tests for {@link KrippendorffAlphaAgreement} with
- * {@link SetAnnotationDistanceFunction} and
+ * Tests for {@link KrippendorffAlphaAgreement} with {@link SetAnnotationDistanceFunction} and
  * {@link MASISetAnnotationDistanceFunction}.
+ * 
  * @author Christian M. Meyer
  * @author Tristan Miller
  */
-public class SetAnnotationsTest extends TestCase {
+public class SetAnnotationsTest
+    extends TestCase
+{
 
     /***/
-    public void testSetDistanceFunction() {
+    public void testSetDistanceFunction()
+    {
         ICodingAnnotationStudy study = createExample();
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
@@ -44,7 +47,8 @@ public class SetAnnotationsTest extends TestCase {
     }
 
     /***/
-    public void testMASIDistanceFunction() {
+    public void testMASIDistanceFunction()
+    {
         ICodingAnnotationStudy study = createExample();
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
@@ -55,7 +59,8 @@ public class SetAnnotationsTest extends TestCase {
     }
 
     /***/
-    public void testPercentageAgreement() {
+    public void testPercentageAgreement()
+    {
         ICodingAnnotationStudy study = createExample();
 
         PercentageAgreement percentageAgreement = new PercentageAgreement(study);
@@ -63,7 +68,8 @@ public class SetAnnotationsTest extends TestCase {
     }
 
     /***/
-    public void testMaxPercentageAgreement() {
+    public void testMaxPercentageAgreement()
+    {
         ICodingAnnotationStudy study = createExample();
 
         MaxPercentageAgreement maxPercentageAgreement = new MaxPercentageAgreement(study);
@@ -71,7 +77,8 @@ public class SetAnnotationsTest extends TestCase {
     }
 
     /***/
-    public void testDiceAgreement() {
+    public void testDiceAgreement()
+    {
         ICodingAnnotationStudy study = createExample();
 
         DiceAgreement DiceAgreement = new DiceAgreement(study);
@@ -79,7 +86,8 @@ public class SetAnnotationsTest extends TestCase {
     }
 
     /** Creates an example annotation study. */
-    public ICodingAnnotationStudy createExample() {
+    public ICodingAnnotationStudy createExample()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addItem(new SetAnnotation(), new SetAnnotation());
         study.addItem(new SetAnnotation("A"), new SetAnnotation());

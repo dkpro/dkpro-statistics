@@ -22,41 +22,49 @@ import org.dkpro.statistics.agreement.IWeightedAgreement;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 
 /**
- * Abstract base class for weighted measures. In most cases, weighted
- * measures are defined as disagreement functions. They are characterized
- * by a distance function that is used to score the similarity between two
- * categories.
+ * Abstract base class for weighted measures. In most cases, weighted measures are defined as
+ * disagreement functions. They are characterized by a distance function that is used to score the
+ * similarity between two categories.
+ * 
  * @see IDistanceFunction
  * @see DisagreementMeasure
  * @author Christian M. Meyer
  */
-public abstract class WeightedAgreement extends DisagreementMeasure
-        implements IWeightedAgreement {
+public abstract class WeightedAgreement
+    extends DisagreementMeasure
+    implements IWeightedAgreement
+{
 
     protected IDistanceFunction distanceFunction;
     protected ICodingAnnotationStudy study;
 
-    /** Initializes the instance for the given annotation study. The study
-     *  should never be null. */
-    public WeightedAgreement(final ICodingAnnotationStudy study) {
+    /**
+     * Initializes the instance for the given annotation study. The study should never be null.
+     */
+    public WeightedAgreement(final ICodingAnnotationStudy study)
+    {
         this.study = study;
     }
 
     @Override
-    public IDistanceFunction getDistanceFunction() {
+    public IDistanceFunction getDistanceFunction()
+    {
         return distanceFunction;
     }
 
-    /** Uses the given distance function for upcoming calculations of the
-     *  inter-rater agreement. */
-    public void setDistanceFunction(final IDistanceFunction distanceFunction) {
+    /**
+     * Uses the given distance function for upcoming calculations of the inter-rater agreement.
+     */
+    public void setDistanceFunction(final IDistanceFunction distanceFunction)
+    {
         this.distanceFunction = distanceFunction;
     }
 
-    protected void ensureDistanceFunction() {
+    protected void ensureDistanceFunction()
+    {
         if (distanceFunction == null) {
-            throw new NullPointerException("No distance function provided. "
-                    + "Use " + getClass() + ".setDistanceFunction()!");
+            throw new NullPointerException("No distance function provided. " + "Use " + getClass()
+                    + ".setDistanceFunction()!");
         }
     }
 

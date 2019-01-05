@@ -33,7 +33,7 @@ public class AnnotationStudyTest
         study.addItem(5, 3, 0);
         study.addItem(new Object(), "c", 12);
         study.addItem((Object[]) new String[] { "A", "B", "D" });
-        
+
         assertThat(study.getItemCount()).isEqualTo(4);
     }
 

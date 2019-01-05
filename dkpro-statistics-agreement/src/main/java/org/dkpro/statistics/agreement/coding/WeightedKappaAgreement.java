@@ -43,14 +43,17 @@ import org.dkpro.statistics.agreement.distance.IDistanceFunction;
  * 
  * @author Christian M. Meyer
  */
-public class WeightedKappaAgreement extends WeightedAgreement
-        implements IChanceCorrectedDisagreement {
+public class WeightedKappaAgreement
+    extends WeightedAgreement
+    implements IChanceCorrectedDisagreement
+{
 
     /**
      * Initializes the instance for the given annotation study. The study should never be null.
      */
     public WeightedKappaAgreement(final ICodingAnnotationStudy study,
-            final IDistanceFunction distanceFunction) {
+            final IDistanceFunction distanceFunction)
+    {
         super(study);
         this.distanceFunction = distanceFunction;
     }
@@ -72,8 +75,8 @@ public class WeightedKappaAgreement extends WeightedAgreement
         double result = 0.0;
         double maxDistance = 1.0;
         for (ICodingAnnotationItem item : study.getItems()) {
-            Map<Object, Integer> annotationsPerCategory
-                    = CodingAnnotationStudy.countTotalAnnotationsPerCategory(item);
+            Map<Object, Integer> annotationsPerCategory = CodingAnnotationStudy
+                    .countTotalAnnotationsPerCategory(item);
 
             for (Entry<Object, Integer> category1 : annotationsPerCategory.entrySet()) {
                 for (Entry<Object, Integer> category2 : annotationsPerCategory.entrySet()) {
@@ -84,10 +87,9 @@ public class WeightedKappaAgreement extends WeightedAgreement
                         continue;
                     }
 
-                    double distance = distanceFunction.measureDistance(study,
-                            category1.getKey(), category2.getKey());
-                    result += category1.getValue() * category2.getValue()
-                            * distance;
+                    double distance = distanceFunction.measureDistance(study, category1.getKey(),
+                            category2.getKey());
+                    result += category1.getValue() * category2.getValue() * distance;
                     if (distance > maxDistance) {
                         maxDistance = distance;
                     }
@@ -115,8 +117,8 @@ public class WeightedKappaAgreement extends WeightedAgreement
         ensureDistanceFunction();
 
         BigDecimal result = BigDecimal.ZERO;
-        Map<Object, int[]> annotationsPerCategory
-                = CodingAnnotationStudy.countAnnotationsPerCategory(study);
+        Map<Object, int[]> annotationsPerCategory = CodingAnnotationStudy
+                .countAnnotationsPerCategory(study);
 
         double maxDistance = 1.0;
         for (Object category1 : study.getCategories()) {
@@ -127,11 +129,9 @@ public class WeightedKappaAgreement extends WeightedAgreement
                     for (int n = m + 1; n < study.getRaterCount(); n++) {
                         double distance = distanceFunction.measureDistance(study, category1,
                                 category2);
-                        result = result.add(
-                                new BigDecimal(annotationCounts1[m]).multiply(
-                                new BigDecimal(annotationCounts2[n]).multiply(
-                                new BigDecimal(distance)
-                                )));
+                        result = result.add(new BigDecimal(annotationCounts1[m])
+                                .multiply(new BigDecimal(annotationCounts2[n])
+                                        .multiply(new BigDecimal(distance))));
                         if (distance > maxDistance) {
                             maxDistance = distance;
                         }
@@ -140,8 +140,9 @@ public class WeightedKappaAgreement extends WeightedAgreement
             }
         }
 
-        result = result.divide(new BigDecimal(study.getItemCount()).pow(2).multiply(
-                new BigDecimal(maxDistance)), MathContext.DECIMAL128);
+        result = result.divide(
+                new BigDecimal(study.getItemCount()).pow(2).multiply(new BigDecimal(maxDistance)),
+                MathContext.DECIMAL128);
         return result.doubleValue();
     }
 }

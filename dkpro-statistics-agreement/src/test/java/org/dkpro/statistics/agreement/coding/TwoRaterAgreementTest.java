@@ -32,7 +32,8 @@ import junit.framework.TestCase;
 public class TwoRaterAgreementTest extends TestCase {
 
     /***/
-    public void testAgreement() {
+    public void testAgreement()
+    {
         ICodingAnnotationStudy study = createExample();
 
         PercentageAgreement pa = new PercentageAgreement(study);
@@ -63,7 +64,8 @@ public class TwoRaterAgreementTest extends TestCase {
     }
 
     /***/
-    public void testItemSpecificAgreement() {
+    public void testItemSpecificAgreement()
+    {
         ICodingAnnotationStudy study = createExample();
 
         PercentageAgreement pa = new PercentageAgreement(study);
@@ -81,7 +83,7 @@ public class TwoRaterAgreementTest extends TestCase {
         assertFalse(itemIter.hasNext());
     }
 
-    /* ** /
+    /*
     public void testCategorySpecificAgreement() {
         ICodingAnnotationStudy study = createExample();
 
@@ -93,8 +95,8 @@ public class TwoRaterAgreementTest extends TestCase {
         assertEquals(10 / 13, pa.calculateCategoryAgreement("high"));
     }*/
 
-
-    public void testMissingCategories() {
+    public void testMissingCategories()
+    {
         // Annotation categories not used by any rater must be added to
         // the study explicitly in order to avoid an InsufficientDataException.
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
@@ -121,7 +123,8 @@ public class TwoRaterAgreementTest extends TestCase {
 
 
     /***/
-    public void testInsufficientData() {
+    public void testInsufficientData()
+    {
         // Empty annotation study.
         CodingAnnotationStudy emptyStudy = new CodingAnnotationStudy(2);
 
@@ -152,7 +155,8 @@ public class TwoRaterAgreementTest extends TestCase {
     }
 
     /***/
-    public void testInvalidRaterCount() {
+    public void testInvalidRaterCount()
+    {
         CodingAnnotationStudy tooManyRatersStudy = new CodingAnnotationStudy(3);
         
         assertThatExceptionOfType(IllegalArgumentException.class)
@@ -166,7 +170,8 @@ public class TwoRaterAgreementTest extends TestCase {
     }
 
     /** Creates an example annotation study. */
-    public static ICodingAnnotationStudy createExample() {
+    public static ICodingAnnotationStudy createExample()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addItem("high", "high");
         study.addItem("high", "high");
@@ -180,5 +185,4 @@ public class TwoRaterAgreementTest extends TestCase {
         study.addItem("low", "low");
         return study;
     }
-
 }

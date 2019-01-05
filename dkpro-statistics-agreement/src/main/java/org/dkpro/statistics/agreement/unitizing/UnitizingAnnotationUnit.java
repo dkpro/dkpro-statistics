@@ -20,50 +20,58 @@ package org.dkpro.statistics.agreement.unitizing;
 import org.dkpro.statistics.agreement.AnnotationUnit;
 
 /**
- * Default implementation of {@link IUnitizingAnnotationUnit} holding the
- * rater's index and the category that the rater assigned to this unit as
- * well as the position of the annotation unit within the continuum of an
- * annotation study. When using the default implementation, it is recommended
- * to use {@link UnitizingAnnotationStudy#addUnit(long, long, int, Object)}
- * instead of instantiating this type.
+ * Default implementation of {@link IUnitizingAnnotationUnit} holding the rater's index and the
+ * category that the rater assigned to this unit as well as the position of the annotation unit
+ * within the continuum of an annotation study. When using the default implementation, it is
+ * recommended to use {@link UnitizingAnnotationStudy#addUnit(long, long, int, Object)} instead of
+ * instantiating this type.
+ * 
  * @see UnitizingAnnotationStudy
  * @see IUnitizingAnnotationUnit
  * @author Christian M. Meyer
  */
-public class UnitizingAnnotationUnit extends AnnotationUnit
-        implements IUnitizingAnnotationUnit {
+public class UnitizingAnnotationUnit
+    extends AnnotationUnit
+    implements IUnitizingAnnotationUnit
+{
 
     protected long offset;
     protected long length;
 
-    /** Initializes the unit with the given offset and length as well as the
-     *  category assigned to the unit by the rater with the specified index.
-     *  Normally, the method {@link UnitizingAnnotationStudy#addUnit(long,
-     *  long, int, Object)} should be used to define the annotation units. */
-    protected UnitizingAnnotationUnit(long offset, long length, int raterIdx,
-            final Object category) {
+    /**
+     * Initializes the unit with the given offset and length as well as the category assigned to the
+     * unit by the rater with the specified index. Normally, the method
+     * {@link UnitizingAnnotationStudy#addUnit(long, long, int, Object)} should be used to define
+     * the annotation units.
+     */
+    protected UnitizingAnnotationUnit(long offset, long length, int raterIdx, final Object category)
+    {
         super(raterIdx, category);
         this.offset = offset;
         this.length = length;
     }
 
     @Override
-    public long getOffset() {
+    public long getOffset()
+    {
         return offset;
     }
 
     @Override
-    public long getLength() {
+    public long getLength()
+    {
         return length;
     }
 
     @Override
-    public long getEndOffset() {
+    public long getEndOffset()
+    {
         return offset + length;
     }
 
     @Override
-    public int compareTo(final IUnitizingAnnotationUnit that) {
+    public int compareTo(final IUnitizingAnnotationUnit that)
+    {
         if (this.equals(that)) {
             return 0;
         }
@@ -93,9 +101,9 @@ public class UnitizingAnnotationUnit extends AnnotationUnit
     }
 
     @Override
-    public String toString() {
-        return raterIdx + "<" + category + ">"
-                + ((offset >= 0) ? "@" + offset : "")
+    public String toString()
+    {
+        return raterIdx + "<" + category + ">" + ((offset >= 0) ? "@" + offset : "")
                 + ((length > 0) ? "-" + length : "");
     }
 

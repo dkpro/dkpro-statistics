@@ -27,17 +27,21 @@ import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
 import junit.framework.TestCase;
 
 /**
- * Tests for {@link WeightedKappaAgreement} and 
- * {@link KrippendorffAlphaAgreement}.
+ * Tests for {@link WeightedKappaAgreement} and {@link KrippendorffAlphaAgreement}.
+ * 
  * @author Christian M. Meyer
  */
-public class WeightedAgreementTest extends TestCase {
-    
+public class WeightedAgreementTest
+    extends TestCase
+{
+
     /***/
-    public void testDistanceFunction1() {
+    public void testDistanceFunction1()
+    {
         ICodingAnnotationStudy study = createExample();
-        
-        IDistanceFunction weightedDistanceFunction = new IDistanceFunction() {            
+
+        IDistanceFunction weightedDistanceFunction = new IDistanceFunction()
+        {
             @Override
             public double measureDistance(final IAnnotationStudy study, 
                     final Object category1, final Object category2) {
@@ -70,10 +74,12 @@ public class WeightedAgreementTest extends TestCase {
     }
     
     /***/
-    public void testDistanceFunction2() {
+    public void testDistanceFunction2()
+    {
         ICodingAnnotationStudy study = createExample();
         
-        IDistanceFunction weightedDistanceFunction = new IDistanceFunction() {
+        IDistanceFunction weightedDistanceFunction = new IDistanceFunction()
+        {
             @Override
             public double measureDistance(final IAnnotationStudy study, 
                     final Object category1, final Object category2) {
@@ -105,53 +111,53 @@ public class WeightedAgreementTest extends TestCase {
         assertEquals(0.252, alpha.calculateAgreement(), 0.001);        
     }
     
-    public void testMissingVariance() {
+    public void testMissingVariance()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(11, 1, 1);
         study.addItem(1, 2);
         study.addItem(1, 3);
-        
-        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, 
+
+        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
                 new NominalDistanceFunction());
         assertEquals(0.153, alpha.calculateObservedDisagreement(), 0.001);
         assertEquals(0.150, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(-0.020, alpha.calculateAgreement(), 0.001);    
-        
+        assertEquals(-0.020, alpha.calculateAgreement(), 0.001);
+
         WeightedKappaAgreement kappaW = new WeightedKappaAgreement(study,
                 new NominalDistanceFunction());
         assertEquals(0.153, kappaW.calculateObservedDisagreement(), 0.001);
         assertEquals(0.153, kappaW.calculateExpectedDisagreement(), 0.001);
         assertEquals(0.000, kappaW.calculateAgreement(), 0.001);
 
-        kappaW = new WeightedKappaAgreement(study,
-                new IntervalDistanceFunction());
+        kappaW = new WeightedKappaAgreement(study, new IntervalDistanceFunction());
         assertEquals(0.096, kappaW.calculateObservedDisagreement(), 0.001);
         assertEquals(0.096, kappaW.calculateExpectedDisagreement(), 0.001);
         assertEquals(0.000, kappaW.calculateAgreement(), 0.001);
     }
-    
-    public void testNormalization() {
+
+    public void testNormalization()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(11, 10, 10);
         study.addItem(10, 20);
         study.addItem(10, 30);
-        
+
         WeightedKappaAgreement kappaW = new WeightedKappaAgreement(study,
                 new NominalDistanceFunction());
         assertEquals(0.153, kappaW.calculateObservedDisagreement(), 0.001);
         assertEquals(0.153, kappaW.calculateExpectedDisagreement(), 0.001);
         assertEquals(0.000, kappaW.calculateAgreement(), 0.001);
 
-        kappaW = new WeightedKappaAgreement(study,
-                new IntervalDistanceFunction());
+        kappaW = new WeightedKappaAgreement(study, new IntervalDistanceFunction());
         assertEquals(0.096, kappaW.calculateObservedDisagreement(), 0.001);
         assertEquals(0.096, kappaW.calculateExpectedDisagreement(), 0.001);
         assertEquals(0.000, kappaW.calculateAgreement(), 0.001);
     }
-    
 
     /** Creates an example annotation study. */
-    public ICodingAnnotationStudy createExample() {
+    public ICodingAnnotationStudy createExample()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addItem("", "");
         study.addItem("A", "");

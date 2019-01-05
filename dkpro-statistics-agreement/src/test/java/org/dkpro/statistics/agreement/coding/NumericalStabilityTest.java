@@ -21,12 +21,16 @@ import junit.framework.TestCase;
 
 /**
  * Tests for numerical stability.
+ * 
  * @author Christian M. Meyer
  */
-public class NumericalStabilityTest extends TestCase {
+public class NumericalStabilityTest
+    extends TestCase
+{
 
     /***/
-    public void testExample1() {
+    public void testExample1()
+    {
         ICodingAnnotationStudy study = createExample1();
 
         PercentageAgreement raw = new PercentageAgreement(study);
@@ -49,17 +53,22 @@ public class NumericalStabilityTest extends TestCase {
     }
 
     /***/
-    public void testExample2() {
+    public void testExample2()
+    {
         ICodingAnnotationStudy study = createExample2();
         CodingAnnotationStudy tmpStudy = new CodingAnnotationStudy(2);
-        for (int i = 0; i < 81001; i++)
+        for (int i = 0; i < 81001; i++) {
             tmpStudy.addItem(1, 1);
-        for (int i = 0; i < 9000; i++)
+        }
+        for (int i = 0; i < 9000; i++) {
             tmpStudy.addItem(1, 0);
-        for (int i = 0; i < 1000; i++)
+        }
+        for (int i = 0; i < 1000; i++) {
             tmpStudy.addItem(0, 1);
-        for (int i = 0; i < 9000; i++)
+        }
+        for (int i = 0; i < 9000; i++) {
             tmpStudy.addItem(0, 0);
+        }
         study = tmpStudy;
 
         PercentageAgreement raw = new PercentageAgreement(study);
@@ -82,7 +91,8 @@ public class NumericalStabilityTest extends TestCase {
     }
 
     /***/
-    public void testScaledArtsteinPoesio() {
+    public void testScaledArtsteinPoesio()
+    {
         ICodingAnnotationStudy study = createExample2(500);
 
         // Two raters, observed agreement.
@@ -107,7 +117,8 @@ public class NumericalStabilityTest extends TestCase {
     }
 
     /***/
-    public void testScaledFleiss() {
+    public void testScaledFleiss()
+    {
         ICodingAnnotationStudy study = createExample3(2000);
 
         FleissKappaAgreement pi = new FleissKappaAgreement(study);
@@ -117,35 +128,43 @@ public class NumericalStabilityTest extends TestCase {
         assertEquals(0.430, agreement, 0.001);
     }
 
-    /** Creates an example annotation study with many items. Such a study
-     *  can easily yield problems related to numerical stability. */
-    public static ICodingAnnotationStudy createExample1() {
+    /**
+     * Creates an example annotation study with many items. Such a study can easily yield problems
+     * related to numerical stability.
+     */
+    public static ICodingAnnotationStudy createExample1()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(45000, 1, 1);
-        study.addMultipleItems( 5000, 1, 0);
-        study.addMultipleItems( 4999, 0, 1);
+        study.addMultipleItems(5000, 1, 0);
+        study.addMultipleItems(4999, 0, 1);
         study.addMultipleItems(45000, 0, 0);
         return study;
     }
 
-    /** Creates an example annotation study with many items. Such a study
-     *  can easily yield problems related to numerical stability. */
-    public static ICodingAnnotationStudy createExample2() {
+    /**
+     * Creates an example annotation study with many items. Such a study can easily yield problems
+     * related to numerical stability.
+     */
+    public static ICodingAnnotationStudy createExample2()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(81001, 1, 1);
-        study.addMultipleItems( 9000, 1, 0);
-        study.addMultipleItems( 1000, 0, 1);
-        study.addMultipleItems( 9000, 0, 0);
+        study.addMultipleItems(9000, 1, 0);
+        study.addMultipleItems(1000, 0, 1);
+        study.addMultipleItems(9000, 0, 0);
         return study;
     }
 
-    /** Creates an example annotation study introduced by Artstein &amp;
-     *  Poesio (2008: p. 558) that is scaled by the given factor. */
-    public static ICodingAnnotationStudy createExample2(int scale) {
-        /*        STAT    IReq      Σ
-        STAT     20         10         30
-        IReq     20         50         70
-        Σ        40         60        100 */
+    /**
+     * Creates an example annotation study introduced by Artstein &amp; Poesio (2008: p. 558) that
+     * is scaled by the given factor.
+     */
+    public static ICodingAnnotationStudy createExample2(int scale)
+    {
+        /*
+         * STAT IReq Σ STAT 20 10 30 IReq 20 50 70 Σ 40 60 100
+         */
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(20 * scale, "STAT", "STAT");
         study.addMultipleItems(10 * scale, "IReq", "STAT");
@@ -154,9 +173,12 @@ public class NumericalStabilityTest extends TestCase {
         return study;
     }
 
-    /** Creates an example annotation study introduced by
-     *  Fleiss (1971: 379) that is scaled by the given factor.. */
-    public static ICodingAnnotationStudy createExample3(int scale) {
+    /**
+     * Creates an example annotation study introduced by Fleiss (1971: 379) that is scaled by the
+     * given factor..
+     */
+    public static ICodingAnnotationStudy createExample3(int scale)
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(6);
         study.addMultipleItems(scale, 4, 4, 4, 4, 4, 4);
         study.addMultipleItems(scale, 2, 2, 2, 5, 5, 5);

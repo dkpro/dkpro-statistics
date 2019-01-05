@@ -20,13 +20,15 @@ package org.dkpro.statistics.agreement.coding;
 import org.dkpro.statistics.agreement.IAgreementMeasure;
 
 /**
- * Super interface for all {@link IAgreementMeasure}s for coding tasks.
- * That is, a measure of inter-rater agreement for 
- * {@link ICodingAnnotationStudy}s.
+ * Super interface for all {@link IAgreementMeasure}s for coding tasks. That is, a measure of
+ * inter-rater agreement for {@link ICodingAnnotationStudy}s.
+ * 
  * @see IAgreementMeasure
  * @see ICodingAnnotationStudy
  * @author Christian M. Meyer
  */
-public interface ICodingAgreementMeasure extends IAgreementMeasure {
-    
+public interface ICodingAgreementMeasure
+    extends IAgreementMeasure
+{
+
 }

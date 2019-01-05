@@ -28,10 +28,12 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  * @author Christian Stab
  */
-public class Krippendorff2004Test extends TestCase {
-    
+public class Krippendorff2004Test
+    extends TestCase
+{
     /***/
-    public void testDistanceMetric1() {
+    public void testDistanceMetric1()
+    {
         assertEquals(40.0, KrippendorffAlphaUnitizingAgreement.measureDistance(
                 2, 3, null, 2, 2, "X") 
                 + KrippendorffAlphaUnitizingAgreement.measureDistance(
@@ -55,7 +57,8 @@ public class Krippendorff2004Test extends TestCase {
     }
 
     /***/
-    public void testDistanceMetric2() {
+    public void testDistanceMetric2()
+    {
         assertEquals(50.0, KrippendorffAlphaUnitizingAgreement.measureDistance(
                 225, 70, "c", 220, 80, "c"));
         assertEquals(850.0, KrippendorffAlphaUnitizingAgreement.measureDistance(
@@ -65,7 +68,8 @@ public class Krippendorff2004Test extends TestCase {
     }
 
     /***/
-    public void testAgreement() {
+    public void testAgreement()
+    {
         IUnitizingAnnotationStudy study = createExample();
 
         KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
@@ -73,7 +77,8 @@ public class Krippendorff2004Test extends TestCase {
     }
     
     /***/
-    public void testCategoryAgreement() {
+    public void testCategoryAgreement()
+    {
         IUnitizingAnnotationStudy study = createExample();
         
         KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
@@ -87,9 +92,11 @@ public class Krippendorff2004Test extends TestCase {
     }
     
     
-    /** Creates an example annotation study introduced by  
-     *  Krippendorff (2004: p. 254). */
-    public static UnitizingAnnotationStudy createExample() {
+    /**
+     * Creates an example annotation study introduced by Krippendorff (2004: p. 254).
+     */
+    public static UnitizingAnnotationStudy createExample()
+    {
         UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(2, 150, 300);
         // observer i is annotator 1
         // observer j is annotator 2

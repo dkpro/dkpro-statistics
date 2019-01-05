@@ -59,8 +59,11 @@ public class SpearmansRankCorrelation_old
 
     /**
      * Computes the correlation between two datasets.
-     * @param list1 The first dataset as a list.
-     * @param list2 The second dataset as a list.
+     * 
+     * @param list1
+     *            The first dataset as a list.
+     * @param list2
+     *            The second dataset as a list.
      * @return The correlation between the two datasets.
      */
     public static double computeCorrelation(final List<Double> list1, final List<Double> list2)

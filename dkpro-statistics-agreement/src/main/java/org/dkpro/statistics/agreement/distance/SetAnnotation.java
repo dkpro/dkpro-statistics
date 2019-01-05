@@ -51,12 +51,14 @@ public class SetAnnotation
     private static final long serialVersionUID = 8656250211589017624L;
 
     /** Instantiates an empty set annotation. */
-    public SetAnnotation() {
+    public SetAnnotation()
+    {
         super();
     }
 
     /** Instantiates a set annotation with the given values as set elements. */
-    public SetAnnotation(Object... values) {
+    public SetAnnotation(Object... values)
+    {
         super();
         for (Object value : values) {
             add(value);
@@ -64,23 +66,26 @@ public class SetAnnotation
     }
 
     /** Instantiates a set annotation with the given values as set elements. */
-    public SetAnnotation(Collection<? extends Object> c) {
+    public SetAnnotation(Collection<? extends Object> c)
+    {
         super(c);
     }
 
     @Override
-    public int compareTo(final SetAnnotation that) {
+    public int compareTo(final SetAnnotation that)
+    {
         return toString().compareTo(that.toString());
     }
 
     @Override
-    public boolean equals(final Object that)    {
+    public boolean equals(final Object that)
+    {
         if (!(that instanceof SetAnnotation)) {
             return false;
         }
         return toString().equals(((SetAnnotation) that).toString());
     }
-    
+
     @Override
     public int hashCode()
     {
@@ -88,7 +93,8 @@ public class SetAnnotation
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuilder result = new StringBuilder();
         for (Object value : this) {
             result.append(result.length() == 0 ? "" : ", ").append(value);

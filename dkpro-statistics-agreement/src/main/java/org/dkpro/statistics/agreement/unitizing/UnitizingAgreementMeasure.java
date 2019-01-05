@@ -20,18 +20,22 @@ package org.dkpro.statistics.agreement.unitizing;
 import org.dkpro.statistics.agreement.DisagreementMeasure;
 
 /**
- * Abstract base class of agreement measures for 
- * {@link IUnitizingAnnotationStudy}s.
+ * Abstract base class of agreement measures for {@link IUnitizingAnnotationStudy}s.
+ * 
  * @author Christian M. Meyer
  */
-public abstract class UnitizingAgreementMeasure extends DisagreementMeasure
-        implements IUnitizingAgreementMeasure {
+public abstract class UnitizingAgreementMeasure
+    extends DisagreementMeasure
+    implements IUnitizingAgreementMeasure
+{
 
     protected IUnitizingAnnotationStudy study;
-    
-    /** Initializes the instance for the given annotation study. The study 
-     *  should never be null. */
-    public UnitizingAgreementMeasure(final IUnitizingAnnotationStudy study) {
+
+    /**
+     * Initializes the instance for the given annotation study. The study should never be null.
+     */
+    public UnitizingAgreementMeasure(final IUnitizingAnnotationStudy study)
+    {
         this.study = study;
     }
 

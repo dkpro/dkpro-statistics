@@ -18,13 +18,16 @@
 package org.dkpro.statistics.agreement.distance;
 
 /**
- * Equals the {@link IntervalDistanceFunction} for interval-scaled data. Kept 
- * for compatibility reasons.
+ * Equals the {@link IntervalDistanceFunction} for interval-scaled data. Kept for compatibility
+ * reasons.
+ * 
  * @see IDistanceFunction
  * @see IntervalDistanceFunction
  * @author Christian M. Meyer
  */
 @Deprecated
-public class SquareDistanceFunction extends IntervalDistanceFunction {
-        
+public class SquareDistanceFunction
+    extends IntervalDistanceFunction
+{
+
 }

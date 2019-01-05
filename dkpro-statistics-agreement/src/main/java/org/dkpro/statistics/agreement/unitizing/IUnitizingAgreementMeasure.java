@@ -20,13 +20,15 @@ package org.dkpro.statistics.agreement.unitizing;
 import org.dkpro.statistics.agreement.IAgreementMeasure;
 
 /**
- * Super interface for all {@link IAgreementMeasure}s for unitizing tasks.
- * That is, a measure of inter-rater agreement for 
- * {@link IUnitizingAnnotationStudy}s.
+ * Super interface for all {@link IAgreementMeasure}s for unitizing tasks. That is, a measure of
+ * inter-rater agreement for {@link IUnitizingAnnotationStudy}s.
+ * 
  * @see IAgreementMeasure
  * @see IUnitizingAnnotationStudy
  * @author Christian M. Meyer
  */
-public interface IUnitizingAgreementMeasure extends IAgreementMeasure {
-    
+public interface IUnitizingAgreementMeasure
+    extends IAgreementMeasure
+{
+
 }

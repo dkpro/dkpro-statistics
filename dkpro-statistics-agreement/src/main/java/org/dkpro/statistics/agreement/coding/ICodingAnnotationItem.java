@@ -21,28 +21,32 @@ import org.dkpro.statistics.agreement.IAnnotationItem;
 import org.dkpro.statistics.agreement.IAnnotationUnit;
 
 /**
- * Represents a single annotation item of an {@link ICodingAnnotationStudy}.
- * In coding tasks, annotation items are fixed, and each rater is
- * asked to code each item. The category assigned by a certain rater is 
- * represented as annotation units. Thus, an annotation item of a coding
- * study consists of multiple annotation units.
+ * Represents a single annotation item of an {@link ICodingAnnotationStudy}. In coding tasks,
+ * annotation items are fixed, and each rater is asked to code each item. The category assigned by a
+ * certain rater is represented as annotation units. Thus, an annotation item of a coding study
+ * consists of multiple annotation units.
+ * 
  * @see IAnnotationUnit
  * @see ICodingAnnotationStudy
  * @author Christian M. Meyer
  */
-public interface ICodingAnnotationItem extends IAnnotationItem {
-
-    /** Returns the annotation unit of the rater with the specified 
-     *  index. That is, the object holding the category assigned 
-     *  to the item by the specified rater. */
+public interface ICodingAnnotationItem
+    extends IAnnotationItem
+{
+    /**
+     * Returns the annotation unit of the rater with the specified index. That is, the object
+     * holding the category assigned to the item by the specified rater.
+     */
     public IAnnotationUnit getUnit(int raterIdx);
-    
-    /** Returns all coding units for this annotation item (i.e., 
-     *  the categories assigned by the individual raters). */
+
+    /**
+     * Returns all coding units for this annotation item (i.e., the categories assigned by the
+     * individual raters).
+     */
     public Iterable<IAnnotationUnit> getUnits();
 
-    /** Returns the number of raters who annotated this item with a 
-     *  non-null category. */
+    /**
+     * Returns the number of raters who annotated this item with a non-null category.
+     */
     public int getRaterCount();
-    
 }

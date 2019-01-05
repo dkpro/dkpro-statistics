@@ -23,12 +23,13 @@ import org.apache.commons.math.MathException;
 import org.apache.commons.math.special.Erf;
 import org.apache.commons.math.stat.inference.TestUtils;
 
-
 /**
  * Computes statistical significance.
+ * 
  * @author zesch
  */
-public class Significance {
+public class Significance
+{
 
     /**
      * Tests two correlation values for equality. See page 745 Press, W. H. (2007). Numerical

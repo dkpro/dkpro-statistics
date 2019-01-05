@@ -24,6 +24,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Computes the correlation of two datasets.
+ * 
  * @author zesch
  *
  */
@@ -34,8 +35,11 @@ public class PearsonCorrelation
 
     /**
      * Computes the correlation between two datasets.
-     * @param list1 The first dataset as a list.
-     * @param list2 The second dataset as a list.
+     * 
+     * @param list1
+     *            The first dataset as a list.
+     * @param list2
+     *            The second dataset as a list.
      * @return The correlation between the two datasets.
      */
     public static double computeCorrelation(final List<Double> list1, final List<Double> list2)
@@ -62,8 +66,11 @@ public class PearsonCorrelation
 
     /**
      * Computes the correlation between two datasets.
-     * @param list1 The first dataset as a double array.
-     * @param list2 The second dataset as a double array.
+     * 
+     * @param list1
+     *            The first dataset as a double array.
+     * @param list2
+     *            The second dataset as a double array.
      * @return The correlation between the two datasets.
      */
     public static double computeCorrelation(final double[] list1, final double[] list2)

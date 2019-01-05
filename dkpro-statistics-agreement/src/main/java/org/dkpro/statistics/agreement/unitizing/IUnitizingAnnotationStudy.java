@@ -20,42 +20,47 @@ package org.dkpro.statistics.agreement.unitizing;
 import org.dkpro.statistics.agreement.IAnnotationStudy;
 
 /**
- * Data model for unitizing studies. Unitizing studies are characterized by
- * a continuum in which a number of (human) raters are asked to identify
- * the boundaries of annotation units and optionally code the units with
- * a certain category. The continuum is represented on a sampled, discretized
- * integer scale starting with 0 (unless otherwise specified). Note that
- * this interface allows reusing existing data representations by implementing
- * the required methods. Use {@link UnitizingAnnotationStudy} as a default
- * implementation if no existing data representation exists. The default
- * implementation facilitates adding the individual units.
+ * Data model for unitizing studies. Unitizing studies are characterized by a continuum in which a
+ * number of (human) raters are asked to identify the boundaries of annotation units and optionally
+ * code the units with a certain category. The continuum is represented on a sampled, discretized
+ * integer scale starting with 0 (unless otherwise specified). Note that this interface allows
+ * reusing existing data representations by implementing the required methods. Use
+ * {@link UnitizingAnnotationStudy} as a default implementation if no existing data representation
+ * exists. The default implementation facilitates adding the individual units.
+ * 
  * @see UnitizingAnnotationStudy
  * @see IUnitizingAnnotationUnit
  * @author Christian M. Meyer
  */
-public interface IUnitizingAnnotationStudy extends IAnnotationStudy {
+public interface IUnitizingAnnotationStudy
+    extends IAnnotationStudy
+{
 
     // -- Units --
-    
+
     /** Allows iterating all annotation units of this study. */
     public Iterable<IUnitizingAnnotationUnit> getUnits();
 
     // -- Continuum --
-    
-//    @Deprecated
-//    public int getSectionCount();
-//    
-//    @Deprecated
-//    public Iterable<Integer> getSectionBoundaries();
-    
-    /** Returns the begin of the continuum (i.e., the first offset that 
-     *  is considered valid for annotation units). */
+
+    // @Deprecated
+    // public int getSectionCount();
+    //
+    // @Deprecated
+    // public Iterable<Integer> getSectionBoundaries();
+
+    /**
+     * Returns the begin of the continuum (i.e., the first offset that is considered valid for
+     * annotation units).
+     */
     public long getContinuumBegin();
-    
-    /** Returns the length of the continuum (i.e., the last possible 
-     *  right delimiter of an annotation unit). */
+
+    /**
+     * Returns the length of the continuum (i.e., the last possible right delimiter of an annotation
+     * unit).
+     */
     public long getContinuumLength();
-    
-    //TODO: public void addSectionBoundary(long position);
+
+    // TODO: public void addSectionBoundary(long position);
 
 }

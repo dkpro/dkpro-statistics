@@ -28,77 +28,87 @@ import org.dkpro.statistics.agreement.AnnotationUnit;
 import org.dkpro.statistics.agreement.IAnnotationUnit;
 
 /**
- * Default implementation of the {@link ICodingAnnotationStudy} interface.
- * Instantiate this class for representing the annotation item of a
- * coding study (i.e., an annotation setup in which the (human) raters
- * are asked to code a set of given annotation items). The standard way of
- * representing the annotation units (i.e., the category assigned by a
- * certain rater) of an annotation item is using the
- * {@link #addItem(Object...)} method which allows specifying the list of
- * categories assigned by the raters.
+ * Default implementation of the {@link ICodingAnnotationStudy} interface. Instantiate this class
+ * for representing the annotation item of a coding study (i.e., an annotation setup in which the
+ * (human) raters are asked to code a set of given annotation items). The standard way of
+ * representing the annotation units (i.e., the category assigned by a certain rater) of an
+ * annotation item is using the {@link #addItem(Object...)} method which allows specifying the list
+ * of categories assigned by the raters.
+ * 
  * @see ICodingAnnotationStudy
  * @see ICodingAnnotationItem
  * @author Christian M. Meyer
  */
-public class CodingAnnotationStudy extends AnnotationStudy
-        implements ICodingAnnotationStudy, Cloneable {
+public class CodingAnnotationStudy
+    extends AnnotationStudy
+    implements ICodingAnnotationStudy, Cloneable
+{
 
     protected List<ICodingAnnotationItem> items;
 
-    /** Initializes and empty annotation study for a coding task. The basic
-     *  setup of a coding study is assigning categories to units with fixed
-     *  boundaries. */
-    protected CodingAnnotationStudy() {
+    /**
+     * Initializes and empty annotation study for a coding task. The basic setup of a coding study
+     * is assigning categories to units with fixed boundaries.
+     */
+    protected CodingAnnotationStudy()
+    {
         super();
         items = new ArrayList<ICodingAnnotationItem>();
     }
 
-    /** Initializes and empty annotation study for a coding task with the given
-     *  number of raters. The basic setup of a coding study is assigning
-     *  categories to units with fixed boundaries. */
-    public CodingAnnotationStudy(int raterCount) {
+    /**
+     * Initializes and empty annotation study for a coding task with the given number of raters. The
+     * basic setup of a coding study is assigning categories to units with fixed boundaries.
+     */
+    public CodingAnnotationStudy(int raterCount)
+    {
         this();
         for (int raterIdx = 0; raterIdx < raterCount; raterIdx++) {
             addRater(Integer.toString(raterIdx));
         }
     }
 
-    /** Add the given annotation item to this study. The specified item
-     *  should never be null. When relying on the default implementation
-     *  {@link CodingAnnotationItem}, it is recommended to use
-     *  {@link #addItem(Object...)} instead. */
-    protected void addItem(final ICodingAnnotationItem item) {
+    /**
+     * Add the given annotation item to this study. The specified item should never be null. When
+     * relying on the default implementation {@link CodingAnnotationItem}, it is recommended to use
+     * {@link #addItem(Object...)} instead.
+     */
+    protected void addItem(final ICodingAnnotationItem item)
+    {
         items.add(item);
     }
 
-    /** Creates a new {@link CodingAnnotationItem} which has been coded with
-     *  the given annotation categories. Note that the order of the categories
-     *  must correspond to the raters' indexes. Use null to represent missing
-     *  annotations, Invoking <code>addItem("A", "B", null, "A")</code>
-     *  indicates an annotation item which has been coded as category "A"
-     *  by rater 0 and 3 and as category "B" by rater 1. Rater 2 did not
-     *  assign any category to the item. The method is a shorthand for
-     *  {@link #addItemAsArray(Object[])}.
-     *  @throws IllegalArgumentException if the number of annotations does
-     *      not match the number of raters. */
-    public ICodingAnnotationItem addItem(final Object... annotations) {
+    /**
+     * Creates a new {@link CodingAnnotationItem} which has been coded with the given annotation
+     * categories. Note that the order of the categories must correspond to the raters' indexes. Use
+     * null to represent missing annotations, Invoking <code>addItem("A", "B", null, "A")</code>
+     * indicates an annotation item which has been coded as category "A" by rater 0 and 3 and as
+     * category "B" by rater 1. Rater 2 did not assign any category to the item. The method is a
+     * shorthand for {@link #addItemAsArray(Object[])}.
+     * 
+     * @throws IllegalArgumentException
+     *             if the number of annotations does not match the number of raters.
+     */
+    public ICodingAnnotationItem addItem(final Object... annotations)
+    {
         return addItemAsArray(annotations);
     }
 
-    /** Creates a new {@link CodingAnnotationItem} which has been coded with
-     *  the given annotation categories. Note that the order of the categories
-     *  must correspond to the raters' indexes. Use null to represent missing
-     *  annotations, Invoking <code>addItem(new Object[]{"A", "B", null,
-     *  "A"})</code> indicates an annotation item which has been coded as
-     *  category "A" by rater 0 and 3 and as category "B" by rater 1. Rater 2
-     *  did not assign any category to the item.
-     *  @throws IllegalArgumentException if the number of annotations does
-     *      not match the number of raters. */
-    public ICodingAnnotationItem addItemAsArray(final Object[] annotations) {
+    /**
+     * Creates a new {@link CodingAnnotationItem} which has been coded with the given annotation
+     * categories. Note that the order of the categories must correspond to the raters' indexes. Use
+     * null to represent missing annotations, Invoking <code>addItem(new Object[]{"A", "B", null,
+     *  "A"})</code> indicates an annotation item which has been coded as category "A" by rater 0
+     * and 3 and as category "B" by rater 1. Rater 2 did not assign any category to the item.
+     * 
+     * @throws IllegalArgumentException
+     *             if the number of annotations does not match the number of raters.
+     */
+    public ICodingAnnotationItem addItemAsArray(final Object[] annotations)
+    {
         if (annotations.length != raters.size()) {
             throw new IllegalArgumentException("Incorrect number of annotation units "
-                    + "(expected " + raters.size() + ", given "
-                    + annotations.length + "). "
+                    + "(expected " + raters.size() + ", given " + annotations.length + "). "
                     + "For array params, use #addItemsAsArray instead of #addItem.");
         }
 
@@ -111,18 +121,20 @@ public class CodingAnnotationStudy extends AnnotationStudy
         return item;
     }
 
-    /** Shorthand for invoking {@link #addItem(Object...)} with the same
-     *  parameters multiple times. This method is useful for modeling
-     *  annotation data based on a contingency table. */
-    public void addMultipleItems(int times, final Object... values) {
+    /**
+     * Shorthand for invoking {@link #addItem(Object...)} with the same parameters multiple times.
+     * This method is useful for modeling annotation data based on a contingency table.
+     */
+    public void addMultipleItems(int times, final Object... values)
+    {
         for (int i = 0; i < times; i++) {
             addItemAsArray(values);
         }
     }
 
-    protected IAnnotationUnit createUnit(int index, int raterIdx,
-            final Object category) {
-        IAnnotationUnit result = new AnnotationUnit(/*index, */raterIdx, category);
+    protected IAnnotationUnit createUnit(int index, int raterIdx, final Object category)
+    {
+        IAnnotationUnit result = new AnnotationUnit(/* index, */raterIdx, category);
         if (result.getCategory() != null) {
             categories.add(result.getCategory());
         }
@@ -130,32 +142,37 @@ public class CodingAnnotationStudy extends AnnotationStudy
     }
 
     @Override
-    public ICodingAnnotationItem getItem(int index) {
+    public ICodingAnnotationItem getItem(int index)
+    {
         return items.get(index);
     }
 
     @Override
-    public Iterable<ICodingAnnotationItem> getItems() {
+    public Iterable<ICodingAnnotationItem> getItems()
+    {
         return items;
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return items.size();
     }
 
     @Override
-    public int getUnitCount() {
+    public int getUnitCount()
+    {
         int result = 0;
         for (ICodingAnnotationItem item : items) {
             result += item.getRaterCount();
         }
         return result;
-        //return items.size() * raters.size();
+        // return items.size() * raters.size();
     }
 
     @Override
-    public boolean hasMissingValues() {
+    public boolean hasMissingValues()
+    {
         for (ICodingAnnotationItem item : items) {
             if (item.getRaterCount() != raters.size()) {
                 return true;
@@ -166,13 +183,14 @@ public class CodingAnnotationStudy extends AnnotationStudy
     }
 
     @Override
-    public CodingAnnotationStudy clone() {
+    public CodingAnnotationStudy clone()
+    {
         CodingAnnotationStudy result = new CodingAnnotationStudy(getRaterCount());
         for (ICodingAnnotationItem item : getItems()) {
             CodingAnnotationItem newItem = new CodingAnnotationItem(raters.size());
             for (IAnnotationUnit unit : item.getUnits()) {
-                newItem.addUnit(result.createUnit(result.items.size(),
-                        unit.getRaterIdx(), unit.getCategory()));
+                newItem.addUnit(result.createUnit(result.items.size(), unit.getRaterIdx(),
+                        unit.getCategory()));
             }
             result.items.add(newItem);
         }
@@ -182,11 +200,13 @@ public class CodingAnnotationStudy extends AnnotationStudy
         return result;
     }
 
-    /** Returns a clone of the current annotation study in which all categories
-     *  are replaced by the given nullCategory except the categories matching
-     *  the specified keepCategory. */
+    /**
+     * Returns a clone of the current annotation study in which all categories are replaced by the
+     * given nullCategory except the categories matching the specified keepCategory.
+     */
     public CodingAnnotationStudy stripCategories(final Object keepCategory,
-            final Object nullCategory) {
+            final Object nullCategory)
+    {
         CodingAnnotationStudy result = new CodingAnnotationStudy(getRaterCount());
         for (ICodingAnnotationItem item : getItems()) {
             CodingAnnotationItem newItem = new CodingAnnotationItem(raters.size());
@@ -198,48 +218,48 @@ public class CodingAnnotationStudy extends AnnotationStudy
                 else {
                     newCategory = keepCategory;
                 }
-                newItem.addUnit(result.createUnit(result.items.size(),
-                        unit.getRaterIdx(), newCategory));
+                newItem.addUnit(
+                        result.createUnit(result.items.size(), unit.getRaterIdx(), newCategory));
             }
             result.items.add(newItem);
         }
         return result;
     }
 
-    /** Returns a clone of the current annotation study which contains
-     *  only the annotation units of the raters with the given indexes.
-     *  All other units will be removed. This method is useful for
-     *  converting an annotation study with multiple raters into a
-     *  (pairwise) annotation study with two raters. */
-    public CodingAnnotationStudy extractRaters(final int... raters) {
+    /**
+     * Returns a clone of the current annotation study which contains only the annotation units of
+     * the raters with the given indexes. All other units will be removed. This method is useful for
+     * converting an annotation study with multiple raters into a (pairwise) annotation study with
+     * two raters.
+     */
+    public CodingAnnotationStudy extractRaters(final int... raters)
+    {
         CodingAnnotationStudy result = new CodingAnnotationStudy(raters.length);
         for (ICodingAnnotationItem item : getItems()) {
             CodingAnnotationItem newItem = new CodingAnnotationItem(raters.length);
             for (int r = 0; r < raters.length; r++) {
                 IAnnotationUnit unit = item.getUnit(raters[r]);
-                newItem.addUnit(result.createUnit(result.items.size(),
-                        r, unit.getCategory()));
+                newItem.addUnit(result.createUnit(result.items.size(), r, unit.getCategory()));
             }
             result.items.add(newItem);
         }
         return result;
     }
 
-    /*TODO public IAnnotationStudy createPairwiseStudy(int rater1, int rater2) {
-        AnnotationStudy result = new AnnotationStudy(2);
-        for (IAnnotationItem item : getItems())
-            result.addItem(item.getAnnotation(rater1), item.getAnnotation(rater2));
-        return result;
-    }*/
+    /*
+     * TODO public IAnnotationStudy createPairwiseStudy(int rater1, int rater2) { AnnotationStudy
+     * result = new AnnotationStudy(2); for (IAnnotationItem item : getItems())
+     * result.addItem(item.getAnnotation(rater1), item.getAnnotation(rater2)); return result; }
+     */
 
-
-    /** Returns a two-dimensional map of categories and raters and the
-     *  corresponding usage frequencies in the given annotation study
-     *  (i.e., how often a certain rater used a certain category for
-     *  coding an annotation unit). */
+    /**
+     * Returns a two-dimensional map of categories and raters and the corresponding usage
+     * frequencies in the given annotation study (i.e., how often a certain rater used a certain
+     * category for coding an annotation unit).
+     */
     // Category x Rater -> #
-    public static Map<Object, int[]> countAnnotationsPerCategory(
-            final ICodingAnnotationStudy study) {
+    public static Map<Object, int[]> countAnnotationsPerCategory(final ICodingAnnotationStudy study)
+    {
         Map<Object, int[]> result = new HashMap<Object, int[]>();
         for (ICodingAnnotationItem item : study.getItems()) {
             for (IAnnotationUnit unit : item.getUnits()) {
@@ -259,12 +279,14 @@ public class CodingAnnotationStudy extends AnnotationStudy
         return result;
     }
 
-    /** Returns a map of categories and their usage frequencies (i.e.,
-     *  how often they are used in annotation units) within the given
-     *  annotation study. */
+    /**
+     * Returns a map of categories and their usage frequencies (i.e., how often they are used in
+     * annotation units) within the given annotation study.
+     */
     // Category -> #
     public static Map<Object, Integer> countTotalAnnotationsPerCategory(
-            final ICodingAnnotationStudy study) {
+            final ICodingAnnotationStudy study)
+    {
         Map<Object, Integer> result = new HashMap<Object, Integer>();
         for (ICodingAnnotationItem item : study.getItems()) {
             if (item.getRaterCount() <= 1) {
@@ -289,12 +311,14 @@ public class CodingAnnotationStudy extends AnnotationStudy
         return result;
     }
 
-    /** Returns a map of categories and their usage frequencies (i.e.,
-     *  how often they are used in annotation units) within the given
-     *  annotation item. */
+    /**
+     * Returns a map of categories and their usage frequencies (i.e., how often they are used in
+     * annotation units) within the given annotation item.
+     */
     // Category -> #
     public static Map<Object, Integer> countTotalAnnotationsPerCategory(
-            final ICodingAnnotationItem item) {
+            final ICodingAnnotationItem item)
+    {
         Map<Object, Integer> result = new HashMap<Object, Integer>();
         for (IAnnotationUnit unit : item.getUnits()) {
             Object category = unit.getCategory();
@@ -313,16 +337,17 @@ public class CodingAnnotationStudy extends AnnotationStudy
         return result;
     }
 
-    /** Returns a two dimensional map of category pairs and their co-occurrence
-     *  frequencies for the given annotation study. */
+    /**
+     * Returns a two dimensional map of category pairs and their co-occurrence frequencies for the
+     * given annotation study.
+     */
     // Category x Category -> #
-    public static Map<Object, Map<Object, Double>>
-            countCategoryCoincidence(final ICodingAnnotationStudy study) {
-        Map<Object, Map<Object, Double>> result =
-                new HashMap<Object, Map<Object, Double>>();
+    public static Map<Object, Map<Object, Double>> countCategoryCoincidence(
+            final ICodingAnnotationStudy study)
+    {
+        Map<Object, Map<Object, Double>> result = new HashMap<Object, Map<Object, Double>>();
         for (ICodingAnnotationItem item : study.getItems()) {
-            Map<Object, Map<Object, Double>> itemMatrix =
-                    countCategoryCoincidence(item);
+            Map<Object, Map<Object, Double>> itemMatrix = countCategoryCoincidence(item);
 
             for (Entry<Object, Map<Object, Double>> itemCat : itemMatrix.entrySet()) {
                 Map<Object, Double> resultCat = result.get(itemCat.getKey());
@@ -342,13 +367,15 @@ public class CodingAnnotationStudy extends AnnotationStudy
         return result;
     }
 
-    /** Returns a two dimensional map of category pairs and their co-occurrence
-     *  frequencies for the given annotation item. */
-    //Category x Category -> #
-    public static Map<Object, Map<Object, Double>>
-            countCategoryCoincidence(final ICodingAnnotationItem item) {
-        Map<Object, Map<Object, Double>> result =
-                new HashMap<Object, Map<Object, Double>>();
+    /**
+     * Returns a two dimensional map of category pairs and their co-occurrence frequencies for the
+     * given annotation item.
+     */
+    // Category x Category -> #
+    public static Map<Object, Map<Object, Double>> countCategoryCoincidence(
+            final ICodingAnnotationItem item)
+    {
+        Map<Object, Map<Object, Double>> result = new HashMap<Object, Map<Object, Double>>();
         for (IAnnotationUnit unit1 : item.getUnits()) {
             for (IAnnotationUnit unit2 : item.getUnits()) {
                 if (unit1 == unit2) {

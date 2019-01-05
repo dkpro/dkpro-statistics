@@ -23,25 +23,31 @@ import org.dkpro.statistics.agreement.AgreementMeasure;
 import org.dkpro.statistics.agreement.InsufficientDataException;
 
 /**
- * Abstract base class of agreement measures for
- * {@link ICodingAnnotationStudy}s.
+ * Abstract base class of agreement measures for {@link ICodingAnnotationStudy}s.
+ * 
  * @author Christian M. Meyer
  */
-public abstract class CodingAgreementMeasure extends AgreementMeasure
-        implements ICodingAgreementMeasure {
-
+public abstract class CodingAgreementMeasure
+    extends AgreementMeasure
+    implements ICodingAgreementMeasure
+{
     protected ICodingAnnotationStudy study;
 
-    /** Initializes the instance for the given annotation study. The study
-     *  should never be null. */
-    public CodingAgreementMeasure(final ICodingAnnotationStudy study) {
+    /**
+     * Initializes the instance for the given annotation study. The study should never be null.
+     */
+    public CodingAgreementMeasure(final ICodingAnnotationStudy study)
+    {
         this.study = study;
     }
 
     @Override
-    public double calculateObservedAgreement() {
-        if (study.getCategoryCount() <= 1)
-            throw new InsufficientDataException("An annotation study needs at least two different categories; otherwise there is no decision for the raters to agree on.");
+    public double calculateObservedAgreement()
+    {
+        if (study.getCategoryCount() <= 1) {
+            throw new InsufficientDataException(
+                    "An annotation study needs at least two different categories; otherwise there is no decision for the raters to agree on.");
+        }
 
         double result = 0.0;
         double denominator = 0.0;
@@ -55,28 +61,37 @@ public abstract class CodingAgreementMeasure extends AgreementMeasure
         return result / denominator;
     }
 
-    protected double doCalculateItemAgreement(final ICodingAnnotationItem item) {
-        Map<Object, Integer> annotationsPerCategory
-                = CodingAnnotationStudy.countTotalAnnotationsPerCategory(item);
+    protected double doCalculateItemAgreement(final ICodingAnnotationItem item)
+    {
+        Map<Object, Integer> annotationsPerCategory = CodingAnnotationStudy
+                .countTotalAnnotationsPerCategory(item);
         double result = 0.0;
-        for (Integer count : annotationsPerCategory.values())
+        for (Integer count : annotationsPerCategory.values()) {
             result += count * (count - 1);
+        }
         int raterCount = item.getRaterCount();
-        if (raterCount <= 1)
+        if (raterCount <= 1) {
             return 0.0;
-        else
+        }
+        else {
             return result / (double) (raterCount - 1.0);
+        }
     }
 
-    protected void ensureTwoRaters() {
-        if (study.getRaterCount() != 2)
+    protected void ensureTwoRaters()
+    {
+        if (study.getRaterCount() != 2) {
             throw new IllegalArgumentException("This agreement measure is only "
                     + "applicable for annotation studies with two raters!");
+        }
     }
 
-    protected void warnIfMissingValues() {
-        if (study.hasMissingValues())
-            System.err.println(getClass().getName() + " does not support dealing with missing values. Consider using, for example, Krippendorff's alpha instead.");
+    protected void warnIfMissingValues()
+    {
+        if (study.hasMissingValues()) {
+            System.err.println(getClass().getName()
+                    + " does not support dealing with missing values. Consider using, for example, Krippendorff's alpha instead.");
+        }
     }
 
 }

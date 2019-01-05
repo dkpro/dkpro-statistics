@@ -21,25 +21,31 @@ import junit.framework.TestCase;
 
 /**
  * Tests based on Mieskes (2009) for category-specific agreement using
- * {@link FleissKappaAgreement}.<br><br>
- * References:<ul>
- * <li>Mieskes, M.: Exploring Methods for the Automatic Summarization of 
- *   Meetings. Dissertation. Friedrich-Alexander-Universität 
- *   Erlangen-Nürnberg, 2009.</li></ul>
+ * {@link FleissKappaAgreement}.<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>Mieskes, M.: Exploring Methods for the Automatic Summarization of Meetings. Dissertation.
+ * Friedrich-Alexander-Universität Erlangen-Nürnberg, 2009.</li>
+ * </ul>
+ * 
  * @author Christian M. Meyer
  * @author Margot Mieskes
  */
-public class Mieskes2009Test extends TestCase {
+public class Mieskes2009Test
+    extends TestCase
+{
 
     /***/
-    public void testAgreement() {
+    public void testAgreement()
+    {
         ICodingAnnotationStudy study = createExample();
 
         FleissKappaAgreement kappa = new FleissKappaAgreement(study);
         assertEquals(0.84, kappa.calculateObservedAgreement(), 0.01);
         assertEquals(0.20, kappa.calculateExpectedAgreement(), 0.01);
         assertEquals(0.80, kappa.calculateAgreement(), 0.01);
-        
+
         assertEquals(1.00, kappa.calculateCategoryAgreement("INP"), 0.01);
         assertEquals(1.00, kappa.calculateCategoryAgreement("JJ"), 0.01);
         assertEquals(1.00, kappa.calculateCategoryAgreement("MD"), 0.01);
@@ -51,9 +57,11 @@ public class Mieskes2009Test extends TestCase {
         assertEquals(-0.02, kappa.calculateCategoryAgreement("VBP"), 0.01);
     }
 
-    /** Creates an example annotation study introduced by 
-     *  Mieskes (2009: p. 58). */
-    public static ICodingAnnotationStudy createExample() {
+    /**
+     * Creates an example annotation study introduced by Mieskes (2009: p. 58).
+     */
+    public static ICodingAnnotationStudy createExample()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(3);
         study.addItem("UH", "VB", "UH");
         study.addItem("INP", "INP", "INP");
@@ -74,5 +82,5 @@ public class Mieskes2009Test extends TestCase {
         study.addItem("INP", "INP", "INP");
         return study;
     }
-    
+
 }

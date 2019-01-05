@@ -47,22 +47,25 @@ import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
  * @see IDistanceFunction
  * @author Christian M. Meyer
  */
-public class OrdinalDistanceFunction implements IDistanceFunction {
-    
+public class OrdinalDistanceFunction
+    implements IDistanceFunction
+{
+
     @Override
-    public double measureDistance(final IAnnotationStudy study, 
-            final Object category1, final Object category2) {
+    public double measureDistance(final IAnnotationStudy study, final Object category1,
+            final Object category2)
+    {
         if (category1 instanceof Integer && category2 instanceof Integer) {
             if (category1.equals(category2)) {
                 return 0.0;
             }
-            
+
             // TODO: Provide generic method for the annotation study w/ potential use for unitizing
             // tasks!
             Map<Object, Integer> nk = CodingAnnotationStudy
                     .countTotalAnnotationsPerCategory((ICodingAnnotationStudy) study);
             Integer v;
-            
+
             double result = 0.0;
             v = nk.get(category1);
             if (v != null) {
@@ -72,7 +75,7 @@ public class OrdinalDistanceFunction implements IDistanceFunction {
             if (v != null) {
                 result += ((double) v) / 2.0;
             }
-            
+
             int cat1 = (Integer) category1;
             int cat2 = (Integer) category2;
             int minCat = (cat1 < cat2 ? cat1 : cat2);
@@ -81,11 +84,11 @@ public class OrdinalDistanceFunction implements IDistanceFunction {
                 v = nk.get(i);
                 if (v != null) {
                     result += v;
-                }    
+                }
             }
             return result * result;
         }
-            
+
         return (category1.equals(category2) ? 0.0 : 1.0);
-    }    
+    }
 }

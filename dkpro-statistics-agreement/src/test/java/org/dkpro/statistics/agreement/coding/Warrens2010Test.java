@@ -20,21 +20,27 @@ package org.dkpro.statistics.agreement.coding;
 import junit.framework.TestCase;
 
 /**
- * Tests based on Warrens (2010) for measuring several inter-rater agreement
- * measures with more than two raters.<br><br>
- * References:<ul>
- * <li>O'Malley, F.P.; Mohsin, S.K.; Badve, S.; Bose, S.; Collins, L.C.;
- *   Ennis, M.; Kleer, C.G.; Pinder, S.E. &amp; Schnitt, S.J.: Interobserver
- *   reproducibility in the diagnosis of flat epithelial atypia of the
- *   breast. Modern Pathology 19(2):172-179, 2006.</li>
- * <li>Warrens, M.J.: Inequalities between multi-rater kappas. Advances in
- *   Data Analysis and Classification 4(4):271-286, 2010.</li></ul>
+ * Tests based on Warrens (2010) for measuring several inter-rater agreement measures with more than
+ * two raters.<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>O'Malley, F.P.; Mohsin, S.K.; Badve, S.; Bose, S.; Collins, L.C.; Ennis, M.; Kleer, C.G.;
+ * Pinder, S.E. &amp; Schnitt, S.J.: Interobserver reproducibility in the diagnosis of flat
+ * epithelial atypia of the breast. Modern Pathology 19(2):172-179, 2006.</li>
+ * <li>Warrens, M.J.: Inequalities between multi-rater kappas. Advances in Data Analysis and
+ * Classification 4(4):271-286, 2010.</li>
+ * </ul>
+ * 
  * @author Christian M. Meyer
  */
-public class Warrens2010Test extends TestCase {
+public class Warrens2010Test
+    extends TestCase
+{
 
     /***/
-    public void testAgreement() {
+    public void testAgreement()
+    {
         ICodingAnnotationStudy study = createExample();
 
         RandolphKappaAgreement s = new RandolphKappaAgreement(study);
@@ -46,12 +52,13 @@ public class Warrens2010Test extends TestCase {
         HubertKappaAgreement kappaH = new HubertKappaAgreement(study);
         assertEquals(0.8326, kappaH.calculateAgreement(), 0.0001);
 
-        //TODO LightKappaAgreement kappaL = new LightKappaAgreement(study);
-        //assertEquals(0.8325, kappaL.calculateAgreement(), 0.0001);
+        // TODO LightKappaAgreement kappaL = new LightKappaAgreement(study);
+        // assertEquals(0.8325, kappaL.calculateAgreement(), 0.0001);
     }
 
     /***/
-    public void testPairwiseEquivalenceHubertKappa() {
+    public void testPairwiseEquivalenceHubertKappa()
+    {
         CodingAnnotationStudy study = createExample();
 
         HubertKappaAgreement kappaH = new HubertKappaAgreement(study);
@@ -72,11 +79,12 @@ public class Warrens2010Test extends TestCase {
     }
 
     /***/
-    public void testPairwiseEquivalenceLightKappa() {
+    public void testPairwiseEquivalenceLightKappa()
+    {
         CodingAnnotationStudy study = createExample();
 
-        //TODO LightKappaAgreement kappaL = new LightKappaAgreement(study);
-        //assertEquals(0.8325, kappaL.calculateAgreement(), 0.0001);
+        // TODO LightKappaAgreement kappaL = new LightKappaAgreement(study);
+        // assertEquals(0.8325, kappaL.calculateAgreement(), 0.0001);
 
         double kappaEquivalence = 0.0;
         for (int r1 = 0; r1 < study.getRaterCount(); r1++) {
@@ -91,18 +99,20 @@ public class Warrens2010Test extends TestCase {
         assertEquals(0.8325, kappaEquivalence, 0.0001);
     }
 
-    /** Creates an example annotation study introduced by
-     *  Warrens (2010: p. 284), based on O'Malley et al. (2006: p. 176). */
-    public static CodingAnnotationStudy createExample() {
+    /**
+     * Creates an example annotation study introduced by Warrens (2010: p. 284), based on O'Malley
+     * et al. (2006: p. 176).
+     */
+    public static CodingAnnotationStudy createExample()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(8);
         study.addMultipleItems(14, "N", "N", "N", "N", "N", "N", "N", "N");
-        study.addMultipleItems( 1, "N", "N", "N", "A", "N", "N", "N", "N");
-        study.addMultipleItems( 1, "N", "N", "N", "N", "N", "N", "N", "A");
+        study.addMultipleItems(1, "N", "N", "N", "A", "N", "N", "N", "N");
+        study.addMultipleItems(1, "N", "N", "N", "N", "N", "N", "N", "A");
         study.addMultipleItems(10, "A", "A", "A", "A", "A", "A", "A", "A");
-        study.addMultipleItems( 2, "A", "A", "N", "A", "A", "A", "A", "N");
-        study.addMultipleItems( 1, "A", "A", "N", "A", "N", "A", "A", "N");
-        study.addMultipleItems( 1, "A", "A", "N", "A", "N", "A", "N", "N");
+        study.addMultipleItems(2, "A", "A", "N", "A", "A", "A", "A", "N");
+        study.addMultipleItems(1, "A", "A", "N", "A", "N", "A", "A", "N");
+        study.addMultipleItems(1, "A", "A", "N", "A", "N", "A", "N", "N");
         return study;
     }
-
 }

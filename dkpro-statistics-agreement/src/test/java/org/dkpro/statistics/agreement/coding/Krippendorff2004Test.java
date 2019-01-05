@@ -26,19 +26,25 @@ import org.dkpro.statistics.agreement.distance.RatioDistanceFunction;
 import junit.framework.TestCase;
 
 /**
- * Tests based on Krippendorff (2004) for measuring 
- * {@link KrippendorffAlphaAgreement}.<br><br>
- * References:<ul>
- * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology.
- *   Thousand Oaks, CA: Sage Publications, 2004.</li></ul>
+ * Tests based on Krippendorff (2004) for measuring {@link KrippendorffAlphaAgreement}.<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology. Thousand Oaks, CA:
+ * Sage Publications, 2004.</li>
+ * </ul>
+ * 
  * @author Christian M. Meyer
  */
-public class Krippendorff2004Test extends TestCase {
+public class Krippendorff2004Test
+    extends TestCase
+{
 
     /***/
-    public void testDichotomy() {
+    public void testDichotomy()
+    {
         ICodingAnnotationStudy study = createExample1();
-        
+
         PercentageAgreement pa = new PercentageAgreement(study);
         assertEquals(0.600, pa.calculateAgreement(), 0.001);
 
@@ -50,9 +56,10 @@ public class Krippendorff2004Test extends TestCase {
     }
 
     /***/
-    public void testMultipleCategories() {
+    public void testMultipleCategories()
+    {
         ICodingAnnotationStudy study = createExample2();
-        
+
         PercentageAgreement pa = new PercentageAgreement(study);
         assertEquals(0.833, pa.calculateAgreement(), 0.001);
 
@@ -62,11 +69,12 @@ public class Krippendorff2004Test extends TestCase {
         assertEquals(0.6268, alpha.calculateExpectedDisagreement(), 0.001);
         assertEquals(0.734, alpha.calculateAgreement(), 0.001);
     }
-    
+
     /***/
-    public void testMultipleRatersMissingValues() {
+    public void testMultipleRatersMissingValues()
+    {
         ICodingAnnotationStudy study = createExample3();
-        
+
         PercentageAgreement pa = new PercentageAgreement(study);
         assertEquals(0.800, pa.calculateAgreement(), 0.001);
 
@@ -78,11 +86,12 @@ public class Krippendorff2004Test extends TestCase {
     }
 
     /***/
-    public void testOrdinalMetric() {
+    public void testOrdinalMetric()
+    {
         CodingAnnotationStudy study = createExample3a(0);
-        
+
         IDistanceFunction distFunc = new OrdinalDistanceFunction();
-        
+
         final double[][] EXPECTED = new double[][]{
                 {  0.0, 11.0, 22.5, 30.0, 32.5, 34.0 },
                 { 11.0,  0.0, 11.5, 19.0, 21.5, 23.0 },
@@ -95,8 +104,7 @@ public class Krippendorff2004Test extends TestCase {
         int j = 0;
         for (Object category1 : study.getCategories()) {
             for (Object category2 : study.getCategories()) {
-                assertEquals("item " + category1 + "," + category2, 
-                        EXPECTED[i][j] * EXPECTED[i][j], 
+                assertEquals("item " + category1 + "," + category2, EXPECTED[i][j] * EXPECTED[i][j],
                         distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
@@ -106,11 +114,12 @@ public class Krippendorff2004Test extends TestCase {
     }
 
     /***/
-    public void testIntervallMetric() {
+    public void testIntervallMetric()
+    {
         CodingAnnotationStudy study = createExample3a(-2);
-        
+
         IDistanceFunction distFunc = new IntervalDistanceFunction();
-        
+
         final double[][] EXPECTED = new double[][]{
                 {  0.0,  1.0,  2.0,  3.0,  4.0,  5.0 },
                 {  1.0,  0.0,  1.0,  2.0,  3.0,  4.0 },
@@ -123,8 +132,7 @@ public class Krippendorff2004Test extends TestCase {
         int j = 0;
         for (Object category1 : study.getCategories()) {
             for (Object category2 : study.getCategories()) {
-                assertEquals("item " + category1 + "," + category2, 
-                        EXPECTED[i][j] * EXPECTED[i][j], 
+                assertEquals("item " + category1 + "," + category2, EXPECTED[i][j] * EXPECTED[i][j],
                         distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
@@ -134,11 +142,12 @@ public class Krippendorff2004Test extends TestCase {
     }
 
     /***/
-    public void testRatioMetric() {
+    public void testRatioMetric()
+    {
         CodingAnnotationStudy study = createExample3a(-1);
-        
+
         IDistanceFunction distFunc = new RatioDistanceFunction();
-        
+
         final double[][] EXPECTED = new double[][]{
                 {  0.0      ,  1.0 / 1.0,  2.0 / 2.0,  3.0 / 3.0,  4.0 / 4.0,  5.0 / 5.0 },
                 {  1.0 / 1.0,  0.0 / 2.0,  1.0 / 3.0,  2.0 / 4.0,  3.0 / 5.0,  4.0 / 6.0 },
@@ -152,8 +161,7 @@ public class Krippendorff2004Test extends TestCase {
         int j = 0;
         for (Object category1 : study.getCategories()) {
             for (Object category2 : study.getCategories()) {
-                assertEquals("item " + category1 + "," + category2, 
-                        EXPECTED[i][j] * EXPECTED[i][j], 
+                assertEquals("item " + category1 + "," + category2, EXPECTED[i][j] * EXPECTED[i][j],
                         distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
@@ -161,24 +169,24 @@ public class Krippendorff2004Test extends TestCase {
             j = 0;
         }
     }
-    
 
     /***/
-    public void testIntervallAgreement() {
+    public void testIntervallAgreement()
+    {
         CodingAnnotationStudy study = createExample3b();
-        
+
         IDistanceFunction distFunc = new IntervalDistanceFunction();
 
-        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
-                distFunc);
+        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, distFunc);
         assertEquals(0.433, alpha.calculateObservedDisagreement(), 0.001);
         assertEquals(2.872, alpha.calculateExpectedDisagreement(), 0.001);
         assertEquals(0.849, alpha.calculateAgreement(), 0.001);
-        
+
     }
 
     /***/
-    public void testOtherCoefficients() {
+    public void testOtherCoefficients()
+    {
         CodingAnnotationStudy study = createExample4a();
 
         PercentageAgreement pa = new PercentageAgreement(study);
@@ -189,7 +197,7 @@ public class Krippendorff2004Test extends TestCase {
         assertEquals(0.186, pi.calculateAgreement(), 0.001);
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
         assertEquals(0.186, kappa.calculateAgreement(), 0.001);
-        
+
         study = createExample4b();
 
         pa = new PercentageAgreement(study);
@@ -201,12 +209,12 @@ public class Krippendorff2004Test extends TestCase {
         kappa = new CohenKappaAgreement(study);
         assertEquals(0.258, kappa.calculateAgreement(), 0.001);
     }
-    
-    
 
-    /** Creates an example annotation study introduced by  
-     *  Krippendorff (2004: p. 224). */
-    public static CodingAnnotationStudy createExample1() {
+    /**
+     * Creates an example annotation study introduced by Krippendorff (2004: p. 224).
+     */
+    public static CodingAnnotationStudy createExample1()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addItem(1, 0);
         study.addItem(1, 1);
@@ -221,9 +229,11 @@ public class Krippendorff2004Test extends TestCase {
         return study;
     }
 
-    /** Creates an example annotation study introduced by 
-     *  Krippendorff (2004: p. 227). */
-    public static CodingAnnotationStudy createExample2() {
+    /**
+     * Creates an example annotation study introduced by Krippendorff (2004: p. 227).
+     */
+    public static CodingAnnotationStudy createExample2()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addItem("a", "a");
         study.addItem("a", "b");
@@ -240,11 +250,13 @@ public class Krippendorff2004Test extends TestCase {
         return study;
     }
 
-    /** Creates an example annotation study introduced by 
-     *  Krippendorff (2004: p. 230). */
-    public static CodingAnnotationStudy createExample3() {
-        // B = book symbol, L = letter symbol, P = phone symbol, 
-        // C = computer symbol, F = folder symbol. 
+    /**
+     * Creates an example annotation study introduced by Krippendorff (2004: p. 230).
+     */
+    public static CodingAnnotationStudy createExample3()
+    {
+        // B = book symbol, L = letter symbol, P = phone symbol,
+        // C = computer symbol, F = folder symbol.
         CodingAnnotationStudy study = new CodingAnnotationStudy(4);
         study.addItem("B", "B", null, "B");
         study.addItem("L", "L", "P", "L");
@@ -261,11 +273,13 @@ public class Krippendorff2004Test extends TestCase {
         return study;
     }
 
-    /** Creates a variant of the annotation study introduced by  
-     *  Krippendorff (2004: p. 230). */
-    public static CodingAnnotationStudy createExample3a(int catOffset) {
-        // 1 = book symbol, 2 = letter symbol, 3 = phone symbol, 
-        // 4 = computer symbol, 5 = new empty symbol, 6 = folder symbol. 
+    /**
+     * Creates a variant of the annotation study introduced by Krippendorff (2004: p. 230).
+     */
+    public static CodingAnnotationStudy createExample3a(int catOffset)
+    {
+        // 1 = book symbol, 2 = letter symbol, 3 = phone symbol,
+        // 4 = computer symbol, 5 = new empty symbol, 6 = folder symbol.
         CodingAnnotationStudy study = new CodingAnnotationStudy(4);
         study.addCategory(1 + catOffset);
         study.addCategory(2 + catOffset);
@@ -288,11 +302,13 @@ public class Krippendorff2004Test extends TestCase {
         return study;
     }
 
-    /** Creates a variant of the annotation study introduced by  
-     *  Krippendorff (2004: p. 230). */
-    public static CodingAnnotationStudy createExample3b() {
-        // B = book symbol, L = letter symbol, P = phone symbol, 
-        // C = computer symbol, F = folder symbol. 
+    /**
+     * Creates a variant of the annotation study introduced by Krippendorff (2004: p. 230).
+     */
+    public static CodingAnnotationStudy createExample3b()
+    {
+        // B = book symbol, L = letter symbol, P = phone symbol,
+        // C = computer symbol, F = folder symbol.
         CodingAnnotationStudy study = new CodingAnnotationStudy(4);
         study.addItem(1, 1, null, 1);
         study.addItem(2, 2, 3, 2);
@@ -309,34 +325,38 @@ public class Krippendorff2004Test extends TestCase {
         return study;
     }
 
-    /** Creates a variant of the annotation study introduced by  
-     *  Krippendorff (2004: p. 246). */
-    public static CodingAnnotationStudy createExample4a() {
+    /**
+     * Creates a variant of the annotation study introduced by Krippendorff (2004: p. 246).
+     */
+    public static CodingAnnotationStudy createExample4a()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(12, "a", "a");
-        study.addMultipleItems( 9, "a", "b");
-        study.addMultipleItems( 9, "a", "c");
-        study.addMultipleItems( 9, "b", "a");
+        study.addMultipleItems(9, "a", "b");
+        study.addMultipleItems(9, "a", "c");
+        study.addMultipleItems(9, "b", "a");
         study.addMultipleItems(14, "b", "b");
-        study.addMultipleItems( 9, "b", "c");
-        study.addMultipleItems( 9, "c", "a");
-        study.addMultipleItems( 9, "c", "b");
+        study.addMultipleItems(9, "b", "c");
+        study.addMultipleItems(9, "c", "a");
+        study.addMultipleItems(9, "c", "b");
         study.addMultipleItems(20, "c", "c");
         return study;
     }
 
-    /** Creates a variant of the annotation study introduced by  
-     *  Krippendorff (2004: p. 246). */
-    public static CodingAnnotationStudy createExample4b() {
+    /**
+     * Creates a variant of the annotation study introduced by Krippendorff (2004: p. 246).
+     */
+    public static CodingAnnotationStudy createExample4b()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(12, "a", "a");
         study.addMultipleItems(18, "a", "b");
         study.addMultipleItems(18, "a", "c");
-        study.addMultipleItems( 0, "b", "a");
+        study.addMultipleItems(0, "b", "a");
         study.addMultipleItems(14, "b", "b");
         study.addMultipleItems(18, "b", "c");
-        study.addMultipleItems( 0, "c", "a");
-        study.addMultipleItems( 0, "c", "b");
+        study.addMultipleItems(0, "c", "a");
+        study.addMultipleItems(0, "c", "b");
         study.addMultipleItems(20, "c", "c");
         return study;
     }

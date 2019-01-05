@@ -22,11 +22,16 @@ import java.util.Iterator;
 import junit.framework.TestCase;
 
 /**
- * Tests for {@link UnitizingAnnotationStudy}.<br><br>
+ * Tests for {@link UnitizingAnnotationStudy}.<br>
+ * <br>
+ * 
  * @author Christian M. Meyer
  */
-public class UnitizingAnnotationStudyTest extends TestCase {
-    public void testSortOrder() {
+public class UnitizingAnnotationStudyTest
+    extends TestCase
+{
+    public void testSortOrder()
+    {
         UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 7);
         study.addUnit(0, 1, 1, null);
         study.addUnit(3, 1, 1, null);
@@ -38,7 +43,7 @@ public class UnitizingAnnotationStudyTest extends TestCase {
         study.addUnit(1, 1, 2, null);
         study.addUnit(2, 4, 2, null);
         study.addUnit(3, 2, 1, null);
-        
+
         Iterator<IUnitizingAnnotationUnit> iter = study.getUnits().iterator();
         assertAnnotationItem(0, 1, 1, iter.next());
         assertAnnotationItem(1, 1, 1, iter.next());
@@ -53,9 +58,9 @@ public class UnitizingAnnotationStudyTest extends TestCase {
         assertFalse(iter.hasNext());
     }
 
-    protected static void assertAnnotationItem(int expectedOffset, 
-            int expectedLength, int expectedRaterIdx, 
-            final IUnitizingAnnotationUnit actual) {
+    protected static void assertAnnotationItem(int expectedOffset, int expectedLength,
+            int expectedRaterIdx, final IUnitizingAnnotationUnit actual)
+    {
         assertEquals(actual.toString(), expectedOffset, actual.getOffset());
         assertEquals(actual.toString(), expectedLength, actual.getLength());
         assertEquals(actual.toString(), expectedRaterIdx, actual.getRaterIdx());
