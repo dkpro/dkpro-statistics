@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+    <groupId>org.dkpro</groupId>
     <artifactId>dkpro-parent-pom</artifactId>
     <version>20</version>
   </parent>
