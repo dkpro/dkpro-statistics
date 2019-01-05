@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
@@ -14,30 +14,35 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 package org.dkpro.statistics.agreement;
 
 /**
- * Exception type for indicating missing data. The exception is raised for
- * computing agreement for empty annotation studies and for studies with
- * only one annotation category.
+ * Exception type for indicating missing data. The exception is raised for computing agreement for
+ * empty annotation studies and for studies with only one annotation category.
  */
-public class InsufficientDataException extends RuntimeException {
+public class InsufficientDataException
+    extends RuntimeException
+{
+    private static final long serialVersionUID = -3081535421752493402L;
 
-    public InsufficientDataException() {
+    public InsufficientDataException()
+    {
         super();
     }
 
-    public InsufficientDataException(final String message, final Throwable cause) {
+    public InsufficientDataException(final String message, final Throwable cause)
+    {
         super(message, cause);
     }
 
-    public InsufficientDataException(final String message) {
+    public InsufficientDataException(final String message)
+    {
         super(message);
     }
 
-    public InsufficientDataException(final Throwable cause) {
+    public InsufficientDataException(final Throwable cause)
+    {
         super(cause);
     }
-
 }

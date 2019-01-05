@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
@@ -14,22 +14,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 package org.dkpro.statistics.agreement;
 
 /**
- * Default implementation of the {@link IAgreementMeasure} interface providing
- * computational hooks for calculating the observed and the expected agreement.
- * The values for observed and expected agreement are combined using Scott's
- * (1955)<center>(A_O - A_E) / (1.0 - A_E)</center> formula (where A_O denotes
- * the observed agreement and A_E denotes the expected agreement. See also
- * {@link DisagreementMeasure} for the analogous definition of a measure based
- * on the observed and expected disagreement.<br><br>
- * References:<ul>
- * <li>Artstein, R. &amp; Poesio, M.: Inter-Coder Agreement for Computational
- *   Linguistics. Computational Linguistics 34(4):555-596, 2008.</li>
- * <li>Scott, W.A.: Reliability of content analysis: The case of nominal
- *   scale coding. Public Opinion Quaterly 19(3):321-325, 1955.</li></ul>
+ * Default implementation of the {@link IAgreementMeasure} interface providing computational hooks
+ * for calculating the observed and the expected agreement. The values for observed and expected
+ * agreement are combined using Scott's (1955)<center>(A_O - A_E) / (1.0 - A_E)</center> formula
+ * (where A_O denotes the observed agreement and A_E denotes the expected agreement. See also
+ * {@link DisagreementMeasure} for the analogous definition of a measure based on the observed and
+ * expected disagreement.<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>Artstein, R. &amp; Poesio, M.: Inter-Coder Agreement for Computational Linguistics.
+ * Computational Linguistics 34(4):555-596, 2008.</li>
+ * <li>Scott, W.A.: Reliability of content analysis: The case of nominal scale coding. Public
+ * Opinion Quaterly 19(3):321-325, 1955.</li>
+ * </ul>
+ * 
  * @see IAgreementMeasure
  * @see DisagreementMeasure
  * @author Christian M. Meyer

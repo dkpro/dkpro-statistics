@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
@@ -14,7 +14,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 package org.dkpro.statistics.agreement.distance;
 
 import java.util.Collection;
@@ -48,6 +48,8 @@ public class SetAnnotation
     extends HashSet<Object>
     implements Comparable<SetAnnotation>
 {
+    private static final long serialVersionUID = 8656250211589017624L;
+
     /** Instantiates an empty set annotation. */
     public SetAnnotation() {
         super();
@@ -93,5 +95,4 @@ public class SetAnnotation
         }
         return result.toString();
     }
-
 }
