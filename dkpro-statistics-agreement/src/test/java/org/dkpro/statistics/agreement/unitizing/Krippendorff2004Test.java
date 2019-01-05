@@ -17,10 +17,6 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.unitizing;
 
-import org.dkpro.statistics.agreement.unitizing.IUnitizingAnnotationStudy;
-import org.dkpro.statistics.agreement.unitizing.KrippendorffAlphaUnitizingAgreement;
-import org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy;
-
 import junit.framework.TestCase;
 
 /**

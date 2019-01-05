@@ -18,37 +18,45 @@
 package org.dkpro.statistics.agreement;
 
 /**
- * Default implementation of {@link IAnnotationUnit} holding the rater's
- * index and the category that the rater assigned to this unit.
+ * Default implementation of {@link IAnnotationUnit} holding the rater's index and the category that
+ * the rater assigned to this unit.
+ * 
  * @see IAnnotationStudy
  * @see IAnnotationUnit
  * @author Christian M. Meyer
  */
-public class AnnotationUnit implements IAnnotationUnit {
+public class AnnotationUnit
+    implements IAnnotationUnit
+{
 
     protected int raterIdx;
     protected Object category;
 
-    /** Initializes the annotation unit with the given category as the 
-     *  annotation by the rater with the specified index. */
-    public AnnotationUnit(int raterIdx, final Object category) {
+    /**
+     * Initializes the annotation unit with the given category as the annotation by the rater with
+     * the specified index.
+     */
+    public AnnotationUnit(int raterIdx, final Object category)
+    {
         this.raterIdx = raterIdx;
         this.category = category;
     }
 
     @Override
-    public int getRaterIdx() {
+    public int getRaterIdx()
+    {
         return raterIdx;
     }
 
     @Override
-    public Object getCategory() {
+    public Object getCategory()
+    {
         return category;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return raterIdx + "<" + category + ">";
     }
-    
 }

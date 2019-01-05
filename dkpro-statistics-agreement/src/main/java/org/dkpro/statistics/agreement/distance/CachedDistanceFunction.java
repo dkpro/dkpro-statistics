@@ -22,28 +22,31 @@ import java.util.Hashtable;
 import org.dkpro.statistics.agreement.IAnnotationStudy;
 
 /**
- * Wrapper class for arbitrary distance functions that caches the distance
- * scores between two categories in a hash table. This is useful, if the
- * calculation of a distance value is computationally complex, for instance,
- * for set-valued categories as assumed by the
+ * Wrapper class for arbitrary distance functions that caches the distance scores between two
+ * categories in a hash table. This is useful, if the calculation of a distance value is
+ * computationally complex, for instance, for set-valued categories as assumed by the
  * {@link SetAnnotationDistanceFunction}.
+ * 
  * @see IDistanceFunction
  * @author Christian M. Meyer
  */
-public class CachedDistanceFunction implements IDistanceFunction {
-
+public class CachedDistanceFunction
+    implements IDistanceFunction
+{
     protected Hashtable<String, Double> cache;
     protected IDistanceFunction wrappee;
 
     /** Instantiates the wrapper for the given distance function. */
-    public CachedDistanceFunction(final IDistanceFunction wrappee) {
+    public CachedDistanceFunction(final IDistanceFunction wrappee)
+    {
         this.wrappee = wrappee;
         cache = new Hashtable<String, Double>();
     }
 
     @Override
-    public double measureDistance(final IAnnotationStudy study,
-            final Object category1, final Object category2) {
+    public double measureDistance(final IAnnotationStudy study, final Object category1,
+            final Object category2)
+    {
         String key = category1.hashCode() + "|" + category2.hashCode();
         Double result = cache.get(key);
         if (result == null) {
@@ -52,5 +55,4 @@ public class CachedDistanceFunction implements IDistanceFunction {
         }
         return result;
     }
-
 }

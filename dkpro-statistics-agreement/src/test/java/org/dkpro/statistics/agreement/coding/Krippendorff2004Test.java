@@ -17,13 +17,6 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import org.dkpro.statistics.agreement.coding.BennettSAgreement;
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.CohenKappaAgreement;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
-import org.dkpro.statistics.agreement.coding.PercentageAgreement;
-import org.dkpro.statistics.agreement.coding.ScottPiAgreement;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 import org.dkpro.statistics.agreement.distance.IntervalDistanceFunction;
 import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
@@ -104,7 +97,7 @@ public class Krippendorff2004Test extends TestCase {
             for (Object category2 : study.getCategories()) {
                 assertEquals("item " + category1 + "," + category2, 
                         EXPECTED[i][j] * EXPECTED[i][j], 
-                        distFunc.measureDistance(study, category1, category2), 0.001);                
+                        distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
             i++;
@@ -132,7 +125,7 @@ public class Krippendorff2004Test extends TestCase {
             for (Object category2 : study.getCategories()) {
                 assertEquals("item " + category1 + "," + category2, 
                         EXPECTED[i][j] * EXPECTED[i][j], 
-                        distFunc.measureDistance(study, category1, category2), 0.001);                
+                        distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
             i++;
@@ -161,7 +154,7 @@ public class Krippendorff2004Test extends TestCase {
             for (Object category2 : study.getCategories()) {
                 assertEquals("item " + category1 + "," + category2, 
                         EXPECTED[i][j] * EXPECTED[i][j], 
-                        distFunc.measureDistance(study, category1, category2), 0.001);                
+                        distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
             i++;
@@ -270,28 +263,28 @@ public class Krippendorff2004Test extends TestCase {
 
     /** Creates a variant of the annotation study introduced by  
      *  Krippendorff (2004: p. 230). */
-    public static CodingAnnotationStudy createExample3a(int categoryOffset) {
+    public static CodingAnnotationStudy createExample3a(int catOffset) {
         // 1 = book symbol, 2 = letter symbol, 3 = phone symbol, 
         // 4 = computer symbol, 5 = new empty symbol, 6 = folder symbol. 
         CodingAnnotationStudy study = new CodingAnnotationStudy(4);
-        study.addCategory(1 + categoryOffset);
-        study.addCategory(2 + categoryOffset);
-        study.addCategory(3 + categoryOffset);
-        study.addCategory(4 + categoryOffset);
-        study.addCategory(5 + categoryOffset);
-        study.addCategory(6 + categoryOffset);
-        study.addItem(1 + categoryOffset, 1 + categoryOffset, null, 1 + categoryOffset);
-        study.addItem(2 + categoryOffset, 2 + categoryOffset, 3 + categoryOffset, 2 + categoryOffset);
-        study.addItem(3 + categoryOffset, 3 + categoryOffset, 3 + categoryOffset, 3 + categoryOffset);
-        study.addItem(3 + categoryOffset, 3 + categoryOffset, 3 + categoryOffset, 3 + categoryOffset);
-        study.addItem(2 + categoryOffset, 2 + categoryOffset, 2 + categoryOffset, 2 + categoryOffset);
-        study.addItem(1 + categoryOffset, 2 + categoryOffset, 3 + categoryOffset, 4 + categoryOffset);
-        study.addItem(4 + categoryOffset, 4 + categoryOffset, 4 + categoryOffset, 4 + categoryOffset);
-        study.addItem(1 + categoryOffset, 1 + categoryOffset, 2 + categoryOffset, 1 + categoryOffset);
-        study.addItem(2 + categoryOffset, 2 + categoryOffset, 2 + categoryOffset, 2 + categoryOffset);
-        study.addItem(null, 6 + categoryOffset, 6 + categoryOffset, 6 + categoryOffset);
-        study.addItem(null, null, 1 + categoryOffset, 1 + categoryOffset);
-        study.addItem(null, null, 3 + categoryOffset, null);
+        study.addCategory(1 + catOffset);
+        study.addCategory(2 + catOffset);
+        study.addCategory(3 + catOffset);
+        study.addCategory(4 + catOffset);
+        study.addCategory(5 + catOffset);
+        study.addCategory(6 + catOffset);
+        study.addItem(1 + catOffset, 1 + catOffset, null, 1 + catOffset);
+        study.addItem(2 + catOffset, 2 + catOffset, 3 + catOffset, 2 + catOffset);
+        study.addItem(3 + catOffset, 3 + catOffset, 3 + catOffset, 3 + catOffset);
+        study.addItem(3 + catOffset, 3 + catOffset, 3 + catOffset, 3 + catOffset);
+        study.addItem(2 + catOffset, 2 + catOffset, 2 + catOffset, 2 + catOffset);
+        study.addItem(1 + catOffset, 2 + catOffset, 3 + catOffset, 4 + catOffset);
+        study.addItem(4 + catOffset, 4 + catOffset, 4 + catOffset, 4 + catOffset);
+        study.addItem(1 + catOffset, 1 + catOffset, 2 + catOffset, 1 + catOffset);
+        study.addItem(2 + catOffset, 2 + catOffset, 2 + catOffset, 2 + catOffset);
+        study.addItem(null, 6 + catOffset, 6 + catOffset, 6 + catOffset);
+        study.addItem(null, null, 1 + catOffset, 1 + catOffset);
+        study.addItem(null, null, 3 + catOffset, null);
         return study;
     }
 

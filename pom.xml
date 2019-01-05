@@ -68,6 +68,7 @@
   </licenses>
 
   <modules>
+    <module>dkpro-statistics-build</module>
     <module>dkpro-statistics-agreement</module>
     <module>dkpro-statistics-correlation</module>
     <module>dkpro-statistics-significance</module>
@@ -103,6 +104,11 @@
         <artifactId>junit</artifactId>
         <version>4.10</version>
       </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>3.5.2</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -129,6 +135,8 @@
                 <configuration>
                   <excludes>
                     <exclude>.gitignore</exclude>
+                    <exclude>.checkstyle</exclude>
+                    <exclude>suppressions.xml</exclude>
                     <!-- release generated artifact -->
                     <exclude>release.properties</exclude>
                     <exclude>CHANGES.txt</exclude>
@@ -144,41 +152,64 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>checkstyle</id>
+      <activation>
+        <file>
+          <exists>src</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+          </plugin>
+        </plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-checkstyle-plugin</artifactId>
+              <version>2.17</version>
+              <inherited>true</inherited>
+              <dependencies>
+                <dependency>
+                  <groupId>org.dkpro.statistics</groupId>
+                  <artifactId>dkpro-statistics-build</artifactId>
+                  <version>${project.version}</version>
+                </dependency>
+                <dependency>
+                  <groupId>com.puppycrawl.tools</groupId>
+                  <artifactId>checkstyle</artifactId>
+                  <version>8.8</version>
+                </dependency>
+              </dependencies>
+              <configuration>
+                <configLocation>dkpro-statistics/checkstyle.xml</configLocation>
+                <propertyExpansion>basedir=${project.basedir}</propertyExpansion>
+                <consoleOutput>true</consoleOutput>
+                <failOnViolation>true</failOnViolation>
+                <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                <includeResources>false</includeResources>
+                <includeTestResources>false</includeTestResources>
+                <logViolationsToConsole>true</logViolationsToConsole>
+                <maxAllowedViolations>0</maxAllowedViolations>
+                <violationSeverity>error</violationSeverity>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>checkstyle-check</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
   </profiles>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.5</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-gpg-plugin</artifactId>
-          <version>1.4</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>1.3.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <configuration>
-            <additionalparam>-Xdoclint:none</additionalparam>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-webdav</artifactId>
-        <version>1.0-beta-2</version>
-      </extension>
-    </extensions>
-  </build>
 </project>

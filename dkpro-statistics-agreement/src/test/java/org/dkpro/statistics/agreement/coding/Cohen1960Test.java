@@ -17,10 +17,6 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.CohenKappaAgreement;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-
 import junit.framework.TestCase;
 
 /**

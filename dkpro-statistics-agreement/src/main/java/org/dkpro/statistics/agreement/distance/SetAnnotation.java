@@ -21,31 +21,33 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * Represents a set of categories that can be used as annotation type in
- * a multi-labeling setting. That is, an annotation study allowing the raters
- * to assign multiple elements from a given set of categories to the very
- * same unit. An example is tagging summaries with multiple content units,
- * as it done for the pyramid method (cf. Passonneau, 2006). Another example
- * is relation anchoring (i.e., the task of finding the correct word senses
- * of the source and the target of a semantic relation. In this setting,
- * raters may assign multiple word senses to a relation endpoint (cf.
- * Meyer &amp; Gurevych, 2012).<br><br>
- * References:<ul>
- * <li>Meyer, C.M. &amp; Gurevych, I.: OntoWiktionary – Constructing an Ontology
- *   from the Collaborative Online Dictionary Wiktionary. In: Semi-Automatic
- *   Ontology Development: Processes and Resources, p. 131–161,
- *   Hershey, PA: IGI Global, 2012.</li>
- * <li>Passonneau, R.: Measuring agreement on set-valued items (MASI)
- *   for semantic and pragmatic annotation, in: Proceedings of the Fifth
- *   International Conference on Language Resources and Evaluation,
- *   p. 831–836, 2006.</li></ul>
+ * Represents a set of categories that can be used as annotation type in a multi-labeling setting.
+ * That is, an annotation study allowing the raters to assign multiple elements from a given set of
+ * categories to the very same unit. An example is tagging summaries with multiple content units, as
+ * it done for the pyramid method (cf. Passonneau, 2006). Another example is relation anchoring
+ * (i.e., the task of finding the correct word senses of the source and the target of a semantic
+ * relation. In this setting, raters may assign multiple word senses to a relation endpoint (cf.
+ * Meyer &amp; Gurevych, 2012).<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>Meyer, C.M. &amp; Gurevych, I.: OntoWiktionary – Constructing an Ontology from the
+ * Collaborative Online Dictionary Wiktionary. In: Semi-Automatic Ontology Development: Processes
+ * and Resources, p. 131–161, Hershey, PA: IGI Global, 2012.</li>
+ * <li>Passonneau, R.: Measuring agreement on set-valued items (MASI) for semantic and pragmatic
+ * annotation, in: Proceedings of the Fifth International Conference on Language Resources and
+ * Evaluation, p. 831–836, 2006.</li>
+ * </ul>
+ * 
  * @see IDistanceFunction
  * @see SetAnnotationDistanceFunction
  * @see MASISetAnnotationDistanceFunction
  * @author Christian M. Meyer
  */
-public class SetAnnotation extends HashSet<Object> implements Comparable<SetAnnotation> {
-
+public class SetAnnotation
+    extends HashSet<Object>
+    implements Comparable<SetAnnotation>
+{
     /** Instantiates an empty set annotation. */
     public SetAnnotation() {
         super();
@@ -75,6 +77,12 @@ public class SetAnnotation extends HashSet<Object> implements Comparable<SetAnno
             return false;
         }
         return toString().equals(((SetAnnotation) that).toString());
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return toString().hashCode();
     }
 
     @Override

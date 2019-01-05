@@ -18,10 +18,6 @@
 package org.dkpro.statistics.agreement.coding;
 
 import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
-import org.dkpro.statistics.agreement.coding.PercentageAgreement;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 import org.dkpro.statistics.agreement.distance.IntervalDistanceFunction;
 import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
@@ -98,7 +94,7 @@ public class Krippendorff1980Test extends TestCase {
             for (Object category2 : study.getCategories()) {
                 assertEquals("item " + category1 + "," + category2, 
                         EXPECTED[i][j] * EXPECTED[i][j], 
-                        distFunc.measureDistance(study, category1, category2), 0.001);                
+                        distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
             i++;
@@ -109,8 +105,9 @@ public class Krippendorff1980Test extends TestCase {
     /***/
     public void testNominalMetric() {
         CodingAnnotationStudy study = new CodingAnnotationStudy(1);
-        for (int i = 0; i <= 7; i++)
+        for (int i = 0; i <= 7; i++) {
             study.addCategory(i);
+        }
         
         IDistanceFunction distFunc = new NominalDistanceFunction();
         
@@ -130,7 +127,7 @@ public class Krippendorff1980Test extends TestCase {
             for (Object category2 : study.getCategories()) {
                 assertEquals("item " + category1 + "," + category2, 
                         EXPECTED[i][j] * EXPECTED[i][j], 
-                        distFunc.measureDistance(study, category1, category2), 0.001);                
+                        distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
             i++;
@@ -141,8 +138,9 @@ public class Krippendorff1980Test extends TestCase {
     /***/
     public void testIntervallMetric() {
         CodingAnnotationStudy study = new CodingAnnotationStudy(1);
-        for (int i = 0; i <= 7; i++)
+        for (int i = 0; i <= 7; i++) {
             study.addCategory(i);
+        }
         
         IDistanceFunction distFunc = new IntervalDistanceFunction();
         
@@ -162,7 +160,7 @@ public class Krippendorff1980Test extends TestCase {
             for (Object category2 : study.getCategories()) {
                 assertEquals("item " + category1 + "," + category2, 
                         EXPECTED[i][j] * EXPECTED[i][j], 
-                        distFunc.measureDistance(study, category1, category2), 0.001);                
+                        distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
             i++;
@@ -178,20 +176,29 @@ public class Krippendorff1980Test extends TestCase {
     /***/
     public void testRatioMetric() {
         CodingAnnotationStudy study = new CodingAnnotationStudy(1);
-        for (int i = 0; i <= 7; i++)
+        for (int i = 0; i <= 7; i++) {
             study.addCategory(i);
+        }
         
         IDistanceFunction distFunc = new RatioDistanceFunction();
         
         final double[][] EXPECTED = new double[][]{
-                {  0.0      ,  1.0 / 1.0,  2.0 / 2.0,  3.0 /  3.0,  4.0 /  4.0,  5.0 /  5.0, 6.0 /  6.0, 7.0 /  7.0 },
-                {  1.0 / 1.0,  0.0 / 2.0,  1.0 / 3.0,  2.0 /  4.0,  3.0 /  5.0,  4.0 /  6.0, 5.0 /  7.0, 6.0 /  8.0 },
-                {  2.0 / 2.0,  1.0 / 3.0,  0.0 / 4.0,  1.0 /  5.0,  2.0 /  6.0,  3.0 /  7.0, 4.0 /  8.0, 5.0 /  9.0 },
-                {  3.0 / 3.0,  2.0 / 4.0,  1.0 / 5.0,  0.0 /  6.0,  1.0 /  7.0,  2.0 /  8.0, 3.0 /  9.0, 4.0 / 10.0 },
-                {  4.0 / 4.0,  3.0 / 5.0,  2.0 / 6.0,  1.0 /  7.0,  0.0 /  8.0,  1.0 /  9.0, 2.0 / 10.0, 3.0 / 11.0 },
-                {  5.0 / 5.0,  4.0 / 6.0,  3.0 / 7.0,  2.0 /  8.0,  1.0 /  9.0,  0.0 / 10.0, 1.0 / 11.0, 2.0 / 12.0 },
-                {  6.0 / 6.0,  5.0 / 7.0,  4.0 / 8.0,  3.0 /  9.0,  2.0 / 10.0,  1.0 / 11.0, 0.0 / 12.0, 1.0 / 13.0 },
-                {  7.0 / 7.0,  6.0 / 8.0,  5.0 / 9.0,  4.0 / 10.0,  3.0 / 11.0,  2.0 / 12.0, 1.0 / 13.0, 0.0 / 14.0 }
+                {  0.0      ,  1.0 / 1.0,  2.0 / 2.0,  3.0 /  3.0,  4.0 /  4.0,  5.0 /  5.0, 
+                    6.0 /  6.0, 7.0 /  7.0 },
+                {  1.0 / 1.0,  0.0 / 2.0,  1.0 / 3.0,  2.0 /  4.0,  3.0 /  5.0,  4.0 /  6.0, 5.0 /  
+                    7.0, 6.0 /  8.0 },
+                {  2.0 / 2.0,  1.0 / 3.0,  0.0 / 4.0,  1.0 /  5.0,  2.0 /  6.0,  3.0 /  7.0, 4.0 /  
+                    8.0, 5.0 /  9.0 },
+                {  3.0 / 3.0,  2.0 / 4.0,  1.0 / 5.0,  0.0 /  6.0,  1.0 /  7.0,  2.0 /  8.0, 3.0 /  
+                    9.0, 4.0 / 10.0 },
+                {  4.0 / 4.0,  3.0 / 5.0,  2.0 / 6.0,  1.0 /  7.0,  0.0 /  8.0,  1.0 /  9.0, 2.0 / 
+                    10.0, 3.0 / 11.0 },
+                {  5.0 / 5.0,  4.0 / 6.0,  3.0 / 7.0,  2.0 /  8.0,  1.0 /  9.0,  0.0 / 10.0, 1.0 / 
+                    11.0, 2.0 / 12.0 },
+                {  6.0 / 6.0,  5.0 / 7.0,  4.0 / 8.0,  3.0 /  9.0,  2.0 / 10.0,  1.0 / 11.0, 0.0 / 
+                    12.0, 1.0 / 13.0 },
+                {  7.0 / 7.0,  6.0 / 8.0,  5.0 / 9.0,  4.0 / 10.0,  3.0 / 11.0,  2.0 / 12.0, 1.0 / 
+                    13.0, 0.0 / 14.0 }
         };
         
         int i = 0;
@@ -200,7 +207,7 @@ public class Krippendorff1980Test extends TestCase {
             for (Object category2 : study.getCategories()) {
                 assertEquals("item " + category1 + "," + category2, 
                         EXPECTED[i][j] * EXPECTED[i][j], 
-                        distFunc.measureDistance(study, category1, category2), 0.001);                
+                        distFunc.measureDistance(study, category1, category2), 0.001);
                 j++;
             }
             i++;
@@ -233,11 +240,13 @@ public class Krippendorff1980Test extends TestCase {
         agreement = new KrippendorffAlphaAgreement(study, new NominalDistanceFunction());
         iter = study.getItems().iterator();
         assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
-        //assertEquals(0.539, agreement.calculateItemAgreement(iter.next()), 0.001); -- error in D_O within original publication?
+        // Next line -- error in D_O within original publication?
+        //assertEquals(0.539, agreement.calculateItemAgreement(iter.next()), 0.001);
         assertEquals(0.078, agreement.calculateItemAgreement(iter.next()), 0.001);
         assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
         assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
-        //assertEquals(0.539, agreement.calculateItemAgreement(iter.next()), 0.001); -- error in D_O within original publication?
+        // Next line -- error in D_O within original publication?
+        //assertEquals(0.539, agreement.calculateItemAgreement(iter.next()), 0.001);
         assertEquals(0.078, agreement.calculateItemAgreement(iter.next()), 0.001);
         assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
         assertEquals(-.382, agreement.calculateItemAgreement(iter.next()), 0.001);

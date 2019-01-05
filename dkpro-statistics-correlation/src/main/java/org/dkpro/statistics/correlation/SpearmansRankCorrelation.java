@@ -17,32 +17,34 @@
  ******************************************************************************/
 package org.dkpro.statistics.correlation;
 
-
 import java.util.List;
 
 import org.apache.commons.math.stat.correlation.SpearmansCorrelation;
 
-
-public class SpearmansRankCorrelation {
-    
+public class SpearmansRankCorrelation
+{
     /**
      * Computes the correlation between two datasets.
-     * @param list1 The first dataset as a list.
-     * @param list2 The second dataset as a list.
+     * 
+     * @param list1
+     *            The first dataset as a list.
+     * @param list2
+     *            The second dataset as a list.
      * @return The correlation between the two datasets.
      */
-    public static double computeCorrelation(List<Double> list1, List<Double> list2) {
+    public static double computeCorrelation(List<Double> list1, List<Double> list2)
+    {
         double[] l1 = new double[list1.size()];
         double[] l2 = new double[list2.size()];
 
-        for (int i=0; i<list1.size(); i++) {
+        for (int i = 0; i < list1.size(); i++) {
             l1[i] = list1.get(i);
         }
-        for (int i=0; i<list2.size(); i++) {
+        for (int i = 0; i < list2.size(); i++) {
             l2[i] = list2.get(i);
         }
 
         SpearmansCorrelation sc = new SpearmansCorrelation();
-        return sc.correlation(l1,  l2);
-    }    
+        return sc.correlation(l1, l2);
+    }
 }

@@ -34,25 +34,31 @@ package org.dkpro.statistics.agreement;
  * @see DisagreementMeasure
  * @author Christian M. Meyer
  */
-public abstract class AgreementMeasure implements IAgreementMeasure {
+public abstract class AgreementMeasure
+    implements IAgreementMeasure
+{
 
     @Override
-    public double calculateAgreement() {
+    public double calculateAgreement()
+    {
         double A_O = calculateObservedAgreement();
         double A_E = calculateExpectedAgreement();
-        if (A_E == 0.0)
+        if (A_E == 0.0) {
             return A_O;
-        else
-        if (A_O == 1.0 && A_E == 1.0)
-            throw new InsufficientDataException("Insufficient variation. Most likely, the raters only used a single category which yields an expected agreement of 1.0. In this case, it is not possible to make any statement about the other categories and thus the agreement of the study itself.");
-        else
+        }
+        else if (A_O == 1.0 && A_E == 1.0) {
+            throw new InsufficientDataException(
+                    "Insufficient variation. Most likely, the raters only used a single category which yields an expected agreement of 1.0. In this case, it is not possible to make any statement about the other categories and thus the agreement of the study itself.");
+        }
+        else {
             return (A_O - A_E) / (1.0 - A_E);
+        }
     }
 
     protected abstract double calculateObservedAgreement();
 
-    protected double calculateExpectedAgreement() {
+    protected double calculateExpectedAgreement()
+    {
         return 0.0;
     }
-
 }

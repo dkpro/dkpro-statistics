@@ -17,21 +17,25 @@
  ******************************************************************************/
 package org.dkpro.statistics.significance;
 
-public class FisherZTransformation {
+public class FisherZTransformation
+{
 
     /**
      * zf = 1/2 * ln( (1+r) / (1-r) )
      * 
-     * @param value A correlation value
+     * @param value
+     *            A correlation value
      * @return The Fisher Z-value for the given correlation
      */
-    public static double transform(double value) {
-        double transformed = 0.5 * Math.log( (1+value) / (1-value) );
+    public static double transform(double value)
+    {
+        double transformed = 0.5 * Math.log((1 + value) / (1 - value));
         return transformed;
     }
-    
-    public static double retransform(double value) {
-        double retransformed = (Math.exp(2*value) - 1) / (Math.exp(2*value) + 1);
+
+    public static double retransform(double value)
+    {
+        double retransformed = (Math.exp(2 * value) - 1) / (Math.exp(2 * value) + 1);
         return retransformed;
     }
 }

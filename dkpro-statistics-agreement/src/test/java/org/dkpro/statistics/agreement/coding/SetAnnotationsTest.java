@@ -17,11 +17,11 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
-
 import org.dkpro.statistics.agreement.distance.MASISetAnnotationDistanceFunction;
 import org.dkpro.statistics.agreement.distance.SetAnnotation;
 import org.dkpro.statistics.agreement.distance.SetAnnotationDistanceFunction;
+
+import junit.framework.TestCase;
 
 /**
  * Tests for {@link KrippendorffAlphaAgreement} with

@@ -17,7 +17,7 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.unitizing;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.dkpro.statistics.agreement.InsufficientDataException;
 import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
@@ -25,6 +25,8 @@ import org.dkpro.statistics.agreement.coding.CohenKappaAgreement;
 import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
 import org.dkpro.statistics.agreement.coding.ScottPiAgreement;
 import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
+
+import junit.framework.TestCase;
 
 /**
  * Tests based on Krippendorff (1995) for measuring
@@ -37,15 +39,15 @@ import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
 public class Krippendorff1995Test
     extends TestCase
 {
-
-    /***/
     public void testDigitizedAgreement() {
 //        IUnitizingAnnotationStudy study = createExample(1, "A");
 //        ICodingAnnotationStudy digitizedStudy = study.digitize();
 
         //TODO: Digitize method!
-//    A Bertha:  0 0|1 1 1 1 1 1 1 1|0 0 0 0|1 1 1 1 1 1|0 0 0 0
-//      Bill:    0 0 0 0|1 1 1 1|0 0 0 0 0 0 0|1 1|0 0 0 0 0 0 0
+        // @formatter:off
+        //    A Bertha:  0 0|1 1 1 1 1 1 1 1|0 0 0 0|1 1 1 1 1 1|0 0 0 0
+        //      Bill:    0 0 0 0|1 1 1 1|0 0 0 0 0 0 0|1 1|0 0 0 0 0 0 0
+        // @formatter:on
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addItem(0, 0);
         study.addItem(0, 0);
@@ -74,10 +76,13 @@ public class Krippendorff1995Test
 
         assertEquals(0.385, new CohenKappaAgreement(study).calculateAgreement(), 0.001);
         assertEquals(0.314, new ScottPiAgreement(study).calculateAgreement(), 0.001);
-        assertEquals(0.329, new KrippendorffAlphaAgreement(study, new NominalDistanceFunction()).calculateAgreement(), 0.001);
+        assertEquals(0.329, new KrippendorffAlphaAgreement(study, new NominalDistanceFunction())
+                .calculateAgreement(), 0.001);
 
-//  B John:    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1|0 0 0 0 0 0
-//    Jill:    1 1|1|1|1|1|1 1 1|1|0 0 0 0 0 0 0 0 0 0 0 0 0 0
+        // @formatter:off
+        //  B John:    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1|0 0 0 0 0 0
+        //    Jill:    1 1|1|1|1|1|1 1 1|1|0 0 0 0 0 0 0 0 0 0 0 0 0 0
+        // @formatter:on
         study = new CodingAnnotationStudy(2);
         study.addItem(1, 1);
         study.addItem(1, 1);
@@ -107,8 +112,10 @@ public class Krippendorff1995Test
         assertEquals(0.385, new CohenKappaAgreement(study).calculateAgreement(), 0.001);
         assertEquals(0.314, new ScottPiAgreement(study).calculateAgreement(), 0.001);
 
-//    C Gerret:  0 0|1 1 1 1 1 1|0 0|1 1|0 0|1 1 1 1|0 0|1 1|0 0
-//      Gill:    1 1|0 0|1 1 1 1|0 0|1 1 1 1|0 0|1 1|0 0|1 1|0 0
+        // @formatter:off
+        //    C Gerret:  0 0|1 1 1 1 1 1|0 0|1 1|0 0|1 1 1 1|0 0|1 1|0 0
+        //      Gill:    1 1|0 0|1 1 1 1|0 0|1 1 1 1|0 0|1 1|0 0|1 1|0 0
+        // @formatter:on
         study = new CodingAnnotationStudy(2);
         study.addItem(0, 1);
         study.addItem(0, 1);
@@ -137,10 +144,16 @@ public class Krippendorff1995Test
 
         assertEquals(0.314, new CohenKappaAgreement(study).calculateAgreement(), 0.001);
         assertEquals(0.314, new ScottPiAgreement(study).calculateAgreement(), 0.001);
-
-//  D Heather: 1 1|1 1 1 1 1 1 1 1|1 1 1 1|1 1 1 1 1 1|1 1 1 1
-//    Hill:    1 1 1 1|1 1 1 1|1 1 1 1 1 1 1|1 1|1 1 1 1 1 1 1
-        study = new CodingAnnotationStudy(2);
+    }
+    
+    public void testThatAgreementThrowsInsufficientDataException()
+    {
+        // @formatter:off
+        //  D Heather:    1 1|1 1 1 1 1 1 1 1|1 1 1 1|1 1 1 1 1 1|1 1 1 1
+        //       Hill:    1 1 1 1|1 1 1 1|1 1 1 1 1 1 1|1 1|1 1 1 1 1 1 1
+        // @formatter:on
+        
+        CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addItem(1, 1);
         study.addItem(1, 1);
         study.addItem(1, 1);
@@ -166,17 +179,13 @@ public class Krippendorff1995Test
         study.addItem(1, 1);
         study.addItem(1, 1);
 
-        try {
-            new ScottPiAgreement(study).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
-        try {
-            new CohenKappaAgreement(study).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new ScottPiAgreement(study).calculateAgreement());
+
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new CohenKappaAgreement(study).calculateAgreement());
     }
 
-    /***/
     public void testVaryingLengths() {
         IUnitizingAnnotationStudy study;
         KrippendorffAlphaUnitizingAgreement alpha;
@@ -254,14 +263,16 @@ public class Krippendorff1995Test
     public static UnitizingAnnotationStudy createExample(double stretch) {
         UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(2,
                 (int) (0 * stretch), (int) (24 * stretch));
-//      A Bertha:  0 0|1 1 1 1 1 1 1 1|0 0 0 0|1 1 1 1 1 1|0 0 0 0
-//        Bill:    0 0 0 0|1 1 1 1|0 0 0 0 0 0 0|1 1|0 0 0 0 0 0 0
-//      B John:    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1|0 0 0 0 0 0
-//        Jill:    1 1|1|1|1|1|1 1 1|1|0 0 0 0 0 0 0 0 0 0 0 0 0 0
-//      C Gerret:  0 0|1 1 1 1 1 1|0 0|1 1|0 0|1 1 1 1|0 0|1 1|0 0
-//        Gill:    1 1|0 0|1 1 1 1|0 0|1 1 1 1|0 0|1 1|0 0|1 1|0 0
-//      D Heather: 1 1|1 1 1 1 1 1 1 1|1 1 1 1|1 1 1 1 1 1|1 1 1 1
-//        Hill:    1 1 1 1|1 1 1 1|1 1 1 1 1 1 1|1 1|1 1 1 1 1 1 1
+        // @formatter:off
+        //      A Bertha:  0 0|1 1 1 1 1 1 1 1|0 0 0 0|1 1 1 1 1 1|0 0 0 0
+        //        Bill:    0 0 0 0|1 1 1 1|0 0 0 0 0 0 0|1 1|0 0 0 0 0 0 0
+        //      B John:    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1|0 0 0 0 0 0
+        //        Jill:    1 1|1|1|1|1|1 1 1|1|0 0 0 0 0 0 0 0 0 0 0 0 0 0
+        //      C Gerret:  0 0|1 1 1 1 1 1|0 0|1 1|0 0|1 1 1 1|0 0|1 1|0 0
+        //        Gill:    1 1|0 0|1 1 1 1|0 0|1 1 1 1|0 0|1 1|0 0|1 1|0 0
+        //      D Heather: 1 1|1 1 1 1 1 1 1 1|1 1 1 1|1 1 1 1 1 1|1 1 1 1
+        //        Hill:    1 1 1 1|1 1 1 1|1 1 1 1 1 1 1|1 1|1 1 1 1 1 1 1
+        // @formatter:on
 
         study.addUnit((int) ( 2 * stretch), (int) ( 8 * stretch), 0, "A");
         study.addUnit((int) (14 * stretch), (int) ( 6 * stretch), 0, "A");

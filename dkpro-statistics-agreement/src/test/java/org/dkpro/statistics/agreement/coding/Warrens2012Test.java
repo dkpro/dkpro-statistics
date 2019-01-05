@@ -17,11 +17,6 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.CohenKappaAgreement;
-import org.dkpro.statistics.agreement.coding.HubertKappaAgreement;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-
 import junit.framework.TestCase;
 
 /**
@@ -46,9 +41,10 @@ public class Warrens2012Test extends TestCase {
         // It should read 1 − (8/15)(2/3) − (7/15)(1/3) = 22/45
         ICodingAnnotationStudy pairwiseStudy = study.extractRaters(0, 1);
         CohenKappaAgreement kappa2 = new CohenKappaAgreement(pairwiseStudy);
-        assertEquals(8.0/15.0 + 1.0/3.0, kappa2.calculateObservedAgreement(), 0.0001);
-        assertEquals((8.0/15.0)*(2.0/3.0)+(7.0/15.0)*(1.0/3.0), kappa2.calculateExpectedAgreement(), 0.0001);
-        assertEquals(8.0/11.0, kappa2.calculateAgreement(), 0.0001);
+        assertEquals(8.0 / 15.0 + 1.0 / 3.0, kappa2.calculateObservedAgreement(), 0.0001);
+        assertEquals((8.0 / 15.0) * (2.0 / 3.0) + (7.0 / 15.0) * (1.0 / 3.0),
+                kappa2.calculateExpectedAgreement(), 0.0001);
+        assertEquals(8.0 / 11.0, kappa2.calculateAgreement(), 0.0001);
     }
 
     /***/

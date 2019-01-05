@@ -58,11 +58,12 @@ public class Warrens2010Test extends TestCase {
         assertEquals(0.8326, kappaH.calculateAgreement(), 0.0001);
 
         double AOmean = 0.0;
-        for (int r1 = 0; r1 < study.getRaterCount(); r1++)
+        for (int r1 = 0; r1 < study.getRaterCount(); r1++) {
             for (int r2 = r1 + 1; r2 < study.getRaterCount(); r2++) {
                 ICodingAnnotationStudy pairwiseStudy = study.extractRaters(r1, r2);
                 AOmean += new CohenKappaAgreement(pairwiseStudy).calculateObservedAgreement();
             }
+        }
         AOmean *= 2.0;
         AOmean /= (double) (study.getRaterCount() * (double) (study.getRaterCount() - 1.0));
         double AE = kappaH.calculateExpectedAgreement();
@@ -78,13 +79,15 @@ public class Warrens2010Test extends TestCase {
         //assertEquals(0.8325, kappaL.calculateAgreement(), 0.0001);
 
         double kappaEquivalence = 0.0;
-        for (int r1 = 0; r1 < study.getRaterCount(); r1++)
+        for (int r1 = 0; r1 < study.getRaterCount(); r1++) {
             for (int r2 = r1 + 1; r2 < study.getRaterCount(); r2++) {
                 ICodingAnnotationStudy pairwiseStudy = study.extractRaters(r1, r2);
                 kappaEquivalence += new CohenKappaAgreement(pairwiseStudy).calculateAgreement();
             }
+        }
         kappaEquivalence *= 2.0;
-        kappaEquivalence /= (double) (study.getRaterCount() * (double) (study.getRaterCount() - 1.0));
+        kappaEquivalence /= (double) (study.getRaterCount()
+                * (double) (study.getRaterCount() - 1.0));
         assertEquals(0.8325, kappaEquivalence, 0.0001);
     }
 

@@ -17,11 +17,13 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
 import java.util.Iterator;
 
-import junit.framework.TestCase;
-
 import org.dkpro.statistics.agreement.InsufficientDataException;
+
+import junit.framework.TestCase;
 
 /**
  * Tests for several inter-rater agreement measures with two raters.
@@ -37,11 +39,12 @@ public class TwoRaterAgreementTest extends TestCase {
         double agreement = pa.calculateAgreement();
         assertEquals(0.7, agreement);
         //TODO
-//        double se = poa.standardError(agreement);
-//        double[] ci = poa.confidenceInterval(agreement, se, TwoRaterObservedAgreement.CONFIDENCE_95);
-//        assertEquals(0.045, se, 0.001);
-//        assertEquals(0.610, ci[0], 0.001);
-//        assertEquals(0.789, ci[1], 0.001);
+        // double se = poa.standardError(agreement);
+        // double[] ci = poa.confidenceInterval(agreement, se,
+        //      TwoRaterObservedAgreement.CONFIDENCE_95);
+        // assertEquals(0.045, se, 0.001);
+        // assertEquals(0.610, ci[0], 0.001);
+        // assertEquals(0.789, ci[1], 0.001);
 
         BennettSAgreement s = new BennettSAgreement(study);
         assertEquals(0.7, s.calculateObservedAgreement(), 0.001);
@@ -109,14 +112,11 @@ public class TwoRaterAgreementTest extends TestCase {
         assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
         assertEquals(1.0, s.calculateAgreement(), 0.001);
 
-        try {
-            new ScottPiAgreement(study).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
-        try {
-            new CohenKappaAgreement(study).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new ScottPiAgreement(study).calculateAgreement());
+        
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new CohenKappaAgreement(study).calculateAgreement());
     }
 
 
@@ -124,53 +124,45 @@ public class TwoRaterAgreementTest extends TestCase {
     public void testInsufficientData() {
         // Empty annotation study.
         CodingAnnotationStudy emptyStudy = new CodingAnnotationStudy(2);
-        try {
-            new BennettSAgreement(emptyStudy).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
-        try {
-            new ScottPiAgreement(emptyStudy).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
-        try {
-            new CohenKappaAgreement(emptyStudy).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
 
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new BennettSAgreement(emptyStudy).calculateAgreement());
+
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new ScottPiAgreement(emptyStudy).calculateAgreement());
+        
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new CohenKappaAgreement(emptyStudy).calculateAgreement());
+        
         // Annotation study with single category.
         CodingAnnotationStudy singleCategoryStudy = new CodingAnnotationStudy(2);
         singleCategoryStudy.addItem("A", "A");
         singleCategoryStudy.addItem("A", "A");
         singleCategoryStudy.addItem("A", "A");
-        try {
-            new BennettSAgreement(singleCategoryStudy).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
-        try {
-            new ScottPiAgreement(singleCategoryStudy).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
-        try {
-            new CohenKappaAgreement(singleCategoryStudy).calculateAgreement();
-            fail("InsufficientDataException expected!");
-        } catch (InsufficientDataException e) {}
+
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new BennettSAgreement(singleCategoryStudy).calculateAgreement());
+        
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new ScottPiAgreement(singleCategoryStudy).calculateAgreement());
+        
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(() -> new CohenKappaAgreement(singleCategoryStudy)
+                        .calculateAgreement());
     }
 
     /***/
     public void testInvalidRaterCount() {
         CodingAnnotationStudy tooManyRatersStudy = new CodingAnnotationStudy(3);
-        try {
-            new BennettSAgreement(tooManyRatersStudy);
-            fail("IllegalArgumentException expected!");
-        } catch (IllegalArgumentException e) {}
-        try {
-            new ScottPiAgreement(tooManyRatersStudy);
-            fail("IllegalArgumentException expected!");
-        } catch (IllegalArgumentException e) {}
-        try {
-            new CohenKappaAgreement(tooManyRatersStudy);
-            fail("IllegalArgumentException expected!");
-        } catch (IllegalArgumentException e) {}
+        
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new BennettSAgreement(tooManyRatersStudy));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new ScottPiAgreement(tooManyRatersStudy));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new CohenKappaAgreement(tooManyRatersStudy));
     }
 
     /** Creates an example annotation study. */

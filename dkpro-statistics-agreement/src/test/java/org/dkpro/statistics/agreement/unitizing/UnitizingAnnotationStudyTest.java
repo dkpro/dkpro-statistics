@@ -19,9 +19,6 @@ package org.dkpro.statistics.agreement.unitizing;
 
 import java.util.Iterator;
 
-import org.dkpro.statistics.agreement.unitizing.IUnitizingAnnotationUnit;
-import org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy;
-
 import junit.framework.TestCase;
 
 /**

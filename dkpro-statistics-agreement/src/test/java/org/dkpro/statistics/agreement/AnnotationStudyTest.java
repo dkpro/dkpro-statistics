@@ -17,42 +17,41 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
 import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class AnnotationStudyTest extends TestCase {
-
-    public void testAddItem() {
+public class AnnotationStudyTest
+{
+    @Test
+    public void testAddItem()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(3);
         study.addItem("A", "B", "C");
         study.addItem(5, 3, 0);
         study.addItem(new Object(), "c", 12);
-        study.addItem((Object[]) new String[]{"A", "B", "D"});
-        assertEquals(4, study.getItemCount());
+        study.addItem((Object[]) new String[] { "A", "B", "D" });
+        
+        assertThat(study.getItemCount()).isEqualTo(4);
     }
-    
-    public void testAddItemMissingUnits() {
+
+    @Test
+    public void testAddItemMissingUnits()
+    {
         CodingAnnotationStudy study = new CodingAnnotationStudy(3);
-        try {
-            study.addItem("A");
-            fail("IllegalArgumentException expected!");
-        } catch (IllegalArgumentException e) {}
         
-        try {
-            study.addItem(5, 3);
-            fail("IllegalArgumentException expected!");
-        } catch (IllegalArgumentException e) {}
-        
-        try {
-            study.addItem((Object) new String[]{"A", "B", "D"});
-            fail("IllegalArgumentException expected!");
-        } catch (IllegalArgumentException e) {}
-        
-        try {
-            study.addItem((Object[]) new String[]{"A", "B"});
-            fail("IllegalArgumentException expected!");
-        } catch (IllegalArgumentException e) {}
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> study.addItem("A"));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> study.addItem(5, 3));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> study.addItem((Object) new String[] { "A", "B", "D" }));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> study.addItem((Object[]) new String[] { "A", "B" }));
     }
-    
 }

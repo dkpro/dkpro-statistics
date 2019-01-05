@@ -17,24 +17,29 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static junit.framework.Assert.assertEquals;
 
 import org.dkpro.statistics.agreement.IAnnotationStudy;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
+import org.junit.Test;
 
 /**
- * Tests based on Artstein &amp; Poesio (2008) for several inter-rater
- * agreement measures.<br><br>
- * References:<ul>
- * <li>Artstein, R. &amp; Poesio, M.: Inter-Coder Agreement for Computational
- *   Linguistics. Computational Linguistics 34(4):555-596, 2008.</li></ul>
+ * Tests based on Artstein &amp; Poesio (2008) for several inter-rater agreement measures.<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>Artstein, R. &amp; Poesio, M.: Inter-Coder Agreement for Computational Linguistics.
+ * Computational Linguistics 34(4):555-596, 2008.</li>
+ * </ul>
+ * 
  * @author Christian M. Meyer
  */
-public class ArtsteinPoesio2008Test extends TestCase {
-
-    /***/
-    public void testExample1() {
+public class ArtsteinPoesio2008Test
+{
+    @Test
+    public void testExample1()
+    {
         ICodingAnnotationStudy study = createExample1();
 
         // Two raters, observed agreement.
@@ -58,8 +63,9 @@ public class ArtsteinPoesio2008Test extends TestCase {
         assertEquals(0.348, kappa.calculateAgreement(), 0.001);
     }
 
-    /***/
-    public void testExample2() {
+    @Test
+    public void testExample2()
+    {
         ICodingAnnotationStudy study = createExample2();
 
         PercentageAgreement poa = new PercentageAgreement(study);
@@ -82,22 +88,24 @@ public class ArtsteinPoesio2008Test extends TestCase {
     }
 
     /*
-    public void testCategoryAgreement() {
-        //TODO positive and negative agreement!
-        ICodingAnnotationStudy study = createExample1();
+     * public void testCategoryAgreement() { //TODO positive and negative agreement!
+     * ICodingAnnotationStudy study = createExample1();
+     * 
+     * PercentageAgreement cat = new PercentageAgreement(study); assertEquals(0.571,
+     * cat.calculateCategoryAgreement("STAT"), 0.001); assertEquals(0.769,
+     * cat.calculateCategoryAgreement("IReq"), 0.001); }
+     */
 
-        PercentageAgreement cat = new PercentageAgreement(study);
-        assertEquals(0.571, cat.calculateCategoryAgreement("STAT"), 0.001);
-        assertEquals(0.769, cat.calculateCategoryAgreement("IReq"), 0.001);
-    }*/
-
-    /***/
-    public void testWeightedAgreement() {
+    @Test
+    public void testWeightedAgreement()
+    {
         ICodingAnnotationStudy study = createExample2();
-        IDistanceFunction weightedDistanceFunction = new IDistanceFunction() {
+        IDistanceFunction weightedDistanceFunction = new IDistanceFunction()
+        {
             @Override
-            public double measureDistance(final IAnnotationStudy study,
-                    final Object category1, final Object category2) {
+            public double measureDistance(final IAnnotationStudy study, final Object category1,
+                    final Object category2)
+            {
                 if (category1.equals(category2)) {
                     return 0.0;
                 }
@@ -148,13 +156,17 @@ public class ArtsteinPoesio2008Test extends TestCase {
         assertEquals(0.8163, kappaW.calculateAgreement(), 0.001);
     }
 
-    /** Creates an example annotation study introduced by
-     *  Artstein &amp; Poesio (2008: p. 558). */
-    public static ICodingAnnotationStudy createExample1() {
-        /*        STAT    IReq      Σ
-        STAT     20         10         30
-        IReq     20         50         70
-        Σ        40         60        100 */
+    /**
+     * Creates an example annotation study introduced by Artstein &amp; Poesio (2008: p. 558).
+     */
+    public static ICodingAnnotationStudy createExample1()
+    {
+        // @formatter:off
+        //         STAT     IReq          Σ
+        // STAT     20         10         30
+        // IReq     20         50         70
+        // Σ        40         60        100
+        // @formatter:on
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(20, "STAT", "STAT");
         study.addMultipleItems(20, "IReq", "STAT");
@@ -163,21 +175,24 @@ public class ArtsteinPoesio2008Test extends TestCase {
         return study;
     }
 
-    /** Creates an example annotation study introduced by
-     *  Artstein &amp; Poesio (2008: p. 568). */
-    public static ICodingAnnotationStudy createExample2() {
-        /*      STAT    IReq    Chck      Σ
-        STAT     46          0          0         46
-        IReq      6         32          6         44
-        Chck      0          0         10         10
-        Σ        52         32         16        100 */
+    /**
+     * Creates an example annotation study introduced by Artstein &amp; Poesio (2008: p. 568).
+     */
+    public static ICodingAnnotationStudy createExample2()
+    {
+        // @formatter:off
+        //          STAT     IReq       Chck          Σ
+        // STAT     46          0          0         46
+        // IReq      6         32          6         44
+        // Chck      0          0         10         10
+        // Σ        52         32         16        100
+        // @formatter:on
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(46, "STAT", "STAT");
-        study.addMultipleItems( 6, "IReq", "STAT");
+        study.addMultipleItems(6, "IReq", "STAT");
         study.addMultipleItems(32, "IReq", "IReq");
-        study.addMultipleItems( 6, "IReq", "Chck");
+        study.addMultipleItems(6, "IReq", "Chck");
         study.addMultipleItems(10, "Chck", "Chck");
         return study;
     }
-
 }

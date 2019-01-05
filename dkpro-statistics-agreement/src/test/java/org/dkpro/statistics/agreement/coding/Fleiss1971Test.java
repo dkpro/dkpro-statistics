@@ -20,12 +20,6 @@ package org.dkpro.statistics.agreement.coding;
 import java.util.Iterator;
 
 import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.FleissKappaAgreement;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationItem;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.ICodingItemSpecificAgreement;
-import org.dkpro.statistics.agreement.coding.PercentageAgreement;
 
 import junit.framework.TestCase;
 

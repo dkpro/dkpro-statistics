@@ -17,9 +17,9 @@
  ******************************************************************************/
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
-
 import org.dkpro.statistics.agreement.distance.OrdinalDistanceFunction;
+
+import junit.framework.TestCase;
 
 /**
  * Tests based on Hayes &amp; Krippendorff (2007) for measuring

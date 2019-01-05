@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>dkpro-statistics-significance</artifactId>
-  <name>DKPro Significance</name>
+  <name>DKPro Statistics - Significance</name>
 
   <parent>
     <groupId>org.dkpro.statistics</groupId>

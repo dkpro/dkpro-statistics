@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>dkpro-statistics-correlation</artifactId>
-  <name>DKPro Correlation</name>
+  <name>DKPro Statistics - Correlation</name>
 
   <parent>
     <groupId>org.dkpro.statistics</groupId>

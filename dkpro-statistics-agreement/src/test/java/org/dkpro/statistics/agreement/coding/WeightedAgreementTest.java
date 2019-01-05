@@ -20,10 +20,6 @@ package org.dkpro.statistics.agreement.coding;
 import java.util.Hashtable;
 
 import org.dkpro.statistics.agreement.IAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
-import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
-import org.dkpro.statistics.agreement.coding.WeightedKappaAgreement;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 import org.dkpro.statistics.agreement.distance.IntervalDistanceFunction;
 import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
@@ -42,6 +38,7 @@ public class WeightedAgreementTest extends TestCase {
         ICodingAnnotationStudy study = createExample();
         
         IDistanceFunction weightedDistanceFunction = new IDistanceFunction() {            
+            @Override
             public double measureDistance(final IAnnotationStudy study, 
                     final Object category1, final Object category2) {
                 final double[][] WEIGHTS = new double[][]{
@@ -77,16 +74,17 @@ public class WeightedAgreementTest extends TestCase {
         ICodingAnnotationStudy study = createExample();
         
         IDistanceFunction weightedDistanceFunction = new IDistanceFunction() {
+            @Override
             public double measureDistance(final IAnnotationStudy study, 
                     final Object category1, final Object category2) {
                 final double[][] WEIGHTS = new double[][]{
-                        {0/3.0, 1/3.0, 1/3.0, 1/3.0, 1/3.0, 1/3.0, 1/3.0},
-                        {1/3.0, 0/3.0, 3/3.0, 1/6.0, 1/6.0, 2/9.0, 3/3.0},
-                        {1/3.0, 3/3.0, 0/3.0, 1/6.0, 3/3.0, 2/9.0, 3/3.0},
-                        {1/3.0, 1/6.0, 1/6.0, 0/3.0, 4/9.0, 1/9.0, 3/3.0},
-                        {1/3.0, 1/6.0, 3/3.0, 4/9.0, 0/3.0, 1/9.0, 1/6.0},
-                        {1/3.0, 2/9.0, 2/9.0, 1/9.0, 1/9.0, 0/3.0, 2/9.0},
-                        {1/3.0, 3/3.0, 3/3.0, 3/3.0, 1/6.0, 2/9.0, 0/3.0}
+                        {0 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0},
+                        {1 / 3.0, 0 / 3.0, 3 / 3.0, 1 / 6.0, 1 / 6.0, 2 / 9.0, 3 / 3.0},
+                        {1 / 3.0, 3 / 3.0, 0 / 3.0, 1 / 6.0, 3 / 3.0, 2 / 9.0, 3 / 3.0},
+                        {1 / 3.0, 1 / 6.0, 1 / 6.0, 0 / 3.0, 4 / 9.0, 1 / 9.0, 3 / 3.0},
+                        {1 / 3.0, 1 / 6.0, 3 / 3.0, 4 / 9.0, 0 / 3.0, 1 / 9.0, 1 / 6.0},
+                        {1 / 3.0, 2 / 9.0, 2 / 9.0, 1 / 9.0, 1 / 9.0, 0 / 3.0, 2 / 9.0},
+                        {1 / 3.0, 3 / 3.0, 3 / 3.0, 3 / 3.0, 1 / 6.0, 2 / 9.0, 0 / 3.0}
                 };
                 final Hashtable<Object, Integer> idx = new Hashtable<Object, Integer>();
                 idx.put("", 0);

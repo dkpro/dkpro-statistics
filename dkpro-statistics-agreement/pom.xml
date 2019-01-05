@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>dkpro-statistics-agreement</artifactId>
-  <name>DKPro Agreement</name>
+  <name>DKPro Statistics - Agreement</name>
 
   <parent>
     <groupId>org.dkpro.statistics</groupId>
@@ -42,6 +42,11 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

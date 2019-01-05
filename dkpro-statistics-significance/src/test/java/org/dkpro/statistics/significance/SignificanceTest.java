@@ -17,10 +17,11 @@
  ******************************************************************************/
 package org.dkpro.statistics.significance;
 
-import static org.junit.Assert.*;
+import static org.dkpro.statistics.significance.Significance.testCorrelations;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.math.MathException;
-import org.dkpro.statistics.significance.Significance;
 import org.junit.Test;
 
 public class SignificanceTest
@@ -29,16 +30,15 @@ public class SignificanceTest
     @Test
     public void testTestCorrelations() throws MathException
     {
-        assertTrue(Significance.testCorrelations(0.5, 0.74, 68, 68, 0.2));
-        assertTrue(Significance.testCorrelations(0.5, 0.74, 68, 68, 0.1));
-        assertTrue(Significance.testCorrelations(0.5, 0.74, 68, 68, 0.05));
-        assertFalse(Significance.testCorrelations(0.5, 0.74, 68, 68, 0.01));
+        assertTrue(testCorrelations(0.5, 0.74, 68, 68, 0.2));
+        assertTrue(testCorrelations(0.5, 0.74, 68, 68, 0.1));
+        assertTrue(testCorrelations(0.5, 0.74, 68, 68, 0.05));
+        assertFalse(testCorrelations(0.5, 0.74, 68, 68, 0.01));
 
-        assertTrue(Significance.testCorrelations(0.5, 0.7, 100, 100, 0.1));
-        assertTrue(Significance.testCorrelations(0.5, 0.7, 100, 100, 0.05));
-        assertFalse(Significance.testCorrelations(0.5, 0.7, 100, 100, 0.01));
-    
-        assertFalse(Significance.testCorrelations(0.5, 0.5, 100, 100, 0.99));
-}
+        assertTrue(testCorrelations(0.5, 0.7, 100, 100, 0.1));
+        assertTrue(testCorrelations(0.5, 0.7, 100, 100, 0.05));
+        assertFalse(testCorrelations(0.5, 0.7, 100, 100, 0.01));
 
+        assertFalse(testCorrelations(0.5, 0.5, 100, 100, 0.99));
+    }
 }
