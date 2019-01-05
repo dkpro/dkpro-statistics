@@ -28,7 +28,7 @@ public class MultiRaterAgreementTest
     extends TestCase
 {
 
-    /***/
+    
     public void testExample()
     {
         ICodingAnnotationStudy study = createExample();

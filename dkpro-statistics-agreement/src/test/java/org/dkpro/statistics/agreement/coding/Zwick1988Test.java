@@ -34,7 +34,7 @@ public class Zwick1988Test
     extends TestCase
 {
 
-    /***/
+    
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
@@ -50,7 +50,7 @@ public class Zwick1988Test
         assertEquals(0.467, kappa.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();
@@ -66,7 +66,7 @@ public class Zwick1988Test
         assertEquals(0.444, kappa.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testExample3()
     {
         ICodingAnnotationStudy study = createExample3();

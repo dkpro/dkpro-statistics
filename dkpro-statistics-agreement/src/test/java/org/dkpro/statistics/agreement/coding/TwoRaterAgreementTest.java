@@ -31,7 +31,7 @@ import junit.framework.TestCase;
  */
 public class TwoRaterAgreementTest extends TestCase {
 
-    /***/
+    
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
@@ -63,7 +63,7 @@ public class TwoRaterAgreementTest extends TestCase {
         assertEquals(0.348, kappa.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testItemSpecificAgreement()
     {
         ICodingAnnotationStudy study = createExample();
@@ -122,7 +122,7 @@ public class TwoRaterAgreementTest extends TestCase {
     }
 
 
-    /***/
+    
     public void testInsufficientData()
     {
         // Empty annotation study.
@@ -154,7 +154,7 @@ public class TwoRaterAgreementTest extends TestCase {
                         .calculateAgreement());
     }
 
-    /***/
+    
     public void testInvalidRaterCount()
     {
         CodingAnnotationStudy tooManyRatersStudy = new CodingAnnotationStudy(3);

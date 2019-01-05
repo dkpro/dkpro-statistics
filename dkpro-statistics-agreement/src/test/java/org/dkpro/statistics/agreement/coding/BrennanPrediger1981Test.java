@@ -35,7 +35,7 @@ public class BrennanPrediger1981Test
     extends TestCase
 {
 
-    /***/
+    
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
@@ -56,7 +56,7 @@ public class BrennanPrediger1981Test
         // assertEquals(-1.00, kappa_b, 0.01);
     }
 
-    /***/
+    
     public void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();

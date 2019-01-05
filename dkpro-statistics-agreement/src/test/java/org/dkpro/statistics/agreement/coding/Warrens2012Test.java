@@ -34,7 +34,7 @@ public class Warrens2012Test
     extends TestCase
 {
 
-    /***/
+    
     public void testExample1()
     {
         CodingAnnotationStudy study = createExample1();
@@ -52,7 +52,7 @@ public class Warrens2012Test
         assertEquals(8.0 / 11.0, kappa2.calculateAgreement(), 0.0001);
     }
 
-    /***/
+    
     public void testExample2a()
     {
         ICodingAnnotationStudy study = createExample2a();
@@ -68,7 +68,7 @@ public class Warrens2012Test
         // assertEquals(0.599, kappa(4,4).calculateAgreement(), 001);
     }
 
-    /***/
+    
     public void testExample2b()
     {
         ICodingAnnotationStudy study = createExample2b();

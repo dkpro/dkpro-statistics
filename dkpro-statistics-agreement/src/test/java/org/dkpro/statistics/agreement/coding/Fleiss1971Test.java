@@ -38,7 +38,7 @@ public class Fleiss1971Test
     extends TestCase
 {
 
-    /***/
+    
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
@@ -60,7 +60,7 @@ public class Fleiss1971Test
          */
     }
 
-    /***/
+    
     public void testCategoryAgreement()
     {
         ICodingAnnotationStudy study = createExample();
@@ -73,7 +73,7 @@ public class Fleiss1971Test
         assertEquals(0.565, catAgreement.calculateCategoryAgreement(5), 0.005);
     }
 
-    /***/
+    
     public void testItemAgreement()
     {
         ICodingAnnotationStudy study = createExample();

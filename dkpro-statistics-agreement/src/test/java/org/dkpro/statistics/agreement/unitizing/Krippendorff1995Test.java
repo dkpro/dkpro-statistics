@@ -232,7 +232,7 @@ public class Krippendorff1995Test
         assertEquals(0.679, alpha.calculateCategoryAgreement("C"), 0.02);
     }
 
-    /***/
+    
     public void testAgreement() {
         IUnitizingAnnotationStudy study = createExample(1);
 //        new UnitizingStudyPrinter().print(System.out, study);

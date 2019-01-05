@@ -41,7 +41,7 @@ public class Krippendorff1980Test
     extends TestCase
 {
 
-    /***/
+    
     public void testDichotomy()
     {
         ICodingAnnotationStudy study = createExample1();
@@ -56,7 +56,7 @@ public class Krippendorff1980Test
         assertEquals(0.095, alpha.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testMultiCategoryMultiRater()
     {
         ICodingAnnotationStudy study = createExample2();
@@ -71,7 +71,7 @@ public class Krippendorff1980Test
         assertEquals(0.642, alpha.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testOrdinalMetric()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
@@ -109,7 +109,7 @@ public class Krippendorff1980Test
         }
     }
 
-    /***/
+    
     public void testNominalMetric()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(1);
@@ -142,7 +142,7 @@ public class Krippendorff1980Test
         }
     }
 
-    /***/
+    
     public void testIntervallMetric()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(1);
@@ -180,7 +180,7 @@ public class Krippendorff1980Test
         assertEquals(0.547, alpha.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testRatioMetric() {
         CodingAnnotationStudy study = new CodingAnnotationStudy(1);
         for (int i = 0; i <= 7; i++) {
@@ -261,7 +261,7 @@ public class Krippendorff1980Test
         assertFalse(iter.hasNext());
     }*/
 
-    /***/
+    
     public void testCategoryAgreement() {
         ICodingAnnotationStudy study = createExample2();
         

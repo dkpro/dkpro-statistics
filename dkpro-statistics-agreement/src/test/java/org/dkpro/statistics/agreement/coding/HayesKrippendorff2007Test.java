@@ -37,7 +37,7 @@ public class HayesKrippendorff2007Test
     extends TestCase
 {
 
-    /***/
+    
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();

@@ -36,7 +36,7 @@ public class Mieskes2009Test
     extends TestCase
 {
 
-    /***/
+    
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();

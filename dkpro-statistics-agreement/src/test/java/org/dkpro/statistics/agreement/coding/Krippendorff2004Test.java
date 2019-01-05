@@ -40,7 +40,7 @@ public class Krippendorff2004Test
     extends TestCase
 {
 
-    /***/
+    
     public void testDichotomy()
     {
         ICodingAnnotationStudy study = createExample1();
@@ -55,7 +55,7 @@ public class Krippendorff2004Test
         assertEquals(0.095, alpha.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testMultipleCategories()
     {
         ICodingAnnotationStudy study = createExample2();
@@ -70,7 +70,7 @@ public class Krippendorff2004Test
         assertEquals(0.734, alpha.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testMultipleRatersMissingValues()
     {
         ICodingAnnotationStudy study = createExample3();
@@ -85,7 +85,7 @@ public class Krippendorff2004Test
         assertEquals(0.743, alpha.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testOrdinalMetric()
     {
         CodingAnnotationStudy study = createExample3a(0);
@@ -113,7 +113,7 @@ public class Krippendorff2004Test
         }
     }
 
-    /***/
+    
     public void testIntervallMetric()
     {
         CodingAnnotationStudy study = createExample3a(-2);
@@ -141,7 +141,7 @@ public class Krippendorff2004Test
         }
     }
 
-    /***/
+    
     public void testRatioMetric()
     {
         CodingAnnotationStudy study = createExample3a(-1);
@@ -170,7 +170,7 @@ public class Krippendorff2004Test
         }
     }
 
-    /***/
+    
     public void testIntervallAgreement()
     {
         CodingAnnotationStudy study = createExample3b();
@@ -184,7 +184,7 @@ public class Krippendorff2004Test
 
     }
 
-    /***/
+    
     public void testOtherCoefficients()
     {
         CodingAnnotationStudy study = createExample4a();

@@ -28,7 +28,7 @@ public class NumericalStabilityTest
     extends TestCase
 {
 
-    /***/
+    
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
@@ -52,7 +52,7 @@ public class NumericalStabilityTest
         assertEquals(0.8, kappa.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();
@@ -90,7 +90,7 @@ public class NumericalStabilityTest
         assertEquals(0.590, kappa.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testScaledArtsteinPoesio()
     {
         ICodingAnnotationStudy study = createExample2(500);
@@ -116,7 +116,7 @@ public class NumericalStabilityTest
         assertEquals(0.348, kappa.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testScaledFleiss()
     {
         ICodingAnnotationStudy study = createExample3(2000);

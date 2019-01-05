@@ -36,7 +36,7 @@ public class Randolph2005Test
     extends TestCase
 {
 
-    /***/
+    
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
@@ -50,7 +50,7 @@ public class Randolph2005Test
         assertEquals(0.33, rk.calculateAgreement(), 0.01);
     }
 
-    /***/
+    
     public void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();

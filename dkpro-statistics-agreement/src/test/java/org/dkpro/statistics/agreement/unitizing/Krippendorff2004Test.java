@@ -31,7 +31,7 @@ import junit.framework.TestCase;
 public class Krippendorff2004Test
     extends TestCase
 {
-    /***/
+    
     public void testDistanceMetric1()
     {
         assertEquals(40.0, KrippendorffAlphaUnitizingAgreement.measureDistance(
@@ -56,7 +56,7 @@ public class Krippendorff2004Test
                 5, 6, "X", 5, 6, "X"));
     }
 
-    /***/
+    
     public void testDistanceMetric2()
     {
         assertEquals(50.0, KrippendorffAlphaUnitizingAgreement.measureDistance(
@@ -67,7 +67,7 @@ public class Krippendorff2004Test
                 400, 50, null, 400, 20, "c"));
     }
 
-    /***/
+    
     public void testAgreement()
     {
         IUnitizingAnnotationStudy study = createExample();
@@ -76,7 +76,7 @@ public class Krippendorff2004Test
         assertEquals(0.8591, alpha.calculateAgreement(), 0.0005);        
     }
     
-    /***/
+    
     public void testCategoryAgreement()
     {
         IUnitizingAnnotationStudy study = createExample();

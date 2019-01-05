@@ -34,7 +34,7 @@ public class SetAnnotationsTest
     extends TestCase
 {
 
-    /***/
+    
     public void testSetDistanceFunction()
     {
         ICodingAnnotationStudy study = createExample();
@@ -46,7 +46,7 @@ public class SetAnnotationsTest
         assertEquals(0.186, alpha.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testMASIDistanceFunction()
     {
         ICodingAnnotationStudy study = createExample();
@@ -58,7 +58,7 @@ public class SetAnnotationsTest
         assertEquals(0.252, alpha.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testPercentageAgreement()
     {
         ICodingAnnotationStudy study = createExample();
@@ -67,7 +67,7 @@ public class SetAnnotationsTest
         assertEquals(0.333, percentageAgreement.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testMaxPercentageAgreement()
     {
         ICodingAnnotationStudy study = createExample();
@@ -76,7 +76,7 @@ public class SetAnnotationsTest
         assertEquals(0.667, maxPercentageAgreement.calculateAgreement(), 0.001);
     }
 
-    /***/
+    
     public void testDiceAgreement()
     {
         ICodingAnnotationStudy study = createExample();

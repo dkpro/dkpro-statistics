@@ -34,7 +34,7 @@ public class Cohen1960Test
     extends TestCase
 {
 
-    /***/
+    
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
@@ -46,7 +46,7 @@ public class Cohen1960Test
         assertEquals(0.85, kappa.calculateMaximumAgreement(), 0.01);
     }
 
-    /***/
+    
     public void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();

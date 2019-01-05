@@ -37,7 +37,7 @@ public class Agresti1992Test
     extends TestCase
 {
 
-    /***/
+    
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();

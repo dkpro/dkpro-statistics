@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 public class UnitizingAgreementTest
     extends TestCase
 {
-    /***/
+    
     public void testAgreement()
     {
         IUnitizingAnnotationStudy study = createExample();
@@ -40,7 +40,7 @@ public class UnitizingAgreementTest
         assertEquals(-0.7003, alpha.calculateCategoryAgreement("A"), 0.0001);
     }
 
-    /***/
+    
     public void testSingleAnnotationUnit()
     {
         UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 20);
@@ -50,7 +50,7 @@ public class UnitizingAgreementTest
         assertEquals(0.0, alpha.calculateAgreement());
     }
 
-    /***/
+    
     public void testEmptyAnnotationSet()
     {
         UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 20);
@@ -59,7 +59,7 @@ public class UnitizingAgreementTest
         assertTrue(Double.isNaN(alpha.calculateAgreement()));
     }
 
-    /***/
+    
     public void testDistanceMetric()
     {
         assertEquals(0.0,

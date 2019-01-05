@@ -35,7 +35,7 @@ public class WeightedAgreementTest
     extends TestCase
 {
 
-    /***/
+    
     public void testDistanceFunction1()
     {
         ICodingAnnotationStudy study = createExample();
@@ -73,7 +73,7 @@ public class WeightedAgreementTest
         assertEquals(0.186, alpha.calculateAgreement(), 0.001);    
     }
     
-    /***/
+    
     public void testDistanceFunction2()
     {
         ICodingAnnotationStudy study = createExample();
