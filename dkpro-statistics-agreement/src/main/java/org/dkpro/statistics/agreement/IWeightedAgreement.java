@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
@@ -14,24 +14,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 package org.dkpro.statistics.agreement;
 
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 
 /**
- * Interface for all weighted inter-rater agreement measures. A weighted 
- * measure makes use of a user-defined {@link IDistanceFunction}, which 
- * is used to score the degree of disagreement between two categories. See
- * Javadoc of  {@link IDistanceFunction} for more information on weighted 
+ * Interface for all weighted inter-rater agreement measures. A weighted measure makes use of a
+ * user-defined {@link IDistanceFunction}, which is used to score the degree of disagreement between
+ * two categories. See Javadoc of {@link IDistanceFunction} for more information on weighted
  * agreement measures.
+ * 
  * @see IDistanceFunction
  * @author Christian M. Meyer
  */
-public interface IWeightedAgreement {
-
-	/** Returns the distance function that is used to measure the distance
-	 *  between two annotation categories. */
-	public IDistanceFunction getDistanceFunction();
-	
+public interface IWeightedAgreement
+{
+    /**
+     * Returns the distance function that is used to measure the distance between two annotation
+     * categories.
+     */
+    public IDistanceFunction getDistanceFunction();
 }

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
@@ -14,19 +14,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 package org.dkpro.statistics.agreement.coding;
 
 import org.dkpro.statistics.agreement.IAgreementMeasure;
 
 /**
- * Super interface for all {@link IAgreementMeasure}s for coding tasks.
- * That is, a measure of inter-rater agreement for 
- * {@link ICodingAnnotationStudy}s.
+ * Super interface for all {@link IAgreementMeasure}s for coding tasks. That is, a measure of
+ * inter-rater agreement for {@link ICodingAnnotationStudy}s.
+ * 
  * @see IAgreementMeasure
  * @see ICodingAnnotationStudy
  * @author Christian M. Meyer
  */
-public interface ICodingAgreementMeasure extends IAgreementMeasure {
-	
+public interface ICodingAgreementMeasure
+    extends IAgreementMeasure
+{
+
 }

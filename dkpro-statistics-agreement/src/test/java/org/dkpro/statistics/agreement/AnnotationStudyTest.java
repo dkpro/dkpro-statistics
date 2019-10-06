@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
@@ -14,45 +14,44 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 package org.dkpro.statistics.agreement;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
 import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class AnnotationStudyTest
+{
+    @Test
+    public void testAddItem()
+    {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(3);
+        study.addItem("A", "B", "C");
+        study.addItem(5, 3, 0);
+        study.addItem(new Object(), "c", 12);
+        study.addItem((Object[]) new String[] { "A", "B", "D" });
 
-public class AnnotationStudyTest extends TestCase {
+        assertThat(study.getItemCount()).isEqualTo(4);
+    }
 
-	public void testAddItem() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(3);
-		study.addItem("A", "B", "C");
-		study.addItem(5, 3, 0);
-		study.addItem(new Object(), "c", 12);
-		study.addItem((Object[]) new String[]{"A", "B", "D"});
-		assertEquals(4, study.getItemCount());
-	}
-	
-	public void testAddItemMissingUnits() {
-		CodingAnnotationStudy study = new CodingAnnotationStudy(3);
-		try {
-			study.addItem("A");
-			fail("IllegalArgumentException expected!");
-		} catch (IllegalArgumentException e) {}
-		
-		try {
-			study.addItem(5, 3);
-			fail("IllegalArgumentException expected!");
-		} catch (IllegalArgumentException e) {}
-		
-		try {
-			study.addItem((Object) new String[]{"A", "B", "D"});
-			fail("IllegalArgumentException expected!");
-		} catch (IllegalArgumentException e) {}
-		
-		try {
-			study.addItem((Object[]) new String[]{"A", "B"});
-			fail("IllegalArgumentException expected!");
-		} catch (IllegalArgumentException e) {}
-	}
-	
+    @Test
+    public void testAddItemMissingUnits()
+    {
+        CodingAnnotationStudy study = new CodingAnnotationStudy(3);
+        
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> study.addItem("A"));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> study.addItem(5, 3));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> study.addItem((Object) new String[] { "A", "B", "D" }));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> study.addItem((Object[]) new String[] { "A", "B" }));
+    }
 }

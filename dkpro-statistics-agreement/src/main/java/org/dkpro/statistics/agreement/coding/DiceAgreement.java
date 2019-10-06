@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2014
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
@@ -14,23 +14,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 package org.dkpro.statistics.agreement.coding;
 
 import org.dkpro.statistics.agreement.IAnnotationUnit;
 import org.dkpro.statistics.agreement.distance.SetAnnotation;
 
 /**
- * Implementation of a mean Dice agreement measure for calculating the
- * inter-rater agreement for two or more raters applying set-valued annotations.
- * The measure is neither chance-corrected nor weighted.<br>
+ * Implementation of a mean Dice agreement measure for calculating the inter-rater agreement for two
+ * or more raters applying set-valued annotations. The measure is neither chance-corrected nor
+ * weighted.<br>
  * <br>
  * References:
  * <ul>
- * <li>Lee R. Dice. Measures of the amount of ecologic association between
- * species. <em>Ecology</em> 36(3):297–302, 1945.</li>
- * <li>Jean Véronis. A study of polysemy judgements and inter-annotator
- * agreement. In <em>Proceedings of SENSEVAL-1</em>, 1998.</li>
+ * <li>Lee R. Dice. Measures of the amount of ecologic association between species. <em>Ecology</em>
+ * 36(3):297–302, 1945.</li>
+ * <li>Jean Véronis. A study of polysemy judgements and inter-annotator agreement. In
+ * <em>Proceedings of SENSEVAL-1</em>, 1998.</li>
  * </ul>
  *
  * @author Tristan Miller
@@ -41,8 +41,7 @@ public class DiceAgreement
 {
 
     /**
-     * Initializes the instance for the given annotation study. The study should
-     * never be null.
+     * Initializes the instance for the given annotation study. The study should never be null.
      */
     public DiceAgreement(final ICodingAnnotationStudy study)
     {
@@ -52,9 +51,9 @@ public class DiceAgreement
     }
 
     /**
-     * Calculates the inter-rater agreement for the given annotation item. This
-     * is the basic step that is performed for each item of an annotation study,
-     * when calling {@link #calculateAgreement()}.
+     * Calculates the inter-rater agreement for the given annotation item. This is the basic step
+     * that is performed for each item of an annotation study, when calling
+     * {@link #calculateAgreement()}.
      *
      * @throws NullPointerException
      *             if the given item is null.
@@ -65,8 +64,7 @@ public class DiceAgreement
         SetAnnotation setAnnotation = null;
         int numberOfCategories = 0;
         for (IAnnotationUnit annotationUnit : item.getUnits()) {
-            SetAnnotation raterSetAnnotation = (SetAnnotation) (annotationUnit
-                    .getCategory());
+            SetAnnotation raterSetAnnotation = (SetAnnotation) (annotationUnit.getCategory());
             numberOfCategories += raterSetAnnotation.size();
             if (setAnnotation == null) {
                 setAnnotation = new SetAnnotation(raterSetAnnotation);
@@ -78,14 +76,14 @@ public class DiceAgreement
                 return 0.0;
             }
         }
-        return item.getRaterCount() * item.getRaterCount()
-                * setAnnotation.size() / (double) numberOfCategories;
+        return item.getRaterCount() * item.getRaterCount() * setAnnotation.size()
+                / (double) numberOfCategories;
     }
 
     /**
-     * Calculates the inter-rater agreement for the given annotation item. This
-     * is the basic step that is performed for each item of an annotation study,
-     * when calling {@link #calculateAgreement()}.
+     * Calculates the inter-rater agreement for the given annotation item. This is the basic step
+     * that is performed for each item of an annotation study, when calling
+     * {@link #calculateAgreement()}.
      *
      * @throws NullPointerException
      *             if the given item is null.

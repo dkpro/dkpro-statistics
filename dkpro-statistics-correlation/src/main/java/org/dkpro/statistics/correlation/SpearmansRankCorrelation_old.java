@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2013
  * Ubiquitous Knowledge Processing (UKP) Lab
  * Technische Universität Darmstadt
@@ -14,7 +14,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 package org.dkpro.statistics.correlation;
 
 import java.util.ArrayList;
@@ -59,8 +59,11 @@ public class SpearmansRankCorrelation_old
 
     /**
      * Computes the correlation between two datasets.
-     * @param list1 The first dataset as a list.
-     * @param list2 The second dataset as a list.
+     * 
+     * @param list1
+     *            The first dataset as a list.
+     * @param list2
+     *            The second dataset as a list.
      * @return The correlation between the two datasets.
      */
     public static double computeCorrelation(final List<Double> list1, final List<Double> list2)
