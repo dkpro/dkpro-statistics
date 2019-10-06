@@ -28,7 +28,8 @@ package org.dkpro.statistics.agreement;
 public class AnnotationUnit
     implements IAnnotationUnit
 {
-
+    private static final long serialVersionUID = 4277733312128063453L;
+    
     protected int raterIdx;
     protected Object category;
 

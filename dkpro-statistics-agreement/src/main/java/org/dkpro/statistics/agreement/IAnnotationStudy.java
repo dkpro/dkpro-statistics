@@ -17,6 +17,8 @@
  */
 package org.dkpro.statistics.agreement;
 
+import java.io.Serializable;
+
 /**
  * Basic interface representing the essential data model of any annotation study. The data model
  * provides access to the raters participating in the annotation study, the set of categories a
@@ -31,12 +33,15 @@ package org.dkpro.statistics.agreement;
  * @author Christian M. Meyer
  */
 public interface IAnnotationStudy
+    extends Serializable
 {
 
     // -- Raters --
 
     /** Returns the number of raters participating in this study. */
-    public int getRaterCount();
+    int getRaterCount();
+    
+    int findRater(final String name);
 
     // -- Categories --
 
@@ -45,20 +50,20 @@ public interface IAnnotationStudy
      * are not per se clear; they might need to be gathered by iterating through all associated
      * items, which yields performance problems in large-scale annotation studies.
      */
-    public Iterable<Object> getCategories();
+    Iterable<Object> getCategories();
 
     /**
      * Returns the number of annotation categories in the study. Note that the categories are not
      * per se clear; they might need to be gathered by iterating through all associated items, which
      * yields performance problems in large-scale annotation studies.
      */
-    public int getCategoryCount();
+    int getCategoryCount();
 
     /**
      * Returns true if, and only if, the categories defined by the study yield a dichotomy (i.e.,
      * there are exactly two categories).
      */
-    public boolean isDichotomous();
+    boolean isDichotomous();
 
     // -- Units --
 
@@ -68,6 +73,5 @@ public interface IAnnotationStudy
      * Returns the number of annotation units defined by the study. That is, the number of
      * annotations coded by the raters.
      */
-    public int getUnitCount();
-
+    int getUnitCount();
 }

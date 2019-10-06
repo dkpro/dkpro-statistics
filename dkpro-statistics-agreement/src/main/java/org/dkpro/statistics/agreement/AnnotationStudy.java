@@ -19,6 +19,7 @@ package org.dkpro.statistics.agreement;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,8 +31,9 @@ import java.util.Set;
 public abstract class AnnotationStudy
     implements IAnnotationStudy
 {
-
-    protected ArrayList<String> raters;
+    private static final long serialVersionUID = -3596722258510421730L;
+    
+    protected List<String> raters;
     protected Set<Object> categories;
 
     protected AnnotationStudy()

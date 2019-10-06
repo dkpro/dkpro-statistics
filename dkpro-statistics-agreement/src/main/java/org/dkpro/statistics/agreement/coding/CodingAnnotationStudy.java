@@ -17,6 +17,7 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +42,10 @@ import org.dkpro.statistics.agreement.IAnnotationUnit;
  */
 public class CodingAnnotationStudy
     extends AnnotationStudy
-    implements ICodingAnnotationStudy, Cloneable
+    implements ICodingAnnotationStudy, Cloneable, Serializable
 {
-
+    private static final long serialVersionUID = -8242222160334337626L;
+    
     protected List<ICodingAnnotationItem> items;
 
     /**
