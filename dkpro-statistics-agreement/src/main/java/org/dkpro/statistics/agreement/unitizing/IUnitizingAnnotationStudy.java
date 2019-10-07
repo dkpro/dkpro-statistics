@@ -17,6 +17,8 @@
  */
 package org.dkpro.statistics.agreement.unitizing;
 
+import java.util.Collection;
+
 import org.dkpro.statistics.agreement.IAnnotationStudy;
 
 /**
@@ -39,7 +41,7 @@ public interface IUnitizingAnnotationStudy
     // -- Units --
 
     /** Allows iterating all annotation units of this study. */
-    public Iterable<IUnitizingAnnotationUnit> getUnits();
+    Collection<IUnitizingAnnotationUnit> getUnits();
 
     // -- Continuum --
 
@@ -53,13 +55,18 @@ public interface IUnitizingAnnotationStudy
      * Returns the begin of the continuum (i.e., the first offset that is considered valid for
      * annotation units).
      */
-    public long getContinuumBegin();
+    long getContinuumBegin();
 
     /**
      * Returns the length of the continuum (i.e., the last possible right delimiter of an annotation
      * unit).
      */
-    public long getContinuumLength();
+    long getContinuumLength();
+
+    /**
+     * Returns the number of units rated by the given rater.
+     */
+    long getUnitCount(int aRaterIdx);
 
     // TODO: public void addSectionBoundary(long position);
 

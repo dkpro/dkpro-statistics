@@ -17,6 +17,8 @@
  */
 package org.dkpro.statistics.agreement.unitizing;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -36,13 +38,25 @@ import org.dkpro.statistics.agreement.AnnotationStudy;
  */
 public class UnitizingAnnotationStudy
     extends AnnotationStudy
-    implements IUnitizingAnnotationStudy
+    implements IUnitizingAnnotationStudy, Serializable
 {
-
+    private static final long serialVersionUID = 5877774485360119115L;
+    
     protected Set<IUnitizingAnnotationUnit> units;
     protected long begin;
     protected long length;
     // protected Set<Integer> sections;
+
+    /**
+     * Initializes and empty annotation study for a unitizing task with no raters. Add raters using
+     * the {@link #addRater(String)} method. The basic setup of a unitizing study is identifying
+     * units within a given continuum. The continuum is initialized to start at position 0 and end
+     * at the given length.
+     */
+    public UnitizingAnnotationStudy(int length)
+    {
+        this(0, 0, length);
+    }
 
     /**
      * Initializes and empty annotation study for a unitizing task with the given number of raters.
@@ -111,9 +125,15 @@ public class UnitizingAnnotationStudy
     }
 
     @Override
-    public Iterable<IUnitizingAnnotationUnit> getUnits()
+    public Collection<IUnitizingAnnotationUnit> getUnits()
     {
         return units;
+    }
+    
+    @Override
+    public long getUnitCount(int raterIdx)
+    {
+        return units.stream().filter(u -> u.getRaterIdx() == raterIdx).count();
     }
 
     @Override

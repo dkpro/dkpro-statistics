@@ -34,7 +34,8 @@ public class UnitizingAnnotationUnit
     extends AnnotationUnit
     implements IUnitizingAnnotationUnit
 {
-
+    private static final long serialVersionUID = -6716379300031576772L;
+    
     protected long offset;
     protected long length;
 

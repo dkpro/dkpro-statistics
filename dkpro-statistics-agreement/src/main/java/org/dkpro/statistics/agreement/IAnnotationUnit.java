@@ -17,6 +17,8 @@
  */
 package org.dkpro.statistics.agreement;
 
+import java.io.Serializable;
+
 /**
  * Represents a single annotation unit of an {@link IAnnotationStudy} identified and coded by a
  * certain rater. This basic interface concentrates on modeling the rater (represented by its
@@ -28,6 +30,7 @@ package org.dkpro.statistics.agreement;
  * @author Christian M. Meyer
  */
 public interface IAnnotationUnit
+    extends Serializable
 {
     /**
      * Returns the index of the rater who coded this unit (in case of a coding study) or defined the

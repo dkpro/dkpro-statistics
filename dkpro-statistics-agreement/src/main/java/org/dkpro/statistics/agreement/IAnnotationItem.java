@@ -17,6 +17,8 @@
  */
 package org.dkpro.statistics.agreement;
 
+import java.io.Serializable;
+
 /**
  * Represents a single annotation item of an {@link IAnnotationStudy}. Note that the definition of
  * an annotation item depends on the annotation setup: In coding tasks, annotation items are fixed,
@@ -31,7 +33,7 @@ package org.dkpro.statistics.agreement;
  * @see IAnnotationStudy
  * @author Christian M. Meyer
  */
-public interface IAnnotationItem
+public interface IAnnotationItem extends Serializable
 {
 
 }
