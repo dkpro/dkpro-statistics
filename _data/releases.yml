@@ -3,6 +3,9 @@
 # Possible status: "stable", "unstable"
 #
 # 
+- version: 2.2.0
+  date: 2019-11-11
+  status: stable
 - version: 2.1.0
   date: 2015-07-01
   status: stable
