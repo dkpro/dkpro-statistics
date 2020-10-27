@@ -18,6 +18,7 @@
 package org.dkpro.statistics.agreement.visualization;
 
 import java.io.PrintStream;
+import java.util.Objects;
 
 import org.dkpro.statistics.agreement.unitizing.IUnitizingAnnotationStudy;
 import org.dkpro.statistics.agreement.unitizing.IUnitizingAnnotationUnit;
@@ -109,7 +110,7 @@ public class UnitizingStudyPrinter
             annotations[i] = ' ';
         }
         for (IUnitizingAnnotationUnit unit : study.getUnits()) {
-            if (unit.getRaterIdx() == raterIdx && unit.getCategory().equals(category)) {
+            if (unit.getRaterIdx() == raterIdx && Objects.equals(unit.getCategory(),category)) {
                 for (int i = 0; i < unit.getLength(); i++) {
                     annotations[i + (int) unit.getOffset() - (int) B] = '*';
                 }
