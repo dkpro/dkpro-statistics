@@ -90,7 +90,7 @@ public class UnitizingMatrixPrinter
             annotations1[i] = ' ';
         }
         for (IUnitizingAnnotationUnit unit : study.getUnits()) {
-            if (unit.getRaterIdx() == rater1 && unit.getCategory() == category) {
+            if (unit.getRaterIdx() == rater1 && unit.getCategory().equals(category)) {
                 for (int i = 0; i < unit.getLength(); i++) {
                     annotations1[i + (int) unit.getOffset() - (int) B] = '*';
                 }
@@ -106,7 +106,7 @@ public class UnitizingMatrixPrinter
             annotations2[i] = ' ';
         }
         for (IUnitizingAnnotationUnit unit : study.getUnits()) {
-            if (unit.getRaterIdx() == rater2 && unit.getCategory() == category) {
+            if (unit.getRaterIdx() == rater2 && unit.getCategory().equals(category)) {
                 for (int i = 0; i < unit.getLength(); i++) {
                     annotations2[i + (int) unit.getOffset() - (int) B] = '*';
                 }
