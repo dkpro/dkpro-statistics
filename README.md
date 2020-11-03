@@ -1,5 +1,7 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.dkpro.statistics/dkpro-statistics/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/org.dkpro.statistics/dkpro-statistics)
 
+# DKPro Statistics
+
 DKPro Statistics is a collection of open-licensed statistical tools
 written in Java. The software library is divided into the following modules:
 
