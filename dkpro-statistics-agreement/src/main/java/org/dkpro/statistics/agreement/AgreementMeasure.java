@@ -20,7 +20,7 @@ package org.dkpro.statistics.agreement;
 /**
  * Default implementation of the {@link IAgreementMeasure} interface providing computational hooks
  * for calculating the observed and the expected agreement. The values for observed and expected
- * agreement are combined using Scott's (1955)<center>(A_O - A_E) / (1.0 - A_E)</center> formula
+ * agreement are combined using Scott's (1955) {@code (A_O - A_E) / (1.0 - A_E)} formula
  * (where A_O denotes the observed agreement and A_E denotes the expected agreement. See also
  * {@link DisagreementMeasure} for the analogous definition of a measure based on the observed and
  * expected disagreement.<br>

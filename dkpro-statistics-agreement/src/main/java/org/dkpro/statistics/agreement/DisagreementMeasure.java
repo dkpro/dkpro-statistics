@@ -20,7 +20,7 @@ package org.dkpro.statistics.agreement;
 /**
  * Default implementation of the {@link IAgreementMeasure} interface providing computational hooks
  * for calculating the observed and the expected disagreement. The values for observed and expected
- * disagreement are combined using Krippendorff's (1980)<center>1 - (D_O / D_E)</center> formula
+ * disagreement are combined using Krippendorff's (1980) {@code 1 - (D_O / D_E)} formula
  * (where D_O denotes the observed disagreement and D_E denotes the expected disagreement. See also
  * {@link AgreementMeasure} for the analogous definition of a measure based on the observed and
  * expected agreement.<br>
