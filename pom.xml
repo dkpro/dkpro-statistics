@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.dkpro</groupId>
     <artifactId>dkpro-parent-pom</artifactId>
-    <version>20</version>
+    <version>24</version>
   </parent>
 
   <groupId>org.dkpro.statistics</groupId>
