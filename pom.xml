@@ -169,7 +169,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>2.17</version>
+              <version>3.1.1</version>
               <inherited>true</inherited>
               <dependencies>
                 <dependency>
@@ -180,11 +180,14 @@
                 <dependency>
                   <groupId>com.puppycrawl.tools</groupId>
                   <artifactId>checkstyle</artifactId>
-                  <version>8.18</version>
+                  <version>8.31</version>
                 </dependency>
               </dependencies>
               <configuration>
                 <configLocation>dkpro-statistics/checkstyle.xml</configLocation>
+                <!-- See: https://github.com/m2e-code-quality/m2e-code-quality/issues/117#issuecomment-380022879 -->
+                <sourceDirectories>${project.compileSourceRoots}</sourceDirectories>
+                <testSourceDirectories>${project.testCompileSourceRoots}</testSourceDirectories>
                 <propertyExpansion>basedir=${project.basedir}</propertyExpansion>
                 <consoleOutput>true</consoleOutput>
                 <failOnViolation>true</failOnViolation>
