@@ -61,7 +61,6 @@ public class Significance
      *            The significance level.
      * @return True, if the null hypothesis is rejected, i.e. the difference between the correlation
      *         values is significant. False otherwise.
-     * @throws MathException
      */
     public static boolean testCorrelations(double correlation1, double correlation2, int n1, int n2,
             double alpha)
@@ -86,8 +85,6 @@ public class Significance
      * @param sample2
      *            The second dataset vector.
      * @return The significance value p.
-     * @throws MathException
-     * @throws IllegalArgumentException
      */
     public static double getSignificance(double[] sample1, double[] sample2)
         throws IllegalArgumentException
