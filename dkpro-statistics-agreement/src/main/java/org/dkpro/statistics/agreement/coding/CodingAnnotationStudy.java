@@ -45,7 +45,7 @@ public class CodingAnnotationStudy
     implements ICodingAnnotationStudy, Cloneable, Serializable
 {
     private static final long serialVersionUID = -8242222160334337626L;
-    
+
     protected List<ICodingAnnotationItem> items;
 
     /**

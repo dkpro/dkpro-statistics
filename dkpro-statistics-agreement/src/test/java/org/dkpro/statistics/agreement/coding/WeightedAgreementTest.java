@@ -17,14 +17,16 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
 import java.util.Hashtable;
 
 import org.dkpro.statistics.agreement.IAnnotationStudy;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 import org.dkpro.statistics.agreement.distance.IntervalDistanceFunction;
 import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link WeightedKappaAgreement} and {@link KrippendorffAlphaAgreement}.
@@ -32,10 +34,8 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class WeightedAgreementTest
-    extends TestCase
 {
-
-    
+    @Test
     public void testDistanceFunction1()
     {
         ICodingAnnotationStudy study = createExample();
@@ -68,12 +68,13 @@ public class WeightedAgreementTest
         
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
         alpha.setDistanceFunction(weightedDistanceFunction);
-        assertEquals(0.333, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.409, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.186, alpha.calculateAgreement(), 0.001);    
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.333, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.409, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.186, offset(0.001));    
     }
     
     
+    @Test
     public void testDistanceFunction2()
     {
         ICodingAnnotationStudy study = createExample();
@@ -106,11 +107,12 @@ public class WeightedAgreementTest
         
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
         alpha.setDistanceFunction(weightedDistanceFunction);
-        assertEquals(0.253, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.338, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.252, alpha.calculateAgreement(), 0.001);        
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.253, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.338, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.252, offset(0.001));        
     }
     
+    @Test
     public void testMissingVariance()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
@@ -120,22 +122,23 @@ public class WeightedAgreementTest
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
                 new NominalDistanceFunction());
-        assertEquals(0.153, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.150, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(-0.020, alpha.calculateAgreement(), 0.001);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.153, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.150, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(-0.020, offset(0.001));
 
         WeightedKappaAgreement kappaW = new WeightedKappaAgreement(study,
                 new NominalDistanceFunction());
-        assertEquals(0.153, kappaW.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.153, kappaW.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.000, kappaW.calculateAgreement(), 0.001);
+        assertThat(kappaW.calculateObservedDisagreement()).isCloseTo(0.153, offset(0.001));
+        assertThat(kappaW.calculateExpectedDisagreement()).isCloseTo(0.153, offset(0.001));
+        assertThat(kappaW.calculateAgreement()).isCloseTo(0.000, offset(0.001));
 
         kappaW = new WeightedKappaAgreement(study, new IntervalDistanceFunction());
-        assertEquals(0.096, kappaW.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.096, kappaW.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.000, kappaW.calculateAgreement(), 0.001);
+        assertThat(kappaW.calculateObservedDisagreement()).isCloseTo(0.096, offset(0.001));
+        assertThat(kappaW.calculateExpectedDisagreement()).isCloseTo(0.096, offset(0.001));
+        assertThat(kappaW.calculateAgreement()).isCloseTo(0.000, offset(0.001));
     }
 
+    @Test
     public void testNormalization()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
@@ -145,14 +148,14 @@ public class WeightedAgreementTest
 
         WeightedKappaAgreement kappaW = new WeightedKappaAgreement(study,
                 new NominalDistanceFunction());
-        assertEquals(0.153, kappaW.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.153, kappaW.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.000, kappaW.calculateAgreement(), 0.001);
+        assertThat(kappaW.calculateObservedDisagreement()).isCloseTo(0.153, offset(0.001));
+        assertThat(kappaW.calculateExpectedDisagreement()).isCloseTo(0.153, offset(0.001));
+        assertThat(kappaW.calculateAgreement()).isCloseTo(0.000, offset(0.001));
 
         kappaW = new WeightedKappaAgreement(study, new IntervalDistanceFunction());
-        assertEquals(0.096, kappaW.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.096, kappaW.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.000, kappaW.calculateAgreement(), 0.001);
+        assertThat(kappaW.calculateObservedDisagreement()).isCloseTo(0.096, offset(0.001));
+        assertThat(kappaW.calculateExpectedDisagreement()).isCloseTo(0.096, offset(0.001));
+        assertThat(kappaW.calculateAgreement()).isCloseTo(0.000, offset(0.001));
     }
 
     /** Creates an example annotation study. */

@@ -33,15 +33,15 @@ public interface IAnnotationUnit
     extends Serializable
 {
     /**
-     * Returns the index of the rater who coded this unit (in case of a coding study) or defined the
-     * boundaries of this unit (in case of a unitizing study). The first rater has index 0.
+     * @return the index of the rater who coded this unit (in case of a coding study) or defined the
+     *         boundaries of this unit (in case of a unitizing study). The first rater has index 0.
      */
-    public int getRaterIdx();
+    int getRaterIdx();
 
     /**
-     * Returns the category assigned to this unit by one of the raters. The category might be null
-     * if, and only if, the unit represents a missing value (in case of a coding study) or a gap (in
-     * case of a unitizing study).
+     * @return the category assigned to this unit by one of the raters. The category might be null
+     *         if, and only if, the unit represents a missing value (in case of a coding study) or a
+     *         gap (in case of a unitizing study).
      */
-    public Object getCategory();
+    Object getCategory();
 }

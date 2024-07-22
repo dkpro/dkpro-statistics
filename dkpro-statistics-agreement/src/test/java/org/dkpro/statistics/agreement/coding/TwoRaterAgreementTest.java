@@ -17,73 +17,75 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.offset;
 
 import java.util.Iterator;
 
 import org.dkpro.statistics.agreement.InsufficientDataException;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for several inter-rater agreement measures with two raters.
  * @author Christian M. Meyer
  */
-public class TwoRaterAgreementTest extends TestCase {
+public class TwoRaterAgreementTest {
 
-    
+    @Test
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         PercentageAgreement pa = new PercentageAgreement(study);
         double agreement = pa.calculateAgreement();
-        assertEquals(0.7, agreement);
+        assertThat(agreement).isEqualTo(0.7);
         //TODO
         // double se = poa.standardError(agreement);
         // double[] ci = poa.confidenceInterval(agreement, se,
         //      TwoRaterObservedAgreement.CONFIDENCE_95);
-        // assertEquals(0.045, se, 0.001);
-        // assertEquals(0.610, ci[0], 0.001);
-        // assertEquals(0.789, ci[1], 0.001);
+        // assertThat(se).isCloseTo(0.045, offset(0.001));
+        // assertThat(ci[0]).isCloseTo(0.610, offset(0.001));
+        // assertThat(ci[1]).isCloseTo(0.789, offset(0.001));
 
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(0.7, s.calculateObservedAgreement(), 0.001);
-        assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.4, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateObservedAgreement()).isCloseTo(0.7, offset(0.001));
+        assertThat(s.calculateExpectedAgreement()).isCloseTo(0.5, offset(0.001));
+        assertThat(s.calculateAgreement()).isCloseTo(0.4, offset(0.001));
 
         ScottPiAgreement pi = new ScottPiAgreement(study);
-        assertEquals(0.7, pi.calculateObservedAgreement(), 0.001);
-        assertEquals(0.545, pi.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.341, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateObservedAgreement()).isCloseTo(0.7, offset(0.001));
+        assertThat(pi.calculateExpectedAgreement()).isCloseTo(0.545, offset(0.001));
+        assertThat(pi.calculateAgreement()).isCloseTo(0.341, offset(0.001));
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.7, kappa.calculateObservedAgreement(), 0.001);
-        assertEquals(0.54, kappa.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.348, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.7, offset(0.001));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.54, offset(0.001));
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.348, offset(0.001));
     }
 
-    
+    @Test
     public void testItemSpecificAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         PercentageAgreement pa = new PercentageAgreement(study);
         Iterator<ICodingAnnotationItem> itemIter = study.getItems().iterator();
-        assertEquals(1.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(1.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(0.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(0.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(1.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(1.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(1.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(0.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(1.0, pa.calculateItemAgreement(itemIter.next()));
-        assertEquals(1.0, pa.calculateItemAgreement(itemIter.next()));
-        assertFalse(itemIter.hasNext());
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(1.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(1.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(0.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(0.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(1.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(1.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(1.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(0.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(1.0);
+        assertThat(pa.calculateItemAgreement(itemIter.next())).isEqualTo(1.0);
+        assertThat(itemIter.hasNext()).isFalse();
     }
 
     /*
+    @Test
     public void testCategorySpecificAgreement() {
         ICodingAnnotationStudy study = createExample();
 
@@ -91,10 +93,11 @@ public class TwoRaterAgreementTest extends TestCase {
         new CoincidenceMatrixPrinter().print(System.out, study);
 
         PercentageAgreement pa = new PercentageAgreement(study);
-        assertEquals(4 / 7, pa.calculateCategoryAgreement("low"));
-        assertEquals(10 / 13, pa.calculateCategoryAgreement("high"));
+        assertThat(pa.calculateCategoryAgreement("low")).isEqualTo(4 / 7);
+        assertThat(pa.calculateCategoryAgreement("high")).isEqualTo(10 / 13);
     }*/
 
+    @Test
     public void testMissingCategories()
     {
         // Annotation categories not used by any rater must be added to
@@ -107,12 +110,12 @@ public class TwoRaterAgreementTest extends TestCase {
         study.addItem("A", "A");
 
         PercentageAgreement pa = new PercentageAgreement(study);
-        assertEquals(1.0, pa.calculateAgreement());
+        assertThat(pa.calculateAgreement()).isEqualTo(1.0);
 
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(1.0, s.calculateObservedAgreement(), 0.001);
-        assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
-        assertEquals(1.0, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateObservedAgreement()).isCloseTo(1.0, offset(0.001));
+        assertThat(s.calculateExpectedAgreement()).isCloseTo(0.5, offset(0.001));
+        assertThat(s.calculateAgreement()).isCloseTo(1.0, offset(0.001));
 
         assertThatExceptionOfType(InsufficientDataException.class)
                 .isThrownBy(() -> new ScottPiAgreement(study).calculateAgreement());
@@ -121,8 +124,7 @@ public class TwoRaterAgreementTest extends TestCase {
                 .isThrownBy(() -> new CohenKappaAgreement(study).calculateAgreement());
     }
 
-
-    
+    @Test
     public void testInsufficientData()
     {
         // Empty annotation study.
@@ -154,7 +156,7 @@ public class TwoRaterAgreementTest extends TestCase {
                         .calculateAgreement());
     }
 
-    
+    @Test
     public void testInvalidRaterCount()
     {
         CodingAnnotationStudy tooManyRatersStudy = new CodingAnnotationStudy(3);

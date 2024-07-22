@@ -17,11 +17,16 @@
  */
 package org.dkpro.statistics.agreement;
 
+import java.lang.invoke.MethodHandles;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Default implementation of the {@link IAgreementMeasure} interface providing computational hooks
  * for calculating the observed and the expected disagreement. The values for observed and expected
- * disagreement are combined using Krippendorff's (1980) {@code 1 - (D_O / D_E)} formula
- * (where D_O denotes the observed disagreement and D_E denotes the expected disagreement. See also
+ * disagreement are combined using Krippendorff's (1980) {@code 1 - (D_O / D_E)} formula (where D_O
+ * denotes the observed disagreement and D_E denotes the expected disagreement. See also
  * {@link AgreementMeasure} for the analogous definition of a measure based on the observed and
  * expected agreement.<br>
  * <br>
@@ -38,26 +43,31 @@ package org.dkpro.statistics.agreement;
 public abstract class DisagreementMeasure
     implements IAgreementMeasure
 {
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
     /**
      * Calculates the inter-rater agreement for the annotation study that was passed to the class
      * constructor and the currently assigned distance function.
      * 
-     * @throws NullPointerException if the study is null.
+     * @throws NullPointerException
+     *             if the study is null.
      * 
-     * @throws ArithmeticException if the study does not contain any item or the number of raters is
-     * smaller than 2.
+     * @throws ArithmeticException
+     *             if the study does not contain any item or the number of raters is smaller than 2.
      */
     @Override
     public double calculateAgreement()
     {
         double D_O = calculateObservedDisagreement();
         double D_E = calculateExpectedDisagreement();
+        
+        LOG.trace("Disagreement -- observed: {} -- expected: {}", D_O, D_E);
+        
         if (D_O == D_E) {
             return 0.0;
         }
-        else {
-            return 1.0 - (D_O / D_E);
-        }
+
+        return 1.0 - (D_O / D_E);
     }
 
     protected abstract double calculateObservedDisagreement();

@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Warrens (2012) for measuring {@link HubertKappaAgreement}.<br>
@@ -31,28 +34,27 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class Warrens2012Test
-    extends TestCase
 {
-
-    
+    @Test
     public void testExample1()
     {
         CodingAnnotationStudy study = createExample1();
 
         HubertKappaAgreement kappaH = new HubertKappaAgreement(study);
-        assertEquals(0.802479, kappaH.calculateAgreement(), 0.000001);
+        assertThat(kappaH.calculateAgreement()).isCloseTo(0.802479, offset(0.000001));
 
         // There is an error in the denominator of equation (3.2):
         // It should read 1 − (8/15)(2/3) − (7/15)(1/3) = 22/45
         ICodingAnnotationStudy pairwiseStudy = study.extractRaters(0, 1);
         CohenKappaAgreement kappa2 = new CohenKappaAgreement(pairwiseStudy);
-        assertEquals(8.0 / 15.0 + 1.0 / 3.0, kappa2.calculateObservedAgreement(), 0.0001);
-        assertEquals((8.0 / 15.0) * (2.0 / 3.0) + (7.0 / 15.0) * (1.0 / 3.0),
-                kappa2.calculateExpectedAgreement(), 0.0001);
-        assertEquals(8.0 / 11.0, kappa2.calculateAgreement(), 0.0001);
+        assertThat(kappa2.calculateObservedAgreement()).isCloseTo(8.0 / 15.0 + 1.0 / 3.0,
+                offset(0.0001));
+        assertThat(kappa2.calculateExpectedAgreement())
+                .isCloseTo((8.0 / 15.0) * (2.0 / 3.0) + (7.0 / 15.0) * (1.0 / 3.0), offset(0.0001));
+        assertThat(kappa2.calculateAgreement()).isCloseTo(8.0 / 11.0, offset(0.0001));
     }
 
-    
+    @Test
     public void testExample2a()
     {
         ICodingAnnotationStudy study = createExample2a();
@@ -62,19 +64,19 @@ public class Warrens2012Test
         // When switching the frequencies 6 and 4 in the example,
         // we end up at a k(4,2) of 0.645!
         HubertKappaAgreement kappaH = new HubertKappaAgreement(study);
-        // assertEquals(0.645, kappaH.calculateAgreement(), 0.001);
-        assertEquals(0.675, kappaH.calculateAgreement(), 0.001);
+        // assertThat(kappaH.calculateAgreement()).isCloseTo(0.645, offset(0.001));
+        assertThat(kappaH.calculateAgreement()).isCloseTo(0.675, offset(0.001));
 
         // assertEquals(0.599, kappa(4,4).calculateAgreement(), 001);
     }
 
-    
+    @Test
     public void testExample2b()
     {
         ICodingAnnotationStudy study = createExample2b();
 
         HubertKappaAgreement kappaH = new HubertKappaAgreement(study);
-        assertEquals(0.564, kappaH.calculateAgreement(), 0.001);
+        assertThat(kappaH.calculateAgreement()).isCloseTo(0.564, offset(0.001));
 
         // assertEquals(0.625, kappa(4,4).calculateAgreement(), 001);
     }

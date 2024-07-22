@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Randolph (2005) for measuring {@link RandolphKappaAgreement} and
@@ -33,33 +36,32 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class Randolph2005Test
-    extends TestCase
 {
-
-    
+    @Test
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
 
         FleissKappaAgreement pi = new FleissKappaAgreement(study);
-        assertEquals(0.67, pi.calculateObservedAgreement(), 0.01);
-        assertEquals(0.50, pi.calculateExpectedAgreement(), 0.01);
-        assertEquals(0.33, pi.calculateAgreement(), 0.01);
+        assertThat(pi.calculateObservedAgreement()).isCloseTo(0.67, offset(0.01));
+        assertThat(pi.calculateExpectedAgreement()).isCloseTo(0.50, offset(0.01));
+        assertThat(pi.calculateAgreement()).isCloseTo(0.33, offset(0.01));
 
         RandolphKappaAgreement rk = new RandolphKappaAgreement(study);
-        assertEquals(0.33, rk.calculateAgreement(), 0.01);
+        assertThat(rk.calculateAgreement()).isCloseTo(0.33, offset(0.01));
     }
 
     
+    @Test
     public void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();
 
         FleissKappaAgreement pi = new FleissKappaAgreement(study);
-        assertEquals(-0.2, pi.calculateAgreement(), 0.01);
+        assertThat(pi.calculateAgreement()).isCloseTo(-0.2, offset(0.01));
 
         RandolphKappaAgreement rk = new RandolphKappaAgreement(study);
-        assertEquals(0.33, rk.calculateAgreement(), 0.01);
+        assertThat(rk.calculateAgreement()).isCloseTo(0.33, offset(0.01));
     }
 
     /**

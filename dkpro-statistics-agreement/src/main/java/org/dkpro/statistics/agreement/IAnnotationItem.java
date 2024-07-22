@@ -33,7 +33,8 @@ import java.io.Serializable;
  * @see IAnnotationStudy
  * @author Christian M. Meyer
  */
-public interface IAnnotationItem extends Serializable
+public interface IAnnotationItem
+    extends Serializable
 {
 
 }

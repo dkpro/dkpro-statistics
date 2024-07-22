@@ -120,7 +120,7 @@ public class CoincidenceMatrixPrinter
         out.printf(DIVIDER + DOUBLE_FORMAT, sum);
         out.println();
     }
-/*
+    /*
     public void printPercentage(final PrintStream out, final IItemAnnotationStudy study) {
         //TODO: measure length of cats. maybe cut them.
         Map<Object, Map<Object, Integer>> coincidence = 
@@ -175,5 +175,5 @@ public class CoincidenceMatrixPrinter
         out.printf(DIVIDER + "%1.3f", sum);
         out.println();
     }
-    */
+     */
 }

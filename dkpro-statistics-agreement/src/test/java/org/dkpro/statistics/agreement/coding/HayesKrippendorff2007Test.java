@@ -17,9 +17,11 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import org.dkpro.statistics.agreement.distance.OrdinalDistanceFunction;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
 
-import junit.framework.TestCase;
+import org.dkpro.statistics.agreement.distance.OrdinalDistanceFunction;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Hayes &amp; Krippendorff (2007) for measuring {@link KrippendorffAlphaAgreement}
@@ -34,17 +36,15 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class HayesKrippendorff2007Test
-    extends TestCase
 {
-
-    
+    @Test
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
                 new OrdinalDistanceFunction());
-        assertEquals(0.7598, alpha.calculateAgreement(), 0.0001);
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.7598, offset(0.0001));
     }
 
     /**

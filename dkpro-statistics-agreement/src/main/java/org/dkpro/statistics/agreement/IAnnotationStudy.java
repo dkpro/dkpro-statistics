@@ -40,7 +40,7 @@ public interface IAnnotationStudy
 
     /** Returns the number of raters participating in this study. */
     int getRaterCount();
-    
+
     int findRater(final String name);
 
     // -- Categories --
@@ -63,7 +63,10 @@ public interface IAnnotationStudy
      * Returns true if, and only if, the categories defined by the study yield a dichotomy (i.e.,
      * there are exactly two categories).
      */
-    boolean isDichotomous();
+    default boolean isDichotomous()
+    {
+        return getCategoryCount() == 2;
+    }
 
     // -- Units --
 

@@ -16,13 +16,15 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.dkpro</groupId>
     <artifactId>dkpro-parent-pom</artifactId>
-    <version>24</version>
+    <version>32</version>
   </parent>
 
   <groupId>org.dkpro.statistics</groupId>
@@ -32,13 +34,15 @@
 
   <name>DKPro Statistics</name>
   <url>https://dkpro.github.io/dkpro-statistics/</url>
-  <description>DKPro Statistics is a collection of open-licensed statistical tools, currently including inter-rater agreement, correlation, and significance measures.</description>
+  <description>DKPro Statistics is a collection of open-licensed statistical
+    tools, currently including inter-rater agreement, correlation, and
+    significance measures.</description>
 
   <organization>
     <name>Ubiquitous Knowledge Processing (UKP) Lab</name>
     <url>https://www.ukp.tu-darmstadt.de/</url>
   </organization>
-  
+
   <developers>
     <developer>
       <id>chmeyer.de</id>
@@ -78,34 +82,37 @@
     <url>https://github.com/dkpro/dkpro-statistics</url>
     <tag>head</tag>
   </scm>
-  
+
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging-api</artifactId>
-        <version>1.1</version>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-math3</artifactId>
+        <version>3.2</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
-        <artifactId>commons-math</artifactId>
-        <version>2.2</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-lang</groupId>
-        <artifactId>commons-lang</artifactId>
-        <version>2.6</version>
-      </dependency>
-  
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.13.1</version>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.14.0</version>
       </dependency>
       <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
         <version>3.5.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>5.10.2</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-bom</artifactId>
+        <version>2.0.13</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -185,7 +192,8 @@
               </dependencies>
               <configuration>
                 <configLocation>dkpro-statistics/checkstyle.xml</configLocation>
-                <!-- See: https://github.com/m2e-code-quality/m2e-code-quality/issues/117#issuecomment-380022879 -->
+                <!-- See:
+                https://github.com/m2e-code-quality/m2e-code-quality/issues/117#issuecomment-380022879 -->
                 <sourceDirectories>${project.compileSourceRoots}</sourceDirectories>
                 <testSourceDirectories>${project.testCompileSourceRoots}</testSourceDirectories>
                 <propertyExpansion>basedir=${project.basedir}</propertyExpansion>

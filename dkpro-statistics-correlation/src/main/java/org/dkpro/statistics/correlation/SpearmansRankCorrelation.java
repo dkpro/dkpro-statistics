@@ -19,7 +19,7 @@ package org.dkpro.statistics.correlation;
 
 import java.util.List;
 
-import org.apache.commons.math.stat.correlation.SpearmansCorrelation;
+import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
 
 public class SpearmansRankCorrelation
 {

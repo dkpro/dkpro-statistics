@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Mieskes (2009) for category-specific agreement using
@@ -33,34 +36,32 @@ import junit.framework.TestCase;
  * @author Margot Mieskes
  */
 public class Mieskes2009Test
-    extends TestCase
 {
-
-    
-    public void testAgreement()
+    @Test
+    void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         FleissKappaAgreement kappa = new FleissKappaAgreement(study);
-        assertEquals(0.84, kappa.calculateObservedAgreement(), 0.01);
-        assertEquals(0.20, kappa.calculateExpectedAgreement(), 0.01);
-        assertEquals(0.80, kappa.calculateAgreement(), 0.01);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.84, offset(0.01));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.20, offset(0.01));
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.80, offset(0.01));
 
-        assertEquals(1.00, kappa.calculateCategoryAgreement("INP"), 0.01);
-        assertEquals(1.00, kappa.calculateCategoryAgreement("JJ"), 0.01);
-        assertEquals(1.00, kappa.calculateCategoryAgreement("MD"), 0.01);
-        assertEquals(0.48, kappa.calculateCategoryAgreement("NN"), 0.01);
-        assertEquals(1.00, kappa.calculateCategoryAgreement("PRP"), 0.01);
-        assertEquals(0.56, kappa.calculateCategoryAgreement("RB"), 0.01);
-        assertEquals(0.67, kappa.calculateCategoryAgreement("UH"), 0.01);
-        assertEquals(0.29, kappa.calculateCategoryAgreement("VB"), 0.01);
-        assertEquals(-0.02, kappa.calculateCategoryAgreement("VBP"), 0.01);
+        assertThat(kappa.calculateCategoryAgreement("INP")).isCloseTo(1.00, offset(0.01));
+        assertThat(kappa.calculateCategoryAgreement("JJ")).isCloseTo(1.00, offset(0.01));
+        assertThat(kappa.calculateCategoryAgreement("MD")).isCloseTo(1.00, offset(0.01));
+        assertThat(kappa.calculateCategoryAgreement("NN")).isCloseTo(0.48, offset(0.01));
+        assertThat(kappa.calculateCategoryAgreement("PRP")).isCloseTo(1.00, offset(0.01));
+        assertThat(kappa.calculateCategoryAgreement("RB")).isCloseTo(0.56, offset(0.01));
+        assertThat(kappa.calculateCategoryAgreement("UH")).isCloseTo(0.67, offset(0.01));
+        assertThat(kappa.calculateCategoryAgreement("VB")).isCloseTo(0.29, offset(0.01));
+        assertThat(kappa.calculateCategoryAgreement("VBP")).isCloseTo(-0.02, offset(0.01));
     }
 
     /**
      * Creates an example annotation study introduced by Mieskes (2009: p. 58).
      */
-    public static ICodingAnnotationStudy createExample()
+    static ICodingAnnotationStudy createExample()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(3);
         study.addItem("UH", "VB", "UH");

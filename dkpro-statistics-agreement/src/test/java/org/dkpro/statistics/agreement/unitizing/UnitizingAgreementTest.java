@@ -17,7 +17,11 @@
  */
 package org.dkpro.statistics.agreement.unitizing;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+import static org.dkpro.statistics.agreement.unitizing.KrippendorffAlphaUnitizingAgreement.measureDistance;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for measuring {@link KrippendorffAlphaUnitizingAgreement}.<br>
@@ -27,59 +31,51 @@ import junit.framework.TestCase;
  * @author Ivan Habernal
  */
 public class UnitizingAgreementTest
-    extends TestCase
 {
-    
+    @Test
     public void testAgreement()
     {
         IUnitizingAnnotationStudy study = createExample();
 
         KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
-        assertEquals(0.9100, alpha.calculateObservedCategoryDisagreement("A"), 0.0001);
-        assertEquals(0.5351, alpha.calculateExpectedCategoryDisagreement("A"), 0.0001);
-        assertEquals(-0.7003, alpha.calculateCategoryAgreement("A"), 0.0001);
+        assertThat(alpha.calculateObservedCategoryDisagreement("A")).isCloseTo(0.9100,
+                offset(0.0001));
+        assertThat(alpha.calculateExpectedCategoryDisagreement("A")).isCloseTo(0.5351,
+                offset(0.0001));
+        assertThat(alpha.calculateCategoryAgreement("A")).isCloseTo(-0.7003, offset(0.0001));
     }
 
-    
+    @Test
     public void testSingleAnnotationUnit()
     {
         UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 20);
         study.addUnit(0, 1, 0, "X");
 
         KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
-        assertEquals(0.0, alpha.calculateAgreement());
+        assertThat(alpha.calculateAgreement()).isEqualTo(0.0);
     }
 
-    
+    @Test
     public void testEmptyAnnotationSet()
     {
         UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 20);
 
         KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
-        assertTrue(Double.isNaN(alpha.calculateAgreement()));
+        assertThat(alpha.calculateAgreement()).isNaN();
     }
 
-    
+    @Test
     public void testDistanceMetric()
     {
-        assertEquals(0.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(0, 1, null, 0, 2, null));
-        assertEquals(0.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(1, 8, "A", 0, 2, null));
-        assertEquals(37.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(1, 8, "A", 2, 1, "A"));
-        assertEquals(0.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(1, 8, "A", 3, 1, null));
-        assertEquals(25.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(1, 8, "A", 4, 1, "A"));
-        assertEquals(0.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(1, 8, "A", 5, 1, null));
-        assertEquals(29.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(1, 8, "A", 6, 1, "A"));
-        assertEquals(0.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(1, 8, "A", 7, 4, null));
-        assertEquals(0.0,
-                KrippendorffAlphaUnitizingAgreement.measureDistance(9, 2, null, 7, 4, null));
+        assertThat(measureDistance(0, 1, null, 0, 2, null)).isEqualTo(0.0);
+        assertThat(measureDistance(1, 8, "A", 0, 2, null)).isEqualTo(0.0);
+        assertThat(measureDistance(1, 8, "A", 2, 1, "A")).isEqualTo(37.0);
+        assertThat(measureDistance(1, 8, "A", 3, 1, null)).isEqualTo(0.0);
+        assertThat(measureDistance(1, 8, "A", 4, 1, "A")).isEqualTo(25.0);
+        assertThat(measureDistance(1, 8, "A", 5, 1, null)).isEqualTo(0.0);
+        assertThat(measureDistance(1, 8, "A", 6, 1, "A")).isEqualTo(29.0);
+        assertThat(measureDistance(1, 8, "A", 7, 4, null)).isEqualTo(0.0);
+        assertThat(measureDistance(9, 2, null, 7, 4, null)).isEqualTo(0.0);
     }
 
     /** Creates an example annotation study. */

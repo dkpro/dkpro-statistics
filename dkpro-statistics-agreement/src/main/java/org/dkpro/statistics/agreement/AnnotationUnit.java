@@ -29,18 +29,18 @@ public class AnnotationUnit
     implements IAnnotationUnit
 {
     private static final long serialVersionUID = 4277733312128063453L;
-    
-    protected int raterIdx;
-    protected Object category;
+
+    protected final int raterIdx;
+    protected final Object category;
 
     /**
      * Initializes the annotation unit with the given category as the annotation by the rater with
      * the specified index.
      */
-    public AnnotationUnit(int raterIdx, final Object category)
+    public AnnotationUnit(int aRaterIdx, final Object aCategory)
     {
-        this.raterIdx = raterIdx;
-        this.category = category;
+        raterIdx = aRaterIdx;
+        category = aCategory;
     }
 
     @Override

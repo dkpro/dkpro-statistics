@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for numerical stability.
@@ -25,34 +28,32 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class NumericalStabilityTest
-    extends TestCase
 {
-
-    
+    @Test
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
 
         PercentageAgreement raw = new PercentageAgreement(study);
-        assertEquals(0.9, raw.calculateAgreement(), 0.001);
+        assertThat(raw.calculateAgreement()).isCloseTo(0.9, offset(0.001));
 
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(0.9, s.calculateObservedAgreement(), 0.001);
-        assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.8, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateObservedAgreement()).isCloseTo(0.9, offset(0.001));
+        assertThat(s.calculateExpectedAgreement()).isCloseTo(0.5, offset(0.001));
+        assertThat(s.calculateAgreement()).isCloseTo(0.8, offset(0.001));
 
         ScottPiAgreement pi = new ScottPiAgreement(study);
-        assertEquals(0.9, pi.calculateObservedAgreement(), 0.001);
-        assertEquals(0.5, pi.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.8, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateObservedAgreement()).isCloseTo(0.9, offset(0.001));
+        assertThat(pi.calculateExpectedAgreement()).isCloseTo(0.5, offset(0.001));
+        assertThat(pi.calculateAgreement()).isCloseTo(0.8, offset(0.001));
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.9, kappa.calculateObservedAgreement(), 0.001);
-        assertEquals(0.5, kappa.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.8, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.9, offset(0.001));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.5, offset(0.001));
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.8, offset(0.001));
     }
 
-    
+    @Test
     public void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();
@@ -72,60 +73,60 @@ public class NumericalStabilityTest
         study = tmpStudy;
 
         PercentageAgreement raw = new PercentageAgreement(study);
-        assertEquals(0.9, raw.calculateAgreement(), 0.001);
+        assertThat(raw.calculateAgreement()).isCloseTo(0.9, offset(0.001));
 
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(0.9, s.calculateObservedAgreement(), 0.001);
-        assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.8, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateObservedAgreement()).isCloseTo(0.9, offset(0.001));
+        assertThat(s.calculateExpectedAgreement()).isCloseTo(0.5, offset(0.001));
+        assertThat(s.calculateAgreement()).isCloseTo(0.8, offset(0.001));
 
         ScottPiAgreement pi = new ScottPiAgreement(study);
-        assertEquals(0.9, pi.calculateObservedAgreement(), 0.001);
-        assertEquals(0.759, pi.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.585, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateObservedAgreement()).isCloseTo(0.9, offset(0.001));
+        assertThat(pi.calculateExpectedAgreement()).isCloseTo(0.759, offset(0.001));
+        assertThat(pi.calculateAgreement()).isCloseTo(0.585, offset(0.001));
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.9, kappa.calculateObservedAgreement(), 0.001);
-        assertEquals(0.756, kappa.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.590, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.9, offset(0.001));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.756, offset(0.001));
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.590, offset(0.001));
     }
 
-    
+    @Test
     public void testScaledArtsteinPoesio()
     {
         ICodingAnnotationStudy study = createExample2(500);
 
         // Two raters, observed agreement.
         PercentageAgreement pa = new PercentageAgreement(study);
-        assertEquals(0.7, pa.calculateAgreement(), 0.001);
+        assertThat(pa.calculateAgreement()).isCloseTo(0.7, offset(0.001));
 
         // Two raters, chance-corrected agreement.
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(0.7, s.calculateObservedAgreement(), 0.001);
-        assertEquals(0.5, s.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.4, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateObservedAgreement()).isCloseTo(0.7, offset(0.001));
+        assertThat(s.calculateExpectedAgreement()).isCloseTo(0.5, offset(0.001));
+        assertThat(s.calculateAgreement()).isCloseTo(0.4, offset(0.001));
 
         ScottPiAgreement pi = new ScottPiAgreement(study);
-        assertEquals(0.7, pi.calculateObservedAgreement(), 0.001);
-        assertEquals(0.545, pi.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.341, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateObservedAgreement()).isCloseTo(0.7, offset(0.001));
+        assertThat(pi.calculateExpectedAgreement()).isCloseTo(0.545, offset(0.001));
+        assertThat(pi.calculateAgreement()).isCloseTo(0.341, offset(0.001));
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.7, kappa.calculateObservedAgreement(), 0.001);
-        assertEquals(0.54, kappa.calculateExpectedAgreement(), 0.001);
-        assertEquals(0.348, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.7, offset(0.001));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.54, offset(0.001));
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.348, offset(0.001));
     }
 
-    
+    @Test
     public void testScaledFleiss()
     {
         ICodingAnnotationStudy study = createExample3(2000);
 
         FleissKappaAgreement pi = new FleissKappaAgreement(study);
-        assertEquals(0.5556, pi.calculateObservedAgreement(), 0.001);
-        assertEquals(0.2201, pi.calculateExpectedAgreement(), 0.001);
+        assertThat(pi.calculateObservedAgreement()).isCloseTo(0.5556, offset(0.001));
+        assertThat(pi.calculateExpectedAgreement()).isCloseTo(0.2201, offset(0.001));
         double agreement = pi.calculateAgreement();
-        assertEquals(0.430, agreement, 0.001);
+        assertThat(agreement).isCloseTo(0.430, offset(0.001));
     }
 
     /**
@@ -214,5 +215,4 @@ public class NumericalStabilityTest
         study.addMultipleItems(scale, 5, 5, 5, 5, 5, 5);
         return study;
     }
-
 }
