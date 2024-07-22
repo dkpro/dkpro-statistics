@@ -30,7 +30,7 @@ import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
  * of each combination of categories used by two raters. A contigency table
  * is only defined for coding studies with exactly two raters. For the example 
  * by Krippendorff (1980: p. 133), the implementation displays:
- * <pre>     
+ * <pre>
  *     0   1   Σ
  * 0   5   3   8
  * 1   1   1   2

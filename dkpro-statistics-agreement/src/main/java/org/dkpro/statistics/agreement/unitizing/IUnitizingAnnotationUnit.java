@@ -34,23 +34,46 @@ import org.dkpro.statistics.agreement.IAnnotationUnit;
 public interface IUnitizingAnnotationUnit
     extends IAnnotationUnit, Comparable<IUnitizingAnnotationUnit>
 {
+    /**
+     * @return the offset of the annotation unit (i.e., the start position of the identified
+     *         segment).
+     * @deprecated Use {@link #getBegin()}
+     */
+    @Deprecated
+    default long getOffset()
+    {
+        return getBegin();
+    }
 
     /**
-     * Returns the offset of the annotation unit (i.e., the start position of the identified
-     * segment).
+     * @return the length of the annotation unit (i.e., the difference between the end and start
+     *         position of the identified segment).
      */
-    public long getOffset();
+    default long getLength()
+    {
+        return getEnd() - getBegin();
+    }
 
     /**
-     * Returns the length of the annotation unit (i.e., the difference between the end and start
-     * position of the identified segment).
+     * @return the right delimiter of the annotation unit (i.e., the end position of the identified
+     *         segment). The method is a shorthand for {@link #getOffset()} + {@link #getLength()}.
+     * @deprecated Use {@link #getEnd()}
      */
-    public long getLength();
+    @Deprecated
+    default long getEndOffset()
+    {
+        return getEnd();
+    }
 
     /**
-     * Returns the right delimiter of the annotation unit (i.e., the end position of the identified
-     * segment). The method is a shorthand for {@link #getOffset()} + {@link #getLength()}.
+     * @return the offset of the annotation unit (i.e., the start position of the identified
+     *         segment).
      */
-    public long getEndOffset();
+    long getBegin();
 
+    /**
+     * @return the right delimiter of the annotation unit (i.e., the end position of the identified
+     *         segment). The method is a shorthand for {@link #getOffset()} + {@link #getLength()}.
+     */
+    long getEnd();
 }

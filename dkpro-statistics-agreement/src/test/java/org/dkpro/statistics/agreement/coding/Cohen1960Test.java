@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Cohen (1960) for measuring {@link CohenKappaAgreement}.<br>
@@ -30,38 +33,36 @@ import junit.framework.TestCase;
  * 
  * @author Christian M. Meyer
  */
-public class Cohen1960Test
-    extends TestCase
+class Cohen1960Test
 {
-
-    
+    @Test
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.29, kappa.calculateObservedAgreement(), 0.01);
-        assertEquals(0.35, kappa.calculateExpectedAgreement(), 0.01);
-        assertEquals(0.90, kappa.calculateMaximumObservedAgreement(), 0.01);
-        assertEquals(0.85, kappa.calculateMaximumAgreement(), 0.01);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.29, offset(0.01));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.35, offset(0.01));
+        assertThat(kappa.calculateMaximumObservedAgreement()).isCloseTo(0.90, offset(0.01));
+        assertThat(kappa.calculateMaximumAgreement()).isCloseTo(0.85, offset(0.01));
     }
 
-    
-    public void testExample2()
+    @Test
+    void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.70, kappa.calculateObservedAgreement(), 0.01);
-        assertEquals(0.41, kappa.calculateExpectedAgreement(), 0.01);
-        assertEquals(0.492, kappa.calculateAgreement(), 0.001);
-        assertEquals(0.831, kappa.calculateMaximumAgreement(), 0.001);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.70, offset(0.01));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.41, offset(0.01));
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.492, offset(0.001));
+        assertThat(kappa.calculateMaximumAgreement()).isCloseTo(0.831, offset(0.001));
     }
 
     /**
      * Creates an example annotation study introduced by Cohen (1960: p. 37).
      */
-    public static ICodingAnnotationStudy createExample1()
+    static ICodingAnnotationStudy createExample1()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(25, 1, 1);
@@ -79,7 +80,7 @@ public class Cohen1960Test
     /**
      * Creates an example annotation study introduced by Cohen (1960: p. 45).
      */
-    public static ICodingAnnotationStudy createExample2()
+    static ICodingAnnotationStudy createExample2()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(2);
         study.addMultipleItems(88, 1, 1);

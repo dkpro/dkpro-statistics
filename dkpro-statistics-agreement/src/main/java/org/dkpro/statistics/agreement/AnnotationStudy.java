@@ -32,7 +32,7 @@ public abstract class AnnotationStudy
     implements IAnnotationStudy
 {
     private static final long serialVersionUID = -3596722258510421730L;
-    
+
     protected List<String> raters;
     protected Set<Object> categories;
 

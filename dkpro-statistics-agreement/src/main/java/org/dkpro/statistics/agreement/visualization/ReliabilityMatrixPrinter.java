@@ -93,8 +93,8 @@ public class ReliabilityMatrixPrinter
             }
             out.println(DIVIDER + catSum);
         }
-        
-/*        
+
+        /*
         for (Object category : categories.keySet())
             out.print(DIVIDER + category);
         out.print(DIVIDER + "Σ");
@@ -123,5 +123,5 @@ public class ReliabilityMatrixPrinter
         out.printf(DIVIDER + "%3d", rowSum);
         out.println();*/
     }
-    
+
 }

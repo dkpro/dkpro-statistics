@@ -17,11 +17,15 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.Iterator;
 
 import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Fleiss (1971) for measuring {@link FleissKappaAgreement}.<br>
@@ -35,81 +39,82 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class Fleiss1971Test
-    extends TestCase
 {
-
-    
+    @Test
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
         assertEquals(30, study.getItemCount());
 
         FleissKappaAgreement kappa = new FleissKappaAgreement(study);
-        assertEquals(0.5556, kappa.calculateObservedAgreement(), 0.001);
-        assertEquals(0.2201, kappa.calculateExpectedAgreement(), 0.001);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.5556, offset(0.001));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.2201, offset(0.001));
         double agreement = kappa.calculateAgreement();
-        assertEquals(0.430, agreement, 0.001);
+        assertThat(agreement).isCloseTo(0.430, offset(0.001));
 
         // Var = 0.000759 = 2/n*m(m-1) * (AE - (2m-3)AE^2 + 2(m-2)AE / (1-AE)^2)
         // SE = 0.028
         // TODO
         /*
          * double se = raw.standardError(agreement); double[] ci = raw.confidenceInterval(agreement,
-         * se, RawAgreement.CONFIDENCE_95); assertEquals(0.028, se, 0.001); assertEquals(0.610,
-         * ci[0], 0.001); assertEquals(0.789, ci[1], 0.001);
+         * se, RawAgreement.CONFIDENCE_95); 
+         * assertThat(se).isCloseTo(0.028, offset(0.001)); 
+         * assertEquals(0.610, ci[0], 0.001); assertThat(ci[1]).isCloseTo(0.789, offset(0.001));
          */
     }
 
     
+    @Test
     public void testCategoryAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         ICategorySpecificAgreement catAgreement = new FleissKappaAgreement(study);
-        assertEquals(0.248, catAgreement.calculateCategoryAgreement(1), 0.005);
-        assertEquals(0.248, catAgreement.calculateCategoryAgreement(2), 0.005);
-        assertEquals(0.517, catAgreement.calculateCategoryAgreement(3), 0.005);
-        assertEquals(0.470, catAgreement.calculateCategoryAgreement(4), 0.005);
-        assertEquals(0.565, catAgreement.calculateCategoryAgreement(5), 0.005);
+        assertThat(catAgreement.calculateCategoryAgreement(1)).isCloseTo(0.248, offset(0.005));
+        assertThat(catAgreement.calculateCategoryAgreement(2)).isCloseTo(0.248, offset(0.005));
+        assertThat(catAgreement.calculateCategoryAgreement(3)).isCloseTo(0.517, offset(0.005));
+        assertThat(catAgreement.calculateCategoryAgreement(4)).isCloseTo(0.470, offset(0.005));
+        assertThat(catAgreement.calculateCategoryAgreement(5)).isCloseTo(0.565, offset(0.005));
     }
 
     
+    @Test
     public void testItemAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         ICodingItemSpecificAgreement agreement = new PercentageAgreement(study);
         Iterator<ICodingAnnotationItem> iter = study.getItems().iterator();
-        assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.400, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.400, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.400, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.467, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.467, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.267, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.467, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.667, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.400, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.400, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.667, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.267, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.667, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.267, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.667, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.467, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.267, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.667, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.267, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.467, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.400, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.667, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.467, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.467, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(0.667, agreement.calculateItemAgreement(iter.next()), 0.001);
-        assertEquals(1.000, agreement.calculateItemAgreement(iter.next()), 0.001);
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(1.000, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.400, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.400, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(1.000, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.400, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.467, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.467, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.267, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.467, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(1.000, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.667, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.400, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.400, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.667, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.267, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.667, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.267, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.667, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.467, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.267, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(1.000, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.667, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.267, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.467, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.400, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.667, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.467, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.467, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(0.667, offset(0.001));
+        assertThat(agreement.calculateItemAgreement(iter.next())).isCloseTo(1.000, offset(0.001));
         assertFalse(iter.hasNext());
     }
 
@@ -153,5 +158,4 @@ public class Fleiss1971Test
         study.addItem(5, 5, 5, 5, 5, 5);
         return study;
     }
-
 }

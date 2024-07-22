@@ -35,9 +35,9 @@ public class UnitizingAnnotationUnit
     implements IUnitizingAnnotationUnit
 {
     private static final long serialVersionUID = -6716379300031576772L;
-    
-    protected long offset;
-    protected long length;
+
+    final protected long offset;
+    final protected long length;
 
     /**
      * Initializes the unit with the given offset and length as well as the category assigned to the
@@ -45,11 +45,12 @@ public class UnitizingAnnotationUnit
      * {@link UnitizingAnnotationStudy#addUnit(long, long, int, Object)} should be used to define
      * the annotation units.
      */
-    protected UnitizingAnnotationUnit(long offset, long length, int raterIdx, final Object category)
+    protected UnitizingAnnotationUnit(long aOffset, long aLength, int aRaterIdx,
+            final Object aCategory)
     {
-        super(raterIdx, category);
-        this.offset = offset;
-        this.length = length;
+        super(aRaterIdx, aCategory);
+        offset = aOffset;
+        length = aLength;
     }
 
     @Override
@@ -68,6 +69,16 @@ public class UnitizingAnnotationUnit
     public long getEndOffset()
     {
         return offset + length;
+    }
+
+    public long getBegin()
+    {
+        return getOffset();
+    }
+
+    public long getEnd()
+    {
+        return getEndOffset();
     }
 
     @Override

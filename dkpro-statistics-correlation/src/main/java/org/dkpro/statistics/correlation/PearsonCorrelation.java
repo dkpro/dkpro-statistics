@@ -17,21 +17,21 @@
  */
 package org.dkpro.statistics.correlation;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Computes the correlation of two datasets.
  * 
  * @author zesch
- *
  */
 public class PearsonCorrelation
 {
 
-    private static Log log = LogFactory.getLog(PearsonCorrelation.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     /**
      * Computes the correlation between two datasets.
@@ -85,7 +85,7 @@ public class PearsonCorrelation
         final long N = list1.length; // we assume that both list are of equal length
 
         if (list1.length != list2.length) {
-            log.fatal("Lists are not the same size (" + list1.length + " - " + list2.length + ").");
+            LOG.error("Lists are not the same size ({} - {}).", list1.length, list2.length);
             System.exit(1);
         }
 

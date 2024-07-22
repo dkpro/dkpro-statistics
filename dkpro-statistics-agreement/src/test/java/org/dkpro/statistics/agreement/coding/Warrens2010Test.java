@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Warrens (2010) for measuring several inter-rater agreement measures with more than
@@ -35,33 +38,32 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class Warrens2010Test
-    extends TestCase
 {
-    /***/
+    @Test
     public void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         RandolphKappaAgreement s = new RandolphKappaAgreement(study);
-        assertEquals(0.8358, s.calculateAgreement(), 0.0001);
+        assertThat(s.calculateAgreement()).isCloseTo(0.8358, offset(0.0001));
 
         FleissKappaAgreement pi = new FleissKappaAgreement(study);
-        assertEquals(0.8324, pi.calculateAgreement(), 0.0001);
+        assertThat(pi.calculateAgreement()).isCloseTo(0.8324, offset(0.0001));
 
         HubertKappaAgreement kappaH = new HubertKappaAgreement(study);
-        assertEquals(0.8326, kappaH.calculateAgreement(), 0.0001);
+        assertThat(kappaH.calculateAgreement()).isCloseTo(0.8326, offset(0.0001));
 
         // TODO LightKappaAgreement kappaL = new LightKappaAgreement(study);
-        // assertEquals(0.8325, kappaL.calculateAgreement(), 0.0001);
+        // assertThat(kappaL.calculateAgreement()).isCloseTo(0.8325, offset(0.0001));
     }
 
-    /***/
+    @Test
     public void testPairwiseEquivalenceHubertKappa()
     {
         CodingAnnotationStudy study = createExample();
 
         HubertKappaAgreement kappaH = new HubertKappaAgreement(study);
-        assertEquals(0.8326, kappaH.calculateAgreement(), 0.0001);
+        assertThat(kappaH.calculateAgreement()).isCloseTo(0.8326, offset(0.0001));
 
         double AOmean = 0.0;
         for (int r1 = 0; r1 < study.getRaterCount(); r1++) {
@@ -74,16 +76,16 @@ public class Warrens2010Test
         AOmean /= (double) (study.getRaterCount() * (double) (study.getRaterCount() - 1.0));
         double AE = kappaH.calculateExpectedAgreement();
         double kappaEquivalence = (AOmean - AE) / (1.0 - AE);
-        assertEquals(0.8326, kappaEquivalence, 0.0001);
+        assertThat(kappaEquivalence).isCloseTo(0.8326, offset(0.0001));
     }
 
-    /***/
+    @Test
     public void testPairwiseEquivalenceLightKappa()
     {
         CodingAnnotationStudy study = createExample();
 
         // TODO LightKappaAgreement kappaL = new LightKappaAgreement(study);
-        // assertEquals(0.8325, kappaL.calculateAgreement(), 0.0001);
+        // assertThat(kappaL.calculateAgreement()).isCloseTo(0.8325, offset(0.0001));
 
         double kappaEquivalence = 0.0;
         for (int r1 = 0; r1 < study.getRaterCount(); r1++) {
@@ -95,7 +97,7 @@ public class Warrens2010Test
         kappaEquivalence *= 2.0;
         kappaEquivalence /= (double) (study.getRaterCount()
                 * (double) (study.getRaterCount() - 1.0));
-        assertEquals(0.8325, kappaEquivalence, 0.0001);
+        assertThat(kappaEquivalence).isCloseTo(0.8325, offset(0.0001));
     }
 
     /**

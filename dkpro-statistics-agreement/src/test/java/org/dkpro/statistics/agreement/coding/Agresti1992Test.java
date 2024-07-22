@@ -17,7 +17,9 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Agresti (1992) for category-specific agreement using
@@ -33,12 +35,10 @@ import junit.framework.TestCase;
  * 
  * @author Christian M. Meyer
  */
-public class Agresti1992Test
-    extends TestCase
+class Agresti1992Test
 {
-
-    
-    public void testAgreement()
+    @Test
+    void testAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
@@ -73,5 +73,4 @@ public class Agresti1992Test
         study.addMultipleItems(10, 4, 4);
         return study;
     }
-
 }

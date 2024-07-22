@@ -36,7 +36,7 @@ public class CodingAnnotationItem
     implements ICodingAnnotationItem
 {
     private static final long serialVersionUID = 3447650373912260846L;
-    
+
     protected List<IAnnotationUnit> units;
     protected int nonNullCount;
 

@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Brennan &amp; Prediger (1981) for measuring {@link BennettSAgreement} and
@@ -31,51 +34,49 @@ import junit.framework.TestCase;
  * 
  * @author Christian M. Meyer
  */
-public class BrennanPrediger1981Test
-    extends TestCase
+class BrennanPrediger1981Test
 {
-
-    
+    @Test
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.60, kappa.calculateObservedAgreement(), 0.01);
-        assertEquals(0.45, kappa.calculateExpectedAgreement(), 0.01);
-        assertEquals(0.27, kappa.calculateAgreement(), 0.01);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.60, offset(0.01));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.45, offset(0.01));
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.27, offset(0.01));
 
         BennettSAgreement S = new BennettSAgreement(study);
-        assertEquals(0.60, S.calculateObservedAgreement(), 0.01);
-        assertEquals(0.33, S.calculateExpectedAgreement(), 0.01);
-        assertEquals(0.40, S.calculateAgreement(), 0.01);
+        assertThat(S.calculateObservedAgreement()).isCloseTo(0.60, offset(0.01));
+        assertThat(S.calculateExpectedAgreement()).isCloseTo(0.33, offset(0.01));
+        assertThat(S.calculateAgreement()).isCloseTo(0.40, offset(0.01));
 
         // max A_O = sum min{marginals} -> 0.7
-        // assertEquals(0.60, kappa / max-kappa, 0.01);
+        // assertThat(kappa / max-kappa).isCloseTo(0.60, offset(0.01));
 
         // assertEquals(-1.00, kappa_b, 0.01);
     }
 
-    
-    public void testExample2()
+    @Test
+    void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();
 
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.60, kappa.calculateObservedAgreement(), 0.01);
-        assertEquals(0.44, kappa.calculateExpectedAgreement(), 0.01);
-        assertEquals(0.29, kappa.calculateAgreement(), 0.01);
+        assertThat(kappa.calculateObservedAgreement()).isCloseTo(0.60, offset(0.01));
+        assertThat(kappa.calculateExpectedAgreement()).isCloseTo(0.44, offset(0.01));
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.29, offset(0.01));
 
         BennettSAgreement S = new BennettSAgreement(study);
-        assertEquals(0.60, S.calculateObservedAgreement(), 0.01);
-        assertEquals(0.33, S.calculateExpectedAgreement(), 0.01);
-        assertEquals(0.40, S.calculateAgreement(), 0.01);
+        assertThat(S.calculateObservedAgreement()).isCloseTo(0.60, offset(0.01));
+        assertThat(S.calculateExpectedAgreement()).isCloseTo(0.33, offset(0.01));
+        assertThat(S.calculateAgreement()).isCloseTo(0.40, offset(0.01));
 
         // max A_O = sum min{marginals} -> 1
-        // assertEquals(0.29, kappa / max-kappa, 0.01);
+        // assertThat(kappa / max-kappa).isCloseTo(0.29, offset(0.01));
 
         // A_E = max. marginal (majority class)
-        // assertEquals(0.00, kappa_b, 0.01);
+        // assertThat(kappa_b).isCloseTo(0.00, offset(0.01));
     }
 
     /**

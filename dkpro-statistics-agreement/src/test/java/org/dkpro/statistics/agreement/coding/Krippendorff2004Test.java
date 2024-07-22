@@ -17,13 +17,15 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 import org.dkpro.statistics.agreement.distance.IntervalDistanceFunction;
 import org.dkpro.statistics.agreement.distance.NominalDistanceFunction;
 import org.dkpro.statistics.agreement.distance.OrdinalDistanceFunction;
 import org.dkpro.statistics.agreement.distance.RatioDistanceFunction;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Krippendorff (2004) for measuring {@link KrippendorffAlphaAgreement}.<br>
@@ -37,75 +39,70 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class Krippendorff2004Test
-    extends TestCase
 {
-
-    
+    @Test
     public void testDichotomy()
     {
         ICodingAnnotationStudy study = createExample1();
 
         PercentageAgreement pa = new PercentageAgreement(study);
-        assertEquals(0.600, pa.calculateAgreement(), 0.001);
+        assertThat(pa.calculateAgreement()).isCloseTo(0.600, offset(0.001));
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
                 new NominalDistanceFunction());
-        assertEquals(0.400, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.442, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.095, alpha.calculateAgreement(), 0.001);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.400, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.442, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.095, offset(0.001));
     }
 
-    
+    @Test
     public void testMultipleCategories()
     {
         ICodingAnnotationStudy study = createExample2();
 
         PercentageAgreement pa = new PercentageAgreement(study);
-        assertEquals(0.833, pa.calculateAgreement(), 0.001);
+        assertThat(pa.calculateAgreement()).isCloseTo(0.833, offset(0.001));
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
                 new NominalDistanceFunction());
-        assertEquals(0.1667, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.6268, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.734, alpha.calculateAgreement(), 0.001);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.1667, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.6268, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.734, offset(0.001));
     }
 
-    
+    @Test
     public void testMultipleRatersMissingValues()
     {
         ICodingAnnotationStudy study = createExample3();
 
         PercentageAgreement pa = new PercentageAgreement(study);
-        assertEquals(0.800, pa.calculateAgreement(), 0.001);
+        assertThat(pa.calculateAgreement()).isCloseTo(0.800, offset(0.001));
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study,
                 new NominalDistanceFunction());
-        assertEquals(0.200, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.779, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.743, alpha.calculateAgreement(), 0.001);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.200, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.779, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.743, offset(0.001));
     }
 
-    
+    @Test
     public void testOrdinalMetric()
     {
         CodingAnnotationStudy study = createExample3a(0);
 
         IDistanceFunction distFunc = new OrdinalDistanceFunction();
 
-        final double[][] EXPECTED = new double[][]{
-                {  0.0, 11.0, 22.5, 30.0, 32.5, 34.0 },
-                { 11.0,  0.0, 11.5, 19.0, 21.5, 23.0 },
-                { 22.5, 11.5,  0.0,  7.5, 10.0, 11.5 },
-                { 30.0, 19.0,  7.5,  0.0,  2.5,  4.0 },
-                { 32.5, 21.5, 10.0,  2.5,  0.0,  1.5 },
-                { 34.0, 23.0, 11.5,  4.0,  1.5,  0.0 }
-        }; 
+        final double[][] EXPECTED = new double[][] { { 0.0, 11.0, 22.5, 30.0, 32.5, 34.0 },
+                { 11.0, 0.0, 11.5, 19.0, 21.5, 23.0 }, { 22.5, 11.5, 0.0, 7.5, 10.0, 11.5 },
+                { 30.0, 19.0, 7.5, 0.0, 2.5, 4.0 }, { 32.5, 21.5, 10.0, 2.5, 0.0, 1.5 },
+                { 34.0, 23.0, 11.5, 4.0, 1.5, 0.0 } };
         int i = 0;
         int j = 0;
         for (Object category1 : study.getCategories()) {
             for (Object category2 : study.getCategories()) {
-                assertEquals("item " + category1 + "," + category2, EXPECTED[i][j] * EXPECTED[i][j],
-                        distFunc.measureDistance(study, category1, category2), 0.001);
+                assertThat(distFunc.measureDistance(study, category1, category2))
+                        .as("item " + category1 + "," + category2)
+                        .isCloseTo(EXPECTED[i][j] * EXPECTED[i][j], offset(0.001));
                 j++;
             }
             i++;
@@ -113,27 +110,24 @@ public class Krippendorff2004Test
         }
     }
 
-    
+    @Test
     public void testIntervallMetric()
     {
         CodingAnnotationStudy study = createExample3a(-2);
 
         IDistanceFunction distFunc = new IntervalDistanceFunction();
 
-        final double[][] EXPECTED = new double[][]{
-                {  0.0,  1.0,  2.0,  3.0,  4.0,  5.0 },
-                {  1.0,  0.0,  1.0,  2.0,  3.0,  4.0 },
-                {  2.0,  1.0,  0.0,  1.0,  2.0,  3.0 },
-                {  3.0,  2.0,  1.0,  0.0,  1.0,  2.0 },
-                {  4.0,  3.0,  2.0,  1.0,  0.0,  1.0 },
-                {  5.0,  4.0,  3.0,  2.0,  1.0,  0.0 }
-        };
+        final double[][] EXPECTED = new double[][] { { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0 },
+                { 1.0, 0.0, 1.0, 2.0, 3.0, 4.0 }, { 2.0, 1.0, 0.0, 1.0, 2.0, 3.0 },
+                { 3.0, 2.0, 1.0, 0.0, 1.0, 2.0 }, { 4.0, 3.0, 2.0, 1.0, 0.0, 1.0 },
+                { 5.0, 4.0, 3.0, 2.0, 1.0, 0.0 } };
         int i = 0;
         int j = 0;
         for (Object category1 : study.getCategories()) {
             for (Object category2 : study.getCategories()) {
-                assertEquals("item " + category1 + "," + category2, EXPECTED[i][j] * EXPECTED[i][j],
-                        distFunc.measureDistance(study, category1, category2), 0.001);
+                assertThat(distFunc.measureDistance(study, category1, category2))
+                        .as("item " + category1 + "," + category2)
+                        .isCloseTo(EXPECTED[i][j] * EXPECTED[i][j], offset(0.001));
                 j++;
             }
             i++;
@@ -141,28 +135,28 @@ public class Krippendorff2004Test
         }
     }
 
-    
+    @Test
     public void testRatioMetric()
     {
         CodingAnnotationStudy study = createExample3a(-1);
 
         IDistanceFunction distFunc = new RatioDistanceFunction();
 
-        final double[][] EXPECTED = new double[][]{
-                {  0.0      ,  1.0 / 1.0,  2.0 / 2.0,  3.0 / 3.0,  4.0 / 4.0,  5.0 / 5.0 },
-                {  1.0 / 1.0,  0.0 / 2.0,  1.0 / 3.0,  2.0 / 4.0,  3.0 / 5.0,  4.0 / 6.0 },
-                {  2.0 / 2.0,  1.0 / 3.0,  0.0 / 4.0,  1.0 / 5.0,  2.0 / 6.0,  3.0 / 7.0 },
-                {  3.0 / 3.0,  2.0 / 4.0,  1.0 / 5.0,  0.0 / 6.0,  1.0 / 7.0,  2.0 / 8.0 },
-                {  4.0 / 4.0,  3.0 / 5.0,  2.0 / 6.0,  1.0 / 7.0,  0.0 / 8.0,  1.0 / 9.0 },
-                {  5.0 / 5.0,  4.0 / 6.0,  3.0 / 7.0,  2.0 / 8.0,  1.0 / 9.0,  0.0 / 10.0 }
-        };
-        
+        final double[][] EXPECTED = new double[][] {
+                { 0.0, 1.0 / 1.0, 2.0 / 2.0, 3.0 / 3.0, 4.0 / 4.0, 5.0 / 5.0 },
+                { 1.0 / 1.0, 0.0 / 2.0, 1.0 / 3.0, 2.0 / 4.0, 3.0 / 5.0, 4.0 / 6.0 },
+                { 2.0 / 2.0, 1.0 / 3.0, 0.0 / 4.0, 1.0 / 5.0, 2.0 / 6.0, 3.0 / 7.0 },
+                { 3.0 / 3.0, 2.0 / 4.0, 1.0 / 5.0, 0.0 / 6.0, 1.0 / 7.0, 2.0 / 8.0 },
+                { 4.0 / 4.0, 3.0 / 5.0, 2.0 / 6.0, 1.0 / 7.0, 0.0 / 8.0, 1.0 / 9.0 },
+                { 5.0 / 5.0, 4.0 / 6.0, 3.0 / 7.0, 2.0 / 8.0, 1.0 / 9.0, 0.0 / 10.0 } };
+
         int i = 0;
         int j = 0;
         for (Object category1 : study.getCategories()) {
             for (Object category2 : study.getCategories()) {
-                assertEquals("item " + category1 + "," + category2, EXPECTED[i][j] * EXPECTED[i][j],
-                        distFunc.measureDistance(study, category1, category2), 0.001);
+                assertThat(distFunc.measureDistance(study, category1, category2))
+                        .as("item " + category1 + "," + category2)
+                        .isCloseTo(EXPECTED[i][j] * EXPECTED[i][j], offset(0.001));
                 j++;
             }
             i++;
@@ -170,7 +164,7 @@ public class Krippendorff2004Test
         }
     }
 
-    
+    @Test
     public void testIntervallAgreement()
     {
         CodingAnnotationStudy study = createExample3b();
@@ -178,36 +172,36 @@ public class Krippendorff2004Test
         IDistanceFunction distFunc = new IntervalDistanceFunction();
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, distFunc);
-        assertEquals(0.433, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(2.872, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.849, alpha.calculateAgreement(), 0.001);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.433, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(2.872, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.849, offset(0.001));
 
     }
 
-    
+    @Test
     public void testOtherCoefficients()
     {
         CodingAnnotationStudy study = createExample4a();
 
         PercentageAgreement pa = new PercentageAgreement(study);
-        assertEquals(0.460, pa.calculateAgreement(), 0.001);
+        assertThat(pa.calculateAgreement()).isCloseTo(0.460, offset(0.001));
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(0.190, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateAgreement()).isCloseTo(0.190, offset(0.001));
         ScottPiAgreement pi = new ScottPiAgreement(study);
-        assertEquals(0.186, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateAgreement()).isCloseTo(0.186, offset(0.001));
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.186, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.186, offset(0.001));
 
         study = createExample4b();
 
         pa = new PercentageAgreement(study);
-        assertEquals(0.460, pa.calculateAgreement(), 0.001);
+        assertThat(pa.calculateAgreement()).isCloseTo(0.460, offset(0.001));
         s = new BennettSAgreement(study);
-        assertEquals(0.190, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateAgreement()).isCloseTo(0.190, offset(0.001));
         pi = new ScottPiAgreement(study);
-        assertEquals(0.186, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateAgreement()).isCloseTo(0.186, offset(0.001));
         kappa = new CohenKappaAgreement(study);
-        assertEquals(0.258, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.258, offset(0.001));
     }
 
     /**
@@ -360,5 +354,5 @@ public class Krippendorff2004Test
         study.addMultipleItems(20, "c", "c");
         return study;
     }
-    
+
 }

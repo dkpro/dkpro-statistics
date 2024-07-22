@@ -19,9 +19,8 @@ package org.dkpro.statistics.significance;
 
 import java.util.List;
 
-import org.apache.commons.math.MathException;
-import org.apache.commons.math.special.Erf;
-import org.apache.commons.math.stat.inference.TestUtils;
+import org.apache.commons.math3.special.Erf;
+import org.apache.commons.math3.stat.inference.TestUtils;
 
 /**
  * Computes statistical significance.
@@ -30,7 +29,6 @@ import org.apache.commons.math.stat.inference.TestUtils;
  */
 public class Significance
 {
-
     /**
      * Tests two correlation values for equality. See page 745 Press, W. H. (2007). Numerical
      * Recipes 3rd Edition: The Art of Scientific Computing. Cambridge University Press.
@@ -67,7 +65,6 @@ public class Significance
      */
     public static boolean testCorrelations(double correlation1, double correlation2, int n1, int n2,
             double alpha)
-        throws MathException
     {
 
         double p = getSignificance(correlation1, correlation2, n1, n2);
@@ -93,7 +90,7 @@ public class Significance
      * @throws IllegalArgumentException
      */
     public static double getSignificance(double[] sample1, double[] sample2)
-        throws IllegalArgumentException, MathException
+        throws IllegalArgumentException
     {
         double alpha = TestUtils.pairedTTest(sample1, sample2);
         boolean significance = TestUtils.pairedTTest(sample1, sample2, .30);
@@ -102,7 +99,7 @@ public class Significance
     }
 
     public static double getSignificance(List<Double> list1, List<Double> list2)
-        throws IllegalArgumentException, MathException
+        throws IllegalArgumentException
     {
         double[] doubleArray1 = new double[list1.size()];
         double[] doubleArray2 = new double[list2.size()];
@@ -126,7 +123,6 @@ public class Significance
      * Computes the significance of the difference between two correlations.
      */
     public static double getSignificance(double correlation1, double correlation2, int n1, int n2)
-        throws MathException
     {
 
         // transform to Fisher Z-values

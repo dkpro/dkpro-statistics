@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link PercentageAgreement} and {@link FleissKappaAgreement}.
@@ -25,10 +28,8 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class MultiRaterAgreementTest
-    extends TestCase
 {
-
-    
+    @Test
     public void testExample()
     {
         ICodingAnnotationStudy study = createExample();
@@ -36,20 +37,20 @@ public class MultiRaterAgreementTest
         // Generalized percentage of agreement.
         PercentageAgreement pa = new PercentageAgreement(study);
         double agreement = pa.calculateAgreement();
-        assertEquals(0.533, agreement, 0.001);
+        assertThat(agreement).isCloseTo(0.533, offset(0.001));
         //TODO
         /*double se = poa.standardError(agreement);
         double[] ci = poa.confidenceInterval(agreement, se, RawAgreement.CONFIDENCE_95);
-        assertEquals(0.045, se, 0.001);
-        assertEquals(0.610, ci[0], 0.001);
-        assertEquals(0.789, ci[1], 0.001);*/        
+        assertThat(se).isCloseTo(0.045, offset(0.001));
+        assertThat(ci[0]).isCloseTo(0.610, offset(0.001));
+        assertThat(ci[1]).isCloseTo(0.789, offset(0.001));*/        
         
         // Fleiss' multi-pi.
         FleissKappaAgreement pi = new FleissKappaAgreement(study);
-        assertEquals(0.533, pi.calculateObservedAgreement(), 0.001);
-        assertEquals(0.508, pi.calculateExpectedAgreement(), 0.001);
+        assertThat(pi.calculateObservedAgreement()).isCloseTo(0.533, offset(0.001));
+        assertThat(pi.calculateExpectedAgreement()).isCloseTo(0.508, offset(0.001));
         agreement = pi.calculateAgreement();
-        assertEquals(0.049, agreement, 0.001);
+        assertThat(agreement).isCloseTo(0.049, offset(0.001));
     }
 
     /** Creates an example annotation study. */

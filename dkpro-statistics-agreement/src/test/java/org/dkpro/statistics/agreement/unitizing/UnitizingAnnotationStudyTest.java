@@ -17,9 +17,11 @@
  */
 package org.dkpro.statistics.agreement.unitizing;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Iterator;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link UnitizingAnnotationStudy}.<br>
@@ -28,8 +30,8 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class UnitizingAnnotationStudyTest
-    extends TestCase
 {
+    @Test
     public void testSortOrder()
     {
         UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 7);
@@ -55,14 +57,14 @@ public class UnitizingAnnotationStudyTest
         assertAnnotationItem(2, 5, 1, iter.next());
         assertAnnotationItem(3, 1, 1, iter.next());
         assertAnnotationItem(3, 2, 1, iter.next());
-        assertFalse(iter.hasNext());
+        assertThat(iter.hasNext()).isFalse();
     }
 
     protected static void assertAnnotationItem(int expectedOffset, int expectedLength,
             int expectedRaterIdx, final IUnitizingAnnotationUnit actual)
     {
-        assertEquals(actual.toString(), expectedOffset, actual.getOffset());
-        assertEquals(actual.toString(), expectedLength, actual.getLength());
-        assertEquals(actual.toString(), expectedRaterIdx, actual.getRaterIdx());
+        assertThat( actual.getOffset()).as(actual.toString()).isEqualTo(expectedOffset);
+        assertThat( actual.getLength()).as(actual.toString()).isEqualTo(expectedLength);
+        assertThat( actual.getRaterIdx()).as(actual.toString()).isEqualTo(expectedRaterIdx);
     }
 }

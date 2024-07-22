@@ -17,7 +17,10 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests based on Zwick (1988) for several inter-rater agreement measures.<br>
@@ -31,55 +34,55 @@ import junit.framework.TestCase;
  * @author Christian M. Meyer
  */
 public class Zwick1988Test
-    extends TestCase
 {
-
-    
+    @Test
     public void testExample1()
     {
         ICodingAnnotationStudy study = createExample1();
 
         PercentageAgreement poa = new PercentageAgreement(study);
-        assertEquals(0.600, poa.calculateAgreement(), 0.001);
+        assertThat(poa.calculateAgreement()).isCloseTo(0.600, offset(0.001));
 
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(0.467, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateAgreement()).isCloseTo(0.467, offset(0.001));
         ScottPiAgreement pi = new ScottPiAgreement(study);
-        assertEquals(0.467, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateAgreement()).isCloseTo(0.467, offset(0.001));
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.467, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.467, offset(0.001));
     }
 
     
+    @Test
     public void testExample2()
     {
         ICodingAnnotationStudy study = createExample2();
 
         PercentageAgreement poa = new PercentageAgreement(study);
-        assertEquals(0.600, poa.calculateAgreement(), 0.001);
+        assertThat(poa.calculateAgreement()).isCloseTo(0.600, offset(0.001));
 
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(0.467, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateAgreement()).isCloseTo(0.467, offset(0.001));
         ScottPiAgreement pi = new ScottPiAgreement(study);
-        assertEquals(0.444, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateAgreement()).isCloseTo(0.444, offset(0.001));
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.444, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.444, offset(0.001));
     }
 
     
+    @Test
     public void testExample3()
     {
         ICodingAnnotationStudy study = createExample3();
 
         PercentageAgreement poa = new PercentageAgreement(study);
-        assertEquals(0.600, poa.calculateAgreement(), 0.001);
+        assertThat(poa.calculateAgreement()).isCloseTo(0.600, offset(0.001));
 
         BennettSAgreement s = new BennettSAgreement(study);
-        assertEquals(0.467, s.calculateAgreement(), 0.001);
+        assertThat(s.calculateAgreement()).isCloseTo(0.467, offset(0.001));
         ScottPiAgreement pi = new ScottPiAgreement(study);
-        assertEquals(0.460, pi.calculateAgreement(), 0.001);
+        assertThat(pi.calculateAgreement()).isCloseTo(0.460, offset(0.001));
         CohenKappaAgreement kappa = new CohenKappaAgreement(study);
-        assertEquals(0.474, kappa.calculateAgreement(), 0.001);
+        assertThat(kappa.calculateAgreement()).isCloseTo(0.474, offset(0.001));
     }
 
     /**

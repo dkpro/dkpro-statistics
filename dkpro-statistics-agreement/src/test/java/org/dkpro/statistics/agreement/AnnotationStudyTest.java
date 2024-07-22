@@ -21,12 +21,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.dkpro.statistics.agreement.coding.CodingAnnotationStudy;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AnnotationStudyTest
 {
     @Test
-    public void testAddItem()
+    void testAddItem()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(3);
         study.addItem("A", "B", "C");
@@ -38,7 +38,7 @@ public class AnnotationStudyTest
     }
 
     @Test
-    public void testAddItemMissingUnits()
+    void testAddItemMissingUnits()
     {
         CodingAnnotationStudy study = new CodingAnnotationStudy(3);
         

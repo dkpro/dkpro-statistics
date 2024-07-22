@@ -110,7 +110,7 @@ public class UnitizingStudyPrinter
             annotations[i] = ' ';
         }
         for (IUnitizingAnnotationUnit unit : study.getUnits()) {
-            if (unit.getRaterIdx() == raterIdx && Objects.equals(unit.getCategory(),category)) {
+            if (unit.getRaterIdx() == raterIdx && Objects.equals(unit.getCategory(), category)) {
                 for (int i = 0; i < unit.getLength(); i++) {
                     annotations[i + (int) unit.getOffset() - (int) B] = '*';
                 }

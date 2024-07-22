@@ -41,7 +41,7 @@ public class UnitizingAnnotationStudy
     implements IUnitizingAnnotationStudy, Serializable
 {
     private static final long serialVersionUID = 5877774485360119115L;
-    
+
     protected Set<IUnitizingAnnotationUnit> units;
     protected long begin;
     protected long length;
@@ -129,7 +129,7 @@ public class UnitizingAnnotationStudy
     {
         return units;
     }
-    
+
     @Override
     public long getUnitCount(int raterIdx)
     {

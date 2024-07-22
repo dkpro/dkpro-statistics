@@ -17,11 +17,13 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
+
 import org.dkpro.statistics.agreement.distance.MASISetAnnotationDistanceFunction;
 import org.dkpro.statistics.agreement.distance.SetAnnotation;
 import org.dkpro.statistics.agreement.distance.SetAnnotationDistanceFunction;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link KrippendorffAlphaAgreement} with {@link SetAnnotationDistanceFunction} and
@@ -31,58 +33,56 @@ import junit.framework.TestCase;
  * @author Tristan Miller
  */
 public class SetAnnotationsTest
-    extends TestCase
 {
-
-    
+    @Test
     public void testSetDistanceFunction()
     {
         ICodingAnnotationStudy study = createExample();
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
         alpha.setDistanceFunction(new SetAnnotationDistanceFunction());
-        assertEquals(0.333, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.409, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.186, alpha.calculateAgreement(), 0.001);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.333, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.409, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.186, offset(0.001));
     }
 
-    
+    @Test
     public void testMASIDistanceFunction()
     {
         ICodingAnnotationStudy study = createExample();
 
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
         alpha.setDistanceFunction(new MASISetAnnotationDistanceFunction());
-        assertEquals(0.253, alpha.calculateObservedDisagreement(), 0.001);
-        assertEquals(0.338, alpha.calculateExpectedDisagreement(), 0.001);
-        assertEquals(0.252, alpha.calculateAgreement(), 0.001);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.253, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.338, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.252, offset(0.001));
     }
 
-    
+    @Test
     public void testPercentageAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         PercentageAgreement percentageAgreement = new PercentageAgreement(study);
-        assertEquals(0.333, percentageAgreement.calculateAgreement(), 0.001);
+        assertThat(percentageAgreement.calculateAgreement()).isCloseTo(0.333, offset(0.001));
     }
 
-    
+    @Test
     public void testMaxPercentageAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         MaxPercentageAgreement maxPercentageAgreement = new MaxPercentageAgreement(study);
-        assertEquals(0.667, maxPercentageAgreement.calculateAgreement(), 0.001);
+        assertThat(maxPercentageAgreement.calculateAgreement()).isCloseTo(0.667, offset(0.001));
     }
 
-    
+    @Test
     public void testDiceAgreement()
     {
         ICodingAnnotationStudy study = createExample();
 
         DiceAgreement DiceAgreement = new DiceAgreement(study);
-        assertEquals(0.5, DiceAgreement.calculateAgreement(), 0.001);
+        assertThat(DiceAgreement.calculateAgreement()).isCloseTo(0.5, offset(0.001));
     }
 
     /** Creates an example annotation study. */
