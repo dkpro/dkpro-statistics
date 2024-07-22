@@ -28,7 +28,7 @@ public class AnnotationStudyTest
     @Test
     void testAddItem()
     {
-        CodingAnnotationStudy study = new CodingAnnotationStudy(3);
+        var study = new CodingAnnotationStudy(3);
         study.addItem("A", "B", "C");
         study.addItem(5, 3, 0);
         study.addItem(new Object(), "c", 12);
@@ -40,8 +40,8 @@ public class AnnotationStudyTest
     @Test
     void testAddItemMissingUnits()
     {
-        CodingAnnotationStudy study = new CodingAnnotationStudy(3);
-        
+        var study = new CodingAnnotationStudy(3);
+
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> study.addItem("A"));
 
