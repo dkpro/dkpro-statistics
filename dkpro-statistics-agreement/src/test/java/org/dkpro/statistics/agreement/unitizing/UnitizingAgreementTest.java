@@ -21,7 +21,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
 import static org.dkpro.statistics.agreement.unitizing.KrippendorffAlphaUnitizingAgreement.measureDistance;
 
+import java.lang.invoke.MethodHandles;
+
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for measuring {@link KrippendorffAlphaUnitizingAgreement}.<br>
@@ -32,12 +36,14 @@ import org.junit.jupiter.api.Test;
  */
 public class UnitizingAgreementTest
 {
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
     @Test
     public void testAgreement()
     {
-        IUnitizingAnnotationStudy study = createExample();
+        var study = createExample();
 
-        KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
+        var alpha = new KrippendorffAlphaUnitizingAgreement(study);
         assertThat(alpha.calculateObservedCategoryDisagreement("A")).isCloseTo(0.9100,
                 offset(0.0001));
         assertThat(alpha.calculateExpectedCategoryDisagreement("A")).isCloseTo(0.5351,
@@ -48,19 +54,19 @@ public class UnitizingAgreementTest
     @Test
     public void testSingleAnnotationUnit()
     {
-        UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 20);
+        var study = new UnitizingAnnotationStudy(3, 20);
         study.addUnit(0, 1, 0, "X");
 
-        KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
+        var alpha = new KrippendorffAlphaUnitizingAgreement(study);
         assertThat(alpha.calculateAgreement()).isEqualTo(0.0);
     }
 
     @Test
     public void testEmptyAnnotationSet()
     {
-        UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(3, 20);
+        var study = new UnitizingAnnotationStudy(3, 20);
 
-        KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
+        var alpha = new KrippendorffAlphaUnitizingAgreement(study);
         assertThat(alpha.calculateAgreement()).isNaN();
     }
 
@@ -83,7 +89,7 @@ public class UnitizingAgreementTest
     {
         // r0: -11111111-
         // r1: --1-1-1---
-        UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(2, 10);
+        var study = new UnitizingAnnotationStudy(2, 10);
         study.addUnit(1, 8, 0, "A");
         study.addUnit(2, 1, 1, "A");
         study.addUnit(4, 1, 1, "A");

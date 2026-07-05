@@ -54,31 +54,21 @@ public class UnitizingAnnotationUnit
     }
 
     @Override
-    public long getOffset()
-    {
-        return offset;
-    }
-
-    @Override
     public long getLength()
     {
         return length;
     }
 
     @Override
-    public long getEndOffset()
-    {
-        return offset + length;
-    }
-
     public long getBegin()
     {
-        return getOffset();
+        return offset;
     }
 
+    @Override
     public long getEnd()
     {
-        return getEndOffset();
+        return offset + length;
     }
 
     @Override
@@ -88,10 +78,10 @@ public class UnitizingAnnotationUnit
             return 0;
         }
 
-        if (this.offset < that.getOffset()) {
+        if (this.offset < that.getBegin()) {
             return -1;
         }
-        if (this.offset > that.getOffset()) {
+        if (this.offset > that.getBegin()) {
             return +1;
         }
 

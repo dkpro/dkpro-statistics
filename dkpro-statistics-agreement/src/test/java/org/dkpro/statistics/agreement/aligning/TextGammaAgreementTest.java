@@ -185,13 +185,15 @@ class TextGammaAgreementTest
         var annots1 = asList( //
                 textUnit(ANNOTATOR_A, 0, 2, "a"), //
                 textUnit(ANNOTATOR_A, 3, 5, "b"), //
-                textUnit(ANNOTATOR_A, 6, 8, "c"));
-        var text1 = new AnnotatedText("so so so", annots1);
+                textUnit(ANNOTATOR_A, 6, 8, "c"), //
+                textUnit(ANNOTATOR_A, 10, 13, "abc"));
+        var text1 = new AnnotatedText("so so so so so", annots1);
 
         var annots2 = asList( //
                 textUnit(ANNOTATOR_B, 0, 2, "b"), //
-                textUnit(ANNOTATOR_B, 3, 5, "c"));
-        var text2 = new AnnotatedText("so so", annots2);
+                textUnit(ANNOTATOR_B, 3, 5, "c"), // 
+                textUnit(ANNOTATOR_B, 7, 9, "bc"));
+        var text2 = new AnnotatedText("so so so ", annots2);
 
         var sut = TextGammaAgreement.builder() //
                 .withDisorderSampler(() -> 0.0) //

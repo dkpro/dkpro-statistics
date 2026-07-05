@@ -17,6 +17,8 @@
  */
 package org.dkpro.statistics.agreement.unitizing;
 
+import static java.math.BigDecimal.ZERO;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -115,29 +117,31 @@ public class KrippendorffAlphaUnitizingAgreement
                 long pos = B;
                 while (pos < B + L && (nextUnit1 != null || nextUnit2 != null)) {
                     if (pos == offset1 + length1) {
-                        if (nextUnit1 != null && pos == nextUnit1.getOffset()) {
+                        if (nextUnit1 != null && pos == nextUnit1.getBegin()) {
                             length1 = nextUnit1.getLength();
                             category1 = nextUnit1.getCategory();
                             nextUnit1 = UnitizingAnnotationStudy.findNextUnit(units1, r1, category);
                         }
                         else {
-                            length1 = (nextUnit1 != null ? nextUnit1.getOffset() : B + L) - pos;
+                            length1 = (nextUnit1 != null ? nextUnit1.getBegin() : B + L) - pos;
                             category1 = null;
                         }
                         offset1 = pos;
                     }
+
                     if (pos == offset2 + length2) {
-                        if (nextUnit2 != null && pos == nextUnit2.getOffset()) {
+                        if (nextUnit2 != null && pos == nextUnit2.getBegin()) {
                             length2 = nextUnit2.getLength();
                             category2 = nextUnit2.getCategory();
                             nextUnit2 = UnitizingAnnotationStudy.findNextUnit(units2, r2, category);
                         }
                         else {
-                            length2 = (nextUnit2 != null ? nextUnit2.getOffset() : B + L) - pos;
+                            length2 = (nextUnit2 != null ? nextUnit2.getBegin() : B + L) - pos;
                             category2 = null;
                         }
                         offset2 = pos;
                     }
+
                     result += measureDistance(offset1, length1, category1, offset2, length2,
                             category2);
                     pos = Math.min(offset1 + length1, offset2 + length2);
@@ -156,7 +160,7 @@ public class KrippendorffAlphaUnitizingAgreement
         int R = study.getRaterCount();
 
         int N_c = 0;
-        BigDecimal squaredLengths = BigDecimal.ZERO;
+        BigDecimal squaredLengths = ZERO;
         for (IUnitizingAnnotationUnit unit : study.getUnits()) {
             if (category.equals(unit.getCategory())) {
                 N_c++;
@@ -176,16 +180,21 @@ public class KrippendorffAlphaUnitizingAgreement
             long pos = B;
             while (pos < B + L) {
                 if (pos == offset + length) {
-                    if (nextUnit != null && pos == nextUnit.getOffset()) {
+                    if (nextUnit != null && pos == nextUnit.getBegin()) {
                         length = nextUnit.getLength();
                         nextUnit = UnitizingAnnotationStudy.findNextUnit(units, r, category);
                     }
                     else {
-                        length = (nextUnit != null ? nextUnit.getOffset() : B + L) - pos;
+                        length = (nextUnit != null ? nextUnit.getBegin() : B + L) - pos;
                         gaps.add(length);
                     }
                     offset = pos;
                 }
+                
+                if (length < 0) {
+                    var x = 0;
+                }
+                
                 pos = offset + length;
             }
         }
@@ -204,14 +213,14 @@ public class KrippendorffAlphaUnitizingAgreement
             }
         });
 
-        BigDecimal result = BigDecimal.ZERO;
+        BigDecimal result = ZERO;
         for (IUnitizingAnnotationUnit unit : study.getUnits()) {
             if (category.equals(unit.getCategory())) {
                 long length1 = unit.getLength();
                 BigDecimal sum1 = new BigDecimal((N_c - 1.0)
                         * (2.0 * length1 * length1 * length1 - 3.0 * length1 * length1 + length1))
                                 .divide(new BigDecimal(3), MathContext.DECIMAL128);
-                BigDecimal sum2 = BigDecimal.ZERO;
+                BigDecimal sum2 = ZERO;
                 for (Long gap : gaps) {
                     if (gap >= length1) {
                         sum2 = sum2.add(new BigDecimal(gap - length1 + 1.0));
@@ -231,24 +240,64 @@ public class KrippendorffAlphaUnitizingAgreement
         return result.doubleValue();
     }
 
+    /**
+     * Computes a distance metric between two annotation units based on their offsets, lengths, and
+     * categories. This metric is used to quantify the disagreement between two raters in unitizing
+     * annotation studies.
+     *
+     * @param offset1
+     *            The starting position of the first annotation unit.
+     * @param length1
+     *            The length of the first annotation unit.
+     * @param category1
+     *            The category assigned to the first annotation unit.
+     * @param offset2
+     *            The starting position of the second annotation unit.
+     * @param length2
+     *            The length of the second annotation unit.
+     * @param category2
+     *            The category assigned to the second annotation unit.
+     * @return A non-negative double value representing the distance (disagreement) between the two
+     *         annotation units. A higher value indicates greater disagreement.
+     */
     protected static double measureDistance(long offset1, long length1, final Object category1,
             long offset2, long length2, final Object category2)
     {
+        // Calculate the difference in starting positions (offsets) between the two units.
         long beginDiff = offset1 - offset2;
+
+        // Calculate the difference in lengths between the two units.
         long lengthDiff = length1 - length2;
+
+        // Case 1: Both units have assigned categories (i.e., both are annotated),
+        // and their offsets overlap or touch.
         if (category1 != null && category2 != null && -length1 < beginDiff && beginDiff < length2) {
+            // Compute the squared differences to quantify the disagreement.
+            // This captures both the positional and length discrepancies.
             return beginDiff * beginDiff + (beginDiff + lengthDiff) * (beginDiff + lengthDiff);
         }
-        else if (category1 != null && category2 == null && -lengthDiff >= beginDiff
-                && beginDiff >= 0) {
+
+        // Case 2: The first unit is annotated (category1 != null),
+        // but the second unit is not (category2 == null),
+        // and the first unit starts after or at the same position as the second unit,
+        // but does not extend beyond the second unit's end.
+        if (category1 != null && category2 == null && -lengthDiff >= beginDiff && beginDiff >= 0) {
+            // The disagreement is proportional to the square of the length of the first unit.
             return length1 * length1;
         }
-        else if (category1 == null && category2 != null && -lengthDiff <= beginDiff
-                && beginDiff <= 0) {
+
+        // Case 3: The second unit is annotated (category2 != null),
+        // but the first unit is not (category1 == null),
+        // and the second unit starts after or at the same position as the first unit,
+        // but does not extend beyond the first unit's end.
+        if (category1 == null && category2 != null && -lengthDiff <= beginDiff && beginDiff <= 0) {
+            // The disagreement is proportional to the square of the length of the second unit.
             return length2 * length2;
         }
-        else {
-            return 0.0;
-        }
+
+        // Case 4: Both units are unannotated (category1 == null && category2 == null),
+        // or their annotated regions do not overlap or touch.
+        // In this scenario, there is no disagreement to measure.
+        return 0.0;
     }
 }
