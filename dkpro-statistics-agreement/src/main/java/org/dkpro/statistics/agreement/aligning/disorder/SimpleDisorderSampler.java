@@ -95,15 +95,25 @@ public class SimpleDisorderSampler
     @Override
     public Double sampleDisorder()
     {
-        // REC: The original TextGamma had a "base text" which was used for disorder sampling here.
-        // However, since we have no "base text" in general, the easiest way is to sample the
-        // disorder on both texts and then take the mean average. Not sure if this is a viable idea,
-        // but it seems like a reasonable starting point.
+        // If the caller supplied an explicit base text (a genuine external reference), derive both
+        // random annotators from it - this mirrors the original TextGamma tool, which always sampled
+        // from a single "orig" base text.
+        var baseText = measure.getBaseText();
+        if (baseText.isPresent()) {
+            return sampleDisorder(baseText.get());
+        }
+
+        // Otherwise there is no reference. We must not assume a reference segmentation, so we stay
+        // symmetric in the raters: sample the disorder using each text as its own base and average.
+        // This marginalizes over the arbitrary "which rater is the reference" choice (uniform prior)
+        // and keeps the measure invariant to rater order. When the two texts are identical, both
+        // terms corrupt that same shared text - i.e. the shared text is effectively the base - while
+        // remaining agnostic about how the raters segmented it.
         var disorder = 0.0;
         for (var text : measure.getTexts()) {
             disorder += sampleDisorder(text);
         }
-        
+
         return disorder / (double) measure.getTexts().size();
     }
 
@@ -193,8 +203,10 @@ public class SimpleDisorderSampler
         }
 
         var labelGenerators = new HashMap<String, EnumeratedDistribution<String>>();
-        var labels = new HashMap<String, Integer>();
         for (var featureName : featureNames) {
+            // Counts must be reset per feature - otherwise counts accumulate across features and the
+            // per-feature label distributions become polluted with counts from other features.
+            var labels = new HashMap<String, Integer>();
             for (var u : units) {
                 var label = u.getFeatureValue(featureName);
                 if (labels.containsKey(u.getFeatureValue(featureName))) {

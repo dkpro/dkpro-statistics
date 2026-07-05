@@ -23,6 +23,7 @@ import static org.dkpro.statistics.agreement.aligning.data.AnnotatedTextMerge.me
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
@@ -66,6 +67,7 @@ public class TextGammaAgreement
 
     private final AnnotatedText text1;
     private final AnnotatedText text2;
+    private final AnnotatedText baseText;
     private final IDissimilarity dissimilarity;
     private final IDisorderSampler sampler;
     private final double precision;
@@ -116,6 +118,15 @@ public class TextGammaAgreement
             text2 = texts.get(1);
         }
 
+        // Base text used by the chance model. Upstream TextGamma always had an explicit gold "orig"
+        // text - a text AND a reference segmentation - from which random annotators were derived. The
+        // DKPro API has no such parameter and, in general, there is no reference: in particular we
+        // must not assume the raters share a segmentation. So we only use a base text when the caller
+        // explicitly supplies one (asserting a genuine external reference). Otherwise there is
+        // deliberately no base and the sampler stays symmetric in the raters (see
+        // SimpleDisorderSampler#sampleDisorder).
+        baseText = builder.baseText;
+
         if (builder.sampler != null) {
             sampler = builder.sampler;
         }
@@ -136,6 +147,16 @@ public class TextGammaAgreement
     public List<AnnotatedText> getTexts()
     {
         return asList(text1, text2);
+    }
+
+    /**
+     * @return the base text used by the chance model if one was explicitly supplied via
+     *         {@link Builder#withBaseText}. Empty otherwise, in which case the sampler stays
+     *         symmetric over both raters rather than assuming a reference (see SimpleDisorderSampler).
+     */
+    public Optional<AnnotatedText> getBaseText()
+    {
+        return Optional.ofNullable(baseText);
     }
 
     @Override
@@ -202,6 +223,7 @@ public class TextGammaAgreement
     {
         private TextAligningAnnotationStudy study;
         private List<AnnotatedText> texts;
+        private AnnotatedText baseText;
         private IDissimilarity dissimilarity = new NominalFeatureTextDissimilarity();
         private IDisorderSampler sampler;
         private IDisorderSamplerFactory samplerFactory;
@@ -229,6 +251,18 @@ public class TextGammaAgreement
         public Builder withDissimilarity(IDissimilarity aDissimilarity)
         {
             dissimilarity = aDissimilarity;
+            return this;
+        }
+
+        /**
+         * Supplies an explicit base ("orig") text for the chance model, mirroring the original
+         * TextGamma tool. When set, random annotators are always derived from this text. When not
+         * set, no base text is used: the sampler instead stays symmetric over both raters (see
+         * {@link TextGammaAgreement#getBaseText()}).
+         */
+        public Builder withBaseText(AnnotatedText aBaseText)
+        {
+            baseText = aBaseText;
             return this;
         }
 

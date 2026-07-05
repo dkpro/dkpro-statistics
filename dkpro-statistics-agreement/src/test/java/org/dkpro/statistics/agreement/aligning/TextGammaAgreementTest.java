@@ -204,6 +204,54 @@ class TextGammaAgreementTest
     }
 
     @Test
+    void testBaseText_absentByDefaultForStudy()
+    {
+        var study = new TextAligningAnnotationStudy("so so so");
+        study.addUnits(FULL_TEXT_AGREEMENT);
+
+        var sut = TextGammaAgreement.builder() //
+                .withDisorderSampler(() -> 0.0) //
+                .withStudy(study) //
+                .build();
+
+        // No base text is resolved automatically: without an explicit reference we do not assume a
+        // reference segmentation, so the sampler stays symmetric over both raters.
+        assertThat(sut.getBaseText()).isEmpty();
+    }
+
+    @Test
+    void testBaseText_absentByDefaultForDifferentTexts()
+    {
+        var text1 = new AnnotatedText("so so so", asList(textUnit(ANNOTATOR_A, 0, 2, "a")));
+        var text2 = new AnnotatedText("so so", asList(textUnit(ANNOTATOR_B, 0, 2, "b")));
+
+        var sut = TextGammaAgreement.builder() //
+                .withDisorderSampler(() -> 0.0) //
+                .withTexts(text1, text2) //
+                .build();
+
+        assertThat(sut.getBaseText()).isEmpty();
+    }
+
+    @Test
+    void testBaseText_explicitOverride()
+    {
+        var text1 = new AnnotatedText("so so so", asList(textUnit(ANNOTATOR_A, 0, 2, "a")));
+        var text2 = new AnnotatedText("so so", asList(textUnit(ANNOTATOR_B, 0, 2, "b")));
+        var base = new AnnotatedText("base text", asList(textUnit(ANNOTATOR_A, 0, 4, "base")));
+
+        var sut = TextGammaAgreement.builder() //
+                .withDisorderSampler(() -> 0.0) //
+                .withTexts(text1, text2) //
+                .withBaseText(base) //
+                .build();
+
+        // An explicitly supplied base text always wins, even when the texts differ.
+        assertThat(sut.getBaseText()).isPresent();
+        assertThat(sut.getBaseText().get().getText()).isEqualTo("base text");
+    }
+
+    @Test
     void testCalculateExpectedDisagreement_NormalDistribution()
     {
         var disorderSampler = new NormalDistributionDisorderSampler();
