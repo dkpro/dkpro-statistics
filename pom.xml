@@ -45,6 +45,10 @@
 
   <developers>
     <developer>
+      <id>reckart</id>
+      <name>Richard Eckart de Castilho</name>
+    </developer>
+    <developer>
       <id>chmeyer.de</id>
       <name>Christian M. Meyer</name>
       <email>chmeyer.de@gmail.com</email>
@@ -68,6 +72,10 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>    
+  </properties>
 
   <modules>
     <module>dkpro-statistics-build</module>
