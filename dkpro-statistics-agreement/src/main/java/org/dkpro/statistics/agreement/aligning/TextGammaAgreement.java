@@ -50,7 +50,51 @@ import org.slf4j.LoggerFactory;
  * with simultaneous segmentation and transcription-error correction. In Proceedings of the 13th
  * Conference on Natural Language Processing (KONVENS 2016) pp. 27-37, 2016.</li>
  * </ul>
- * 
+ *
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation. These are aggregated here for
+ * convenience; each ported class also documents the deviations relevant to it. This list covers only
+ * the TextGammaTool-derived classes (those carrying an {@code "Original source: ...TextGammaTool.git"}
+ * header).
+ * <ul>
+ * <li>Exposed as a {@link Builder}-configured {@link IAligningAgreementMeasure} rather than the
+ * upstream static {@code TextGamma.getGamma(...)} function; inputs come from {@link Builder#withTexts}
+ * or {@link Builder#withStudy} and are validated (exactly two texts/raters, one rater each), with
+ * defaults for {@code precision}, {@code alpha} and the dissimilarity that upstream required as
+ * arguments.</li>
+ * <li>The upstream mandatory gold {@code orig} text is optional here ({@link Builder#withBaseText},
+ * {@link #getBaseText()}); when it is absent the chance model stays symmetric over both raters
+ * instead of assuming a shared reference text/segmentation (see {@code SimpleDisorderSampler}).</li>
+ * <li>The chance model is reproducible: a single {@link org.apache.commons.math3.random.RandomGenerator}
+ * ({@link Builder#withSeed} / {@link Builder#withRandomGenerator}, {@link #getRandomGenerator()}) drives
+ * every sampled distribution and shuffle, whereas upstream used unseeded generators and a fresh
+ * {@code new Random()} per call.</li>
+ * <li>The disorder sampler is injected through {@code IDisorderSamplerFactory} /
+ * {@code IGammaDisorderSamplerFactory} so it can bind to the measure and pick up the seed and base
+ * text at build time; upstream instantiated it directly.</li>
+ * <li>{@link #calculateAgreement()} throws
+ * {@link org.dkpro.statistics.agreement.InsufficientDataException} when the expected disorder is
+ * {@code 0} instead of dividing to {@code Infinity}/{@code NaN} as upstream does.</li>
+ * <li>The open/close/gap markers are fixed constants ({@link #OPEN_UNIT}, {@link #CLOSE_UNIT},
+ * {@link #GAP}) validated once for distinctness, rather than per-call {@code char} parameters threaded
+ * through the merge and observed-disorder computation.</li>
+ * <li>{@code NominalFeatureDissimilarity} / {@code NominalFeatureTextDissimilarity} throw
+ * {@code IllegalStateException} for the empty-vs-empty case instead of returning {@code 0}.</li>
+ * <li>The segmentation-merge in {@code AnnotationSetShuffle} keys neighbour compatibility on the
+ * unit's {@code category} ({@code getCategory()}) rather than the upstream annotation {@code type}
+ * ({@code getType()}).</li>
+ * <li>{@code Alignment}'s completeness check was relaxed from set-equality to a {@code containsAll}
+ * (superset) test.</li>
+ * <li>{@code AnnotationSet} is incrementally mutable ({@code addUnit}) and keeps its raters in a
+ * sorted {@code TreeSet}, so rater order is stable and flows into the merge; upstream built the set
+ * once and left raters unordered.</li>
+ * <li>Pervasive renames and type changes: {@code Annotator}->{@code Rater} (now with an index),
+ * {@code Unit}->{@code AlignableAnnotationUnit}, {@code TextUnit}->{@code AlignableAnnotationTextUnit},
+ * {@code Dissimilarity}->{@code IDissimilarity}, {@code TextAlignment}->{@code ITextAlignment}
+ * (abstract classes became interfaces); the {@code Text} value class was folded into
+ * {@code AnnotatedText} as a {@code String}; offsets widened {@code int}->{@code long}.</li>
+ * </ul>
+ *
  * @author Fabian Barteld (original)
  * @author Richard Eckart de Castilho (adaptation into DKPro Statistics)
  */

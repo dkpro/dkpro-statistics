@@ -20,6 +20,17 @@ import java.util.List;
 
 import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 
+/**
+ * An {@link AnnotationSet} bound to a piece of text.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>The upstream {@code Text} value class was dropped; the content is held directly as a
+ * {@code String} and {@code getText()} returns a {@code String}.</li>
+ * <li>Adds an {@code addUnit} override that rejects non-{@code AlignableAnnotationTextUnit} units,
+ * and a {@code getTextUnits()} convenience accessor.</li>
+ * </ul>
+ */
 public class AnnotatedText
     extends AnnotationSet
 {

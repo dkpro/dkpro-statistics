@@ -27,6 +27,15 @@ import org.dkpro.statistics.agreement.aligning.data.AnnotatedText;
 
 /**
  * Align the annotations of two texts using dynamic programming.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Adds a {@code PairwiseDPTextAlignment(AnnotatedText, AnnotatedText)} constructor and a private
+ * {@code insertAnnotationsInText} that serialises annotations into the raw text with the open/close
+ * marker characters. This marker insertion plus the reserved-character and overlapping-unit
+ * validation were relocated here from {@code AnnotatedTextMerge}. The Needleman-Wunsch DP core
+ * (substitutions deliberately never chosen, meta-character handling) is unchanged.</li>
+ * </ul>
  */
 public class PairwiseDPTextAlignment
     implements ITextAlignment

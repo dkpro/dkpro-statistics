@@ -17,6 +17,15 @@ package org.dkpro.statistics.agreement.aligning.dissimilarity;
 
 import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 
+/**
+ * Computes the dissimilarity between two aligned units.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Refactored from the upstream abstract type {@code Dissimilarity} into an interface.</li>
+ * <li>The unit parameter type is {@link AlignableAnnotationUnit} (upstream {@code Unit}).</li>
+ * </ul>
+ */
 public interface IDissimilarity
 {
     double dissimilarity(AlignableAnnotationUnit u, AlignableAnnotationUnit v);

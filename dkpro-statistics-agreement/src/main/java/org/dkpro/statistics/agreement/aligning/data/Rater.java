@@ -18,6 +18,17 @@ package org.dkpro.statistics.agreement.aligning.data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+/**
+ * An annotator/rater identified by name.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Adds an {@code int} index field ({@code getIndex()}), so the constructor is
+ * {@code Rater(name, index)}; the index is intentionally ignored by {@code equals}, {@code hashCode}
+ * and {@code compareTo}, which compare by name only, as upstream {@code Annotator} did.</li>
+ * <li>The class is {@code final}.</li>
+ * </ul>
+ */
 public final class Rater
     implements Comparable<Rater>
 {

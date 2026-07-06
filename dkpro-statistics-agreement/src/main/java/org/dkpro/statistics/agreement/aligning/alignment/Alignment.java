@@ -27,6 +27,18 @@ import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 import org.dkpro.statistics.agreement.aligning.data.AnnotationSet;
 import org.dkpro.statistics.agreement.aligning.dissimilarity.IDissimilarity;
 
+/**
+ * A set of unitary alignments covering all units of an annotation set.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>The final completeness check was relaxed from set-equality against the annotation set to a
+ * {@code containsAll} (superset) test; given the earlier per-unit membership guard the two are
+ * equivalent in practice.</li>
+ * <li>Offsets are {@code long} (upstream {@code int}) and the domain types were renamed
+ * ({@code getRaterCount}/{@code getUnits}).</li>
+ * </ul>
+ */
 public class Alignment
 {
     private final Set<UnitaryAlignment> alignments;

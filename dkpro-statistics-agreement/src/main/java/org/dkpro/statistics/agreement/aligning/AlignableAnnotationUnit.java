@@ -27,6 +27,18 @@ import java.util.Set;
 
 import org.dkpro.statistics.agreement.aligning.data.Rater;
 
+/**
+ * A unit of annotation with a span and a set of features attributed to a rater.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Implements the new {@code IAlignableAnnotationUnit} interface; adds {@code getCategory()} (the
+ * feature map) and {@code getRaterIdx()}.</li>
+ * <li>{@code getFeatures()} returns an unmodifiable view of the feature map, whereas upstream
+ * {@code getFeatureStructure()} returned a mutable clone.</li>
+ * <li>Offsets are {@code long} instead of upstream {@code int}.</li>
+ * </ul>
+ */
 public class AlignableAnnotationUnit
     implements IAlignableAnnotationUnit
 {

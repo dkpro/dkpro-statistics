@@ -44,6 +44,32 @@ import org.dkpro.statistics.agreement.aligning.shuffling.TextChangeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Draws a random disorder value by corrupting the annotated texts (textual, segmentation and
+ * categorization changes) and measuring the resulting observed disorder.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>The upstream gold/base ("orig") text is optional here: when a base text is present it is
+ * corrupted twice as upstream did; when absent, the sampler stays symmetric over both raters,
+ * sampling with each rater's own text as the base and averaging the disorder, rather than assuming
+ * one reference text/segmentation.</li>
+ * <li>All randomness is drawn from the measure's shared {@code RandomGenerator} (every
+ * {@code BinomialDistribution}/{@code EnumeratedDistribution} plus the shuffle position chooser),
+ * making sampling reproducible; upstream used unseeded default generators and a fresh
+ * {@code new Random()} per call.</li>
+ * <li>Character- and label-frequency generators are built internally from the units instead of
+ * being injected as constructor parameters.</li>
+ * <li>The {@code BinomialDistribution} change-count distributions are rebuilt per invocation
+ * because, under the symmetric mode, the base text (and thus the unit count) can differ between the
+ * two averaged terms; upstream precomputed them once.</li>
+ * <li>Only the uniform change-type distribution is supported; upstream's explicit change-chooser
+ * constructor was dropped.</li>
+ * <li>The open/close/gap delimiter fields were dropped (they are now fixed constants used by the
+ * merge), so it calls the three-argument {@code getObservedDisorder}.</li>
+ * <li>Rater identity gained an integer index ({@code Rater("A", 0)} / {@code Rater("B", 1)}).</li>
+ * </ul>
+ */
 public class SimpleDisorderSampler
     implements IDisorderSampler
 {

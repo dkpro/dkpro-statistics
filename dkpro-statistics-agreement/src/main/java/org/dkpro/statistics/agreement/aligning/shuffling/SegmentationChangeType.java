@@ -15,6 +15,15 @@
  */
 package org.dkpro.statistics.agreement.aligning.shuffling;
 
+/**
+ * Types of segmentation mutations applied when shuffling an annotation set.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Extracted to a top-level enum from a nested enum inside {@code AnnotationSetShuffle}
+ * (constants and order unchanged).</li>
+ * </ul>
+ */
 public enum SegmentationChangeType
 {
     MERGE, SPLIT

@@ -32,6 +32,16 @@ import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 /**
  * a set of units created by a given set of annotators; all units are linked to the same (implicit)
  * continuum
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Incrementally mutable through a public {@code addUnit(...)} (with lazy cache invalidation);
+ * upstream built everything once in the constructor.</li>
+ * <li>Raters are kept in a sorted {@code TreeSet} (by name), so rater iteration order is stable and
+ * flows into the merge; upstream kept them unordered.</li>
+ * <li>The distinct-{@code types} tracking and {@code getTypes()} were dropped in favour of
+ * distinct-{@code category} tracking; {@code getUnits()} is lazily cached.</li>
+ * </ul>
  */
 public class AnnotationSet
 {

@@ -17,6 +17,15 @@ package org.dkpro.statistics.agreement.aligning.alignment;
 
 import java.util.List;
 
+/**
+ * A text alignment between two annotated texts.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Refactored from the upstream abstract class {@code TextAlignment} into an interface; the five
+ * methods are unchanged.</li>
+ * </ul>
+ */
 public interface ITextAlignment
 {
     List<String[]> getAlignments();

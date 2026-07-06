@@ -15,6 +15,14 @@
  */
 package org.dkpro.statistics.agreement.aligning.disorder;
 
+/**
+ * Samples a single disorder value for one random draw of the null model.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Upstream {@code DisorderSampler} was an abstract class; this is a functional interface.</li>
+ * </ul>
+ */
 @FunctionalInterface
 public interface IDisorderSampler
 {

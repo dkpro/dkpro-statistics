@@ -29,6 +29,21 @@ import org.dkpro.statistics.agreement.aligning.alignment.Alignment;
 import org.dkpro.statistics.agreement.aligning.alignment.PairwiseDPTextAlignment;
 import org.dkpro.statistics.agreement.aligning.alignment.UnitaryAlignment;
 
+/**
+ * Merges two {@link AnnotatedText}s into the alignments of their combined annotations.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>The open/close/gap marker characters are fixed constants from {@code TextGammaAgreement}
+ * rather than per-call {@code char} parameters, so the upstream runtime marker-distinctness check is
+ * gone.</li>
+ * <li>Marker insertion into the raw text and the reserved-character / overlapping-unit validation
+ * were moved out of the merge into {@code PairwiseDPTextAlignment} (behaviour preserved, ownership
+ * moved).</li>
+ * <li>Each {@code UnitaryAlignment} receives the annotation set's shared sorted rater-set view
+ * instead of a fresh unordered copy per iteration.</li>
+ * </ul>
+ */
 public class AnnotatedTextMerge
 {
     /**

@@ -22,6 +22,17 @@ import java.util.Objects;
 
 import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 
+/**
+ * An {@link AlignableAnnotationUnit} that additionally carries the covered text.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>Overrides {@code hashCode()} to include the covered text; upstream {@code TextUnit} did not
+ * override it.</li>
+ * <li>Adds a {@code TYPE} constant and static factory methods ({@code textUnit(...)}), and a
+ * constructor without a feature set.</li>
+ * </ul>
+ */
 public class AlignableAnnotationTextUnit
     extends AlignableAnnotationUnit
 {

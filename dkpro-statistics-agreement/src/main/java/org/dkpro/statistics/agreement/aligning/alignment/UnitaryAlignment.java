@@ -32,6 +32,17 @@ import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 import org.dkpro.statistics.agreement.aligning.data.Rater;
 import org.dkpro.statistics.agreement.aligning.dissimilarity.IDissimilarity;
 
+/**
+ * A single unitary alignment associating at most one unit per rater.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>{@code begin}/{@code end} were widened from {@code int} to {@code long} (with
+ * {@code Long.compare} in {@code compareTo}); the disorder arithmetic is unchanged.</li>
+ * <li>Domain renames ({@code Annotator} to {@code Rater}, {@code Unit} to
+ * {@code AlignableAnnotationUnit}, {@code getCreator} to {@code getRater}).</li>
+ * </ul>
+ */
 public class UnitaryAlignment
     implements Comparable<UnitaryAlignment>
 {

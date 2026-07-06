@@ -35,6 +35,24 @@ import org.dkpro.statistics.agreement.aligning.data.AlignableAnnotationTextUnit;
 import org.dkpro.statistics.agreement.aligning.data.AnnotatedText;
 import org.dkpro.statistics.agreement.aligning.data.AnnotationSet;
 
+/**
+ * Randomly perturbs an {@link AnnotatedText} / {@link AnnotationSet} (text, segmentation and feature
+ * values) to produce shuffled variants.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>The change-type enums were extracted from nested types to the top-level
+ * {@link TextChangeType} / {@link SegmentationChangeType} (same constants and order).</li>
+ * <li>Position/unit selection randomness is supplied by an injected chooser drawn from the measure's
+ * shared {@code RandomGenerator} (reproducible) rather than a fresh {@code new Random()} per
+ * call.</li>
+ * <li>A segmentation merge accepts a neighbour only when it shares the base unit's rater and
+ * {@code category} ({@code getCategory()}), whereas upstream keyed on the annotation {@code type}
+ * ({@code getType()}).</li>
+ * <li>Text-mutating operations iterate {@code getTextUnits()} (text units only) rather than
+ * upstream's all-units list.</li>
+ * </ul>
+ */
 public class AnnotationSetShuffle
 {
 

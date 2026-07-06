@@ -23,6 +23,12 @@ import org.dkpro.statistics.agreement.aligning.data.AlignableAnnotationTextUnit;
 /**
  * Variation of {@link NominalFeatureDissimilarity} that considers the covered text as an additional
  * implicit feature. It requires {@link AlignableAnnotationTextUnit AlignableAnnotationTextUnits}.
+ * <p>
+ * Deviations from the upstream TextGammaTool implementation:
+ * <ul>
+ * <li>The empty-vs-empty case (both {@code null}) throws {@code IllegalStateException} instead of
+ * returning {@code 0}, matching {@link NominalFeatureDissimilarity} (see there for the rationale).</li>
+ * </ul>
  */
 public class NominalFeatureTextDissimilarity
     extends NominalFeatureDissimilarity
