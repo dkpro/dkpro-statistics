@@ -16,6 +16,7 @@
 package org.dkpro.statistics.agreement.aligning.alignment;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 import org.dkpro.statistics.agreement.aligning.data.AlignableAnnotationTextUnit;
@@ -61,6 +62,9 @@ public class NominalFeatureTextDissimilarityTest
         assertThat(diss.dissimilarity(u, null)).isEqualTo(1.0);
         assertThat(diss.dissimilarity(null, v)).isEqualTo(1.0);
 
-        assertThat(diss.dissimilarity(null, null)).isEqualTo(0.0);
+        // Empty-vs-empty is unreachable in the 2-rater TextGamma path; upstream returned 0 but that
+        // branch was never exercised, so we fail fast instead of trusting an unvalidated value.
+        assertThatThrownBy(() -> diss.dissimilarity(null, null))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

@@ -26,9 +26,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.commons.math3.random.RandomGenerator;
+import org.apache.commons.math3.random.Well19937c;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.dkpro.statistics.agreement.DisagreementMeasure;
+import org.dkpro.statistics.agreement.InsufficientDataException;
 import org.dkpro.statistics.agreement.aligning.data.AnnotatedText;
 import org.dkpro.statistics.agreement.aligning.disorder.IDisorderSampler;
 import org.dkpro.statistics.agreement.aligning.disorder.IDisorderSamplerFactory;
@@ -72,12 +75,20 @@ public class TextGammaAgreement
     private final IDisorderSampler sampler;
     private final double precision;
     private final double alpha;
+    private final RandomGenerator randomGenerator;
 
     private TextGammaAgreement(Builder builder)
     {
         dissimilarity = builder.dissimilarity;
         precision = builder.precision;
         alpha = builder.alpha;
+
+        // Resolve the source of randomness before the sampler is created below, so a sampler
+        // created through the factory can pick it up via getRandomGenerator(). When no generator (or
+        // seed) is configured we fall back to a fresh, time-seeded generator - preserving the
+        // previous, non-reproducible behaviour.
+        randomGenerator = builder.randomGenerator != null ? builder.randomGenerator
+                : new Well19937c();
 
         if (builder.texts != null && builder.study != null) {
             throw new IllegalArgumentException(
@@ -144,6 +155,16 @@ public class TextGammaAgreement
         return dissimilarity;
     }
 
+    /**
+     * @return the source of randomness used by the chance model. Samplers should draw all their
+     *         randomness from this generator so that a seed configured via {@link Builder#withSeed}
+     *         (or {@link Builder#withRandomGenerator}) makes the measurement reproducible.
+     */
+    public RandomGenerator getRandomGenerator()
+    {
+        return randomGenerator;
+    }
+
     public List<AnnotatedText> getTexts()
     {
         return asList(text1, text2);
@@ -157,6 +178,34 @@ public class TextGammaAgreement
     public Optional<AnnotatedText> getBaseText()
     {
         return Optional.ofNullable(baseText);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws InsufficientDataException
+     *             if the expected disorder is zero. This happens when the chance model cannot
+     *             introduce any disorder (e.g. the annotations carry no categories and the sampler
+     *             uses zero text/segmentation change rates), leaving no chance baseline to correct
+     *             against - the agreement would otherwise be an undefined division by zero.
+     */
+    @Override
+    public double calculateAgreement()
+    {
+        var observedDisorder = calculateObservedDisagreement();
+        var expectedDisorder = calculateExpectedDisagreement();
+
+        LOG.trace("Disorder -- observed: {} -- expected: {}", observedDisorder, expectedDisorder);
+
+        if (expectedDisorder == 0.0) {
+            throw new InsufficientDataException(
+                    "Expected disorder is zero: the chance model could not introduce any disorder, "
+                            + "so there is no chance baseline to correct against. This typically "
+                            + "means the annotations carry no categories and the disorder sampler "
+                            + "uses zero text and segmentation change rates.");
+        }
+
+        return 1.0 - (observedDisorder / expectedDisorder);
     }
 
     @Override
@@ -229,6 +278,7 @@ public class TextGammaAgreement
         private IDisorderSamplerFactory samplerFactory;
         private double precision = 0.01;
         private double alpha = 0.05;
+        private RandomGenerator randomGenerator;
 
         private Builder()
         {
@@ -289,6 +339,29 @@ public class TextGammaAgreement
         public Builder withAlpha(double aAlpha)
         {
             alpha = aAlpha;
+            return this;
+        }
+
+        /**
+         * Seeds the chance model so that the measurement is reproducible: with a fixed seed the same
+         * study yields the same agreement value on every run. Without a seed (or an explicit
+         * generator) the chance model uses a fresh, time-seeded generator and results vary slightly
+         * from run to run within the configured precision. Convenience shortcut for
+         * {@link #withRandomGenerator} with a {@link Well19937c} seeded with {@code aSeed}.
+         */
+        public Builder withSeed(long aSeed)
+        {
+            randomGenerator = new Well19937c(aSeed);
+            return this;
+        }
+
+        /**
+         * Supplies the source of randomness for the chance model. See {@link #withSeed} for the
+         * effect on reproducibility.
+         */
+        public Builder withRandomGenerator(RandomGenerator aRandomGenerator)
+        {
+            randomGenerator = aRandomGenerator;
             return this;
         }
 

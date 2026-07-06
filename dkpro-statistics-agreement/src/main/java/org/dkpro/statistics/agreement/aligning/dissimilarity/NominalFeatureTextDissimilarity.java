@@ -31,7 +31,12 @@ public class NominalFeatureTextDissimilarity
     public double dissimilarity(AlignableAnnotationUnit aUnit1, AlignableAnnotationUnit aUnit2)
     {
         if (aUnit1 == null && aUnit2 == null) {
-            return 0;
+            // Upstream (TextGammaTool) returned 0 here, but that branch was never exercised, so we
+            // cannot be sure 0 was the correct behavior. It is unreachable in the 2-rater TextGamma
+            // path; reaching it means a bug was introduced upstream of this call. See
+            // NominalFeatureDissimilarity for the full rationale.
+            throw new IllegalStateException(
+                    "Dissimilarity of two empty units is unreachable in the 2-rater TextGamma path");
         }
 
         if (aUnit1 == null) {

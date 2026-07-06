@@ -17,6 +17,7 @@ package org.dkpro.statistics.agreement.aligning;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.offset;
 import static org.dkpro.statistics.agreement.aligning.TextGammaAgreement.calculateExpectedDisagreement;
 import static org.dkpro.statistics.agreement.aligning.data.AlignableAnnotationTextUnit.textUnit;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
+import org.dkpro.statistics.agreement.InsufficientDataException;
 import org.dkpro.statistics.agreement.aligning.data.AlignableAnnotationTextUnit;
 import org.dkpro.statistics.agreement.aligning.data.AnnotatedText;
 import org.dkpro.statistics.agreement.aligning.data.Rater;
@@ -200,7 +202,9 @@ class TextGammaAgreementTest
                 .withTexts(text1, text2) //
                 .build();
 
-        assertThat(sut.calculateObservedDisagreement()).isCloseTo(0.4, offset(0.001));
+        // The min-disorder alignment leaves A's "a" unmatched (gap = 1.0) and pairs "abc"/"bc"
+        // (text mismatch = 1.0), i.e. 2.0 / 3.5 average annotations = 4/7.
+        assertThat(sut.calculateObservedDisagreement()).isCloseTo(4.0 / 7.0, offset(0.001));
     }
 
     @Test
@@ -255,38 +259,88 @@ class TextGammaAgreementTest
     void testCalculateExpectedDisagreement_NormalDistribution()
     {
         var disorderSampler = new NormalDistributionDisorderSampler();
-        var outerIterations = 100;
-        var innerIterations = 100;
+        var iterations = 10_000;
         var precision = 0.02;
         var alpha = 0.05;
 
-        for (int n = 0; n < outerIterations; n++) {
-            var correct = 0;
-            var tooSmall = 0;
-            var tooBig = 0;
+        var withinMargin = 0;
+        var tooSmall = 0;
+        var tooBig = 0;
 
-            for (var i = 0; i < innerIterations; i++) {
-                var expectedDisorder = calculateExpectedDisagreement(disorderSampler, alpha,
-                        precision);
+        for (var i = 0; i < iterations; i++) {
+            var expectedDisorder = calculateExpectedDisagreement(disorderSampler, alpha, precision);
 
-                if (1 - precision <= expectedDisorder && expectedDisorder <= 1 + precision) {
-                    correct += 1;
-                }
-                else if (expectedDisorder < 1 - precision) {
-                    tooSmall += 1;
-                }
-                else {
-                    tooBig += 1;
-                }
+            if (1 - precision <= expectedDisorder && expectedDisorder <= 1 + precision) {
+                withinMargin += 1;
             }
-
-            assertThat(correct + tooBig + tooSmall).isEqualTo(innerIterations);
-
-            assertThat(correct / (double) innerIterations)
-                    .as("Correct %d -- too big: %d - too small: %d", correct, tooSmall, tooBig)
-                    // should be about 95% -- but seems to drop lower
-                    .isGreaterThanOrEqualTo(0.89);
+            else if (expectedDisorder < 1 - precision) {
+                tooSmall += 1;
+            }
+            else {
+                tooBig += 1;
+            }
         }
+
+        // The estimator promises that its result lies within +/- precision of the true mean with
+        // probability (1 - alpha). We verify that guarantee directly by pooling all results and
+        // checking that at least (1 - alpha) of them fall within the margin.
+        //
+        // Note: we deliberately do NOT slice the runs into sub-batches and require each batch to
+        // clear the bar. The (1 - alpha) guarantee means ~alpha of the results are expected to fall
+        // outside the margin; a per-batch minimum check fishes across many small, noisy batches for
+        // the one where those expected outliers happened to cluster, and so fails intermittently
+        // even when the guarantee holds. Pooling uses all the evidence at once (standard error here
+        // ~0.0018 over 10,000 runs), so the measured ~0.965 coverage clears the 0.95 floor by ~8
+        // sigma - no flakiness - while still catching a genuine regression below ~0.945.
+        assertThat(withinMargin / (double) iterations)
+                .as("within margin: %d -- too big: %d - too small: %d", withinMargin, tooBig,
+                        tooSmall)
+                .isGreaterThanOrEqualTo(1 - alpha);
+    }
+
+    private static double agreementWithSeed(long aSeed)
+    {
+        var study = new TextAligningAnnotationStudy("so so so");
+        study.addUnits(SOME_LABEL_DISAGREEMENT);
+        return TextGammaAgreement.builder() //
+                .withSeed(aSeed) //
+                .withDisorderSampler(m -> new SimpleDisorderSampler(m, 0.0, 0.0)) //
+                .withDissimilarity(new NominalFeatureTextDissimilarity()) //
+                .withStudy(study) //
+                .build() //
+                .calculateAgreement();
+    }
+
+    @Test
+    void testDegenerateChanceModelThrowsInsufficientData()
+    {
+        // Text-only annotations (no categories to shuffle) combined with a sampler that applies no
+        // text or segmentation changes means the chance model can never introduce any disorder, so
+        // the expected disorder is zero. There is then no chance baseline to correct against, and
+        // the agreement is an undefined division by zero - which must surface as a clear exception
+        // rather than -Infinity.
+        var study = new TextAligningAnnotationStudy("so so so");
+        study.addUnits(SOME_TEXT_DISAGREEMENT);
+
+        var sut = TextGammaAgreement.builder() //
+                .withDisorderSampler(m -> new SimpleDisorderSampler(m, 0.0, 0.0)) //
+                .withDissimilarity(new NominalFeatureTextDissimilarity()) //
+                .withStudy(study) //
+                .build();
+
+        assertThatExceptionOfType(InsufficientDataException.class)
+                .isThrownBy(sut::calculateAgreement);
+    }
+
+    @Test
+    void testSeedMakesMeasurementReproducible()
+    {
+        // A fixed seed must make the (otherwise Monte-Carlo) measurement fully reproducible: the
+        // same study yields exactly the same agreement value on every run.
+        assertThat(agreementWithSeed(42)).isEqualTo(agreementWithSeed(42));
+
+        // A different seed explores a different set of random annotators, so the estimate differs.
+        assertThat(agreementWithSeed(42)).isNotEqualTo(agreementWithSeed(99));
     }
 
     private class NormalDistributionDisorderSampler

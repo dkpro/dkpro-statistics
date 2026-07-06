@@ -26,9 +26,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.commons.math3.distribution.BinomialDistribution;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
+import org.apache.commons.math3.random.RandomAdaptor;
+import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.util.Pair;
 import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 import org.dkpro.statistics.agreement.aligning.TextGammaAgreement;
@@ -58,6 +61,9 @@ public class SimpleDisorderSampler
     private final double textChangeRate;
     private final double segmentChangeRate;
 
+    private final RandomGenerator rng;
+    private final Random positionChooser;
+
     // creates a SimpleDisorderSampler with uniform distribution over change types
     public SimpleDisorderSampler(TextGammaAgreement aMeasure, double aTextChangeRate,
             double aSegmentChangeRate)
@@ -66,13 +72,20 @@ public class SimpleDisorderSampler
         textChangeRate = aTextChangeRate;
         segmentChangeRate = aSegmentChangeRate;
 
+        // All randomness is drawn from the measure's generator so that a seed configured on the
+        // measure makes the sampling reproducible. The same generator backs both the commons-math
+        // distributions and - via a RandomAdaptor - the java.util.Random position choosers, so a
+        // single seed drives the entire chance model.
+        rng = measure.getRandomGenerator();
+        positionChooser = new RandomAdaptor(rng);
+
         var units = new ArrayList<AlignableAnnotationUnit>();
         for (var text : measure.getTexts()) {
             units.addAll(text.getUnits());
         }
 
-        characterGenerator = createCharacterGenerator(units);
-        labelGenerators = createLabelGenerators(aMeasure.getTexts(), units);
+        characterGenerator = createCharacterGenerator(rng, units);
+        labelGenerators = createLabelGenerators(rng, aMeasure.getTexts(), units);
 
         // set probabilities of change types to equal probabilities
         var prop = 1 / (double) TextChangeType.values().length;
@@ -81,7 +94,7 @@ public class SimpleDisorderSampler
             pt.add(new Pair<TextChangeType, Double>(type, prop));
         }
 
-        changeChooserText = new EnumeratedDistribution<TextChangeType>(pt);
+        changeChooserText = new EnumeratedDistribution<TextChangeType>(rng, pt);
 
         prop = 1 / (double) SegmentationChangeType.values().length;
         var ps = new ArrayList<Pair<SegmentationChangeType, Double>>();
@@ -89,7 +102,7 @@ public class SimpleDisorderSampler
             ps.add(new Pair<SegmentationChangeType, Double>(type, prop));
         }
 
-        changeChooserSeg = new EnumeratedDistribution<SegmentationChangeType>(ps);
+        changeChooserSeg = new EnumeratedDistribution<SegmentationChangeType>(rng, ps);
     }
 
     @Override
@@ -119,20 +132,21 @@ public class SimpleDisorderSampler
 
     private double sampleDisorder(AnnotatedText aText)
     {
-        var textChangeSampler = new BinomialDistribution(aText.getUnitCount(), textChangeRate);
-        var segChangeSampler = new BinomialDistribution(aText.getUnitCount(), segmentChangeRate);
+        var textChangeSampler = new BinomialDistribution(rng, aText.getUnitCount(), textChangeRate);
+        var segChangeSampler = new BinomialDistribution(rng, aText.getUnitCount(),
+                segmentChangeRate);
 
         // 1. apply textual changes
         var version1 = changeText(aText, textChangeSampler.sample(), changeChooserText,
-                characterGenerator);
+                characterGenerator, positionChooser);
         var version2 = changeText(aText, textChangeSampler.sample(), changeChooserText,
-                characterGenerator);
+                characterGenerator, positionChooser);
 
         // 2. apply segmentation changes
         var set1 = changeSegmentation(new AnnotationSet(version1.getTextUnits()),
-                segChangeSampler.sample(), changeChooserSeg);
+                segChangeSampler.sample(), changeChooserSeg, positionChooser);
         var set2 = changeSegmentation(new AnnotationSet(version2.getTextUnits()),
-                segChangeSampler.sample(), changeChooserSeg);
+                segChangeSampler.sample(), changeChooserSeg, positionChooser);
 
         // 3. apply categorization changes
         for (var featureName : labelGenerators.keySet()) {
@@ -167,7 +181,7 @@ public class SimpleDisorderSampler
         return disorder;
     }
 
-    private static EnumeratedDistribution<Character> createCharacterGenerator(
+    private static EnumeratedDistribution<Character> createCharacterGenerator(RandomGenerator aRng,
             List<AlignableAnnotationUnit> units)
     {
         int numChars = 0;
@@ -191,11 +205,12 @@ public class SimpleDisorderSampler
             pc.add(new Pair<Character, Double>(c, characters.get(c) / (double) numChars));
         }
 
-        return new EnumeratedDistribution<Character>(pc);
+        return new EnumeratedDistribution<Character>(aRng, pc);
     }
 
     private static HashMap<String, EnumeratedDistribution<String>> createLabelGenerators(
-            List<AnnotatedText> aAnnotatedTexts, List<AlignableAnnotationUnit> units)
+            RandomGenerator aRng, List<AnnotatedText> aAnnotatedTexts,
+            List<AlignableAnnotationUnit> units)
     {
         var featureNames = new HashSet<String>();
         for (var text : aAnnotatedTexts) {
@@ -222,7 +237,7 @@ public class SimpleDisorderSampler
                 pl.add(new Pair<String, Double>(label, labels.get(label) / (double) units.size()));
             }
 
-            labelGenerators.put(featureName, new EnumeratedDistribution<String>(pl));
+            labelGenerators.put(featureName, new EnumeratedDistribution<String>(aRng, pl));
         }
 
         return labelGenerators;
