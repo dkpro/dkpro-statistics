@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.dkpro</groupId>
     <artifactId>dkpro-parent-pom</artifactId>
-    <version>32</version>
+    <version>35</version>
   </parent>
 
   <groupId>org.dkpro.statistics</groupId>
@@ -44,6 +44,10 @@
   </organization>
 
   <developers>
+    <developer>
+      <id>reckart</id>
+      <name>Richard Eckart de Castilho</name>
+    </developer>
     <developer>
       <id>chmeyer.de</id>
       <name>Christian M. Meyer</name>
@@ -69,6 +73,10 @@
     </license>
   </licenses>
 
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>    
+  </properties>
+
   <modules>
     <module>dkpro-statistics-build</module>
     <module>dkpro-statistics-agreement</module>
@@ -88,7 +96,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-math3</artifactId>
-        <version>3.2</version>
+        <version>3.6.1</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -176,7 +184,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>3.1.1</version>
+              <version>3.4.0</version>
               <inherited>true</inherited>
               <dependencies>
                 <dependency>
@@ -187,7 +195,7 @@
                 <dependency>
                   <groupId>com.puppycrawl.tools</groupId>
                   <artifactId>checkstyle</artifactId>
-                  <version>8.31</version>
+                  <version>10.17.0</version>
                 </dependency>
               </dependencies>
               <configuration>

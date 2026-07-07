@@ -106,7 +106,7 @@ public class UnitizingAnnotationStudy
     public IUnitizingAnnotationUnit addUnit(long offset, long length, int raterIdx,
             final Object category)
     {
-        IUnitizingAnnotationUnit unit = createUnit(offset, length, raterIdx, category);
+        var unit = createUnit(offset, length, raterIdx, category);
         units.add(unit);
         return unit;
     }
@@ -114,8 +114,7 @@ public class UnitizingAnnotationStudy
     protected IUnitizingAnnotationUnit createUnit(long offset, long length, int raterIdx,
             final Object category)
     {
-        IUnitizingAnnotationUnit result = new UnitizingAnnotationUnit(offset, length, raterIdx,
-                category);
+        var result = new UnitizingAnnotationUnit(offset, length, raterIdx, category);
         if (result.getCategory() != null) {
             categories.add(result.getCategory());
         }
