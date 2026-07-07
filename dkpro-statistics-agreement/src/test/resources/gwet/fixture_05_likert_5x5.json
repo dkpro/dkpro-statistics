@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "irrcacVersion": "1.4",
+    "irrcacHome": "https://CRAN.R-project.org/package=irrCAC",
+    "irrcacLicense": "GPL (>= 2)",
+    "generatedBy": "public API (gwet.ac1.raw)",
+    "description": "5-category ordinal table; larger scale for the quadratic-weighted AC2."
+  },
+  "categories": [1, 2, 3, 4, 5],
+  "table": [
+    [15, 4, 1, 0, 0],
+    [3, 12, 4, 1, 0],
+    [1, 3, 14, 3, 1],
+    [0, 1, 3, 10, 2],
+    [0, 0, 1, 2, 8]
+  ],
+  "n": 89,
+  "cases": [
+    {
+      "measure": "AC1",
+      "weights": "unweighted",
+      "distanceFunction": "nominal",
+      "pa": 0.662921348314607,
+      "pe": 0.197497159449564,
+      "coefficient": 0.57997
+    },
+    {
+      "measure": "AC2",
+      "weights": "quadratic",
+      "distanceFunction": "interval",
+      "pa": 0.966292134831461,
+      "pe": 0.740614347935867,
+      "coefficient": 0.87005
+    }
+  ]
+}

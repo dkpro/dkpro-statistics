@@ -14,23 +14,17 @@
 package org.dkpro.statistics.agreement.aligning;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UncheckedIOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.dkpro.statistics.agreement.JsonFixtures;
 import org.dkpro.statistics.agreement.aligning.data.AnnotationSet;
 import org.dkpro.statistics.agreement.aligning.data.Rater;
 import org.dkpro.statistics.agreement.aligning.dissimilarity.CombinedCategoricalDissimilarity;
 
 import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
 
 /**
  * Shared loader for the pygamma cross-validation fixtures under {@code src/test/resources/pygamma}.
@@ -38,8 +32,6 @@ import tools.jackson.databind.ObjectMapper;
  */
 public final class PygammaFixtures
 {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
-
     public static final String FIXTURE_DIR = "src/test/resources/pygamma";
 
     private PygammaFixtures()
@@ -53,25 +45,12 @@ public final class PygammaFixtures
      */
     public static Stream<String> fixtures() throws IOException
     {
-        var names = new ArrayList<String>();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(FIXTURE_DIR),
-                "fixture_*.json")) {
-            for (Path p : stream) {
-                names.add(p.getFileName().toString());
-            }
-        }
-        names.sort(String::compareTo);
-        return names.stream();
+        return JsonFixtures.fixtures(FIXTURE_DIR);
     }
 
     public static JsonNode load(String aFixture)
     {
-        try (InputStream is = Files.newInputStream(Paths.get(FIXTURE_DIR, aFixture))) {
-            return MAPPER.readTree(is);
-        }
-        catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        return JsonFixtures.load(FIXTURE_DIR, aFixture);
     }
 
     /**

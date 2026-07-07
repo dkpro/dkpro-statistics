@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "irrcacVersion": "1.4",
+    "irrcacHome": "https://CRAN.R-project.org/package=irrCAC",
+    "irrcacLicense": "GPL (>= 2)",
+    "generatedBy": "public API (gwet.ac1.raw)",
+    "description": "Skewed 2x2 table with a high prevalence of one category; AC1 stays high where Scott's pi / kappa collapse."
+  },
+  "categories": [1, 2],
+  "table": [
+    [80, 7],
+    [8, 5]
+  ],
+  "n": 100,
+  "cases": [
+    {
+      "measure": "AC1",
+      "weights": "unweighted",
+      "distanceFunction": "nominal",
+      "pa": 0.85,
+      "pe": 0.21875,
+      "coefficient": 0.808
+    },
+    {
+      "measure": "AC2",
+      "weights": "quadratic",
+      "distanceFunction": "interval",
+      "pa": 0.85,
+      "pe": 0.21875,
+      "coefficient": 0.808
+    }
+  ]
+}
