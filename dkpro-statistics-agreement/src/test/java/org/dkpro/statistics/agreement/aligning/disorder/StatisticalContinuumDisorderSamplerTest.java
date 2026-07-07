@@ -222,6 +222,86 @@ class StatisticalContinuumDisorderSamplerTest
     }
 
     @Test
+    void unlabelledSpansBecomeTheirOwnWeightedCategory()
+    {
+        // Mixed continuum: half the units carry a label, half are unlabelled (empty feature map).
+        var set = new AnnotationSet(List.of( //
+                unit(ANNOTATOR_A, 1, 5, "a"), //
+                unit(ANNOTATOR_A, 10, 14, Map.of()), //
+                unit(ANNOTATOR_B, 3, 7, "a"), //
+                unit(ANNOTATOR_B, 12, 16, Map.of())));
+
+        var sampler = new StatisticalContinuumDisorderSampler(measure(set, 1));
+
+        // The single feature name is still auto-detected from the labelled units.
+        assertThat(sampler.getFeatureName()).isEqualTo("category");
+
+        // "unlabelled" (null) is a first-class category, ordered first by the nulls-first comparator.
+        // Weights: "a" x2, unlabelled x2 over 4 units -> 0.5 / 0.5.
+        assertThat(sampler.getCategories()).containsExactly(null, "a");
+        assertThat(sampler.getCategoryWeights()).containsExactly(0.5, 0.5);
+    }
+
+    @Test
+    void sampledContinuaContainUnlabelledUnitsAsEmptyFeatureMaps()
+    {
+        var set = new AnnotationSet(List.of( //
+                unit(ANNOTATOR_A, 1, 5, "a"), //
+                unit(ANNOTATOR_A, 10, 14, Map.of()), //
+                unit(ANNOTATOR_B, 3, 7, "a"), //
+                unit(ANNOTATOR_B, 12, 16, Map.of())));
+
+        var sampler = new StatisticalContinuumDisorderSampler(measure(set, 123));
+
+        boolean sawLabelled = false;
+        boolean sawUnlabelled = false;
+        for (int i = 0; i < 50; i++) {
+            var sample = sampler.sampleContinuum();
+            for (var u : sample.getUnits()) {
+                assertThat(u.getBegin()).isLessThan(u.getEnd());
+                if (u.getFeatureNames().isEmpty()) {
+                    // Unlabelled: an empty feature map, exactly like a real unlabelled unit - NOT a
+                    // "category" -> null entry.
+                    sawUnlabelled = true;
+                }
+                else {
+                    assertThat(u.getFeatureNames()).containsExactly("category");
+                    assertThat(u.getFeatureValue("category")).isEqualTo("a");
+                    sawLabelled = true;
+                }
+            }
+        }
+
+        // With 50/50 weights over 50 draws, both kinds are overwhelmingly likely to appear.
+        assertThat(sawLabelled).isTrue();
+        assertThat(sawUnlabelled).isTrue();
+    }
+
+    @Test
+    void endToEndGammaWithMixedLabelledAndUnlabelledSpans()
+    {
+        // Regression: a mixed continuum used to NPE in the sampler (TreeMap null key / Map.of null
+        // value). It must now compute a finite gamma end-to-end.
+        var set = new AnnotationSet(List.of( //
+                unit(ANNOTATOR_A, 1, 5, "a"), //
+                unit(ANNOTATOR_A, 10, 14, Map.of()), //
+                unit(ANNOTATOR_A, 20, 25, "b"), //
+                unit(ANNOTATOR_B, 3, 7, "a"), //
+                unit(ANNOTATOR_B, 12, 16, Map.of())));
+
+        var gamma = GammaAgreement.builder() //
+                .withAnnotationSet(set) //
+                .withDisorderSampler(StatisticalContinuumDisorderSampler::new) //
+                .withSeed(99) //
+                .withNumberOfSamples(30) //
+                .build();
+
+        double agreement = gamma.calculateAgreement();
+        assertThat(Double.isFinite(agreement)).isTrue();
+        assertThat(agreement).isLessThanOrEqualTo(1.0);
+    }
+
+    @Test
     void wiresInThroughSamplerFactory()
     {
         var set = new AnnotationSet(List.of( //

@@ -49,6 +49,9 @@
  */
 package org.dkpro.statistics.agreement.aligning.disorder;
 
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsFirst;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -221,7 +224,13 @@ public class StatisticalContinuumDisorderSampler
         stdUnitDuration = populationStd(durations, avgUnitDuration);
 
         // --- category weights (sorted order) ---
-        var counts = new TreeMap<String, Integer>();
+        // A unit that does not carry the category feature yields a null value, representing an
+        // unlabelled span. The measure supports these (categorical dissimilarity treats two
+        // unlabelled units as identical), so null is a legitimate category here. A natural-ordered
+        // TreeMap cannot hold a null key, hence the nulls-first comparator: it keeps the enumeration
+        // order deterministic (which matters because weightedCategory() walks categories[] consuming
+        // the RNG) while letting "unlabelled" be its own weighted category.
+        var counts = new TreeMap<String, Integer>(nullsFirst(naturalOrder()));
         int total = 0;
         for (var unit : referenceContinuum.getUnits()) {
             String category = unit.getFeatureValue(featureName);
@@ -297,10 +306,13 @@ public class StatisticalContinuumDisorderSampler
                 long end = Math.round(startD + durD);
                 String category = weightedCategory();
 
-                // 5-arg constructor with a null type: the 4-arg (Rater, long, long, Map) overload
-                // silently drops the features map, so it must not be used here.
-                sampled.add(new AlignableAnnotationUnit(rater, (String) null, begin, end,
-                        Map.of(featureName, category)));
+                // A null category models an unlabelled span: build it with an empty feature map so the
+                // sampled unit looks exactly like a real unlabelled unit (Map.of would NPE on a null
+                // value anyway). 5-arg constructor with a null type: the 4-arg (Rater, long, long, Map)
+                // overload silently drops the features map, so it must not be used here.
+                var features = category != null ? Map.of(featureName, category)
+                        : Map.<String, String> of();
+                sampled.add(new AlignableAnnotationUnit(rater, (String) null, begin, end, features));
 
                 lastPointD = startD + durD;
             }
