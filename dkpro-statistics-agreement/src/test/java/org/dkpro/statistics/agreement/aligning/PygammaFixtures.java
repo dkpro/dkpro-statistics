@@ -29,8 +29,8 @@ import org.dkpro.statistics.agreement.aligning.data.AnnotationSet;
 import org.dkpro.statistics.agreement.aligning.data.Rater;
 import org.dkpro.statistics.agreement.aligning.dissimilarity.CombinedCategoricalDissimilarity;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Shared loader for the pygamma cross-validation fixtures under
@@ -93,11 +93,11 @@ public final class PygammaFixtures
         var raters = new HashMap<String, Rater>();
         var units = new ArrayList<AlignableAnnotationUnit>();
         for (JsonNode entry : aUnitsArray) {
-            String annotator = entry.get("annotator").asText();
+            String annotator = entry.get("annotator").asString();
             var rater = raters.computeIfAbsent(annotator, name -> new Rater(name, raters.size()));
             long start = entry.get("start").asLong();
             long end = entry.get("end").asLong();
-            String category = entry.get("category").asText();
+            String category = entry.get("category").asString();
             units.add(new AlignableAnnotationUnit(rater, null, start, end,
                     Map.of("category", category)));
         }
