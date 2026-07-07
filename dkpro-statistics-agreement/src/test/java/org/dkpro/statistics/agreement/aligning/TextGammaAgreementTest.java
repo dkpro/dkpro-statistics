@@ -43,6 +43,43 @@ class TextGammaAgreementTest
 {
     private static final Rater ANNOTATOR_A = new Rater("A", 0);
     private static final Rater ANNOTATOR_B = new Rater("B", 1);
+
+    // Expected-disorder estimator guarantee: the estimate is within EXPECTED_DISORDER_PRECISION
+    // (relative) of the true mean with probability (1 - ALPHA).
+    private static final double ALPHA = 0.05;
+    private static final double EXPECTED_DISORDER_PRECISION = 0.01;
+
+    // The chance model is an unseeded Monte-Carlo estimate. Rather than pinning a seed, we average
+    // this many independent measurements; the mean's standard error shrinks by sqrt(repeats).
+    private static final int MEASUREMENT_REPEATS = 25;
+
+    // Head-room between the true agreement and the tolerance. The (1 - ALPHA) guarantee is only ~2
+    // sigma, so the original offset(0.01) (~2 sigma on a single measurement) failed ~5% of the time.
+    private static final double AGREEMENT_TOLERANCE_STD_ERRORS = 8.0;
+
+    private static double meanAgreement(TextGammaAgreement aMeasure)
+    {
+        var sum = 0.0;
+        for (var i = 0; i < MEASUREMENT_REPEATS; i++) {
+            sum += aMeasure.calculateAgreement();
+        }
+        return sum / MEASUREMENT_REPEATS;
+    }
+
+    /**
+     * Assertion tolerance for {@link #meanAgreement}, derived from the estimator's guarantee. Since
+     * agreement is {@code 1 - observed/expected}, the estimator's relative standard error
+     * ({@code EXPECTED_DISORDER_PRECISION / z(1 - alpha/2)}) shows up amplified by
+     * {@code |1 - agreement|} (0 for full agreement, largest for total disagreement) and reduced by
+     * {@code sqrt(MEASUREMENT_REPEATS)}.
+     */
+    private static double agreementTolerance(double aExpectedAgreement)
+    {
+        var z = new NormalDistribution(0, 1).inverseCumulativeProbability(1 - ALPHA / 2);
+        var meanStdError = Math.abs(1.0 - aExpectedAgreement) * EXPECTED_DISORDER_PRECISION / z
+                / Math.sqrt(MEASUREMENT_REPEATS);
+        return AGREEMENT_TOLERANCE_STD_ERRORS * meanStdError;
+    }
     private static final List<AlignableAnnotationTextUnit> TOTAL_TEXT_DISAGREEMENT = asList( //
             textUnit(ANNOTATOR_A, 0, 2, "a"), //
             textUnit(ANNOTATOR_A, 3, 5, "b"), //
@@ -94,10 +131,12 @@ class TextGammaAgreementTest
         var sut = TextGammaAgreement.builder() //
                 .withDisorderSampler(new NormalDistributionDisorderSampler()) //
                 .withDissimilarity(new NominalFeatureTextDissimilarity()) //
+                .withPrecision(EXPECTED_DISORDER_PRECISION) //
                 .withStudy(study) //
                 .build();
 
-        assertThat(sut.calculateAgreement()).isCloseTo(aExpectedAgreement, offset(0.01));
+        assertThat(meanAgreement(sut)).isCloseTo(aExpectedAgreement,
+                offset(agreementTolerance(aExpectedAgreement)));
     }
 
     private static final List<AlignableAnnotationTextUnit> FULL_LABEL_AGREEMENT = asList( //
@@ -175,10 +214,11 @@ class TextGammaAgreementTest
         var sut = TextGammaAgreement.builder() //
                 .withDisorderSampler(new NormalDistributionDisorderSampler()) //
                 .withDissimilarity(new NominalFeatureTextDissimilarity()) //
+                .withPrecision(EXPECTED_DISORDER_PRECISION) //
                 .withTexts(text1, text2) //
                 .build();
 
-        assertThat(sut.calculateAgreement()).isCloseTo(0.6, offset(0.005));
+        assertThat(meanAgreement(sut)).isCloseTo(0.6, offset(agreementTolerance(0.6)));
     }
 
     @Test
