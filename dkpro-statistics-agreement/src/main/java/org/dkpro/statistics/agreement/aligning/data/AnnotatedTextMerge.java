@@ -42,6 +42,10 @@ import org.dkpro.statistics.agreement.aligning.alignment.UnitaryAlignment;
  * moved).</li>
  * <li>Each {@code UnitaryAlignment} receives the annotation set's shared sorted rater-set view
  * instead of a fresh unordered copy per iteration.</li>
+ * <li>Adds an equal-text fast path: when both texts are identical, the units already share a
+ * coordinate system and are merged directly at their native offsets, bypassing the
+ * {@code PairwiseDPTextAlignment} character alignment entirely (avoiding its quadratic matrix and
+ * stack-heavy recursive backtracking on document-scale input).</li>
  * </ul>
  */
 public class AnnotatedTextMerge
@@ -62,6 +66,22 @@ public class AnnotatedTextMerge
             AnnotatedText aText1, AnnotatedText aText2,
             int aLevenshteinThreshold)
     {
+        // Fast path: identical base text. When both raters annotated the very same text -- the
+        // common case for pairwise agreement over a single source document -- the character-level
+        // Needleman-Wunsch alignment is unnecessary. The two texts already share a coordinate
+        // system, so their units can be merged directly at their native offsets. This avoids
+        // building the O(n^2) DP matrix and, in particular, the deep recursive backtracking in
+        // PairwiseDPTextAlignment, which overflows the stack on document-scale input. The text-level
+        // edit distance is zero here, so any Levenshtein threshold is trivially satisfied -- marker
+        // (i.e. annotation) differences are what gamma measures, not a text divergence to reject.
+        if (aText1.getText().equals(aText2.getText())) {
+            var units = new ArrayList<AlignableAnnotationUnit>(
+                    aText1.getUnits().size() + aText2.getUnits().size());
+            units.addAll(aText1.getUnits());
+            units.addAll(aText2.getUnits());
+            return Set.of(buildSegmentedAlignment(units));
+        }
+
         var aligner = new PairwiseDPTextAlignment(aText1, aText2);
 
         // get the alignment cost and throw an Exception if cost is above a threshold
@@ -107,30 +127,40 @@ public class AnnotatedTextMerge
         // create alignments
         var alignmentSet = new HashSet<Alignment>();
         for (var units : bestAlignedUnits) {
-            var alignedUnits = new HashSet<UnitaryAlignment>();
-            var annoset = new AnnotationSet(units);
-            var alignments = new ArrayList<AlignableAnnotationUnit>(annoset.getRaterCount());
-
-            AlignableAnnotationUnit lastUnit = null;
-            for (var u : annoset.getUnits()) {
-                if (lastUnit != null && !u.isCoextensive(lastUnit)) {
-                    alignedUnits.add(new UnitaryAlignment(alignments, annoset.getRaters()));
-                    alignments.clear();
-                }
-
-                alignments.add(u);
-                lastUnit = u;
-            }
-
-            if (!alignments.isEmpty()) {
-                alignedUnits.add(new UnitaryAlignment(alignments, annoset.getRaters()));
-            }
-
-            alignmentSet.add(new Alignment(alignedUnits, annoset));
+            alignmentSet.add(buildSegmentedAlignment(units));
         }
 
         return alignmentSet;
 
+    }
+
+    /**
+     * Groups the given units (assumed to live in a common coordinate system) into a single
+     * {@link Alignment}: co-extensive units are collected into the same {@link UnitaryAlignment},
+     * relying on {@link AnnotationSet#getUnits()} returning them in offset order.
+     */
+    private static Alignment buildSegmentedAlignment(List<AlignableAnnotationUnit> aUnits)
+    {
+        var alignedUnits = new HashSet<UnitaryAlignment>();
+        var annoset = new AnnotationSet(aUnits);
+        var alignments = new ArrayList<AlignableAnnotationUnit>(annoset.getRaterCount());
+
+        AlignableAnnotationUnit lastUnit = null;
+        for (var u : annoset.getUnits()) {
+            if (lastUnit != null && !u.isCoextensive(lastUnit)) {
+                alignedUnits.add(new UnitaryAlignment(alignments, annoset.getRaters()));
+                alignments.clear();
+            }
+
+            alignments.add(u);
+            lastUnit = u;
+        }
+
+        if (!alignments.isEmpty()) {
+            alignedUnits.add(new UnitaryAlignment(alignments, annoset.getRaters()));
+        }
+
+        return new Alignment(alignedUnits, annoset);
     }
 
     private static int countPairwiseColocatedUnits(AlignableAnnotationUnit[] units1,

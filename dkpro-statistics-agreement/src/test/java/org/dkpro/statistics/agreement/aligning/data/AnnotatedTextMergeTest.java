@@ -125,4 +125,31 @@ class AnnotatedTextMergeTest
         // }
     }
 
+    /**
+     * A long identical text must merge via the equal-text fast path. The former character-level DP
+     * backtracking recursed once per character and overflowed the stack on document-scale input; the
+     * fast path merges the units directly at their native offsets in a flat pass.
+     */
+    @Test
+    void testMergeLongIdenticalTextDoesNotOverflowStack()
+    {
+        var text = "lorem ipsum dolor sit amet ".repeat(4000); // ~108k characters
+
+        var annots1 = asList( //
+                new AlignableAnnotationTextUnit(ANNOTATOR_A, 0, 5, "lorem"), //
+                new AlignableAnnotationTextUnit(ANNOTATOR_A, 6, 11, "ipsum"));
+        var text1 = new AnnotatedText(text, annots1);
+
+        var annots2 = asList( //
+                new AlignableAnnotationTextUnit(ANNOTATOR_B, 0, 5, "lorem"), //
+                new AlignableAnnotationTextUnit(ANNOTATOR_B, 6, 11, "ipsum"));
+        var text2 = new AnnotatedText(text, annots2);
+
+        var harm = mergeAnnotatedTextsWithSegmentation(text1, text2);
+
+        assertThat(harm).hasSize(1);
+        var al = harm.toArray(new Alignment[0])[0];
+        assertThat(al.getDisorder(new NominalFeatureTextDissimilarity())).isEqualTo(0);
+    }
+
 }

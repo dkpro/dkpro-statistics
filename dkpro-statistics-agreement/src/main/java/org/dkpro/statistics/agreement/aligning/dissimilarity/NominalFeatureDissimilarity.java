@@ -22,15 +22,11 @@ import java.util.Set;
 import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 
 /**
- * TextGamma nominal dissimilarity ported from {@code TextGammaTool}. Deviation from the original: for
- * the empty-vs-empty case ({@code null, null}) upstream returns {@code 0}, but that branch is never
- * exercised in the 2-rater TextGamma path (a {@link
- * org.dkpro.statistics.agreement.aligning.alignment.UnitaryAlignment} is always built from at least
- * one real unit, so a pair is at most {@code (unit, empty)}). Because upstream never reached this
- * branch either, we cannot be sure {@code 0} was the correct behavior — in the general N-ary Gamma
- * framework an empty unit costs {@code deltaEmpty}, not {@code 0}. We therefore fail fast here so that
- * any future change that makes this reachable surfaces loudly instead of silently returning a value
- * that may be wrong.
+ * TextGamma nominal dissimilarity ported from {@code TextGammaTool}. For the empty-vs-empty case
+ * ({@code null, null}) we return {@code 0}, matching upstream: with three or more raters a {@link
+ * org.dkpro.statistics.agreement.aligning.alignment.UnitaryAlignment} can legitimately pair two empty
+ * units (each missing rater is padded with an empty unit), so this branch is reachable and must return
+ * a value.
  */
 public class NominalFeatureDissimilarity
     implements IDissimilarity
@@ -39,11 +35,7 @@ public class NominalFeatureDissimilarity
     public double dissimilarity(AlignableAnnotationUnit aUnit1, AlignableAnnotationUnit aUnit2)
     {
         if (aUnit1 == null && aUnit2 == null) {
-            // Upstream (TextGammaTool) returned 0 here, but that branch was never exercised, so we
-            // cannot be sure 0 was the correct behavior. It is unreachable in the 2-rater TextGamma
-            // path; reaching it means a bug was introduced upstream of this call.
-            throw new IllegalStateException(
-                    "Dissimilarity of two empty units is unreachable in the 2-rater TextGamma path");
+            return 0;
         }
 
         if (aUnit1 == null) {
