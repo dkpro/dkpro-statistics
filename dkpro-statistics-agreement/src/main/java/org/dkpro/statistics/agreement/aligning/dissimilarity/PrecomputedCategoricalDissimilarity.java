@@ -69,9 +69,9 @@ import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
  * regardless of the order in which they pass the categories.
  * <p>
  * Deviation from the original: pygamma resolves the category via a scalar annotation index, whereas
- * here the category is the value of a configurable unit feature; an unknown category value raises an
- * {@link IllegalArgumentException}. The matrix is validated (square, matching dimensions, symmetric,
- * zero diagonal) and defensively copied at construction time.
+ * here the category is the value of a configurable unit feature; an unknown category value raises
+ * an {@link IllegalArgumentException}. The matrix is validated (square, matching dimensions,
+ * symmetric, zero diagonal) and defensively copied at construction time.
  *
  * @see <a href="https://github.com/bootphon/pygamma-agreement">pygamma-agreement</a>
  * @see <a href="https://aclanthology.org/J15-3003.pdf">Mathet et al. 2015</a>
@@ -116,8 +116,8 @@ public class PrecomputedCategoricalDissimilarity
 
         // Validate: square matrix with dimensions matching the number of (distinct) categories.
         if (aMatrix.length != n) {
-            throw new IllegalArgumentException("Matrix has " + aMatrix.length + " rows but there are "
-                    + n + " categories.");
+            throw new IllegalArgumentException(
+                    "Matrix has " + aMatrix.length + " rows but there are " + n + " categories.");
         }
         for (int i = 0; i < n; i++) {
             if (aMatrix[i] == null || aMatrix[i].length != n) {
@@ -137,7 +137,8 @@ public class PrecomputedCategoricalDissimilarity
                 if (aMatrix[i][j] != aMatrix[j][i]) {
                     throw new IllegalArgumentException(
                             "Matrix must be symmetric. Offending entries: [" + i + "][" + j + "] = "
-                                    + aMatrix[i][j] + " vs [" + j + "][" + i + "] = " + aMatrix[j][i]);
+                                    + aMatrix[i][j] + " vs [" + j + "][" + i + "] = "
+                                    + aMatrix[j][i]);
                 }
             }
         }

@@ -38,13 +38,14 @@ public class MultiRaterAgreementTest
         PercentageAgreement pa = new PercentageAgreement(study);
         double agreement = pa.calculateAgreement();
         assertThat(agreement).isCloseTo(0.533, offset(0.001));
-        //TODO
-        /*double se = poa.standardError(agreement);
-        double[] ci = poa.confidenceInterval(agreement, se, RawAgreement.CONFIDENCE_95);
-        assertThat(se).isCloseTo(0.045, offset(0.001));
-        assertThat(ci[0]).isCloseTo(0.610, offset(0.001));
-        assertThat(ci[1]).isCloseTo(0.789, offset(0.001));*/        
-        
+        // TODO
+        /*
+         * double se = poa.standardError(agreement); double[] ci = poa.confidenceInterval(agreement,
+         * se, RawAgreement.CONFIDENCE_95); assertThat(se).isCloseTo(0.045, offset(0.001));
+         * assertThat(ci[0]).isCloseTo(0.610, offset(0.001)); assertThat(ci[1]).isCloseTo(0.789,
+         * offset(0.001));
+         */
+
         // Fleiss' multi-pi.
         FleissKappaAgreement pi = new FleissKappaAgreement(study);
         assertThat(pi.calculateObservedAgreement()).isCloseTo(0.533, offset(0.001));

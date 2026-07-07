@@ -30,11 +30,12 @@ import org.dkpro.statistics.agreement.aligning.data.AnnotatedText;
  * <p>
  * Deviations from the upstream TextGammaTool implementation:
  * <ul>
- * <li>Adds a {@code PairwiseDPTextAlignment(AnnotatedText, AnnotatedText)} constructor and a private
- * {@code insertAnnotationsInText} that serialises annotations into the raw text with the open/close
- * marker characters. This marker insertion plus the reserved-character and overlapping-unit
- * validation were relocated here from {@code AnnotatedTextMerge}. The Needleman-Wunsch DP core
- * (substitutions deliberately never chosen, meta-character handling) is unchanged.</li>
+ * <li>Adds a {@code PairwiseDPTextAlignment(AnnotatedText, AnnotatedText)} constructor and a
+ * private {@code insertAnnotationsInText} that serialises annotations into the raw text with the
+ * open/close marker characters. This marker insertion plus the reserved-character and
+ * overlapping-unit validation were relocated here from {@code AnnotatedTextMerge}. The
+ * Needleman-Wunsch DP core (substitutions deliberately never chosen, meta-character handling) is
+ * unchanged.</li>
  * </ul>
  */
 public class PairwiseDPTextAlignment
@@ -52,8 +53,7 @@ public class PairwiseDPTextAlignment
 
     private List<String[]> alignments = null;
 
-    public PairwiseDPTextAlignment(AnnotatedText aText1,
-            AnnotatedText aText2)
+    public PairwiseDPTextAlignment(AnnotatedText aText1, AnnotatedText aText2)
     {
         this(insertAnnotationsInText(aText1).toCharArray(),
                 insertAnnotationsInText(aText2).toCharArray(), GAP, OPEN_UNIT, CLOSE_UNIT);

@@ -53,21 +53,23 @@ import org.slf4j.LoggerFactory;
  *
  * <p>
  * Deviations from the upstream TextGammaTool implementation. These are aggregated here for
- * convenience; each ported class also documents the deviations relevant to it. This list covers only
- * the TextGammaTool-derived classes (those carrying an {@code "Original source: ...TextGammaTool.git"}
- * header).
+ * convenience; each ported class also documents the deviations relevant to it. This list covers
+ * only the TextGammaTool-derived classes (those carrying an
+ * {@code "Original source: ...TextGammaTool.git"} header).
  * <ul>
  * <li>Exposed as a {@link Builder}-configured {@link IAligningAgreementMeasure} rather than the
- * upstream static {@code TextGamma.getGamma(...)} function; inputs come from {@link Builder#withTexts}
- * or {@link Builder#withStudy} and are validated (exactly two texts/raters, one rater each), with
- * defaults for {@code precision}, {@code alpha} and the dissimilarity that upstream required as
- * arguments.</li>
+ * upstream static {@code TextGamma.getGamma(...)} function; inputs come from
+ * {@link Builder#withTexts} or {@link Builder#withStudy} and are validated (exactly two
+ * texts/raters, one rater each), with defaults for {@code precision}, {@code alpha} and the
+ * dissimilarity that upstream required as arguments.</li>
  * <li>The upstream mandatory gold {@code orig} text is optional here ({@link Builder#withBaseText},
  * {@link #getBaseText()}); when it is absent the chance model stays symmetric over both raters
- * instead of assuming a shared reference text/segmentation (see {@code SimpleDisorderSampler}).</li>
- * <li>The chance model is reproducible: a single {@link org.apache.commons.math3.random.RandomGenerator}
- * ({@link Builder#withSeed} / {@link Builder#withRandomGenerator}, {@link #getRandomGenerator()}) drives
- * every sampled distribution and shuffle, whereas upstream used unseeded generators and a fresh
+ * instead of assuming a shared reference text/segmentation (see
+ * {@code SimpleDisorderSampler}).</li>
+ * <li>The chance model is reproducible: a single
+ * {@link org.apache.commons.math3.random.RandomGenerator} ({@link Builder#withSeed} /
+ * {@link Builder#withRandomGenerator}, {@link #getRandomGenerator()}) drives every sampled
+ * distribution and shuffle, whereas upstream used unseeded generators and a fresh
  * {@code new Random()} per call.</li>
  * <li>The disorder sampler is injected through {@code IDisorderSamplerFactory} /
  * {@code IGammaDisorderSamplerFactory} so it can bind to the measure and pick up the seed and base
@@ -76,8 +78,8 @@ import org.slf4j.LoggerFactory;
  * {@link org.dkpro.statistics.agreement.InsufficientDataException} when the expected disorder is
  * {@code 0} instead of dividing to {@code Infinity}/{@code NaN} as upstream does.</li>
  * <li>The open/close/gap markers are fixed constants ({@link #OPEN_UNIT}, {@link #CLOSE_UNIT},
- * {@link #GAP}) validated once for distinctness, rather than per-call {@code char} parameters threaded
- * through the merge and observed-disorder computation.</li>
+ * {@link #GAP}) validated once for distinctness, rather than per-call {@code char} parameters
+ * threaded through the merge and observed-disorder computation.</li>
  * <li>{@code NominalFeatureDissimilarity} / {@code NominalFeatureTextDissimilarity} throw
  * {@code IllegalStateException} for the empty-vs-empty case instead of returning {@code 0}.</li>
  * <li>The segmentation-merge in {@code AnnotationSetShuffle} keys neighbour compatibility on the
@@ -89,7 +91,8 @@ import org.slf4j.LoggerFactory;
  * sorted {@code TreeSet}, so rater order is stable and flows into the merge; upstream built the set
  * once and left raters unordered.</li>
  * <li>Pervasive renames and type changes: {@code Annotator}->{@code Rater} (now with an index),
- * {@code Unit}->{@code AlignableAnnotationUnit}, {@code TextUnit}->{@code AlignableAnnotationTextUnit},
+ * {@code Unit}->{@code AlignableAnnotationUnit},
+ * {@code TextUnit}->{@code AlignableAnnotationTextUnit},
  * {@code Dissimilarity}->{@code IDissimilarity}, {@code TextAlignment}->{@code ITextAlignment}
  * (abstract classes became interfaces); the {@code Text} value class was folded into
  * {@code AnnotatedText} as a {@code String}; offsets widened {@code int}->{@code long}.</li>
@@ -128,7 +131,8 @@ public class TextGammaAgreement
         alpha = builder.alpha;
 
         // Resolve the source of randomness before the sampler is created below, so a sampler
-        // created through the factory can pick it up via getRandomGenerator(). When no generator (or
+        // created through the factory can pick it up via getRandomGenerator(). When no generator
+        // (or
         // seed) is configured we fall back to a fresh, time-seeded generator - preserving the
         // previous, non-reproducible behaviour.
         randomGenerator = builder.randomGenerator != null ? builder.randomGenerator
@@ -174,9 +178,11 @@ public class TextGammaAgreement
         }
 
         // Base text used by the chance model. Upstream TextGamma always had an explicit gold "orig"
-        // text - a text AND a reference segmentation - from which random annotators were derived. The
+        // text - a text AND a reference segmentation - from which random annotators were derived.
+        // The
         // DKPro API has no such parameter and, in general, there is no reference: in particular we
-        // must not assume the raters share a segmentation. So we only use a base text when the caller
+        // must not assume the raters share a segmentation. So we only use a base text when the
+        // caller
         // explicitly supplies one (asserting a genuine external reference). Otherwise there is
         // deliberately no base and the sampler stays symmetric in the raters (see
         // SimpleDisorderSampler#sampleDisorder).
@@ -217,7 +223,8 @@ public class TextGammaAgreement
     /**
      * @return the base text used by the chance model if one was explicitly supplied via
      *         {@link Builder#withBaseText}. Empty otherwise, in which case the sampler stays
-     *         symmetric over both raters rather than assuming a reference (see SimpleDisorderSampler).
+     *         symmetric over both raters rather than assuming a reference (see
+     *         SimpleDisorderSampler).
      */
     public Optional<AnnotatedText> getBaseText()
     {
@@ -387,8 +394,8 @@ public class TextGammaAgreement
         }
 
         /**
-         * Seeds the chance model so that the measurement is reproducible: with a fixed seed the same
-         * study yields the same agreement value on every run. Without a seed (or an explicit
+         * Seeds the chance model so that the measurement is reproducible: with a fixed seed the
+         * same study yields the same agreement value on every run. Without a seed (or an explicit
          * generator) the chance model uses a fresh, time-seeded generator and results vary slightly
          * from run to run within the configured precision. Convenience shortcut for
          * {@link #withRandomGenerator} with a {@link Well19937c} seeded with {@code aSeed}.

@@ -25,20 +25,25 @@ import org.dkpro.statistics.agreement.coding.ICodingAnnotationItem;
 import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
 
 /**
- * Plain-text visualization for a contingency matrix as defined by 
- * Krippendorff (1980: p. 133). That is, a table showing the frequencies
- * of each combination of categories used by two raters. A contigency table
- * is only defined for coding studies with exactly two raters. For the example 
- * by Krippendorff (1980: p. 133), the implementation displays:
+ * Plain-text visualization for a contingency matrix as defined by Krippendorff (1980: p. 133). That
+ * is, a table showing the frequencies of each combination of categories used by two raters. A
+ * contigency table is only defined for coding studies with exactly two raters. For the example by
+ * Krippendorff (1980: p. 133), the implementation displays:
+ * 
  * <pre>
  *     0   1   Σ
  * 0   5   3   8
  * 1   1   1   2
  * Σ   6   4  10
- * </pre><br>
- * References:<ul>
- * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology.
- *   Beverly Hills, CA: Sage Publications, 1980.</li></ul>
+ * </pre>
+ * 
+ * <br>
+ * References:
+ * <ul>
+ * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology. Beverly Hills, CA:
+ * Sage Publications, 1980.</li>
+ * </ul>
+ * 
  * @see ICodingAnnotationStudy
  * @author Christian M. Meyer
  */

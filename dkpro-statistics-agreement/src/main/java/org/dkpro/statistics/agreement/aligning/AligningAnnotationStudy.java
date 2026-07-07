@@ -55,13 +55,15 @@ public class AligningAnnotationStudy
         }
     }
 
-    public void addUnits(Collection<? extends AlignableAnnotationUnit> aUnits) {
+    public void addUnits(Collection<? extends AlignableAnnotationUnit> aUnits)
+    {
         for (var unit : aUnits) {
             addUnit(unit);
         }
     }
 
-    public void addUnits(AlignableAnnotationUnit... aUnits) {
+    public void addUnits(AlignableAnnotationUnit... aUnits)
+    {
         for (var unit : aUnits) {
             addUnit(unit);
         }

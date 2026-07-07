@@ -80,7 +80,8 @@ public abstract class AbstractDissimilarity
     }
 
     @Override
-    public final double dissimilarity(AlignableAnnotationUnit aUnit1, AlignableAnnotationUnit aUnit2)
+    public final double dissimilarity(AlignableAnnotationUnit aUnit1,
+            AlignableAnnotationUnit aUnit2)
     {
         // Any pair involving an empty (null) unit - including a pair of two empty units - costs
         // deltaEmpty. See pygamma dissimilarity.py:_compute_alignment_disorders.

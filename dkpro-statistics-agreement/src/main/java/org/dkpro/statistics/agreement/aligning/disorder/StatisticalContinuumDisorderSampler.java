@@ -87,42 +87,44 @@ import org.dkpro.statistics.agreement.aligning.dissimilarity.IDissimilarity;
  * </ul>
  * <p>
  * <b>Category handling (Java adaptation of pygamma's single-annotation model).</b> pygamma stores a
- * single scalar "annotation" (category) per unit. Units in this project instead carry a feature map,
- * so the "category" of a unit is taken to be the value of exactly one feature. If the reference units
- * collectively carry exactly one distinct feature name it is detected automatically; otherwise the
- * explicit feature-name constructor must be used (an {@link IllegalArgumentException} is thrown). Every
- * sampled unit carries exactly that one feature.
+ * single scalar "annotation" (category) per unit. Units in this project instead carry a feature
+ * map, so the "category" of a unit is taken to be the value of exactly one feature. If the
+ * reference units collectively carry exactly one distinct feature name it is detected
+ * automatically; otherwise the explicit feature-name constructor must be used (an
+ * {@link IllegalArgumentException} is thrown). Every sampled unit carries exactly that one feature.
  * <p>
- * <b>Sampling one continuum (long adaptation, per PLAN &sect;3.6).</b> For each rater of the reference
- * (the same {@link Rater} objects, in sorted order):
+ * <b>Sampling one continuum (long adaptation, per PLAN &sect;3.6).</b> For each rater of the
+ * reference (the same {@link Rater} objects, in sorted order):
  * <ol>
- * <li>{@code nbUnits = abs((int) normal(avgUnits, stdUnits))} - the {@code (int)} cast truncates toward
- * zero exactly like Python's {@code int()}. It is forced to {@code max(1, nbUnits)} only while the
- * sampled continuum is still empty (pygamma's {@code if not new_continnum}: the first rater is always
- * forced, later raters only if everything drawn so far was empty).</li>
+ * <li>{@code nbUnits = abs((int) normal(avgUnits, stdUnits))} - the {@code (int)} cast truncates
+ * toward zero exactly like Python's {@code int()}. It is forced to {@code max(1, nbUnits)} only
+ * while the sampled continuum is still empty (pygamma's {@code if not new_continnum}: the first
+ * rater is always forced, later raters only if everything drawn so far was empty).</li>
  * <li>Per unit: {@code gap = normal(avgGap, stdGap)}; {@code startD = lastPointD + gap};
- * {@code durD = abs(normal(avgDur, stdDur))} redrawn while {@code round(startD + durD) - round(startD)
+ * {@code durD = abs(normal(avgDur, stdDur))} redrawn while
+ * {@code round(startD + durD) - round(startD)
  * < 1} (the integer analogue of pyannote's {@code SEGMENT_PRECISION} redraw); the unit gets
- * {@code begin = round(startD)}, {@code end = round(startD + durD)}; the category is drawn by weighted
- * choice; {@code lastPointD = startD + durD} accumulates in {@code double} so only per-unit rounding is
- * applied and positions do not drift.</li>
+ * {@code begin = round(startD)}, {@code end = round(startD + durD)}; the category is drawn by
+ * weighted choice; {@code lastPointD = startD + durD} accumulates in {@code double} so only
+ * per-unit rounding is applied and positions do not drift.</li>
  * </ol>
  * <p>
- * All randomness is drawn from {@link GammaAgreement#getRandomGenerator()} so that a seed configured on
- * the measure makes the sampling reproducible.
+ * All randomness is drawn from {@link GammaAgreement#getRandomGenerator()} so that a seed
+ * configured on the measure makes the sampling reproducible.
  * <p>
  * Deviations from the original:
  * <ul>
- * <li>Units carry {@code long} offsets; positions accumulate in {@code double} and are rounded per unit
- * (pygamma keeps {@code float} coordinates). At character-offset scale this rounding perturbation is
- * far below the 5%/1% sampling precision of the chance model.</li>
+ * <li>Units carry {@code long} offsets; positions accumulate in {@code double} and are rounded per
+ * unit (pygamma keeps {@code float} coordinates). At character-offset scale this rounding
+ * perturbation is far below the 5%/1% sampling precision of the chance model.</li>
  * <li>The duration redraw threshold is an integer {@code 1} instead of pyannote's
- * {@code SEGMENT_PRECISION} (~{@code 1e-6}), because rounded units of zero length are the degenerate
- * case here.</li>
+ * {@code SEGMENT_PRECISION} (~{@code 1e-6}), because rounded units of zero length are the
+ * degenerate case here.</li>
  * <li>Normal draws use {@code mean + sd * rng.nextGaussian()} rather than commons-math's
  * {@code NormalDistribution}, which throws for {@code sd == 0}; numpy returns the mean in that case
  * (and {@code sd == 0} happens routinely, e.g. equal unit counts across raters).</li>
- * <li>The category is a feature value rather than pygamma's single scalar annotation (see above).</li>
+ * <li>The category is a feature value rather than pygamma's single scalar annotation (see
+ * above).</li>
  * </ul>
  *
  * @see <a href="https://github.com/bootphon/pygamma-agreement">pygamma-agreement</a>
@@ -155,11 +157,12 @@ public class StatisticalContinuumDisorderSampler
      * Creates a sampler for the given measure, auto-detecting the category feature name.
      *
      * @param aMeasure
-     *            the gamma measure whose reference continuum, dissimilarity, delta-empty and source of
-     *            randomness are used.
+     *            the gamma measure whose reference continuum, dissimilarity, delta-empty and source
+     *            of randomness are used.
      * @throws IllegalArgumentException
-     *             if the reference units do not collectively carry exactly one distinct feature name
-     *             (use {@link #StatisticalContinuumDisorderSampler(GammaAgreement, String)} instead).
+     *             if the reference units do not collectively carry exactly one distinct feature
+     *             name (use {@link #StatisticalContinuumDisorderSampler(GammaAgreement, String)}
+     *             instead).
      */
     public StatisticalContinuumDisorderSampler(GammaAgreement aMeasure)
     {
@@ -170,8 +173,8 @@ public class StatisticalContinuumDisorderSampler
      * Creates a sampler for the given measure using the named feature as the category.
      *
      * @param aMeasure
-     *            the gamma measure whose reference continuum, dissimilarity, delta-empty and source of
-     *            randomness are used.
+     *            the gamma measure whose reference continuum, dissimilarity, delta-empty and source
+     *            of randomness are used.
      * @param aFeatureName
      *            the feature whose value is treated as each unit's category.
      */
@@ -227,8 +230,10 @@ public class StatisticalContinuumDisorderSampler
         // A unit that does not carry the category feature yields a null value, representing an
         // unlabelled span. The measure supports these (categorical dissimilarity treats two
         // unlabelled units as identical), so null is a legitimate category here. A natural-ordered
-        // TreeMap cannot hold a null key, hence the nulls-first comparator: it keeps the enumeration
-        // order deterministic (which matters because weightedCategory() walks categories[] consuming
+        // TreeMap cannot hold a null key, hence the nulls-first comparator: it keeps the
+        // enumeration
+        // order deterministic (which matters because weightedCategory() walks categories[]
+        // consuming
         // the RNG) while letting "unlabelled" be its own weighted category.
         var counts = new TreeMap<String, Integer>(nullsFirst(naturalOrder()));
         int total = 0;
@@ -296,7 +301,8 @@ public class StatisticalContinuumDisorderSampler
                 double startD = lastPointD + gap;
 
                 double durD = Math.abs(normal(avgUnitDuration, stdUnitDuration));
-                // Redraw until the rounded segment spans at least one integer unit (integer analogue
+                // Redraw until the rounded segment spans at least one integer unit (integer
+                // analogue
                 // of pyannote's SEGMENT_PRECISION check). Guarantees begin < end.
                 while (Math.round(startD + durD) - Math.round(startD) < 1) {
                     durD = Math.abs(normal(avgUnitDuration, stdUnitDuration));
@@ -306,13 +312,17 @@ public class StatisticalContinuumDisorderSampler
                 long end = Math.round(startD + durD);
                 String category = weightedCategory();
 
-                // A null category models an unlabelled span: build it with an empty feature map so the
-                // sampled unit looks exactly like a real unlabelled unit (Map.of would NPE on a null
-                // value anyway). 5-arg constructor with a null type: the 4-arg (Rater, long, long, Map)
+                // A null category models an unlabelled span: build it with an empty feature map so
+                // the
+                // sampled unit looks exactly like a real unlabelled unit (Map.of would NPE on a
+                // null
+                // value anyway). 5-arg constructor with a null type: the 4-arg (Rater, long, long,
+                // Map)
                 // overload silently drops the features map, so it must not be used here.
                 var features = category != null ? Map.of(featureName, category)
                         : Map.<String, String> of();
-                sampled.add(new AlignableAnnotationUnit(rater, (String) null, begin, end, features));
+                sampled.add(
+                        new AlignableAnnotationUnit(rater, (String) null, begin, end, features));
 
                 lastPointD = startD + durD;
             }

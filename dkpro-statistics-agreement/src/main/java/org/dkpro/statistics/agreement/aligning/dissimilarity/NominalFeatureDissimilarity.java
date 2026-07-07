@@ -23,10 +23,10 @@ import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 
 /**
  * TextGamma nominal dissimilarity ported from {@code TextGammaTool}. For the empty-vs-empty case
- * ({@code null, null}) we return {@code 0}, matching upstream: with three or more raters a {@link
- * org.dkpro.statistics.agreement.aligning.alignment.UnitaryAlignment} can legitimately pair two empty
- * units (each missing rater is padded with an empty unit), so this branch is reachable and must return
- * a value.
+ * ({@code null, null}) we return {@code 0}, matching upstream: with three or more raters a
+ * {@link org.dkpro.statistics.agreement.aligning.alignment.UnitaryAlignment} can legitimately pair
+ * two empty units (each missing rater is padded with an empty unit), so this branch is reachable
+ * and must return a value.
  */
 public class NominalFeatureDissimilarity
     implements IDissimilarity

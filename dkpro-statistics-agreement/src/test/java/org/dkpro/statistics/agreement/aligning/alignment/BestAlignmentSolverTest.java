@@ -33,9 +33,11 @@ public class BestAlignmentSolverTest
     private static final Rater ANN1 = new Rater("Ann1", 0);
     private static final Rater ANN2 = new Rater("Ann2", 1);
 
-    private static AlignableAnnotationUnit unit(Rater aRater, long aBegin, long aEnd, String aCategory)
+    private static AlignableAnnotationUnit unit(Rater aRater, long aBegin, long aEnd,
+            String aCategory)
     {
-        return new AlignableAnnotationUnit(aRater, null, aBegin, aEnd, Map.of("category", aCategory));
+        return new AlignableAnnotationUnit(aRater, null, aBegin, aEnd,
+                Map.of("category", aCategory));
     }
 
     private static CombinedCategoricalDissimilarity dissimilarity()
@@ -60,8 +62,10 @@ public class BestAlignmentSolverTest
     @Test
     void testDisjointUnitsBestIsEmptyPairing()
     {
-        // Far-apart units: pairing them is not even a valid candidate (positional dissim >> criterion),
-        // so the best alignment pairs each with the empty unit. Each singleton costs deltaEmpty = 1;
+        // Far-apart units: pairing them is not even a valid candidate (positional dissim >>
+        // criterion),
+        // so the best alignment pairs each with the empty unit. Each singleton costs deltaEmpty =
+        // 1;
         // sum = 2, divided by avg annotations (2/2 = 1) -> disorder 2.
         var units = asList( //
                 unit(ANN1, 0, 10, "a"), //
@@ -124,8 +128,10 @@ public class BestAlignmentSolverTest
             assertThat(disorder).isLessThanOrEqualTo(n * deltaEmpty + 1e-9);
         }
 
-        // Specifically, no candidate must pair far1 with far2. far1 is Ann1's unit at index 0 (begin
-        // 0 < 100), far2 is Ann2's unit at index 1 (begin 1000 > 101). A candidate pairing them would
+        // Specifically, no candidate must pair far1 with far2. far1 is Ann1's unit at index 0
+        // (begin
+        // 0 < 100), far2 is Ann2's unit at index 1 (begin 1000 > 101). A candidate pairing them
+        // would
         // have Ann1 index 0 and Ann2 index 1 both non-empty.
         var raters = candidates.raters();
         int ann1Idx = raters.indexOf(ANN1);
@@ -183,13 +189,14 @@ public class BestAlignmentSolverTest
     }
 
     /**
-     * Exhaustively enumerates all partial matchings between two raters' units and returns the minimal
-     * alignment disorder. For n = 2 the unitary-alignment disorder divides by C(2,2) = 1, so a matched
-     * pair costs d(a, b) and an unmatched unit costs deltaEmpty; the alignment disorder is the sum
-     * divided by the average number of annotations (numUnits / 2).
+     * Exhaustively enumerates all partial matchings between two raters' units and returns the
+     * minimal alignment disorder. For n = 2 the unitary-alignment disorder divides by C(2,2) = 1,
+     * so a matched pair costs d(a, b) and an unmatched unit costs deltaEmpty; the alignment
+     * disorder is the sum divided by the average number of annotations (numUnits / 2).
      */
     private static double bruteForceBestDisorder(List<AlignableAnnotationUnit> aUnits,
-            List<AlignableAnnotationUnit> bUnits, CombinedCategoricalDissimilarity d, double deltaEmpty)
+            List<AlignableAnnotationUnit> bUnits, CombinedCategoricalDissimilarity d,
+            double deltaEmpty)
     {
         double avg = (aUnits.size() + bUnits.size()) / 2.0;
         boolean[] usedB = new boolean[bUnits.size()];
@@ -198,8 +205,8 @@ public class BestAlignmentSolverTest
     }
 
     private static double matchRec(int aIdx, List<AlignableAnnotationUnit> aUnits,
-            List<AlignableAnnotationUnit> bUnits, boolean[] usedB, CombinedCategoricalDissimilarity d,
-            double deltaEmpty)
+            List<AlignableAnnotationUnit> bUnits, boolean[] usedB,
+            CombinedCategoricalDissimilarity d, double deltaEmpty)
     {
         if (aIdx == aUnits.size()) {
             // remaining unmatched b-units become singletons

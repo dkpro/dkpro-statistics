@@ -59,15 +59,17 @@ import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
  * Defaults follow pygamma-agreement (https://github.com/bootphon/pygamma-agreement, MIT license):
  * {@code alpha = 1}, {@code beta = 1}, {@code deltaEmpty = 1}, the positional part is a
  * {@link PositionalSporadicDissimilarity} and the categorical part is an
- * {@link AbsoluteCategoricalDissimilarity}, each constructed with {@code deltaEmpty}. Consistent with
- * the other dissimilarities, any pair involving an empty ({@code null}) unit costs {@code deltaEmpty}.
- * Corresponds to the Python class {@code CombinedCategoricalDissimilarity} in pygamma-agreement.
+ * {@link AbsoluteCategoricalDissimilarity}, each constructed with {@code deltaEmpty}. Consistent
+ * with the other dissimilarities, any pair involving an empty ({@code null}) unit costs
+ * {@code deltaEmpty}. Corresponds to the Python class {@code CombinedCategoricalDissimilarity} in
+ * pygamma-agreement.
  * <p>
- * Deviation from the original: pygamma mutates the categorical sub-dissimilarity's {@code delta_empty}
- * to match the combined value; here the sub-dissimilarities are immutable, so the default sub-parts
- * are simply constructed with the combined {@code deltaEmpty} (custom sub-parts are used as given).
- * The empty-unit guard (inherited from {@link AbstractDissimilarity}) returns the combined
- * {@code deltaEmpty} directly rather than {@code alpha}/{@code beta}-weighting the sub-parts.
+ * Deviation from the original: pygamma mutates the categorical sub-dissimilarity's
+ * {@code delta_empty} to match the combined value; here the sub-dissimilarities are immutable, so
+ * the default sub-parts are simply constructed with the combined {@code deltaEmpty} (custom
+ * sub-parts are used as given). The empty-unit guard (inherited from {@link AbstractDissimilarity})
+ * returns the combined {@code deltaEmpty} directly rather than {@code alpha}/{@code beta}-weighting
+ * the sub-parts.
  *
  * @see <a href="https://github.com/bootphon/pygamma-agreement">pygamma-agreement</a>
  * @see <a href="https://aclanthology.org/J15-3003.pdf">Mathet et al. 2015</a>

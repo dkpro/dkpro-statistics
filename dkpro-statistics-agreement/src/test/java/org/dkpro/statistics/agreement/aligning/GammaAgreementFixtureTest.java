@@ -35,8 +35,8 @@ import tools.jackson.databind.JsonNode;
  * <ul>
  * <li><b>Tier 1</b>: observed disagreement equals the reference best-alignment disorder.</li>
  * <li><b>Tier 2</b>: for every sampled continuum, the disorder computed on its scaled integer units
- * equals the reference; feeding all sampled continua through a replay sampler reproduces the expected
- * disorder (their mean) and the resulting gamma.</li>
+ * equals the reference; feeding all sampled continua through a replay sampler reproduces the
+ * expected disorder (their mean) and the resulting gamma.</li>
  * <li><b>Tier 3</b>: sanity - gamma is finite, and exactly 1.0 for the identical-annotator
  * fixture.</li>
  * </ul>
@@ -52,9 +52,9 @@ public class GammaAgreementFixtureTest
     }
 
     /**
-     * Replays the fixture's scaled sampled continua: each {@code sampleDisorder()} call pops the next
-     * continuum and computes its best-alignment disorder with the real solver. This exercises the
-     * full sampler -> solver -> mean pipeline.
+     * Replays the fixture's scaled sampled continua: each {@code sampleDisorder()} call pops the
+     * next continuum and computes its best-alignment disorder with the real solver. This exercises
+     * the full sampler -> solver -> mean pipeline.
      */
     private static final class ReplaySampler
         implements IDisorderSampler
@@ -136,8 +136,8 @@ public class GammaAgreementFixtureTest
                 .build();
 
         double expectedDisorder = gamma.calculateExpectedDisagreement();
-        assertThat(expectedDisorder)
-                .isCloseTo(meanScaled, offset(Math.max(REL_TOL * Math.abs(meanScaled), 1e-9)));
+        assertThat(expectedDisorder).isCloseTo(meanScaled,
+                offset(Math.max(REL_TOL * Math.abs(meanScaled), 1e-9)));
         assertThat(gamma.getExpectedDisagreementSampleCount()).isEqualTo(nSamples);
 
         double tier1Obs = root.get("tier1").get("bestAlignmentDisorder").asDouble();
@@ -157,8 +157,8 @@ public class GammaAgreementFixtureTest
                 .build();
 
         double actualGamma = gammaForAgreement.calculateAgreement();
-        assertThat(actualGamma)
-                .isCloseTo(expectedGamma, offset(Math.max(1e-4 * Math.abs(expectedGamma), 1e-9)));
+        assertThat(actualGamma).isCloseTo(expectedGamma,
+                offset(Math.max(1e-4 * Math.abs(expectedGamma), 1e-9)));
 
         // Tier 3 sanity: gamma is finite.
         assertThat(Double.isFinite(actualGamma)).isTrue();

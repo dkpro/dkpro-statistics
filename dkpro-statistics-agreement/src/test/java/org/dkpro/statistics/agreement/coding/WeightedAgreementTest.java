@@ -43,17 +43,12 @@ public class WeightedAgreementTest
         IDistanceFunction weightedDistanceFunction = new IDistanceFunction()
         {
             @Override
-            public double measureDistance(final IAnnotationStudy study, 
-                    final Object category1, final Object category2) {
-                final double[][] WEIGHTS = new double[][]{
-                        {0, 1, 1, 1, 1, 1, 1},
-                        {1, 0, 3, 1, 1, 1, 3},
-                        {1, 3, 0, 1, 3, 1, 3},
-                        {1, 1, 1, 0, 2, 1, 3},
-                        {1, 1, 3, 2, 0, 1, 1},
-                        {1, 1, 1, 1, 1, 0, 1},
-                        {1, 3, 3, 3, 1, 1, 0}
-                };
+            public double measureDistance(final IAnnotationStudy study, final Object category1,
+                    final Object category2)
+            {
+                final double[][] WEIGHTS = new double[][] { { 0, 1, 1, 1, 1, 1, 1 },
+                        { 1, 0, 3, 1, 1, 1, 3 }, { 1, 3, 0, 1, 3, 1, 3 }, { 1, 1, 1, 0, 2, 1, 3 },
+                        { 1, 1, 3, 2, 0, 1, 1 }, { 1, 1, 1, 1, 1, 0, 1 }, { 1, 3, 3, 3, 1, 1, 0 } };
                 final Hashtable<Object, Integer> idx = new Hashtable<Object, Integer>();
                 idx.put("", 0);
                 idx.put("A", 1);
@@ -63,36 +58,35 @@ public class WeightedAgreementTest
                 idx.put("ABC", 5);
                 idx.put("C", 6);
                 return WEIGHTS[idx.get(category1)][idx.get(category2)] / 3.0;
-            }            
+            }
         };
-        
+
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
         alpha.setDistanceFunction(weightedDistanceFunction);
         assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.333, offset(0.001));
         assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.409, offset(0.001));
-        assertThat(alpha.calculateAgreement()).isCloseTo(0.186, offset(0.001));    
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.186, offset(0.001));
     }
-    
-    
+
     @Test
     public void testDistanceFunction2()
     {
         ICodingAnnotationStudy study = createExample();
-        
+
         IDistanceFunction weightedDistanceFunction = new IDistanceFunction()
         {
             @Override
-            public double measureDistance(final IAnnotationStudy study, 
-                    final Object category1, final Object category2) {
-                final double[][] WEIGHTS = new double[][]{
-                        {0 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0},
-                        {1 / 3.0, 0 / 3.0, 3 / 3.0, 1 / 6.0, 1 / 6.0, 2 / 9.0, 3 / 3.0},
-                        {1 / 3.0, 3 / 3.0, 0 / 3.0, 1 / 6.0, 3 / 3.0, 2 / 9.0, 3 / 3.0},
-                        {1 / 3.0, 1 / 6.0, 1 / 6.0, 0 / 3.0, 4 / 9.0, 1 / 9.0, 3 / 3.0},
-                        {1 / 3.0, 1 / 6.0, 3 / 3.0, 4 / 9.0, 0 / 3.0, 1 / 9.0, 1 / 6.0},
-                        {1 / 3.0, 2 / 9.0, 2 / 9.0, 1 / 9.0, 1 / 9.0, 0 / 3.0, 2 / 9.0},
-                        {1 / 3.0, 3 / 3.0, 3 / 3.0, 3 / 3.0, 1 / 6.0, 2 / 9.0, 0 / 3.0}
-                };
+            public double measureDistance(final IAnnotationStudy study, final Object category1,
+                    final Object category2)
+            {
+                final double[][] WEIGHTS = new double[][] {
+                        { 0 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0, 1 / 3.0 },
+                        { 1 / 3.0, 0 / 3.0, 3 / 3.0, 1 / 6.0, 1 / 6.0, 2 / 9.0, 3 / 3.0 },
+                        { 1 / 3.0, 3 / 3.0, 0 / 3.0, 1 / 6.0, 3 / 3.0, 2 / 9.0, 3 / 3.0 },
+                        { 1 / 3.0, 1 / 6.0, 1 / 6.0, 0 / 3.0, 4 / 9.0, 1 / 9.0, 3 / 3.0 },
+                        { 1 / 3.0, 1 / 6.0, 3 / 3.0, 4 / 9.0, 0 / 3.0, 1 / 9.0, 1 / 6.0 },
+                        { 1 / 3.0, 2 / 9.0, 2 / 9.0, 1 / 9.0, 1 / 9.0, 0 / 3.0, 2 / 9.0 },
+                        { 1 / 3.0, 3 / 3.0, 3 / 3.0, 3 / 3.0, 1 / 6.0, 2 / 9.0, 0 / 3.0 } };
                 final Hashtable<Object, Integer> idx = new Hashtable<Object, Integer>();
                 idx.put("", 0);
                 idx.put("A", 1);
@@ -104,14 +98,14 @@ public class WeightedAgreementTest
                 return WEIGHTS[idx.get(category1)][idx.get(category2)];
             }
         };
-        
+
         KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
         alpha.setDistanceFunction(weightedDistanceFunction);
         assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.253, offset(0.001));
         assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.338, offset(0.001));
-        assertThat(alpha.calculateAgreement()).isCloseTo(0.252, offset(0.001));        
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.252, offset(0.001));
     }
-    
+
     @Test
     public void testMissingVariance()
     {

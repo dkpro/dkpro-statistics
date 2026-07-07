@@ -70,23 +70,23 @@ import org.ojalgo.optimisation.Variable;
  * <ol>
  * <li><b>Candidate generation and pruning</b> - a port of
  * {@code dissimilarity.py:_get_all_valid_alignments}. It enumerates the cartesian product over the
- * units of each rater (each extended by an "empty" unit) and keeps a candidate unitary alignment iff
- * its raw pair-sum disorder is at most {@code C(n,2) * deltaEmpty * n} (the criterion from Mathet et
- * al. 2015, section 5.1.1). The all-empty tuple is discarded. Kept disorders are divided by
- * {@code C(n,2)}.</li>
+ * units of each rater (each extended by an "empty" unit) and keeps a candidate unitary alignment
+ * iff its raw pair-sum disorder is at most {@code C(n,2) * deltaEmpty * n} (the criterion from
+ * Mathet et al. 2015, section 5.1.1). The all-empty tuple is discarded. Kept disorders are divided
+ * by {@code C(n,2)}.</li>
  * <li><b>Exact best-alignment computation</b> - a port of {@code continuum.py:get_best_alignment}
- * (with the constraint matrix of {@code numba_utils.py:build_A}). A binary integer linear program is
- * solved with ojAlgo: one binary variable per candidate, one equality constraint per (rater, unit)
- * requiring that unit to appear in exactly one chosen candidate, minimizing the total candidate
- * disorder.</li>
+ * (with the constraint matrix of {@code numba_utils.py:build_A}). A binary integer linear program
+ * is solved with ojAlgo: one binary variable per candidate, one equality constraint per (rater,
+ * unit) requiring that unit to appear in exactly one chosen candidate, minimizing the total
+ * candidate disorder.</li>
  * </ol>
  * <p>
  * Deviations from the original: units carry {@code long} offsets and computations are performed in
- * {@code double} rather than pygamma's {@code float32}; the ILP is solved with ojAlgo (pure-Java MIP)
- * instead of cvxpy/CBC/GLPK; candidates are enumerated lazily with an odometer instead of numba's
- * {@code iter_tuples}; the all-empty tuple is skipped explicitly rather than by dropping the last
- * enumerated element. Only the optimal disorder <em>value</em> is guaranteed to match the reference -
- * the concrete chosen alignment may differ when there are ties.
+ * {@code double} rather than pygamma's {@code float32}; the ILP is solved with ojAlgo (pure-Java
+ * MIP) instead of cvxpy/CBC/GLPK; candidates are enumerated lazily with an odometer instead of
+ * numba's {@code iter_tuples}; the all-empty tuple is skipped explicitly rather than by dropping
+ * the last enumerated element. Only the optimal disorder <em>value</em> is guaranteed to match the
+ * reference - the concrete chosen alignment may differ when there are ties.
  *
  * @see <a href="https://github.com/bootphon/pygamma-agreement">pygamma-agreement</a>
  * @see <a href="https://aclanthology.org/J15-3003.pdf">Mathet et al. 2015</a>
@@ -110,19 +110,18 @@ public final class BestAlignmentSolver
      * @param alignment
      *            the chosen best alignment (a valid partition of the annotation set).
      * @param disorder
-     *            the observed disorder, i.e. the sum of the chosen candidate disorders divided by the
-     *            continuum's average number of annotations per rater. This equals
+     *            the observed disorder, i.e. the sum of the chosen candidate disorders divided by
+     *            the continuum's average number of annotations per rater. This equals
      *            {@code alignment.getDisorder(dissimilarity)} up to floating-point error.
      */
-    public record BestAlignment(Alignment alignment, double disorder)
-    {
-    }
+    public record BestAlignment(Alignment alignment, double disorder) {}
 
     /**
-     * Convenience overload deriving {@code deltaEmpty} from the given dissimilarity, which must be an
-     * {@link AbstractDissimilarity}.
+     * Convenience overload deriving {@code deltaEmpty} from the given dissimilarity, which must be
+     * an {@link AbstractDissimilarity}.
      */
-    public static BestAlignment solve(AnnotationSet aAnnotationSet, AbstractDissimilarity aDissimilarity)
+    public static BestAlignment solve(AnnotationSet aAnnotationSet,
+            AbstractDissimilarity aDissimilarity)
     {
         return solve(aAnnotationSet, aDissimilarity, aDissimilarity.getDeltaEmpty());
     }
@@ -151,15 +150,15 @@ public final class BestAlignmentSolver
     }
 
     /**
-     * Holds the pruned candidate unitary alignments for a continuum. Each candidate is a tuple of unit
-     * indices (one per rater, in the annotation set's canonical rater order); an index equal to
-     * {@code sizes[i]} denotes the empty unit for rater {@code i}. The parallel {@code disorders} list
-     * holds each candidate's unitary-alignment disorder (raw pair-sum divided by {@code C(n,2)}).
+     * Holds the pruned candidate unitary alignments for a continuum. Each candidate is a tuple of
+     * unit indices (one per rater, in the annotation set's canonical rater order); an index equal
+     * to {@code sizes[i]} denotes the empty unit for rater {@code i}. The parallel
+     * {@code disorders} list holds each candidate's unitary-alignment disorder (raw pair-sum
+     * divided by {@code C(n,2)}).
      */
     record CandidateSet(List<Rater> raters, List<List<AlignableAnnotationUnit>> unitsPerRater,
             int[] sizes, List<int[]> tuples, List<Double> disorders)
-    {
-    }
+    {}
 
     /**
      * Generates and prunes the candidate unitary alignments, mirroring
@@ -189,9 +188,10 @@ public final class BestAlignmentSolver
         for (int i = 0; i < n; i++) {
             product *= (sizes[i] + 1L);
             if (product > MAX_PRODUCT_SIZE) {
-                throw new IllegalArgumentException("The continuum is too large for the exact solver: "
-                        + "the candidate cartesian product exceeds " + MAX_PRODUCT_SIZE
-                        + " tuples. Consider reducing the number of units per rater.");
+                throw new IllegalArgumentException(
+                        "The continuum is too large for the exact solver: "
+                                + "the candidate cartesian product exceeds " + MAX_PRODUCT_SIZE
+                                + " tuples. Consider reducing the number of units per rater.");
             }
         }
 
@@ -210,7 +210,8 @@ public final class BestAlignmentSolver
                 double[][] matrix = new double[sizes[a] + 1][sizes[b] + 1];
                 for (int ia = 0; ia < sizes[a]; ia++) {
                     for (int ib = 0; ib < sizes[b]; ib++) {
-                        matrix[ia][ib] = aDissimilarity.dissimilarity(unitsA.get(ia), unitsB.get(ib));
+                        matrix[ia][ib] = aDissimilarity.dissimilarity(unitsA.get(ia),
+                                unitsB.get(ib));
                     }
                 }
                 for (int ib = 0; ib <= sizes[b]; ib++) {

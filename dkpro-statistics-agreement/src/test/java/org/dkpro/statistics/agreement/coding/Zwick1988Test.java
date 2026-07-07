@@ -51,7 +51,6 @@ public class Zwick1988Test
         assertThat(kappa.calculateAgreement()).isCloseTo(0.467, offset(0.001));
     }
 
-    
     @Test
     public void testExample2()
     {
@@ -68,7 +67,6 @@ public class Zwick1988Test
         assertThat(kappa.calculateAgreement()).isCloseTo(0.444, offset(0.001));
     }
 
-    
     @Test
     public void testExample3()
     {

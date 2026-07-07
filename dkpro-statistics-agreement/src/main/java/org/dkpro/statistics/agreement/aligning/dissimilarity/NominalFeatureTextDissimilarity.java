@@ -27,7 +27,8 @@ import org.dkpro.statistics.agreement.aligning.data.AlignableAnnotationTextUnit;
  * Deviations from the upstream TextGammaTool implementation:
  * <ul>
  * <li>The empty-vs-empty case (both {@code null}) throws {@code IllegalStateException} instead of
- * returning {@code 0}, matching {@link NominalFeatureDissimilarity} (see there for the rationale).</li>
+ * returning {@code 0}, matching {@link NominalFeatureDissimilarity} (see there for the
+ * rationale).</li>
  * </ul>
  */
 public class NominalFeatureTextDissimilarity

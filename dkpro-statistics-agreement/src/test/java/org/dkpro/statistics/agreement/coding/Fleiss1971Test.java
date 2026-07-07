@@ -57,13 +57,11 @@ public class Fleiss1971Test
         // TODO
         /*
          * double se = raw.standardError(agreement); double[] ci = raw.confidenceInterval(agreement,
-         * se, RawAgreement.CONFIDENCE_95); 
-         * assertThat(se).isCloseTo(0.028, offset(0.001)); 
+         * se, RawAgreement.CONFIDENCE_95); assertThat(se).isCloseTo(0.028, offset(0.001));
          * assertEquals(0.610, ci[0], 0.001); assertThat(ci[1]).isCloseTo(0.789, offset(0.001));
          */
     }
 
-    
     @Test
     public void testCategoryAgreement()
     {
@@ -77,7 +75,6 @@ public class Fleiss1971Test
         assertThat(catAgreement.calculateCategoryAgreement(5)).isCloseTo(0.565, offset(0.005));
     }
 
-    
     @Test
     public void testItemAgreement()
     {

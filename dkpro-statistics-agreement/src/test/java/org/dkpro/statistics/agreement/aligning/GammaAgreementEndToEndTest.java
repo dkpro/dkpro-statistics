@@ -25,10 +25,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 /**
- * Tier-3 statistical validation of the full gamma pipeline (observed disorder + statistical continuum
- * sampler + expected disorder). Both the Java side and the pygamma reference are 30-sample Monte-Carlo
- * estimates over independent PRNG streams, so gamma values are only <em>statistically</em> comparable,
- * not bit-identical.
+ * Tier-3 statistical validation of the full gamma pipeline (observed disorder + statistical
+ * continuum sampler + expected disorder). Both the Java side and the pygamma reference are
+ * 30-sample Monte-Carlo estimates over independent PRNG streams, so gamma values are only
+ * <em>statistically</em> comparable, not bit-identical.
  */
 class GammaAgreementEndToEndTest
 {
@@ -64,12 +64,14 @@ class GammaAgreementEndToEndTest
         assertThat(gammaJava).as("%s: gamma <= 1", aFixture).isLessThanOrEqualTo(1.0);
 
         if ("fixture_03_identical_perfect.json".equals(aFixture)) {
-            // Observed disorder is exactly 0 for a perfect continuum -> gamma == 1 without sampling.
+            // Observed disorder is exactly 0 for a perfect continuum -> gamma == 1 without
+            // sampling.
             assertThat(gammaJava).as("%s: perfect continuum gamma", aFixture).isEqualTo(1.0);
         }
         else {
-            assertThat(gammaJava).as("%s: gamma_java=%s vs tier3 gamma=%s", aFixture, gammaJava,
-                    gammaPy).isCloseTo(gammaPy, offset(GAMMA_BAND));
+            assertThat(gammaJava)
+                    .as("%s: gamma_java=%s vs tier3 gamma=%s", aFixture, gammaJava, gammaPy)
+                    .isCloseTo(gammaPy, offset(GAMMA_BAND));
         }
     }
 
@@ -97,10 +99,8 @@ class GammaAgreementEndToEndTest
 
         // Do NOT widen this band: a failure indicates a sampler-distribution mismatch worth
         // investigating, not a flaky test.
-        assertThat(relative)
-                .as("expected disorder java=%s vs pygamma=%s (relative diff %s)", expectedJava,
-                        expectedPy, relative)
-                .isLessThan(0.15);
+        assertThat(relative).as("expected disorder java=%s vs pygamma=%s (relative diff %s)",
+                expectedJava, expectedPy, relative).isLessThan(0.15);
     }
 
     @Test
@@ -112,12 +112,12 @@ class GammaAgreementEndToEndTest
 
         double first = GammaAgreement.builder().withAnnotationSet(continuum)
                 .withDissimilarity(dissimilarity)
-                .withDisorderSampler(StatisticalContinuumDisorderSampler::new).withSeed(SEED).build()
-                .calculateAgreement();
+                .withDisorderSampler(StatisticalContinuumDisorderSampler::new).withSeed(SEED)
+                .build().calculateAgreement();
         double second = GammaAgreement.builder().withAnnotationSet(continuum)
                 .withDissimilarity(dissimilarity)
-                .withDisorderSampler(StatisticalContinuumDisorderSampler::new).withSeed(SEED).build()
-                .calculateAgreement();
+                .withDisorderSampler(StatisticalContinuumDisorderSampler::new).withSeed(SEED)
+                .build().calculateAgreement();
 
         assertThat(first).isEqualTo(second);
     }

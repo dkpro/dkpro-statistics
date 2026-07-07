@@ -28,7 +28,7 @@ public class SignificanceTest
     public void testTestCorrelations()
     {
         assertThat(testCorrelations(0.5, 0.74, 68, 68, 0.2)).isTrue();
-        
+
         assertThat(testCorrelations(0.5, 0.74, 68, 68, 0.1)).isTrue();
         assertThat(testCorrelations(0.5, 0.74, 68, 68, 0.05)).isTrue();
         assertThat(testCorrelations(0.5, 0.74, 68, 68, 0.01)).isFalse();

@@ -28,9 +28,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for several inter-rater agreement measures with two raters.
+ * 
  * @author Christian M. Meyer
  */
-public class TwoRaterAgreementTest {
+public class TwoRaterAgreementTest
+{
 
     @Test
     public void testAgreement()
@@ -40,10 +42,10 @@ public class TwoRaterAgreementTest {
         PercentageAgreement pa = new PercentageAgreement(study);
         double agreement = pa.calculateAgreement();
         assertThat(agreement).isEqualTo(0.7);
-        //TODO
+        // TODO
         // double se = poa.standardError(agreement);
         // double[] ci = poa.confidenceInterval(agreement, se,
-        //      TwoRaterObservedAgreement.CONFIDENCE_95);
+        // TwoRaterObservedAgreement.CONFIDENCE_95);
         // assertThat(se).isCloseTo(0.045, offset(0.001));
         // assertThat(ci[0]).isCloseTo(0.610, offset(0.001));
         // assertThat(ci[1]).isCloseTo(0.789, offset(0.001));
@@ -85,17 +87,16 @@ public class TwoRaterAgreementTest {
     }
 
     /*
-    @Test
-    public void testCategorySpecificAgreement() {
-        ICodingAnnotationStudy study = createExample();
-
-        new ContingencyMatrixPrinter().print(System.out, study);
-        new CoincidenceMatrixPrinter().print(System.out, study);
-
-        PercentageAgreement pa = new PercentageAgreement(study);
-        assertThat(pa.calculateCategoryAgreement("low")).isEqualTo(4 / 7);
-        assertThat(pa.calculateCategoryAgreement("high")).isEqualTo(10 / 13);
-    }*/
+     * @Test public void testCategorySpecificAgreement() { ICodingAnnotationStudy study =
+     * createExample();
+     * 
+     * new ContingencyMatrixPrinter().print(System.out, study); new
+     * CoincidenceMatrixPrinter().print(System.out, study);
+     * 
+     * PercentageAgreement pa = new PercentageAgreement(study);
+     * assertThat(pa.calculateCategoryAgreement("low")).isEqualTo(4 / 7);
+     * assertThat(pa.calculateCategoryAgreement("high")).isEqualTo(10 / 13); }
+     */
 
     @Test
     public void testMissingCategories()
@@ -119,7 +120,7 @@ public class TwoRaterAgreementTest {
 
         assertThatExceptionOfType(InsufficientDataException.class)
                 .isThrownBy(() -> new ScottPiAgreement(study).calculateAgreement());
-        
+
         assertThatExceptionOfType(InsufficientDataException.class)
                 .isThrownBy(() -> new CohenKappaAgreement(study).calculateAgreement());
     }
@@ -135,10 +136,10 @@ public class TwoRaterAgreementTest {
 
         assertThatExceptionOfType(InsufficientDataException.class)
                 .isThrownBy(() -> new ScottPiAgreement(emptyStudy).calculateAgreement());
-        
+
         assertThatExceptionOfType(InsufficientDataException.class)
                 .isThrownBy(() -> new CohenKappaAgreement(emptyStudy).calculateAgreement());
-        
+
         // Annotation study with single category.
         CodingAnnotationStudy singleCategoryStudy = new CodingAnnotationStudy(2);
         singleCategoryStudy.addItem("A", "A");
@@ -147,20 +148,19 @@ public class TwoRaterAgreementTest {
 
         assertThatExceptionOfType(InsufficientDataException.class)
                 .isThrownBy(() -> new BennettSAgreement(singleCategoryStudy).calculateAgreement());
-        
+
         assertThatExceptionOfType(InsufficientDataException.class)
                 .isThrownBy(() -> new ScottPiAgreement(singleCategoryStudy).calculateAgreement());
-        
-        assertThatExceptionOfType(InsufficientDataException.class)
-                .isThrownBy(() -> new CohenKappaAgreement(singleCategoryStudy)
-                        .calculateAgreement());
+
+        assertThatExceptionOfType(InsufficientDataException.class).isThrownBy(
+                () -> new CohenKappaAgreement(singleCategoryStudy).calculateAgreement());
     }
 
     @Test
     public void testInvalidRaterCount()
     {
         CodingAnnotationStudy tooManyRatersStudy = new CodingAnnotationStudy(3);
-        
+
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> new BennettSAgreement(tooManyRatersStudy));
 

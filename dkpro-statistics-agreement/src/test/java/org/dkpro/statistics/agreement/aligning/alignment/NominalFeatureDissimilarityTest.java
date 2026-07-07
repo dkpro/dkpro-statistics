@@ -53,7 +53,8 @@ public class NominalFeatureDissimilarityTest
         assertThat(diss.dissimilarity(u, null)).isEqualTo(1.0);
         assertThat(diss.dissimilarity(null, v)).isEqualTo(1.0);
 
-        // Empty-vs-empty returns 0, matching upstream: with three or more raters a unitary alignment
+        // Empty-vs-empty returns 0, matching upstream: with three or more raters a unitary
+        // alignment
         // can legitimately pair two empty (padded) units, so this branch is reachable.
         assertThat(diss.dissimilarity(null, null)).isEqualTo(0.0);
     }

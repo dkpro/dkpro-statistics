@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class UnitizingAgreementTest
 {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     @Test
     public void testAgreement()
     {

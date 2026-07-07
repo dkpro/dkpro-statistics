@@ -70,13 +70,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the Mathet et al. (2015) gamma (&gamma;) inter-annotator agreement measure for a
- * continuum of timed intervals, ported from pygamma-agreement's
+ * Implementation of the Mathet et al. (2015) gamma (&gamma;) inter-annotator agreement measure for
+ * a continuum of timed intervals, ported from pygamma-agreement's
  * {@code Continuum.compute_gamma}/{@code GammaResults}.
  * <p>
  * The <b>observed disagreement</b> is the disorder of the best (minimal-disorder) alignment of the
- * continuum, computed exactly via {@link BestAlignmentSolver}. The <b>expected disagreement</b> is the
- * mean best-alignment disorder over a batch of random continua drawn from an injected
+ * continuum, computed exactly via {@link BestAlignmentSolver}. The <b>expected disagreement</b> is
+ * the mean best-alignment disorder over a batch of random continua drawn from an injected
  * {@link IDisorderSampler}. Gamma is then {@code 1 - observed / expected}.
  * <p>
  * References:
@@ -84,12 +84,12 @@ import org.slf4j.LoggerFactory;
  * <li>Mathet, Widlöcher, Métivier (2015): <i>The Unified and Holistic Method Gamma (&gamma;) for
  * Inter-Annotator Agreement Measure and Alignment.</i> Computational Linguistics 41(3),
  * <a href="https://aclanthology.org/J15-3003.pdf">https://aclanthology.org/J15-3003.pdf</a>.</li>
- * <li>Titeux &amp; Riccardi (2021): <i>pygamma-agreement</i>,
- * <a href="https://github.com/bootphon/pygamma-agreement">https://github.com/bootphon/pygamma-agreement</a>.</li>
+ * <li>Titeux &amp; Riccardi (2021): <i>pygamma-agreement</i>, <a href=
+ * "https://github.com/bootphon/pygamma-agreement">https://github.com/bootphon/pygamma-agreement</a>.</li>
  * </ul>
  * <p>
- * Corresponds to the Python {@code Continuum.compute_gamma} + {@code GammaResults.gamma}. Deviations
- * from the original:
+ * Corresponds to the Python {@code Continuum.compute_gamma} + {@code GammaResults.gamma}.
+ * Deviations from the original:
  * <ul>
  * <li>Units carry {@code long} offsets and everything is computed in {@code double} instead of
  * pygamma's {@code float32} (expect ~1e-5 relative divergence against reference values).</li>
@@ -101,20 +101,21 @@ import org.slf4j.LoggerFactory;
  * <li>Gamma is <b>not clamped</b> and may be negative, exactly as in pygamma.</li>
  * </ul>
  * <p>
- * <b>Validation scope.</b> This port is cross-validated against pygamma-agreement 0.5.9 only for the
- * default {@code deltaEmpty == 1.0} (the value used by both the pygamma library and its CLI). For that
- * value the observed disorder, candidate pruning, and best-alignment disorder match the reference to
- * within the {@code float32}-vs-{@code double} floor (~1e-5 relative). It is <b>not</b> validated for
- * other {@code deltaEmpty} values, and it will deliberately <i>not</i> reproduce pygamma 0.5.9's output
- * there, because pygamma 0.5.9 has a bug for non-default {@code deltaEmpty}:
- * {@code AbstractDissimilarity.__init__} compiles and caches the {@code njit} {@code d_mat} closure
- * immediately, and {@code CombinedCategoricalDissimilarity} then reassigns
+ * <b>Validation scope.</b> This port is cross-validated against pygamma-agreement 0.5.9 only for
+ * the default {@code deltaEmpty == 1.0} (the value used by both the pygamma library and its CLI).
+ * For that value the observed disorder, candidate pruning, and best-alignment disorder match the
+ * reference to within the {@code float32}-vs-{@code double} floor (~1e-5 relative). It is
+ * <b>not</b> validated for other {@code deltaEmpty} values, and it will deliberately <i>not</i>
+ * reproduce pygamma 0.5.9's output there, because pygamma 0.5.9 has a bug for non-default
+ * {@code deltaEmpty}: {@code AbstractDissimilarity.__init__} compiles and caches the {@code njit}
+ * {@code d_mat} closure immediately, and {@code CombinedCategoricalDissimilarity} then reassigns
  * {@code cat_dissim.delta_empty} <i>without</i> recompiling that closure. As a result pygamma's
- * best-alignment/pruning path (which uses the cached {@code d_mat}) scores categorical disagreement with
- * the stale {@code delta_empty = 1.0}, while its public {@code d()} method uses the requested value. This
- * makes pygamma internally inconsistent for {@code deltaEmpty != 1.0}. This implementation applies
- * {@code deltaEmpty} consistently to both the positional and categorical terms (so it is arguably more
- * correct), and consequently diverges from pygamma 0.5.9 for those values.
+ * best-alignment/pruning path (which uses the cached {@code d_mat}) scores categorical disagreement
+ * with the stale {@code delta_empty = 1.0}, while its public {@code d()} method uses the requested
+ * value. This makes pygamma internally inconsistent for {@code deltaEmpty != 1.0}. This
+ * implementation applies {@code deltaEmpty} consistently to both the positional and categorical
+ * terms (so it is arguably more correct), and consequently diverges from pygamma 0.5.9 for those
+ * values.
  *
  * @see <a href="https://github.com/bootphon/pygamma-agreement">pygamma-agreement</a>
  * @see <a href="https://aclanthology.org/J15-3003.pdf">Mathet et al. 2015</a>
@@ -152,9 +153,8 @@ public class GammaAgreement
         }
 
         if (builder.numberOfSamples < 1) {
-            throw new IllegalArgumentException(
-                    "The number of samples must be positive, but was " + builder.numberOfSamples
-                            + ".");
+            throw new IllegalArgumentException("The number of samples must be positive, but was "
+                    + builder.numberOfSamples + ".");
         }
 
         if (builder.precisionLevel != null
@@ -170,8 +170,10 @@ public class GammaAgreement
         numberOfSamples = builder.numberOfSamples;
         precisionLevel = builder.precisionLevel;
 
-        // Resolve the source of randomness before the sampler is created below, so a sampler created
-        // through the factory can pick it up via getRandomGenerator(). When no generator (or seed) is
+        // Resolve the source of randomness before the sampler is created below, so a sampler
+        // created
+        // through the factory can pick it up via getRandomGenerator(). When no generator (or seed)
+        // is
         // configured we fall back to a fresh, time-seeded generator (mirrors TextGammaAgreement).
         randomGenerator = builder.randomGenerator != null ? builder.randomGenerator
                 : new Well19937c();
@@ -243,16 +245,18 @@ public class GammaAgreement
      * {@inheritDoc}
      *
      * @throws InsufficientDataException
-     *             if the expected disorder is zero while the observed disorder is positive: there is
-     *             no chance baseline to correct against, so gamma would be an undefined division by
-     *             zero. Mirrors the spirit of {@link TextGammaAgreement}'s zero-expected handling.
+     *             if the expected disorder is zero while the observed disorder is positive: there
+     *             is no chance baseline to correct against, so gamma would be an undefined division
+     *             by zero. Mirrors the spirit of {@link TextGammaAgreement}'s zero-expected
+     *             handling.
      */
     @Override
     public double calculateAgreement()
     {
         var observedDisorder = calculateObservedDisagreement();
 
-        // pygamma GammaResults.gamma special case: an observed disorder of exactly zero yields gamma
+        // pygamma GammaResults.gamma special case: an observed disorder of exactly zero yields
+        // gamma
         // == 1 without dividing by the expected disorder (and without even drawing any samples).
         if (observedDisorder == 0.0) {
             return 1.0;
@@ -392,8 +396,8 @@ public class GammaAgreement
 
         /**
          * Sets the chance model used to estimate the expected disorder. A sampler (or a
-         * {@link IGammaDisorderSamplerFactory factory}) is <b>required</b>: there is no default, and
-         * computing gamma without one throws.
+         * {@link IGammaDisorderSamplerFactory factory}) is <b>required</b>: there is no default,
+         * and computing gamma without one throws.
          *
          * @see org.dkpro.statistics.agreement.aligning.disorder.StatisticalContinuumDisorderSampler
          *      the statistical resampling sampler mirroring pygamma's default

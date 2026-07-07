@@ -35,8 +35,8 @@ import org.dkpro.statistics.agreement.aligning.alignment.UnitaryAlignment;
  * Deviations from the upstream TextGammaTool implementation:
  * <ul>
  * <li>The open/close/gap marker characters are fixed constants from {@code TextGammaAgreement}
- * rather than per-call {@code char} parameters, so the upstream runtime marker-distinctness check is
- * gone.</li>
+ * rather than per-call {@code char} parameters, so the upstream runtime marker-distinctness check
+ * is gone.</li>
  * <li>Marker insertion into the raw text and the reserved-character / overlapping-unit validation
  * were moved out of the merge into {@code PairwiseDPTextAlignment} (behaviour preserved, ownership
  * moved).</li>
@@ -56,22 +56,22 @@ public class AnnotatedTextMerge
      * 
      * @return a set of all possible segmentations of the resulting "Text"
      */
-    public static Set<Alignment> mergeAnnotatedTextsWithSegmentation(
-            AnnotatedText aText1, AnnotatedText aText2)
+    public static Set<Alignment> mergeAnnotatedTextsWithSegmentation(AnnotatedText aText1,
+            AnnotatedText aText2)
     {
         return mergeAnnotatedTextsWithSegmentation(aText1, aText2, -1);
     }
 
-    public static Set<Alignment> mergeAnnotatedTextsWithSegmentation(
-            AnnotatedText aText1, AnnotatedText aText2,
-            int aLevenshteinThreshold)
+    public static Set<Alignment> mergeAnnotatedTextsWithSegmentation(AnnotatedText aText1,
+            AnnotatedText aText2, int aLevenshteinThreshold)
     {
         // Fast path: identical base text. When both raters annotated the very same text -- the
         // common case for pairwise agreement over a single source document -- the character-level
         // Needleman-Wunsch alignment is unnecessary. The two texts already share a coordinate
         // system, so their units can be merged directly at their native offsets. This avoids
         // building the O(n^2) DP matrix and, in particular, the deep recursive backtracking in
-        // PairwiseDPTextAlignment, which overflows the stack on document-scale input. The text-level
+        // PairwiseDPTextAlignment, which overflows the stack on document-scale input. The
+        // text-level
         // edit distance is zero here, so any Levenshtein threshold is trivially satisfied -- marker
         // (i.e. annotation) differences are what gamma measures, not a text divergence to reject.
         if (aText1.getText().equals(aText2.getText())) {

@@ -63,8 +63,8 @@ public class UnitizingAnnotationStudyTest
     protected static void assertAnnotationItem(int expectedOffset, int expectedLength,
             int expectedRaterIdx, final IUnitizingAnnotationUnit actual)
     {
-        assertThat( actual.getOffset()).as(actual.toString()).isEqualTo(expectedOffset);
-        assertThat( actual.getLength()).as(actual.toString()).isEqualTo(expectedLength);
-        assertThat( actual.getRaterIdx()).as(actual.toString()).isEqualTo(expectedRaterIdx);
+        assertThat(actual.getOffset()).as(actual.toString()).isEqualTo(expectedOffset);
+        assertThat(actual.getLength()).as(actual.toString()).isEqualTo(expectedLength);
+        assertThat(actual.getRaterIdx()).as(actual.toString()).isEqualTo(expectedRaterIdx);
     }
 }

@@ -44,7 +44,7 @@ public abstract class DisagreementMeasure
     implements IAgreementMeasure
 {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     /**
      * Calculates the inter-rater agreement for the annotation study that was passed to the class
      * constructor and the currently assigned distance function.
@@ -60,9 +60,9 @@ public abstract class DisagreementMeasure
     {
         double D_O = calculateObservedDisagreement();
         double D_E = calculateExpectedDisagreement();
-        
+
         LOG.trace("Disagreement -- observed: {} -- expected: {}", D_O, D_E);
-        
+
         if (D_O == D_E) {
             return 0.0;
         }

@@ -88,6 +88,23 @@
           <allowMajorUpdates>false</allowMajorUpdates>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.rudikershaw.gitbuildhook</groupId>
+        <artifactId>git-build-hook-maven-plugin</artifactId>
+        <version>3.6.0</version>
+        <configuration>
+          <gitConfig>
+            <core.hooksPath>.githooks</core.hooksPath>
+          </gitConfig>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>configure</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -241,6 +258,51 @@
               <executions>
                 <execution>
                   <id>checkstyle-check</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+    <profile>
+      <id>spotless</id>
+      <activation>
+        <property>
+          <name>!m2e.version</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.diffplug.spotless</groupId>
+            <artifactId>spotless-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>com.diffplug.spotless</groupId>
+              <artifactId>spotless-maven-plugin</artifactId>
+              <version>3.5.1</version>
+              <inherited>true</inherited>
+              <configuration>
+                <java>
+                  <eclipse>
+                    <version>4.39</version>
+                    <file>${maven.multiModuleProjectDirectory}/dkpro-statistics-build/src/main/resources/dkpro-statistics/DKProStyle_latest.xml</file>
+                  </eclipse>
+                  <removeUnusedImports />
+                  <endWithNewline />
+                </java>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>spotless-check</id>
                   <phase>verify</phase>
                   <goals>
                     <goal>check</goal>

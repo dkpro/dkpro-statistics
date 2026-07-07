@@ -74,7 +74,7 @@ public class SimpleDisorderSampler
     implements IDisorderSampler
 {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     private final TextGammaAgreement measure;
 
     private final EnumeratedDistribution<TextChangeType> changeChooserText;
@@ -135,7 +135,8 @@ public class SimpleDisorderSampler
     public Double sampleDisorder()
     {
         // If the caller supplied an explicit base text (a genuine external reference), derive both
-        // random annotators from it - this mirrors the original TextGamma tool, which always sampled
+        // random annotators from it - this mirrors the original TextGamma tool, which always
+        // sampled
         // from a single "orig" base text.
         var baseText = measure.getBaseText();
         if (baseText.isPresent()) {
@@ -144,9 +145,11 @@ public class SimpleDisorderSampler
 
         // Otherwise there is no reference. We must not assume a reference segmentation, so we stay
         // symmetric in the raters: sample the disorder using each text as its own base and average.
-        // This marginalizes over the arbitrary "which rater is the reference" choice (uniform prior)
+        // This marginalizes over the arbitrary "which rater is the reference" choice (uniform
+        // prior)
         // and keeps the measure invariant to rater order. When the two texts are identical, both
-        // terms corrupt that same shared text - i.e. the shared text is effectively the base - while
+        // terms corrupt that same shared text - i.e. the shared text is effectively the base -
+        // while
         // remaining agnostic about how the raters segmented it.
         var disorder = 0.0;
         for (var text : measure.getTexts()) {
@@ -201,9 +204,9 @@ public class SimpleDisorderSampler
         var disorder = TextGammaAgreement.getObservedDisorder(
                 new AnnotatedText(version1.getText(), set1_arr),
                 new AnnotatedText(version2.getText(), set2_arr), measure.getDissimilarity());
-        
+
         LOG.trace("Sampled disorder: {}", disorder);
-        
+
         return disorder;
     }
 
@@ -245,7 +248,8 @@ public class SimpleDisorderSampler
 
         var labelGenerators = new HashMap<String, EnumeratedDistribution<String>>();
         for (var featureName : featureNames) {
-            // Counts must be reset per feature - otherwise counts accumulate across features and the
+            // Counts must be reset per feature - otherwise counts accumulate across features and
+            // the
             // per-feature label distributions become polluted with counts from other features.
             var labels = new HashMap<String, Integer>();
             for (var u : units) {

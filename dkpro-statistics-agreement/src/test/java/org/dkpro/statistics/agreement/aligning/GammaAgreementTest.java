@@ -32,8 +32,8 @@ class GammaAgreementTest
     private static final Rater ANNOTATOR_B = new Rater("B", 1);
 
     /**
-     * Sampler that replays a scripted sequence of disorders and falls back to a fixed value once the
-     * sequence is exhausted, counting the total number of draws.
+     * Sampler that replays a scripted sequence of disorders and falls back to a fixed value once
+     * the sequence is exhausted, counting the total number of draws.
      */
     private static final class CountingSampler
         implements IDisorderSampler

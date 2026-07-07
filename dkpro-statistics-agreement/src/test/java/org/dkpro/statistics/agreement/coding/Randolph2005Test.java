@@ -51,7 +51,6 @@ public class Randolph2005Test
         assertThat(rk.calculateAgreement()).isCloseTo(0.33, offset(0.01));
     }
 
-    
     @Test
     public void testExample2()
     {

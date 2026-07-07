@@ -24,19 +24,27 @@ import org.dkpro.statistics.agreement.unitizing.IUnitizingAnnotationStudy;
 import org.dkpro.statistics.agreement.unitizing.IUnitizingAnnotationUnit;
 
 /**
- * Plain-text visualization for unitizing studies. The visualization prints 
- * the continuum and marks the units of each individual rater and for each 
- * category using asterisks. For category A of Krippendorff's (1995) example, 
- * the implementation prints, for instance: <pre>               1         2   2
+ * Plain-text visualization for unitizing studies. The visualization prints the continuum and marks
+ * the units of each individual rater and for each category using asterisks. For category A of
+ * Krippendorff's (1995) example, the implementation prints, for instance:
+ * 
+ * <pre>
+ *                1         2   2
  * r    0123456789012345678901234
  * 0      ********    ******    
- * 1        ****       **</pre>
- * That is, a continuum starting at 0, ending at 24, in which two raters 
- * identified two units. By defining a {@link PrintStream}, it is possible to
- * display a study on the console or to write the results to a text file.<br><br>
- * References:<ul>
- * <li>Krippendorff, K.: On the reliability of unitizing contiguous data.
- *   Sociological Methodology 25:47–76, 1995.</li></ul>
+ * 1        ****       **
+ * </pre>
+ * 
+ * That is, a continuum starting at 0, ending at 24, in which two raters identified two units. By
+ * defining a {@link PrintStream}, it is possible to display a study on the console or to write the
+ * results to a text file.<br>
+ * <br>
+ * References:
+ * <ul>
+ * <li>Krippendorff, K.: On the reliability of unitizing contiguous data. Sociological Methodology
+ * 25:47–76, 1995.</li>
+ * </ul>
+ * 
  * @see IUnitizingAnnotationStudy
  * @author Christian M. Meyer
  */

@@ -20,11 +20,12 @@ package org.dkpro.statistics.agreement.aligning.disorder;
 import org.dkpro.statistics.agreement.aligning.GammaAgreement;
 
 /**
- * Factory for a {@link IDisorderSampler} bound to a {@link GammaAgreement}. This is the gamma-specific
- * analogue of {@link IDisorderSamplerFactory} (which is typed to {@code TextGammaAgreement} and hence
- * cannot be reused here). It lets a sampler pick up the measure's continuum and source of randomness
- * (via {@link GammaAgreement#getAnnotationSet()} and {@link GammaAgreement#getRandomGenerator()}) at
- * build time - this is how {@link StatisticalContinuumDisorderSampler} is wired in.
+ * Factory for a {@link IDisorderSampler} bound to a {@link GammaAgreement}. This is the
+ * gamma-specific analogue of {@link IDisorderSamplerFactory} (which is typed to
+ * {@code TextGammaAgreement} and hence cannot be reused here). It lets a sampler pick up the
+ * measure's continuum and source of randomness (via {@link GammaAgreement#getAnnotationSet()} and
+ * {@link GammaAgreement#getRandomGenerator()}) at build time - this is how
+ * {@link StatisticalContinuumDisorderSampler} is wired in.
  */
 @FunctionalInterface
 public interface IGammaDisorderSamplerFactory

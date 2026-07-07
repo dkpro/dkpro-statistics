@@ -26,12 +26,12 @@ import org.dkpro.statistics.agreement.coding.ICodingAnnotationItem;
 import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
 
 /**
- * Plain-text visualization for a reliability matrix as defined by 
- * Krippendorff (1980: p. 136). That is, a table showing one annotation
- * item per column and the categories assigned to them by a certain
- * rater. In addition to that, the reliability matrix sums the number 
- * of units with identical categories. For the example by Krippendorff 
- * (1980: p. 139), the implementation displays:
+ * Plain-text visualization for a reliability matrix as defined by Krippendorff (1980: p. 136). That
+ * is, a table showing one annotation item per column and the categories assigned to them by a
+ * certain rater. In addition to that, the reliability matrix sums the number of units with
+ * identical categories. For the example by Krippendorff (1980: p. 139), the implementation
+ * displays:
+ * 
  * <pre>
  *    1  2  3  4  5  6  7  8  9   Σ
  * 1  1  1  2  4  1  2  1  3  2 
@@ -42,10 +42,15 @@ import org.dkpro.statistics.agreement.coding.ICodingAnnotationStudy;
  * 2     2  3        3  1     3  12
  * 3                    1  3      4
  * 4           3  2               5
- * </pre><br>
- * References:<ul>
- * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology.
- *   Beverly Hills, CA: Sage Publications, 1980.</li></ul>
+ * </pre>
+ * 
+ * <br>
+ * References:
+ * <ul>
+ * <li>Krippendorff, K.: Content Analysis: An Introduction to Its Methodology. Beverly Hills, CA:
+ * Sage Publications, 1980.</li>
+ * </ul>
+ * 
  * @see ICodingAnnotationStudy
  * @author Christian M. Meyer
  */
@@ -95,33 +100,17 @@ public class ReliabilityMatrixPrinter
         }
 
         /*
-        for (Object category : categories.keySet())
-            out.print(DIVIDER + category);
-        out.print(DIVIDER + "Σ");
-        out.println();
-        int i = 0;
-        int[] colSum = new int[study.getCategoryCount()];
-        for (Object category1 : categories.keySet()) {
-            out.print(category1);
-            int rowSum = 0;
-            for (int j = 0; j < categories.size(); j++) {
-                out.printf(DIVIDER + "%3d", frequencies[i][j]);
-                rowSum += frequencies[i][j];
-                colSum[j] += frequencies[i][j];
-            }
-            out.printf(DIVIDER + "%3d", rowSum);
-            out.println();
-            i++;
-        }
-        
-        out.print("Σ");
-        int rowSum = 0;
-        for (int j = 0; j < categories.size(); j++) {
-            out.printf(DIVIDER + "%3d", colSum[j]);
-            rowSum += colSum[j];
-        }
-        out.printf(DIVIDER + "%3d", rowSum);
-        out.println();*/
+         * for (Object category : categories.keySet()) out.print(DIVIDER + category);
+         * out.print(DIVIDER + "Σ"); out.println(); int i = 0; int[] colSum = new
+         * int[study.getCategoryCount()]; for (Object category1 : categories.keySet()) {
+         * out.print(category1); int rowSum = 0; for (int j = 0; j < categories.size(); j++) {
+         * out.printf(DIVIDER + "%3d", frequencies[i][j]); rowSum += frequencies[i][j]; colSum[j] +=
+         * frequencies[i][j]; } out.printf(DIVIDER + "%3d", rowSum); out.println(); i++; }
+         * 
+         * out.print("Σ"); int rowSum = 0; for (int j = 0; j < categories.size(); j++) {
+         * out.printf(DIVIDER + "%3d", colSum[j]); rowSum += colSum[j]; } out.printf(DIVIDER +
+         * "%3d", rowSum); out.println();
+         */
     }
 
 }

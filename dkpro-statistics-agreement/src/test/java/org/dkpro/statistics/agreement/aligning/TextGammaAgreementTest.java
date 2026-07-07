@@ -54,7 +54,8 @@ class TextGammaAgreementTest
     private static final int MEASUREMENT_REPEATS = 25;
 
     // Head-room between the true agreement and the tolerance. The (1 - ALPHA) guarantee is only ~2
-    // sigma, so the original offset(0.01) (~2 sigma on a single measurement) failed ~5% of the time.
+    // sigma, so the original offset(0.01) (~2 sigma on a single measurement) failed ~5% of the
+    // time.
     private static final double AGREEMENT_TOLERANCE_STD_ERRORS = 8.0;
 
     private static double meanAgreement(TextGammaAgreement aMeasure)
@@ -80,6 +81,7 @@ class TextGammaAgreementTest
                 / Math.sqrt(MEASUREMENT_REPEATS);
         return AGREEMENT_TOLERANCE_STD_ERRORS * meanStdError;
     }
+
     private static final List<AlignableAnnotationTextUnit> TOTAL_TEXT_DISAGREEMENT = asList( //
             textUnit(ANNOTATOR_A, 0, 2, "a"), //
             textUnit(ANNOTATOR_A, 3, 5, "b"), //
@@ -170,7 +172,7 @@ class TextGammaAgreementTest
             textUnit(ANNOTATOR_B, 0, 2, "a", Map.of("label", "B")), //
             textUnit(ANNOTATOR_B, 3, 5, "b", Map.of("label", "C")), //
             textUnit(ANNOTATOR_B, 6, 8, "c", Map.of("label", "A")));
-    
+
     static List<Arguments> data_SimpleDisorder_NominalFeatureTextDissimilarity()
     {
         return asList( //
@@ -183,9 +185,8 @@ class TextGammaAgreementTest
 
     @ParameterizedTest(name = "[{index}] {0}")
     @MethodSource("data_SimpleDisorder_NominalFeatureTextDissimilarity")
-    void testCalculateTextAgreement_SimpleDisorder_NominalFeatureTextDissimilarity(
-            String aLabel, double aExpectedAgreement, String aText,
-            List<AlignableAnnotationTextUnit> aData)
+    void testCalculateTextAgreement_SimpleDisorder_NominalFeatureTextDissimilarity(String aLabel,
+            double aExpectedAgreement, String aText, List<AlignableAnnotationTextUnit> aData)
     {
         var study = new TextAligningAnnotationStudy(aText);
         study.addUnits(aData);
@@ -197,8 +198,8 @@ class TextGammaAgreementTest
                 .build();
 
         assertThat(sut.calculateAgreement()).isCloseTo(aExpectedAgreement, offset(0.02));
-    }    
-    
+    }
+
     @Test
     void testCalculateTextAgreementWithTexts_LabelTextPositionDisagreement()
     {
@@ -233,7 +234,7 @@ class TextGammaAgreementTest
 
         var annots2 = asList( //
                 textUnit(ANNOTATOR_B, 0, 2, "b"), //
-                textUnit(ANNOTATOR_B, 3, 5, "c"), // 
+                textUnit(ANNOTATOR_B, 3, 5, "c"), //
                 textUnit(ANNOTATOR_B, 7, 9, "bc"));
         var text2 = new AnnotatedText("so so so ", annots2);
 

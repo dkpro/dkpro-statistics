@@ -63,7 +63,8 @@ class CombinedCategoricalDissimilarityTest
     void testConstructorMatchesBuilder()
     {
         var sut = new CombinedCategoricalDissimilarity(3.0, 2.0, 1.0,
-                new PositionalSporadicDissimilarity(1.0), new AbsoluteCategoricalDissimilarity(1.0));
+                new PositionalSporadicDissimilarity(1.0),
+                new AbsoluteCategoricalDissimilarity(1.0));
         var u = unit(ANNOTATOR_1, 0, 10, "A");
         var v = unit(ANNOTATOR_2, 5, 15, "B");
 

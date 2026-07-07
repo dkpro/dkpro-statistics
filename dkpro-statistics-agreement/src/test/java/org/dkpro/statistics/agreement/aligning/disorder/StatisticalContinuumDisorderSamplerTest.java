@@ -91,11 +91,13 @@ class StatisticalContinuumDisorderSamplerTest
 
         var sampler = new StatisticalContinuumDisorderSampler(measure(set, 7));
 
-        // std of unit-count and duration are both 0 (would make commons-math NormalDistribution throw).
+        // std of unit-count and duration are both 0 (would make commons-math NormalDistribution
+        // throw).
         assertThat(sampler.getStandardDeviationOfUnitsPerRater()).isCloseTo(0.0, offset(1e-12));
         assertThat(sampler.getStandardDeviationOfUnitDuration()).isCloseTo(0.0, offset(1e-12));
 
-        // Sampling must not throw; each rater gets exactly the (deterministic) mean count of 2 units,
+        // Sampling must not throw; each rater gets exactly the (deterministic) mean count of 2
+        // units,
         // each of the deterministic mean duration 4.
         for (int i = 0; i < 20; i++) {
             var sample = sampler.sampleContinuum();
@@ -175,7 +177,8 @@ class StatisticalContinuumDisorderSamplerTest
                 // Well-formed spans.
                 assertThat(u.getBegin()).isLessThan(u.getEnd());
 
-                // The category feature is actually retained on the unit (guards the 4-arg-constructor
+                // The category feature is actually retained on the unit (guards the
+                // 4-arg-constructor
                 // trap that silently drops the features map).
                 var category = u.getFeatureValue("category");
                 assertThat(category).isNotNull();
@@ -236,7 +239,8 @@ class StatisticalContinuumDisorderSamplerTest
         // The single feature name is still auto-detected from the labelled units.
         assertThat(sampler.getFeatureName()).isEqualTo("category");
 
-        // "unlabelled" (null) is a first-class category, ordered first by the nulls-first comparator.
+        // "unlabelled" (null) is a first-class category, ordered first by the nulls-first
+        // comparator.
         // Weights: "a" x2, unlabelled x2 over 4 units -> 0.5 / 0.5.
         assertThat(sampler.getCategories()).containsExactly(null, "a");
         assertThat(sampler.getCategoryWeights()).containsExactly(0.5, 0.5);

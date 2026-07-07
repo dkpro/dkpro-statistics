@@ -42,9 +42,10 @@ public class TextAligningAnnotationStudy
     public void addUnit(AlignableAnnotationUnit aUnit)
     {
         if (!(aUnit instanceof AlignableAnnotationTextUnit)) {
-            throw new IllegalArgumentException("AnnotatedText only accepts AlignableAnnotationTextUnit");
+            throw new IllegalArgumentException(
+                    "AnnotatedText only accepts AlignableAnnotationTextUnit");
         }
-        
+
         super.addUnit(aUnit);
     }
 

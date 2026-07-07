@@ -38,10 +38,10 @@ class PrecomputedCategoricalDissimilarityTest
     }
 
     // Matrix laid out in alphabetical category order: a, b, c.
-    //        a    b    c
-    //  a [ 0.0  0.5  0.9 ]
-    //  b [ 0.5  0.0  0.2 ]
-    //  c [ 0.9  0.2  0.0 ]
+    // a b c
+    // a [ 0.0 0.5 0.9 ]
+    // b [ 0.5 0.0 0.2 ]
+    // c [ 0.9 0.2 0.0 ]
     private static double[][] matrix()
     {
         return new double[][] { //
@@ -143,8 +143,9 @@ class PrecomputedCategoricalDissimilarityTest
                 { 0.9, 0.2, 0.0 } };
         List<String> categories = asList("a", "b", "c");
 
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(
-                () -> new PrecomputedCategoricalDissimilarity("label", categories, asymmetric, 1.0));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new PrecomputedCategoricalDissimilarity("label", categories,
+                        asymmetric, 1.0));
     }
 
     @Test
@@ -156,7 +157,8 @@ class PrecomputedCategoricalDissimilarityTest
                 { 0.9, 0.2, 0.0 } };
         List<String> categories = asList("a", "b", "c");
 
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(
-                () -> new PrecomputedCategoricalDissimilarity("label", categories, nonZeroDiag, 1.0));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new PrecomputedCategoricalDissimilarity("label", categories,
+                        nonZeroDiag, 1.0));
     }
 }

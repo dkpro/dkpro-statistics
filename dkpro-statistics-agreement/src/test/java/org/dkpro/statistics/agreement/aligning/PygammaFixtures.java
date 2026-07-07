@@ -33,9 +33,8 @@ import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
 /**
- * Shared loader for the pygamma cross-validation fixtures under
- * {@code src/test/resources/pygamma}. Reused by the tier-1/tier-2/tier-3 tests so the JSON schema is
- * decoded in exactly one place.
+ * Shared loader for the pygamma cross-validation fixtures under {@code src/test/resources/pygamma}.
+ * Reused by the tier-1/tier-2/tier-3 tests so the JSON schema is decoded in exactly one place.
  */
 public final class PygammaFixtures
 {
@@ -85,8 +84,9 @@ public final class PygammaFixtures
 
     /**
      * Builds an {@link AnnotationSet} from an array of unit entries (each with
-     * {@code annotator}/{@code start}/{@code end}/{@code category} keys and integral offsets). Works
-     * both for the top-level {@code continuum} and for a sampled continuum's {@code scaled.units}.
+     * {@code annotator}/{@code start}/{@code end}/{@code category} keys and integral offsets).
+     * Works both for the top-level {@code continuum} and for a sampled continuum's
+     * {@code scaled.units}.
      */
     public static AnnotationSet buildAnnotationSet(JsonNode aUnitsArray)
     {

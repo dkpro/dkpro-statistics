@@ -121,59 +121,31 @@ public class CoincidenceMatrixPrinter
         out.println();
     }
     /*
-    public void printPercentage(final PrintStream out, final IItemAnnotationStudy study) {
-        //TODO: measure length of cats. maybe cut them.
-        Map<Object, Map<Object, Integer>> coincidence = 
-                AgreementUtils.countCategoryCoincidence(study);
-        
-        final String DIVIDER = "\t";
-        
-        double normalizer = 0.0;
-        for (Object category1 : study.getCategories()) {
-            Map<Object, Integer> c1 = coincidence.get(category1);
-            for (Object category2 : study.getCategories())
-                if (c1 != null && c1.get(category2) != null)
-                    normalizer += c1.get(category2);
-        }
-        
-        for (Object category : study.getCategories())
-            out.print(DIVIDER + category);
-        out.print(DIVIDER + "Σ");
-        out.println();
-                
-        int idx = 0;
-        double[] sums = new double[study.getCategoryCount()]; 
-        for (Object category1 : study.getCategories()) {
-            Map<Object, Integer> c1 = coincidence.get(category1);
-            out.print(category1);
-            double sum = 0;
-            for (Object category2 : study.getCategories()) {
-                Double value = 0.0;
-                if (c1 != null && c1.get(category2) != null)
-                    value = new Double(c1.get(category2));
-                value /= normalizer;
-                //value *= study.getItemCount() * study.getRaterCount();
-                
-                if (value != null && value > 0.0) {
-                    out.printf(DIVIDER + "%1.3f", value);
-                    sum += value;
-                } else
-                    out.print(DIVIDER + "     ");
-            }
-            out.printf(DIVIDER + "%1.3f", sum);
-            sums[idx] = sum;
-            idx++;
-            out.println();
-        }
-        
-        double sum = 0;
-        out.print("Σ");
-        for (int i = 0; i < sums.length; i++) {
-            out.printf(DIVIDER + "%1.3f", sums[i]);
-            sum += sums[i];
-        }
-        out.printf(DIVIDER + "%1.3f", sum);
-        out.println();
-    }
+     * public void printPercentage(final PrintStream out, final IItemAnnotationStudy study) {
+     * //TODO: measure length of cats. maybe cut them. Map<Object, Map<Object, Integer>> coincidence
+     * = AgreementUtils.countCategoryCoincidence(study);
+     * 
+     * final String DIVIDER = "\t";
+     * 
+     * double normalizer = 0.0; for (Object category1 : study.getCategories()) { Map<Object,
+     * Integer> c1 = coincidence.get(category1); for (Object category2 : study.getCategories()) if
+     * (c1 != null && c1.get(category2) != null) normalizer += c1.get(category2); }
+     * 
+     * for (Object category : study.getCategories()) out.print(DIVIDER + category);
+     * out.print(DIVIDER + "Σ"); out.println();
+     * 
+     * int idx = 0; double[] sums = new double[study.getCategoryCount()]; for (Object category1 :
+     * study.getCategories()) { Map<Object, Integer> c1 = coincidence.get(category1);
+     * out.print(category1); double sum = 0; for (Object category2 : study.getCategories()) { Double
+     * value = 0.0; if (c1 != null && c1.get(category2) != null) value = new
+     * Double(c1.get(category2)); value /= normalizer; //value *= study.getItemCount() *
+     * study.getRaterCount();
+     * 
+     * if (value != null && value > 0.0) { out.printf(DIVIDER + "%1.3f", value); sum += value; }
+     * else out.print(DIVIDER + "     "); } out.printf(DIVIDER + "%1.3f", sum); sums[idx] = sum;
+     * idx++; out.println(); }
+     * 
+     * double sum = 0; out.print("Σ"); for (int i = 0; i < sums.length; i++) { out.printf(DIVIDER +
+     * "%1.3f", sums[i]); sum += sums[i]; } out.printf(DIVIDER + "%1.3f", sum); out.println(); }
      */
 }

@@ -53,10 +53,10 @@ import java.util.Set;
 import org.dkpro.statistics.agreement.aligning.AlignableAnnotationUnit;
 
 /**
- * Basic categorical dissimilarity. It is {@code 0.0} when the two units carry identical feature sets
- * (same names and same values) and {@code deltaEmpty} otherwise. The feature comparison follows the
- * same semantics as {@link NominalFeatureDissimilarity}. Corresponds to the Python class
- * {@code AbsoluteCategoricalDissimilarity} in pygamma-agreement.
+ * Basic categorical dissimilarity. It is {@code 0.0} when the two units carry identical feature
+ * sets (same names and same values) and {@code deltaEmpty} otherwise. The feature comparison
+ * follows the same semantics as {@link NominalFeatureDissimilarity}. Corresponds to the Python
+ * class {@code AbsoluteCategoricalDissimilarity} in pygamma-agreement.
  * <p>
  * Deviation from the original: pygamma compares a single scalar category index per unit, whereas
  * the units in this project carry a feature map, so this implementation compares the full feature
