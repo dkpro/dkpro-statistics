@@ -4,3 +4,4 @@ target/
 .project
 _todo/
 .checkstyle
+__pycache__/

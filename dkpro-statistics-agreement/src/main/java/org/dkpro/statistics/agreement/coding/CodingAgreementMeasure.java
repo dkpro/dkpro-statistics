@@ -17,10 +17,13 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Map;
 
 import org.dkpro.statistics.agreement.AgreementMeasure;
 import org.dkpro.statistics.agreement.InsufficientDataException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class of agreement measures for {@link ICodingAnnotationStudy}s.
@@ -31,6 +34,8 @@ public abstract class CodingAgreementMeasure
     extends AgreementMeasure
     implements ICodingAgreementMeasure
 {
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     protected ICodingAnnotationStudy study;
 
     /**
@@ -89,8 +94,8 @@ public abstract class CodingAgreementMeasure
     protected void warnIfMissingValues()
     {
         if (study.hasMissingValues()) {
-            System.err.println(getClass().getName()
-                    + " does not support dealing with missing values. Consider using, for example, Krippendorff's alpha instead.");
+            LOG.warn("{} does not support dealing with missing values. Consider using, for "
+                    + "example, Krippendorff's alpha instead.", getClass().getName());
         }
     }
 

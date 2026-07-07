@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "irrcacVersion": "1.4",
+    "irrcacHome": "https://CRAN.R-project.org/package=irrCAC",
+    "irrcacLicense": "GPL (>= 2)",
+    "generatedBy": "public API (gwet.ac1.raw)",
+    "description": "3x3 table from Cohen (1960: p. 37)."
+  },
+  "categories": [1, 2, 3],
+  "table": [
+    [25, 12, 3],
+    [13, 2, 15],
+    [12, 16, 2]
+  ],
+  "n": 100,
+  "cases": [
+    {
+      "measure": "AC1",
+      "weights": "unweighted",
+      "distanceFunction": "nominal",
+      "pa": 0.29,
+      "pe": 0.3225,
+      "coefficient": -0.04797
+    },
+    {
+      "measure": "AC2",
+      "weights": "quadratic",
+      "distanceFunction": "interval",
+      "pa": 0.71,
+      "pe": 0.645,
+      "coefficient": 0.1831
+    }
+  ]
+}

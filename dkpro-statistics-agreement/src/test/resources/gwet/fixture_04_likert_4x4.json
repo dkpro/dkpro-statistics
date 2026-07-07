@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "irrcacVersion": "1.4",
+    "irrcacHome": "https://CRAN.R-project.org/package=irrCAC",
+    "irrcacLicense": "GPL (>= 2)",
+    "generatedBy": "public API (gwet.ac1.raw)",
+    "description": "4-category ordinal table; off-diagonal mass near the diagonal exercises quadratic weighting."
+  },
+  "categories": [1, 2, 3, 4],
+  "table": [
+    [20, 5, 1, 0],
+    [4, 15, 6, 1],
+    [0, 5, 18, 4],
+    [0, 1, 3, 12]
+  ],
+  "n": 95,
+  "cases": [
+    {
+      "measure": "AC1",
+      "weights": "unweighted",
+      "distanceFunction": "nominal",
+      "pa": 0.684210526315789,
+      "pe": 0.247294552169898,
+      "coefficient": 0.58046
+    },
+    {
+      "measure": "AC2",
+      "weights": "quadratic",
+      "distanceFunction": "interval",
+      "pa": 0.95438596491228,
+      "pe": 0.714406484046373,
+      "coefficient": 0.84028
+    }
+  ]
+}
