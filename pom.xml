@@ -104,6 +104,16 @@
         <version>3.14.0</version>
       </dependency>
       <dependency>
+        <groupId>org.ojalgo</groupId>
+        <artifactId>ojalgo</artifactId>
+        <version>57.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.18.2</version>
+      </dependency>
+      <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
         <version>3.5.2</version>
