@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,6 +14,7 @@
 package org.dkpro.statistics.agreement.coding;
 
 import org.dkpro.statistics.agreement.DisagreementMeasure;
+import org.dkpro.statistics.agreement.IAnnotationStudy;
 import org.dkpro.statistics.agreement.IWeightedAgreement;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 
@@ -66,6 +63,12 @@ public abstract class WeightedAgreement
             throw new NullPointerException("No distance function provided. " + "Use " + getClass()
                     + ".setDistanceFunction()!");
         }
+    }
+
+    @Override
+    protected IAnnotationStudy getStudy()
+    {
+        return study;
     }
 
 }
