@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -77,4 +73,12 @@ public interface IAnnotationStudy
      * annotations coded by the raters.
      */
     int getUnitCount();
+
+    /**
+     * Returns true if, and only if, the study does not contain any annotation units.
+     */
+    default boolean isEmpty()
+    {
+        return getUnitCount() == 0;
+    }
 }

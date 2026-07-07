@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -64,10 +60,29 @@ public abstract class DisagreementMeasure
         LOG.trace("Disagreement -- observed: {} -- expected: {}", D_O, D_E);
 
         if (D_O == D_E) {
+            // When observed and expected disagreement are equal, the chance-corrected agreement is
+            // zero -- except when both are zero, which is the case if all raters agreed on every
+            // unit. Such full agreement should yield 1.0 rather than 0.0, unless the study is empty
+            // and there is nothing to agree on. See issue #35.
+            if (D_O == 0.0) {
+                IAnnotationStudy study = getStudy();
+                return study != null && !study.isEmpty() ? 1.0 : 0.0;
+            }
+
             return 0.0;
         }
 
         return 1.0 - (D_O / D_E);
+    }
+
+    /**
+     * Returns the annotation study underlying this measure, or {@code null} if the measure does not
+     * operate on an {@link IAnnotationStudy} (e.g., purely text-based measures). This is used to
+     * tell an empty study apart from a study in which the raters fully agree.
+     */
+    protected IAnnotationStudy getStudy()
+    {
+        return null;
     }
 
     protected abstract double calculateObservedDisagreement();

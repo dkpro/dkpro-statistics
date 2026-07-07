@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,10 +14,11 @@
 package org.dkpro.statistics.agreement.unitizing;
 
 import org.dkpro.statistics.agreement.DisagreementMeasure;
+import org.dkpro.statistics.agreement.IAnnotationStudy;
 
 /**
  * Abstract base class of agreement measures for {@link IUnitizingAnnotationStudy}s.
- * 
+ *
  * @author Christian M. Meyer
  */
 public abstract class UnitizingAgreementMeasure
@@ -37,6 +34,12 @@ public abstract class UnitizingAgreementMeasure
     public UnitizingAgreementMeasure(final IUnitizingAnnotationStudy study)
     {
         this.study = study;
+    }
+
+    @Override
+    protected IAnnotationStudy getStudy()
+    {
+        return study;
     }
 
 }
