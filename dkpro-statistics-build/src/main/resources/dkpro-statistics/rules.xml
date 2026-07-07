@@ -1,0 +1,38 @@
+<!--
+  Copyright 2026
+  Ubiquitous Knowledge Processing (UKP) Lab
+  Technische Universität Darmstadt
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<ruleset comparisonMethod="maven"
+         xmlns="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0 http://mojo.codehaus.org/versions-maven-plugin/xsd/rule-2.0.0.xsd">
+  <ignoreVersions>
+    <!-- Pre-release suffixes - these are not "updates" -->
+    <ignoreVersion type="regex">(?i).*[-_\.]CR[0-9\.]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]b[0-9\.]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]M[0-9\.]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]rc[0-9\.-]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]alpha[0-9\.-]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]beta[0-9\.-]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]preview[0-9\.-]*</ignoreVersion>
+    <!-- Backwards-compat variants for legacy JDKs (e.g. byte-buddy 1.18.8-jdk5) -->
+    <ignoreVersion type="regex">(?i).*[-_\.]jdk[0-9]+</ignoreVersion>
+    <!-- e.g. commons-collections:commons-collections ... 3.2.1.redhat-7 -> 20040117.000000 -->
+    <ignoreVersion type="regex">\d{4,}.*</ignoreVersion>
+  </ignoreVersions>
+  <rules>
+    <!-- Per-artifact pins go here as needed -->
+  </rules>
+</ruleset>

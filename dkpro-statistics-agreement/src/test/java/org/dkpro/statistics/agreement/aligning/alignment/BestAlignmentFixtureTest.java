@@ -23,7 +23,7 @@ import org.dkpro.statistics.agreement.aligning.PygammaFixtures;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 public class BestAlignmentFixtureTest
 {
