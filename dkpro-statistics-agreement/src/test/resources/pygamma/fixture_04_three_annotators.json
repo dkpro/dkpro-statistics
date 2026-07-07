@@ -1,0 +1,1005 @@
+{
+  "metadata": {
+    "pygammaVersion": "0.5.9",
+    "pygammaRepo": "https://github.com/bootphon/pygamma-agreement",
+    "pygammaCommit": "44587ef",
+    "solver": "GLPK_MI",
+    "seed": 4,
+    "description": "3 annotators, 2 units each, with positional and one categorical disagreement."
+  },
+  "params": {
+    "alpha": 1.0,
+    "beta": 1.0,
+    "deltaEmpty": 1.0
+  },
+  "continuum": [
+    {
+      "annotator": "Ann1",
+      "start": 1,
+      "end": 5,
+      "category": "a"
+    },
+    {
+      "annotator": "Ann1",
+      "start": 10,
+      "end": 14,
+      "category": "b"
+    },
+    {
+      "annotator": "Ann2",
+      "start": 2,
+      "end": 6,
+      "category": "a"
+    },
+    {
+      "annotator": "Ann2",
+      "start": 11,
+      "end": 15,
+      "category": "b"
+    },
+    {
+      "annotator": "Ann3",
+      "start": 1,
+      "end": 4,
+      "category": "a"
+    },
+    {
+      "annotator": "Ann3",
+      "start": 9,
+      "end": 14,
+      "category": "c"
+    }
+  ],
+  "tier1": {
+    "pairDissimilarities": [
+      {
+        "annotatorA": "Ann1",
+        "unitIndexA": 0,
+        "annotatorB": "Ann2",
+        "unitIndexB": 0,
+        "positional": 0.0625,
+        "categorical": 0.0,
+        "combined": 0.0625
+      },
+      {
+        "annotatorA": "Ann1",
+        "unitIndexA": 0,
+        "annotatorB": "Ann2",
+        "unitIndexB": 1,
+        "positional": 6.25,
+        "categorical": 1.0,
+        "combined": 7.25
+      },
+      {
+        "annotatorA": "Ann1",
+        "unitIndexA": 1,
+        "annotatorB": "Ann2",
+        "unitIndexB": 0,
+        "positional": 4.0,
+        "categorical": 1.0,
+        "combined": 5.0
+      },
+      {
+        "annotatorA": "Ann1",
+        "unitIndexA": 1,
+        "annotatorB": "Ann2",
+        "unitIndexB": 1,
+        "positional": 0.0625,
+        "categorical": 0.0,
+        "combined": 0.0625
+      },
+      {
+        "annotatorA": "Ann1",
+        "unitIndexA": 0,
+        "annotatorB": "Ann3",
+        "unitIndexB": 0,
+        "positional": 0.020408162847161293,
+        "categorical": 0.0,
+        "combined": 0.020408162847161293
+      },
+      {
+        "annotatorA": "Ann1",
+        "unitIndexA": 0,
+        "annotatorB": "Ann3",
+        "unitIndexB": 1,
+        "positional": 3.567901134490967,
+        "categorical": 1.0,
+        "combined": 4.567901134490967
+      },
+      {
+        "annotatorA": "Ann1",
+        "unitIndexA": 1,
+        "annotatorB": "Ann3",
+        "unitIndexB": 0,
+        "positional": 7.36734676361084,
+        "categorical": 1.0,
+        "combined": 8.36734676361084
+      },
+      {
+        "annotatorA": "Ann1",
+        "unitIndexA": 1,
+        "annotatorB": "Ann3",
+        "unitIndexB": 1,
+        "positional": 0.012345679104328156,
+        "categorical": 1.0,
+        "combined": 1.0123456716537476
+      },
+      {
+        "annotatorA": "Ann2",
+        "unitIndexA": 0,
+        "annotatorB": "Ann3",
+        "unitIndexB": 0,
+        "positional": 0.18367347121238708,
+        "categorical": 0.0,
+        "combined": 0.18367347121238708
+      },
+      {
+        "annotatorA": "Ann2",
+        "unitIndexA": 0,
+        "annotatorB": "Ann3",
+        "unitIndexB": 1,
+        "positional": 2.777777671813965,
+        "categorical": 1.0,
+        "combined": 3.777777671813965
+      },
+      {
+        "annotatorA": "Ann2",
+        "unitIndexA": 1,
+        "annotatorB": "Ann3",
+        "unitIndexB": 0,
+        "positional": 9.0,
+        "categorical": 1.0,
+        "combined": 10.0
+      },
+      {
+        "annotatorA": "Ann2",
+        "unitIndexA": 1,
+        "annotatorB": "Ann3",
+        "unitIndexB": 1,
+        "positional": 0.1111111119389534,
+        "categorical": 1.0,
+        "combined": 1.1111111640930176
+      }
+    ],
+    "bestAlignmentDisorder": 0.40875643491744995
+  },
+  "tier2": {
+    "sampledContinua": [
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 3.739378792537379,
+            "end": 7.164390503074478,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 11.300820699564976,
+            "end": 16.138917134227825,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 3.3955264392011246,
+            "end": 6.733030496281247,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 8.453036351042616,
+            "end": 12.383369995930018,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 2.533878572186274,
+            "end": 6.779294234723135,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 10.1748270562878,
+            "end": 14.272698176941343,
+            "category": "a"
+          }
+        ],
+        "bestAlignmentDisorder": 0.8253426551818848,
+        "scaled": {
+          "scale": 100000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 373938,
+              "end": 716439,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 1130082,
+              "end": 1613892,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 339553,
+              "end": 673303,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 845304,
+              "end": 1238337,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 253388,
+              "end": 677929,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 1017483,
+              "end": 1427270,
+              "category": "a"
+            }
+          ],
+          "bestAlignmentDisorder": 0.8253426551818848
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 1.4699326906561878,
+            "end": 6.363081622694205,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 9.151188796103702,
+            "end": 13.570419821472388,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 0.23547566319096905,
+            "end": 5.519133282930137,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 9.041876277995224,
+            "end": 12.38351464912028,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 1.3790215600695561,
+            "end": 5.692205968998483,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 12.47640755762505,
+            "end": 16.491958863470707,
+            "category": "a"
+          }
+        ],
+        "bestAlignmentDisorder": 0.9491496086120605,
+        "scaled": {
+          "scale": 100000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 146993,
+              "end": 636308,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 915119,
+              "end": 1357042,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 23548,
+              "end": 551913,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 904188,
+              "end": 1238351,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 137902,
+              "end": 569221,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 1247641,
+              "end": 1649196,
+              "category": "a"
+            }
+          ],
+          "bestAlignmentDisorder": 0.9491503238677979
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 4.590062557341935,
+            "end": 8.430596476405938,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 12.778038819838205,
+            "end": 16.77230368821116,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 2.4462907887708916,
+            "end": 6.909375711063197,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 11.378319692913173,
+            "end": 15.27670771071711,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann3",
+            "start": -1.0602198895988244,
+            "end": 2.96145816184545,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 5.749410239980914,
+            "end": 9.854337303865965,
+            "category": "a"
+          }
+        ],
+        "bestAlignmentDisorder": 1.3278087377548218,
+        "scaled": {
+          "scale": 100000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 459006,
+              "end": 843060,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 1277804,
+              "end": 1677230,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 244629,
+              "end": 690938,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 1137832,
+              "end": 1527671,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann3",
+              "start": -106022,
+              "end": 296146,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 574941,
+              "end": 985434,
+              "category": "a"
+            }
+          ],
+          "bestAlignmentDisorder": 1.3278082609176636
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 3.7595290019513823,
+            "end": 7.932991317049364,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 9.313156425614,
+            "end": 13.402607200668317,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 0.7422722880030035,
+            "end": 5.476557109076492,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 6.862921716281457,
+            "end": 11.052139468076817,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 5.101319273110454,
+            "end": 9.241419180980802,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 12.049200072317866,
+            "end": 16.846282311680323,
+            "category": "c"
+          }
+        ],
+        "bestAlignmentDisorder": 1.271691083908081,
+        "scaled": {
+          "scale": 100000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 375953,
+              "end": 793299,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 931316,
+              "end": 1340261,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 74227,
+              "end": 547656,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 686292,
+              "end": 1105214,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 510132,
+              "end": 924142,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 1204920,
+              "end": 1684628,
+              "category": "c"
+            }
+          ],
+          "bestAlignmentDisorder": 1.2716907262802124
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 3.596507910967723,
+            "end": 8.136128376465944,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 10.14077175158569,
+            "end": 14.07126794584369,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 0.5095262599117557,
+            "end": 5.67716236951926,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 5.057392402169078,
+            "end": 8.042499752635102,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 3.101083196997594,
+            "end": 7.221930395913434,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 9.168459597557725,
+            "end": 12.887912221883964,
+            "category": "a"
+          }
+        ],
+        "bestAlignmentDisorder": 1.2597535848617554,
+        "scaled": {
+          "scale": 1000000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 3596508,
+              "end": 8136128,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 10140772,
+              "end": 14071268,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 509526,
+              "end": 5677162,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 5057392,
+              "end": 8042500,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 3101083,
+              "end": 7221930,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 9168460,
+              "end": 12887912,
+              "category": "a"
+            }
+          ],
+          "bestAlignmentDisorder": 1.2597535848617554
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 0.777965816298324,
+            "end": 4.940123112256834,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 6.809143079500316,
+            "end": 11.576063633163681,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 2.289483360327158,
+            "end": 6.306842598062786,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 8.331829967195464,
+            "end": 12.597575986202077,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann3",
+            "start": -0.7364414741716203,
+            "end": 3.013054107981932,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 6.25554904147832,
+            "end": 9.803027949491353,
+            "category": "a"
+          }
+        ],
+        "bestAlignmentDisorder": 1.2535645961761475,
+        "scaled": {
+          "scale": 1000000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 777966,
+              "end": 4940123,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 6809143,
+              "end": 11576064,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 2289483,
+              "end": 6306843,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 8331830,
+              "end": 12597576,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann3",
+              "start": -736441,
+              "end": 3013054,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 6255549,
+              "end": 9803028,
+              "category": "a"
+            }
+          ],
+          "bestAlignmentDisorder": 1.2535645961761475
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 1.789473770214502,
+            "end": 6.143696998211962,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 8.427080695208012,
+            "end": 11.674329691089849,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 4.187025270027059,
+            "end": 8.485261112873111,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 12.189864896123215,
+            "end": 16.51023289253869,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann3",
+            "start": -1.316802810461918,
+            "end": 3.2841647606083786,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 5.160559706981443,
+            "end": 9.4262611924109,
+            "category": "c"
+          }
+        ],
+        "bestAlignmentDisorder": 1.6669913530349731,
+        "scaled": {
+          "scale": 100000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 178947,
+              "end": 614370,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 842708,
+              "end": 1167433,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 418703,
+              "end": 848526,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 1218986,
+              "end": 1651023,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann3",
+              "start": -131680,
+              "end": 328416,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 516056,
+              "end": 942626,
+              "category": "c"
+            }
+          ],
+          "bestAlignmentDisorder": 1.6669912338256836
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 5.02788628887424,
+            "end": 9.13229045098263,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 12.719436508794818,
+            "end": 16.79322870860025,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 0.40736681539114594,
+            "end": 3.914915164204388,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 4.364396853874865,
+            "end": 8.179527846730224,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 2.5502969112719565,
+            "end": 6.925453536738624,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 10.961309381688356,
+            "end": 15.057319223731554,
+            "category": "b"
+          }
+        ],
+        "bestAlignmentDisorder": 1.445013165473938,
+        "scaled": {
+          "scale": 100000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 502789,
+              "end": 913229,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 1271944,
+              "end": 1679323,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 40737,
+              "end": 391492,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 436440,
+              "end": 817953,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 255030,
+              "end": 692545,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 1096131,
+              "end": 1505732,
+              "category": "b"
+            }
+          ],
+          "bestAlignmentDisorder": 1.4450135231018066
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 4.776936833709963,
+            "end": 9.661316700632629,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 11.158489748600324,
+            "end": 14.876849533241566,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 1.8917184932056135,
+            "end": 6.4085072463469155,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 7.884631613264295,
+            "end": 11.67214113893518,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann3",
+            "start": -0.39185243973231854,
+            "end": 3.6400043453936726,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 3.4011915116155644,
+            "end": 7.668192912092408,
+            "category": "a"
+          }
+        ],
+        "bestAlignmentDisorder": 1.0676971673965454,
+        "scaled": {
+          "scale": 1000000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 4776937,
+              "end": 9661317,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 11158490,
+              "end": 14876850,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 1891718,
+              "end": 6408507,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 7884632,
+              "end": 11672141,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann3",
+              "start": -391852,
+              "end": 3640004,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 3401192,
+              "end": 7668193,
+              "category": "a"
+            }
+          ],
+          "bestAlignmentDisorder": 1.067697286605835
+        }
+      },
+      {
+        "units": [
+          {
+            "annotator": "Ann1",
+            "start": 7.23244192852311,
+            "end": 11.854614399169158,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann1",
+            "start": 14.61119068868979,
+            "end": 19.075443789108473,
+            "category": "b"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 2.219612372635849,
+            "end": 6.074006073799142,
+            "category": "c"
+          },
+          {
+            "annotator": "Ann2",
+            "start": 6.159527455209364,
+            "end": 9.209038021006155,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 1.7638397224518332,
+            "end": 5.572475500544021,
+            "category": "a"
+          },
+          {
+            "annotator": "Ann3",
+            "start": 7.3274324216907685,
+            "end": 11.258632772722967,
+            "category": "c"
+          }
+        ],
+        "bestAlignmentDisorder": 1.4115850925445557,
+        "scaled": {
+          "scale": 100000,
+          "units": [
+            {
+              "annotator": "Ann1",
+              "start": 723244,
+              "end": 1185461,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann1",
+              "start": 1461119,
+              "end": 1907544,
+              "category": "b"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 221961,
+              "end": 607401,
+              "category": "c"
+            },
+            {
+              "annotator": "Ann2",
+              "start": 615953,
+              "end": 920904,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 176384,
+              "end": 557248,
+              "category": "a"
+            },
+            {
+              "annotator": "Ann3",
+              "start": 732743,
+              "end": 1125863,
+              "category": "c"
+            }
+          ],
+          "bestAlignmentDisorder": 1.4115846157073975
+        }
+      }
+    ]
+  },
+  "tier3": {
+    "expectedDisorder": 1.1979972124099731,
+    "gamma": 0.6588001847267151,
+    "nSamples": 30
+  }
+}
