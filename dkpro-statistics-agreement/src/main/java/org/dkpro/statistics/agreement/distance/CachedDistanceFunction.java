@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,6 +14,7 @@
 package org.dkpro.statistics.agreement.distance;
 
 import java.util.Hashtable;
+import java.util.Objects;
 
 import org.dkpro.statistics.agreement.IAnnotationStudy;
 
@@ -47,7 +44,7 @@ public class CachedDistanceFunction
     public double measureDistance(final IAnnotationStudy study, final Object category1,
             final Object category2)
     {
-        String key = category1.hashCode() + "|" + category2.hashCode();
+        String key = Objects.hashCode(category1) + "|" + Objects.hashCode(category2);
         Double result = cache.get(key);
         if (result == null) {
             result = wrappee.measureDistance(study, category1, category2);

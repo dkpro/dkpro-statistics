@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,6 +12,8 @@
  * limitations under the License.
  */
 package org.dkpro.statistics.agreement.distance;
+
+import java.util.Objects;
 
 import org.dkpro.statistics.agreement.IAnnotationStudy;
 
@@ -45,6 +43,10 @@ public class MASISetAnnotationDistanceFunction
     @Override
     public double measureDistance(final IAnnotationStudy study, Object category1, Object category2)
     {
+        if (!(category1 instanceof SetAnnotation) || !(category2 instanceof SetAnnotation)) {
+            return Objects.equals(category1, category2) ? 0.0 : 1.0;
+        }
+
         SetAnnotation c1 = (SetAnnotation) category1;
         SetAnnotation c2 = (SetAnnotation) category2;
 

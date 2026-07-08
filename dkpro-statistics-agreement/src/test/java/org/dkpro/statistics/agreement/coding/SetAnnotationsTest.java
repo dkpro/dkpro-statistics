@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -56,6 +52,32 @@ public class SetAnnotationsTest
         assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.253, offset(0.001));
         assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.338, offset(0.001));
         assertThat(alpha.calculateAgreement()).isCloseTo(0.252, offset(0.001));
+    }
+
+    @Test
+    public void testSetDistanceFunctionCategoryAgreement()
+    {
+        ICodingAnnotationStudy study = createExample();
+
+        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
+        alpha.setDistanceFunction(new SetAnnotationDistanceFunction());
+
+        // Provokes issue #10: calculateCategoryAgreement feeds a plain-Object NULL_CATEGORY
+        // sentinel into the distance function, which unconditionally casts it to SetAnnotation.
+        assertThat(alpha.calculateCategoryAgreement(new SetAnnotation("A"))).isBetween(-1.0, 1.0);
+    }
+
+    @Test
+    public void testMASIDistanceFunctionCategoryAgreement()
+    {
+        ICodingAnnotationStudy study = createExample();
+
+        KrippendorffAlphaAgreement alpha = new KrippendorffAlphaAgreement(study, null);
+        alpha.setDistanceFunction(new MASISetAnnotationDistanceFunction());
+
+        // Provokes issue #10: calculateCategoryAgreement feeds a plain-Object NULL_CATEGORY
+        // sentinel into the distance function, which unconditionally casts it to SetAnnotation.
+        assertThat(alpha.calculateCategoryAgreement(new SetAnnotation("A"))).isBetween(-1.0, 1.0);
     }
 
     @Test
