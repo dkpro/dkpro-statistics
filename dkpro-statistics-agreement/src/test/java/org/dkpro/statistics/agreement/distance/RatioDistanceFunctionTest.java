@@ -30,6 +30,16 @@ public class RatioDistanceFunctionTest
     }
 
     @Test
+    public void largeIntegerDistanceDoesNotOverflow()
+    {
+        // Integer.MAX_VALUE + 1 overflows int arithmetic to a negative sum, making the
+        // positivity guard fail and the result fall back to the nominal 1.0. The true
+        // ((MAX - 1) / (MAX + 1))^2 is very close to 1.0 but not exactly 1.0.
+        assertThat(sut.measureDistance(null, Integer.MAX_VALUE, 1)).isCloseTo(1.0, offset(0.0001))
+                .isLessThan(1.0);
+    }
+
+    @Test
     public void doubleDistanceIsSquaredRelativeDifference()
     {
         assertThat(sut.measureDistance(null, 1.0, 3.0)).isCloseTo(0.25, offset(0.0001));

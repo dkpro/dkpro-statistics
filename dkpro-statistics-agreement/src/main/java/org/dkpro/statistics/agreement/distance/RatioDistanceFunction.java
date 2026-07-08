@@ -49,11 +49,13 @@ public class RatioDistanceFunction
     public double measureDistance(final IAnnotationStudy study, final Object category1,
             final Object category2)
     {
-        if (category1 instanceof Integer && category2 instanceof Integer
-                && (((Integer) category1) + ((Integer) category2) > 0.0)) {
-            double result = (((Integer) category1) - ((Integer) category2))
-                    / (double) (((Integer) category1) + ((Integer) category2));
-            return result * result;
+        if (category1 instanceof Integer && category2 instanceof Integer) {
+            double c1 = ((Integer) category1).doubleValue();
+            double c2 = ((Integer) category2).doubleValue();
+            if (c1 + c2 > 0.0) {
+                double result = (c1 - c2) / (c1 + c2);
+                return result * result;
+            }
         }
 
         if (category1 instanceof Double && category2 instanceof Double
