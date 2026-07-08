@@ -50,8 +50,8 @@ public class IntervalDistanceFunction
             final Object category2)
     {
         if (category1 instanceof Integer && category2 instanceof Integer) {
-            return (((Integer) category1) - ((Integer) category2))
-                    * (((Integer) category1) - ((Integer) category2));
+            double diff = ((Integer) category1).doubleValue() - ((Integer) category2).doubleValue();
+            return diff * diff;
         }
 
         if (category1 instanceof Double && category2 instanceof Double) {

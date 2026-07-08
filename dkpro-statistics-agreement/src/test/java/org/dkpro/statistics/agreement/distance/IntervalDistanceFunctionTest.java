@@ -29,6 +29,14 @@ public class IntervalDistanceFunctionTest
     }
 
     @Test
+    public void largeIntegerDistanceDoesNotOverflow()
+    {
+        // 100000^2 == 1.0E10 exceeds Integer.MAX_VALUE; computing the squared difference
+        // in int arithmetic would silently overflow to 1410065408.
+        assertThat(sut.measureDistance(null, 100000, 0)).isEqualTo(1.0E10);
+    }
+
+    @Test
     public void doubleDistanceIsSquaredDifference()
     {
         assertThat(sut.measureDistance(null, 1.0, 3.0)).isEqualTo(4.0);
