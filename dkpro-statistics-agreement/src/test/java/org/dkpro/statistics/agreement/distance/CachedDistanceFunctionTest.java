@@ -57,6 +57,18 @@ public class CachedDistanceFunctionTest
     }
 
     @Test
+    public void distinctCategoriesWithEqualHashCodesDoNotCollide()
+    {
+        CachedDistanceFunction sut = new CachedDistanceFunction(new NominalDistanceFunction());
+
+        // "Aa" and "BB" are distinct but share the same String hashCode (2112).
+        assertThat("Aa".hashCode()).isEqualTo("BB".hashCode());
+
+        assertThat(sut.measureDistance(null, "Aa", "Aa")).isEqualTo(0.0);
+        assertThat(sut.measureDistance(null, "Aa", "BB")).isEqualTo(1.0);
+    }
+
+    @Test
     public void nullCategoriesAreCachedRatherThanThrowing()
     {
         CountingDistanceFunction wrappee = new CountingDistanceFunction();
