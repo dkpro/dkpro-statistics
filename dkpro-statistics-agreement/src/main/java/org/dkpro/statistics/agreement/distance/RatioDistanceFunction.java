@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,6 +12,8 @@
  * limitations under the License.
  */
 package org.dkpro.statistics.agreement.distance;
+
+import java.util.Objects;
 
 import org.dkpro.statistics.agreement.IAnnotationStudy;
 
@@ -65,7 +63,7 @@ public class RatioDistanceFunction
             return result * result;
         }
 
-        return (category1.equals(category2) ? 0.0 : 1.0);
+        return (Objects.equals(category1, category2) ? 0.0 : 1.0);
     }
 
 }
