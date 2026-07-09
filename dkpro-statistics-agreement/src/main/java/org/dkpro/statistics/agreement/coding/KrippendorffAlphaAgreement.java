@@ -20,7 +20,6 @@ package org.dkpro.statistics.agreement.coding;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import org.dkpro.statistics.agreement.IAnnotationUnit;
 import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
@@ -147,26 +146,6 @@ public class KrippendorffAlphaAgreement
         }
         D_O /= n;
 
-        if (coincidenceMatrix == null) {
-            coincidenceMatrix = CodingAnnotationStudy.countCategoryCoincidence(study);
-        }
-        n = 0.0;
-        Map<Object, Double> marginals = new TreeMap<Object, Double>();
-        for (Entry<Object, Map<Object, Double>> cat1 : coincidenceMatrix.entrySet()) {
-            double n_c = 0.0;
-            for (Entry<Object, Double> cat2 : cat1.getValue().entrySet()) {
-                n_c += cat2.getValue();
-            }
-            marginals.put(cat1.getKey(), n_c);
-            n += n_c;
-        }
-
-        /*
-         * double D_E = 0.0; for (Entry<Object, Double> cat1 : marginals.entrySet()) for
-         * (Entry<Object, Double> cat2 : marginals.entrySet()) D_E += cat1.getValue() *
-         * cat2.getValue() distanceFunction.measureDistance(study, cat1.getKey(), cat2.getKey());
-         * D_E /= n * (n - 1.0);
-         */
         double D_E = calculateExpectedDisagreement();
         if (D_E == 0.0) {
             return 1.0;
