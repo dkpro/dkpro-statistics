@@ -116,8 +116,8 @@
   </modules>
 
   <scm>
-    <connection>scm:git:git://github.com/dkpro/dkpro-statistics</connection>
-    <developerConnection>scm:git:git@github.com:dkpro/dkpro-statistics.git</developerConnection>
+    <connection>scm:git:https://github.com/dkpro/dkpro-statistics.git</connection>
+    <developerConnection>scm:git:https://github.com/dkpro/dkpro-statistics.git</developerConnection>
     <url>https://github.com/dkpro/dkpro-statistics</url>
     <tag>head</tag>
   </scm>
