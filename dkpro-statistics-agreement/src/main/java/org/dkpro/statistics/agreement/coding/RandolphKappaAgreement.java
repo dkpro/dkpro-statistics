@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,6 +14,8 @@
 package org.dkpro.statistics.agreement.coding;
 
 import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
+import org.dkpro.statistics.agreement.IMissingValueSupport;
+import org.dkpro.statistics.agreement.IMultiRaterAgreement;
 
 /**
  * Generalization of Bennett et al.'s (1954) S-measure for calculating a chance-corrected
@@ -40,7 +38,7 @@ import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
  */
 public class RandolphKappaAgreement
     extends CodingAgreementMeasure
-    implements IChanceCorrectedAgreement
+    implements IChanceCorrectedAgreement, IMissingValueSupport, IMultiRaterAgreement
 {
 
     /**

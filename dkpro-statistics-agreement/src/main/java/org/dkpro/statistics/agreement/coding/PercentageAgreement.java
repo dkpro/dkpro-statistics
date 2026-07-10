@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,6 +15,8 @@ package org.dkpro.statistics.agreement.coding;
 
 import org.dkpro.statistics.agreement.IAnnotationUnit;
 import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
+import org.dkpro.statistics.agreement.IMissingValueSupport;
+import org.dkpro.statistics.agreement.IMultiRaterAgreement;
 
 /**
  * Implementation of a simple percentage of agreement measure for calculating the inter-rater
@@ -35,7 +33,8 @@ import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
 // TODO: Holsti.
 public class PercentageAgreement
     extends CodingAgreementMeasure
-    implements ICodingItemSpecificAgreement, ICategorySpecificAgreement
+    implements ICodingItemSpecificAgreement, ICategorySpecificAgreement, IMissingValueSupport,
+    IMultiRaterAgreement
 /* , IRaterAgreement */ {
 
     /**

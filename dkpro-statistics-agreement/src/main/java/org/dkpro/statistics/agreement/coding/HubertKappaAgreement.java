@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,6 +17,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Map;
 
+import org.dkpro.statistics.agreement.IMultiRaterAgreement;
+
 /**
  * <ul>
  * <li>Conger, A.J.: Integration and generalization of kappas for multiple raters. Psychological
@@ -35,6 +33,7 @@ import java.util.Map;
 // TODO: Check Popping (1983) and Heuvelmans and Sanders (1993).
 public class HubertKappaAgreement
     extends CodingAgreementMeasure
+    implements IMultiRaterAgreement
 {
 
     /**
@@ -43,7 +42,6 @@ public class HubertKappaAgreement
     public HubertKappaAgreement(final ICodingAnnotationStudy study)
     {
         super(study);
-        warnIfMissingValues();
     }
 
     /**
