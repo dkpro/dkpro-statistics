@@ -23,7 +23,7 @@
 
   <groupId>org.dkpro.statistics</groupId>
   <artifactId>dkpro-statistics</artifactId>
-  <version>2.3.0</version>
+  <version>2.3.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>DKPro Statistics</name>
@@ -113,7 +113,7 @@
     <connection>scm:git:https://github.com/dkpro/dkpro-statistics.git</connection>
     <developerConnection>scm:git:https://github.com/dkpro/dkpro-statistics.git</developerConnection>
     <url>https://github.com/dkpro/dkpro-statistics</url>
-    <tag>dkpro-statistics-2.3.0</tag>
+    <tag>head</tag>
   </scm>
 
   <dependencyManagement>
