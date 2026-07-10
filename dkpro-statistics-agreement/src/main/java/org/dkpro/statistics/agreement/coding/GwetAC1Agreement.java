@@ -56,8 +56,6 @@ public class GwetAC1Agreement
     public GwetAC1Agreement(final ICodingAnnotationStudy study)
     {
         super(study);
-        ensureTwoRaters();
-        warnIfMissingValues();
     }
 
     /**

@@ -57,6 +57,7 @@ import org.apache.commons.math3.random.Well19937c;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.dkpro.statistics.agreement.DisagreementMeasure;
+import org.dkpro.statistics.agreement.IMultiRaterAgreement;
 import org.dkpro.statistics.agreement.InsufficientDataException;
 import org.dkpro.statistics.agreement.aligning.alignment.BestAlignmentSolver;
 import org.dkpro.statistics.agreement.aligning.alignment.BestAlignmentSolver.BestAlignment;
@@ -122,7 +123,7 @@ import org.slf4j.LoggerFactory;
  */
 public class GammaAgreement
     extends DisagreementMeasure
-    implements IAligningAgreementMeasure
+    implements IAligningAgreementMeasure, IMultiRaterAgreement
 {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 

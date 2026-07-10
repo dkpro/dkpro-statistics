@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,6 +14,7 @@
 package org.dkpro.statistics.agreement.coding;
 
 import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
+import org.dkpro.statistics.agreement.IMissingValueSupport;
 
 /**
  * Implementation of Bennett et al.'s S (1954) for calculating a chance-corrected inter-rater
@@ -43,7 +40,7 @@ import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
 // G index; and Maxwell's (1977) random error (RE) coefficient - Zwick88
 public class BennettSAgreement
     extends CodingAgreementMeasure
-    implements IChanceCorrectedAgreement
+    implements IChanceCorrectedAgreement, IMissingValueSupport
 {
 
     /**
@@ -52,7 +49,6 @@ public class BennettSAgreement
     public BennettSAgreement(final ICodingAnnotationStudy study)
     {
         super(study);
-        ensureTwoRaters();
     }
 
     /**

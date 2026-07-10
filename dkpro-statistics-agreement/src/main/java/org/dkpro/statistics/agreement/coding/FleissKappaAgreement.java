@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -26,6 +22,7 @@ import java.util.Map.Entry;
 import org.dkpro.statistics.agreement.IAnnotationUnit;
 import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
 import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
+import org.dkpro.statistics.agreement.IMultiRaterAgreement;
 
 /**
  * Generalization of Scott's (1955) pi-measure for calculating a chance-corrected inter-rater
@@ -49,7 +46,7 @@ import org.dkpro.statistics.agreement.IChanceCorrectedAgreement;
  */
 public class FleissKappaAgreement
     extends CodingAgreementMeasure
-    implements IChanceCorrectedAgreement, ICategorySpecificAgreement
+    implements IChanceCorrectedAgreement, ICategorySpecificAgreement, IMultiRaterAgreement
 {
 
     /**
@@ -58,7 +55,6 @@ public class FleissKappaAgreement
     public FleissKappaAgreement(final ICodingAnnotationStudy study)
     {
         super(study);
-        warnIfMissingValues();
     }
 
     /**

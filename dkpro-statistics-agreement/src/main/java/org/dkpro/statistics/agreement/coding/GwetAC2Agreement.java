@@ -13,15 +13,13 @@
  */
 package org.dkpro.statistics.agreement.coding;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.dkpro.statistics.agreement.IChanceCorrectedDisagreement;
+import org.dkpro.statistics.agreement.IMultiRaterAgreement;
 import org.dkpro.statistics.agreement.InsufficientDataException;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Weighted generalization of Gwet's {@link GwetAC1Agreement AC1} coefficient, commonly referred to
@@ -51,10 +49,8 @@ import org.slf4j.LoggerFactory;
  */
 public class GwetAC2Agreement
     extends WeightedAgreement
-    implements IChanceCorrectedDisagreement
+    implements IChanceCorrectedDisagreement, IMultiRaterAgreement
 {
-
-    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     /**
      * Initializes the instance for the given annotation study. The study should never be null.
@@ -64,22 +60,6 @@ public class GwetAC2Agreement
     {
         super(study);
         this.distanceFunction = distanceFunction;
-        warnIfMissingValues();
-    }
-
-    /**
-     * Like {@link GwetAC1Agreement} (and the other coding measures), AC2 assumes that every item
-     * was annotated by every rater. It tolerates items with fewer raters by skipping them, but its
-     * chance-agreement estimate still pools all annotations, so the result diverges from Gwet's
-     * reference definition once values are missing. Warn instead of silently returning a skewed
-     * coefficient.
-     */
-    protected void warnIfMissingValues()
-    {
-        if (study.hasMissingValues()) {
-            LOG.warn("{} does not support dealing with missing values. Consider using, for "
-                    + "example, Krippendorff's alpha instead.", getClass().getName());
-        }
     }
 
     /**

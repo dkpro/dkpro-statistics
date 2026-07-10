@@ -22,7 +22,7 @@ import org.dkpro.statistics.agreement.distance.IDistanceFunction;
  * Abstract base class for weighted measures. In most cases, weighted measures are defined as
  * disagreement functions. They are characterized by a distance function that is used to score the
  * similarity between two categories.
- * 
+ *
  * @see IDistanceFunction
  * @see DisagreementMeasure
  * @author Christian M. Meyer
@@ -31,7 +31,6 @@ public abstract class WeightedAgreement
     extends DisagreementMeasure
     implements IWeightedAgreement
 {
-
     protected IDistanceFunction distanceFunction;
     protected ICodingAnnotationStudy study;
 
@@ -41,6 +40,8 @@ public abstract class WeightedAgreement
     public WeightedAgreement(final ICodingAnnotationStudy study)
     {
         this.study = study;
+        ensureSupportedRaterCount(study);
+        warnIfMissingValues(study);
     }
 
     @Override

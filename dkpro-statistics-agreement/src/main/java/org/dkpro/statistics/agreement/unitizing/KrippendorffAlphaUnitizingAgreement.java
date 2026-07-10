@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -28,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dkpro.statistics.agreement.ICategorySpecificAgreement;
+import org.dkpro.statistics.agreement.IMultiRaterAgreement;
 import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
 
 /**
@@ -50,7 +47,7 @@ import org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement;
  */
 public class KrippendorffAlphaUnitizingAgreement
     extends UnitizingAgreementMeasure
-    implements ICategorySpecificAgreement
+    implements ICategorySpecificAgreement, IMultiRaterAgreement
 {
 
     /**

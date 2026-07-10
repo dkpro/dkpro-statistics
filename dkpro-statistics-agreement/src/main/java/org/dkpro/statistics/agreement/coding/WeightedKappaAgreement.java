@@ -1,8 +1,4 @@
 /*
- * Copyright 2014
- * Ubiquitous Knowledge Processing (UKP) Lab
- * Technische Universität Darmstadt
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,6 +19,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.dkpro.statistics.agreement.IChanceCorrectedDisagreement;
+import org.dkpro.statistics.agreement.IMissingValueSupport;
+import org.dkpro.statistics.agreement.IMultiRaterAgreement;
 import org.dkpro.statistics.agreement.distance.IDistanceFunction;
 
 /**
@@ -45,7 +43,7 @@ import org.dkpro.statistics.agreement.distance.IDistanceFunction;
  */
 public class WeightedKappaAgreement
     extends WeightedAgreement
-    implements IChanceCorrectedDisagreement
+    implements IChanceCorrectedDisagreement, IMissingValueSupport, IMultiRaterAgreement
 {
 
     /**
