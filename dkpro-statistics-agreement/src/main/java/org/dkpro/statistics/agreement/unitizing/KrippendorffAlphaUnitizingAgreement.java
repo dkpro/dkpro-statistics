@@ -188,10 +188,6 @@ public class KrippendorffAlphaUnitizingAgreement
                     offset = pos;
                 }
 
-                if (length < 0) {
-                    var x = 0;
-                }
-
                 pos = offset + length;
             }
         }
