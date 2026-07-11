@@ -70,6 +70,62 @@ public class UnitizingAgreementTest
         assertThat(alpha.calculateAgreement()).isNaN();
     }
 
+    /**
+     * Two raters annotate the same position with a zero-length unit, but assign different
+     * categories. Alpha_U weights all (dis)agreement by unit length, so the measure cannot see the
+     * units (zero mass): the study is degenerate and must not yield 1.0 even though the observed
+     * and the expected disagreement are both zero. See issue #35.
+     */
+    @Test
+    public void testOnlyZeroLengthUnitsWithDifferingCategories()
+    {
+        var study = new UnitizingAnnotationStudy(2, 15);
+        study.addUnit(0, 0, 0, "A");
+        study.addUnit(0, 0, 1, "B");
+
+        var alpha = new KrippendorffAlphaUnitizingAgreement(study);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.0, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.0, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.0, offset(0.001));
+    }
+
+    /**
+     * Two raters annotate the same position with a zero-length unit of the same category. Although
+     * this looks like agreement, the units carry no mass and the study is just as degenerate as in
+     * the differing-categories case -- the measure cannot tell the two situations apart.
+     */
+    @Test
+    public void testOnlyZeroLengthUnitsWithSameCategory()
+    {
+        var study = new UnitizingAnnotationStudy(2, 15);
+        study.addUnit(0, 0, 0, "A");
+        study.addUnit(0, 0, 1, "A");
+
+        var alpha = new KrippendorffAlphaUnitizingAgreement(study);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.0, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isCloseTo(0.0, offset(0.001));
+        assertThat(alpha.calculateAgreement()).isCloseTo(0.0, offset(0.001));
+    }
+
+    /**
+     * A zero-length unit next to units of positive length must not mark the study as degenerate.
+     * The raters fully agree on the positive-length units, so the agreement is 1.0 via the regular
+     * formula (the expected disagreement is positive).
+     */
+    @Test
+    public void testZeroLengthUnitsMixedWithPositiveLengthUnits()
+    {
+        var study = new UnitizingAnnotationStudy(2, 15);
+        study.addUnit(0, 0, 0, "A");
+        study.addUnit(2, 5, 0, "A");
+        study.addUnit(2, 5, 1, "A");
+
+        var alpha = new KrippendorffAlphaUnitizingAgreement(study);
+        assertThat(alpha.calculateObservedDisagreement()).isCloseTo(0.0, offset(0.001));
+        assertThat(alpha.calculateExpectedDisagreement()).isGreaterThan(0.0);
+        assertThat(alpha.calculateAgreement()).isCloseTo(1.0, offset(0.001));
+    }
+
     @Test
     public void testDistanceMetric()
     {

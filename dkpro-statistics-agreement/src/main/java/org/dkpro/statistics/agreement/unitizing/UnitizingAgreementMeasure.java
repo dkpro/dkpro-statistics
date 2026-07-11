@@ -42,4 +42,25 @@ public abstract class UnitizingAgreementMeasure
         return study;
     }
 
+    /**
+     * Unitizing measures weight all (dis)agreement by unit length. Zero-length units carry no mass,
+     * so a study consisting solely of such units is degenerate: both the observed and the expected
+     * disagreement are necessarily zero regardless of the positions and categories of the units.
+     * Such a study must not be mistaken for full agreement.
+     */
+    @Override
+    protected boolean studyCarriesInformation()
+    {
+        if (!super.studyCarriesInformation()) {
+            return false;
+        }
+
+        for (IUnitizingAnnotationUnit unit : study.getUnits()) {
+            if (unit.getLength() > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

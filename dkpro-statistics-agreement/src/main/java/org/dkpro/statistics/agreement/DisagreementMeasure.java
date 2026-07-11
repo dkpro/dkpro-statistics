@@ -62,11 +62,11 @@ public abstract class DisagreementMeasure
         if (D_O == D_E) {
             // When observed and expected disagreement are equal, the chance-corrected agreement is
             // zero -- except when both are zero, which is the case if all raters agreed on every
-            // unit. Such full agreement should yield 1.0 rather than 0.0, unless the study is empty
-            // and there is nothing to agree on. See issue #35.
+            // unit. Such full agreement should yield 1.0 rather than 0.0, unless the study carries
+            // no information from which agreement could be inferred and there is nothing to agree
+            // on. See issue #35.
             if (D_O == 0.0) {
-                IAnnotationStudy study = getStudy();
-                return study != null && !study.isEmpty() ? 1.0 : 0.0;
+                return studyCarriesInformation() ? 1.0 : 0.0;
             }
 
             return 0.0;
@@ -83,6 +83,20 @@ public abstract class DisagreementMeasure
     protected IAnnotationStudy getStudy()
     {
         return null;
+    }
+
+    /**
+     * Tells whether the underlying study carries any information from which the measure can infer
+     * agreement. {@link #calculateAgreement()} uses this to tell full agreement (yielding 1.0)
+     * apart from a study the measure cannot draw any conclusion from (yielding 0.0), such as an
+     * empty study. Subclasses should refine this check if there are further study configurations
+     * that are invisible to the measure, e.g. length-weighted unitizing measures cannot observe
+     * zero-length units.
+     */
+    protected boolean studyCarriesInformation()
+    {
+        IAnnotationStudy study = getStudy();
+        return study != null && !study.isEmpty();
     }
 
     protected abstract double calculateObservedDisagreement();
