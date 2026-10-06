@@ -17,7 +17,7 @@ DKPro Agreement suggests a simple workflow with three steps in order to measure 
 
 * [Getting Started with DKPro Agreement](/dkpro-statistics/dkpro-agreement-tutorial.pdf)
 
-Besides these tutorial slides, you may want to take a look at and cite our [COLING 2014 paper](http://anthology.aclweb.org/C/C14/C14-2023.pdf), which gives an overview of the implementation and its evaluation. Multiple colleagues found it very helpful to take a look at some of the many test cases in DKPro Agreement. They provide quite simple examples and thus can help you with writing the necessary code snippets more easily. Last, but not least, check out the Javadoc documentation, which also references the original papers of each inter-rater agreement measure.
+Besides these tutorial slides, you may want to take a look at and cite our [COLING 2014 paper](https://aclanthology.org/C14-2023.pdf), which gives an overview of the implementation and its evaluation. Multiple colleagues found it very helpful to take a look at some of the many test cases in DKPro Agreement. They provide quite simple examples and thus can help you with writing the necessary code snippets more easily. Last, but not least, check out the Javadoc documentation, which also references the original papers of each inter-rater agreement measure.
 
 
 Other modules

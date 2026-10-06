@@ -12,7 +12,7 @@ title: "DKPro Statistics"
 
 
 # The slogan describes your website and is used on homepage in <title> and other important places
-slogan: "Getting things done in NLP"
+slogan: "Inter-rater agreement and statistics for Java"
 
 
 # The description is used on homepage and in the footer to quickly describe your website. Use a maximum of 150 characters for SEO-purposes.
@@ -39,14 +39,6 @@ urlimg: "/dkpro-statistics/images/"
 
 # Logo size is 600x80 pixels
 logo: "logo.png"
-
-
-# Paginates all X entries
-paginate: 5
-
-
-# Pagination path › Important for blog page in /blog/ to work
-paginate_path: "blog/page:num"
 
 
 # Theme works best with Kramdown (using the table of contents function)
@@ -88,7 +80,7 @@ defaults:
       show_meta: false 	# Show metadata beneath all pages
       # sidebar:    		# Possible values › left, right › by default there will be no sidebar
       comments: false
-      author: "your_author_name"
+      author: "dkpro_statistics"
   -
     scope:
       path: ""        
@@ -97,7 +89,7 @@ defaults:
       show_meta: false   # Show metadata beneath all posts
       # sidebar:        # Possible values › left, right › by default there will be no sidebar
       comments: false
-      author: "your_author_name"
+      author: "dkpro_statistics"
 
 
 
@@ -205,5 +197,4 @@ sass:
 #
 # used in _includes/footer_scripts.html
 
-google_analytics_tracking_id: UA-119532273-1
-
+#google_analytics_tracking_id: UA-119532273-1

@@ -4,6 +4,6 @@
 # 2. Change author in default settings in config.yml
 #
 # Ressource › http://blog.sorryapp.com/blogging-with-jekyll/2014/02/06/adding-authors-to-your-jekyll-site.html
-your_author_name:
-    name: "The DKPro Statistics Team"
+dkpro_statistics:
+    name: "The DKPro Statistics Project"
     url: http://dkpro.github.io/dkpro-statistics

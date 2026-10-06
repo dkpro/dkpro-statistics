@@ -7,7 +7,7 @@
   side: left
 
 - title: Downloads
-  url: "http://search.maven.org/#search|ga|1|g%3A%22org.dkpro.statistics%22"
+  url: "/maven/"
   side: left
 
 - title: Documentation
@@ -16,11 +16,8 @@
   dropdown:
   - title: "Getting started"
     url: "/documentation/"
-  - title: "Javadoc (Snapshot)"
-    url: "https://zoidberg.ukp.informatik.tu-darmstadt.de/jenkins/job/DKPro%20Statistics%20(GitHub)/javadoc/"
-  - title: "Javadoc (2.1.0)"
-    url: "/releases/2.1.0/apidocs/index.html"
-#    url: "/releases/!LATEST!/apidocs/index.html"
+  - title: "Javadoc"
+    url: "https://javadoc.io/doc/org.dkpro.statistics/dkpro-statistics-agreement/!LATEST!/"
 
 - title: "Issues"
   url: "http://github.com/dkpro/dkpro-statistics/issues"
@@ -36,10 +33,8 @@
   dropdown:
   - title: "Mailing lists"
     url: "/mailinglists/"
-#  - title: "Twitter"
-#    url: "http://twitter.com/dkprocore"
   - title: "Contributing"
-    url: "http://github.com/dkpro/dkpro-core/blob/master/CONTRIBUTING.md"
+    url: "https://dkpro.github.io/contributing/"
 #  - title: "Contributors"
 #    url: "http://github.com/dkpro/dkpro-core/blob/master/CONTRIBUTORS.txt"
 
